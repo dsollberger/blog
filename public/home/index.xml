@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Homes on Derek Sollberger&#39;s Digital Splace</title>
-    <link>https://github.com/dsollberger/blog/home/</link>
+    <link>/dsollberger/blog/home/</link>
     <description>Recent content in Homes on Derek Sollberger&#39;s Digital Splace</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
