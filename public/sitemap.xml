@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/dsollberger/blog/public/post/trying-out-github-pages-with-blogdown/</loc>
+      <lastmod>2018-01-11T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/dsollberger/blog/public/talk/example-talk/</loc>
       <lastmod>2017-01-01T00:00:00-08:00</lastmod>
     </url>
@@ -169,6 +178,16 @@
     
     <url>
     
+      <loc>/dsollberger/blog/public/tags/blogdown/</loc>
+      <lastmod>2018-01-11T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/dsollberger/blog/public/categories/</loc>
       <priority>0</priority>
     </url>
@@ -200,6 +219,16 @@
     
       <loc>/dsollberger/blog/public/</loc>
       <lastmod>2017-10-15T00:00:00-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/dsollberger/blog/public/tags/github/</loc>
+      <lastmod>2018-01-11T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -280,6 +309,16 @@
     
       <loc>/dsollberger/blog/public/tags/regression/</loc>
       <lastmod>2015-07-23T21:13:14-05:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/dsollberger/blog/public/categories/science-communication/</loc>
+      <lastmod>2018-01-11T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

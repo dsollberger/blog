@@ -11,6 +11,16 @@
     <atom:link href="/dsollberger/blog/public/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Trying out GitHub Pages with Blogdown</title>
+      <link>/dsollberger/blog/public/post/trying-out-github-pages-with-blogdown/</link>
+      <pubDate>Thu, 11 Jan 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/dsollberger/blog/public/post/trying-out-github-pages-with-blogdown/</guid>
+      <description>&lt;p&gt;Today I am trying to get a &lt;code&gt;blogdown&lt;/code&gt; site to work with GitHub pages, but I cannot seem to get the posts to link correctly with relative links.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Example Talk</title>
       <link>/dsollberger/blog/public/talk/example-talk/</link>
       <pubDate>Sun, 01 Jan 2017 00:00:00 -0800</pubDate>

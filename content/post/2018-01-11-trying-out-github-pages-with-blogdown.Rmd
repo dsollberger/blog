@@ -1,0 +1,13 @@
+---
+title: Trying out GitHub Pages with Blogdown
+author: Derek Sollberger
+date: '2018-01-11'
+slug: trying-out-github-pages-with-blogdown
+categories:
+  - science communication
+tags:
+  - github
+  - blogdown
+---
+
+Today I am trying to get a `blogdown` site to work with GitHub pages, but I cannot seem to get the posts to link correctly with relative links.
