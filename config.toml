@@ -60,8 +60,8 @@ defaultContentLanguageInSubdir = false
   gravatar = false  # Get your avatar from Gravatar.com? (true/false)
   avatar = "portrait.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
   email = "dsollberger@ucmerced.edu"
-  address = "UCM SNS, 5200 North Lake Road, Merced, CA, 95343"
-  office_hours = "Wednesday 12 noon to 2 PM (or email for appointment)"
+  address = "Derek Sollberger \n School of Natural Sciences \n 5200 North Lake Road \n Merced, CA, 95343"
+  office_hours = "Wednesday 12 noon to 2 PM \n (or email for appointment)"
   phone = ""
   skype = ""
   telegram = ""
@@ -253,8 +253,6 @@ defaultContentLanguageInSubdir = false
   url = "#posts"
   weight = 2
 
-
-
 [[menu.main]]
   name = "Teaching"
   url = "#teaching"
@@ -268,12 +266,12 @@ defaultContentLanguageInSubdir = false
   #[[menu.main]]
   #name = "Publications"
   #url = "#publications_selected"
-  #weight = 7
+  #weight = 5
   
   #[[menu.main]]
   #name = "Projects"
   #url = "#projects"
-  #weight = 8
+  #weight = 6
 
 # Taxonomies.
 [taxonomies]
