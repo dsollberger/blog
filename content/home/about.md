@@ -19,17 +19,17 @@ weight = 5
 [[education.courses]]
   course = "MS in Applied Mathematics"
   institution = "UC Merced"
-  year = 2011
+  year = ""
 
 [[education.courses]]
   course = "MS in Applied Mathematics"
   institution = "CSULB"
-  year = 2009
+  year = ""
 
 [[education.courses]]
   course = "BA in Applied Mathematics"
   institution = "UC Berkeley"
-  year = 2006
+  year = ""
  
 +++
 
