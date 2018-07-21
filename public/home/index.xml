@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
@@ -72,19 +71,3 @@ I am a teaching instructor for the following courses at University X:
     
   </channel>
 </rss>
-=======
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Homes on Derek Sollberger&#39;s Digital Space</title>
-    <link>/dsollberger/blog/public/home/</link>
-    <description>Recent content in Homes on Derek Sollberger&#39;s Digital Space</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Sun, 15 Oct 2017 00:00:00 -0700</lastBuildDate>
-    <atom:link href="/dsollberger/blog/public/home/" rel="self" type="application/rss+xml" />
-    
-  </channel>
-</rss>
->>>>>>> cc22369e7c458610cd89ac264e2a25d60bd1eea5
