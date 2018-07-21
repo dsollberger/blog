@@ -5,7 +5,16 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/post/trying-out-github-pages-with-blogdown/</loc>
+      <loc>/dsollberger/post/let-s-see-if-i-can-make-posts-mostly-through-rstudio/</loc>
+      <lastmod>2018-07-21T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/dsollberger/post/trying-out-github-pages-with-blogdown/</loc>
       <lastmod>2018-01-11T00:00:00+00:00</lastmod>
     </url>
     
@@ -14,7 +23,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/talk/example-talk/</loc>
+      <loc>/dsollberger/talk/example-talk/</loc>
       <lastmod>2017-01-01T00:00:00-08:00</lastmod>
     </url>
     
@@ -23,7 +32,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/post/</loc>
+      <loc>/dsollberger/post/</loc>
       <lastmod>2017-01-01T00:00:00-08:00</lastmod>
     </url>
     
@@ -32,7 +41,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/tags/academic/</loc>
+      <loc>/dsollberger/tags/academic/</loc>
       <lastmod>2017-01-01T00:00:00+00:00</lastmod>
     </url>
     
@@ -41,7 +50,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/publication/</loc>
+      <loc>/dsollberger/publication/</loc>
       <lastmod>2017-01-01T00:00:00+00:00</lastmod>
     </url>
     
@@ -50,7 +59,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/talk/</loc>
+      <loc>/dsollberger/talk/</loc>
       <lastmod>2017-01-01T00:00:00+00:00</lastmod>
     </url>
     
@@ -59,7 +68,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/project/deep-learning/</loc>
+      <loc>/dsollberger/project/deep-learning/</loc>
       <lastmod>2016-04-27T00:00:00+00:00</lastmod>
     </url>
     
@@ -68,7 +77,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/project/example-external-project/</loc>
+      <loc>/dsollberger/project/example-external-project/</loc>
       <lastmod>2016-04-27T00:00:00+00:00</lastmod>
     </url>
     
@@ -77,7 +86,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/post/getting-started/</loc>
+      <loc>/dsollberger/post/getting-started/</loc>
       <lastmod>2017-09-03T00:00:00-07:00</lastmod>
     </url>
     
@@ -86,7 +95,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/post/widgets/</loc>
+      <loc>/dsollberger/post/widgets/</loc>
       <lastmod>2016-04-19T00:00:00-07:00</lastmod>
     </url>
     
@@ -95,7 +104,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/post/managing-content/</loc>
+      <loc>/dsollberger/post/managing-content/</loc>
       <lastmod>2016-04-18T00:00:00-07:00</lastmod>
     </url>
     
@@ -104,7 +113,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/post/writing-markdown-latex/</loc>
+      <loc>/dsollberger/post/writing-markdown-latex/</loc>
       <lastmod>2016-04-17T00:00:00-07:00</lastmod>
     </url>
     
@@ -113,7 +122,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/post/faq/</loc>
+      <loc>/dsollberger/post/faq/</loc>
       <lastmod>2016-04-10T00:00:00-07:00</lastmod>
     </url>
     
@@ -122,7 +131,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/publication/person-re-identification/</loc>
+      <loc>/dsollberger/publication/person-re-identification/</loc>
       <lastmod>2015-09-01T00:00:00+00:00</lastmod>
     </url>
     
@@ -131,7 +140,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/post/2015-07-23-r-rmarkdown/</loc>
+      <loc>/dsollberger/post/2015-07-23-r-rmarkdown/</loc>
       <lastmod>2015-07-23T21:13:14-05:00</lastmod>
     </url>
     
@@ -140,7 +149,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/post/migrate-from-jekyll/</loc>
+      <loc>/dsollberger/post/migrate-from-jekyll/</loc>
       <lastmod>2014-03-10T00:00:00-07:00</lastmod>
     </url>
     
@@ -149,7 +158,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/publication/clothing-search/</loc>
+      <loc>/dsollberger/publication/clothing-search/</loc>
       <lastmod>2013-07-01T00:00:00+00:00</lastmod>
     </url>
     
@@ -158,7 +167,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/publication_types/1/</loc>
+      <loc>/dsollberger/publication_types/1/</loc>
       <lastmod>2013-07-01T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
@@ -168,7 +177,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/publication_types/2/</loc>
+      <loc>/dsollberger/publication_types/2/</loc>
       <lastmod>2015-09-01T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
@@ -178,8 +187,8 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/tags/blogdown/</loc>
-      <lastmod>2018-01-11T00:00:00+00:00</lastmod>
+      <loc>/dsollberger/tags/blogdown/</loc>
+      <lastmod>2018-07-21T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -188,7 +197,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/categories/</loc>
+      <loc>/dsollberger/categories/</loc>
       <priority>0</priority>
     </url>
     
@@ -197,7 +206,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/tags/deep-learning/</loc>
+      <loc>/dsollberger/tags/deep-learning/</loc>
       <lastmod>2016-04-27T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
@@ -207,7 +216,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/tags/demo/</loc>
+      <loc>/dsollberger/tags/demo/</loc>
       <lastmod>2016-04-27T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
@@ -217,17 +226,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/</loc>
-      <lastmod>2017-10-15T00:00:00-07:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/dsollberger/blog/public/tags/github/</loc>
+      <loc>/dsollberger/tags/github/</loc>
       <lastmod>2018-01-11T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
@@ -237,7 +236,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/tags/hugo/</loc>
+      <loc>/dsollberger/tags/hugo/</loc>
       <lastmod>2017-09-03T00:00:00-07:00</lastmod>
       <priority>0</priority>
     </url>
@@ -247,7 +246,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/tags/jekyll/</loc>
+      <loc>/dsollberger/tags/jekyll/</loc>
       <lastmod>2014-03-10T00:00:00-07:00</lastmod>
       <priority>0</priority>
     </url>
@@ -257,7 +256,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/tags/plot/</loc>
+      <loc>/dsollberger/tags/plot/</loc>
       <lastmod>2015-07-23T21:13:14-05:00</lastmod>
       <priority>0</priority>
     </url>
@@ -267,7 +266,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/project/</loc>
+      <loc>/dsollberger/project/</loc>
       <lastmod>2016-04-27T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
@@ -277,7 +276,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/publication_types/</loc>
+      <loc>/dsollberger/publication_types/</loc>
       <lastmod>2013-07-01T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
@@ -287,7 +286,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/categories/r/</loc>
+      <loc>/dsollberger/categories/r/</loc>
       <lastmod>2015-07-23T21:13:14-05:00</lastmod>
       <priority>0</priority>
     </url>
@@ -297,7 +296,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/tags/r-markdown/</loc>
+      <loc>/dsollberger/tags/r-markdown/</loc>
       <lastmod>2015-07-23T21:13:14-05:00</lastmod>
       <priority>0</priority>
     </url>
@@ -307,7 +306,7 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/tags/regression/</loc>
+      <loc>/dsollberger/tags/regression/</loc>
       <lastmod>2015-07-23T21:13:14-05:00</lastmod>
       <priority>0</priority>
     </url>
@@ -317,8 +316,8 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/categories/science-communication/</loc>
-      <lastmod>2018-01-11T00:00:00+00:00</lastmod>
+      <loc>/dsollberger/categories/science-communication/</loc>
+      <lastmod>2018-07-21T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -327,8 +326,18 @@
     
     <url>
     
-      <loc>/dsollberger/blog/public/tags/</loc>
+      <loc>/dsollberger/tags/</loc>
       <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/dsollberger/</loc>
+      <lastmod>2017-10-15T00:00:00-07:00</lastmod>
       <priority>0</priority>
     </url>
     

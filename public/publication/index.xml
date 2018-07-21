@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Publications on Derek Sollberger&#39;s Digital Space</title>
-    <link>/dsollberger/blog/public/publication/</link>
-    <description>Recent content in Publications on Derek Sollberger&#39;s Digital Space</description>
+    <title>Publications on The Median Data Scientist</title>
+    <link>/dsollberger/publication/</link>
+    <description>Recent content in Publications on The Median Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
     <lastBuildDate>Sun, 01 Jan 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="/dsollberger/blog/public/publication/" rel="self" type="application/rss+xml" />
+    
+	<atom:link href="/dsollberger/publication/index.xml" rel="self" type="application/rss+xml" />
+    
     
     <item>
       <title>A Person Re-Identification System For Mobile Devices</title>
-      <link>/dsollberger/blog/public/publication/person-re-identification/</link>
+      <link>/dsollberger/publication/person-re-identification/</link>
       <pubDate>Tue, 01 Sep 2015 00:00:00 +0000</pubDate>
       
-      <guid>/dsollberger/blog/public/publication/person-re-identification/</guid>
-      <description>&lt;p&gt;More detail can easily be written here using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
-</description>
+      <guid>/dsollberger/publication/person-re-identification/</guid>
+      <description>More detail can easily be written here using Markdown and $\rm \LaTeX$ math code.</description>
     </item>
     
     <item>
       <title>Mobile visual clothing search</title>
-      <link>/dsollberger/blog/public/publication/clothing-search/</link>
+      <link>/dsollberger/publication/clothing-search/</link>
       <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
       
-      <guid>/dsollberger/blog/public/publication/clothing-search/</guid>
-      <description>&lt;p&gt;More detail can easily be written here using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
-</description>
+      <guid>/dsollberger/publication/clothing-search/</guid>
+      <description>More detail can easily be written here using Markdown and $\rm \LaTeX$ math code.</description>
     </item>
     
   </channel>

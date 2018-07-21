@@ -6,7 +6,7 @@
 baseurl = "https://github.com/dsollberger/"
 
 # Title of your site
-title = "Derek Sollberger's Digital Space"
+title = "The Median Data Scientist"
 
 # Your copyright notice - appears in site footer.
 # To display a copyright symbol, type `&copy;`.
@@ -58,10 +58,10 @@ defaultContentLanguageInSubdir = false
   organizations = [ { name = "UC Merced", url = "https://www.ucmerced.edu/" } ]
 
   gravatar = false  # Get your avatar from Gravatar.com? (true/false)
-  avatar = "portrait.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
+  avatar = "profile picture.jpg"  # Specify an avatar image (in `static/img/` folder) or delete value to disable avatar.
   email = "dsollberger@ucmerced.edu"
   address = "Derek Sollberger \n School of Natural Sciences \n 5200 North Lake Road \n Merced, CA, 95343"
-  office_hours = "Wednesday 12 noon to 2 PM \n (or email for appointment)"
+  office_hours = "or email for appointment"
   phone = ""
   skype = ""
   telegram = ""
@@ -100,7 +100,7 @@ defaultContentLanguageInSubdir = false
 
   # Date and time format (refer to Go's date format: http://fuckinggodateformat.com )
   #   Examples: "Mon, Jan 2, 2006" or "2006-01-02"
-  date_format = "Jan 2, 2006"
+  date_format = "Mon, Jan 2, 2006"
   #   Examples: "3:04 pm" or "15:04"
   time_format = "3:04 PM"
 
