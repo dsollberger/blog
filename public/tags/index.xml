@@ -102,5 +102,32 @@
       <description></description>
     </item>
     
+    <item>
+      <title>Teaching</title>
+      <link>/tags/teaching/</link>
+      <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/teaching/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TimeSeries</title>
+      <link>/tags/timeseries/</link>
+      <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/timeseries/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Xts</title>
+      <link>/tags/xts/</link>
+      <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/xts/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>

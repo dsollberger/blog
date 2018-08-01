@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Xts on The Median Data Scientist</title>
+    <link>/tags/xts/</link>
+    <description>Recent content in Xts on The Median Data Scientist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Wed, 01 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/xts/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Semester Schedule Planner</title>
+      <link>/post/semester-schedule-planner/</link>
+      <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/semester-schedule-planner/</guid>
+      <description>As a lecturer at UC Merced, each semester I find myself needing to figure out how many days I get to teach. Furthermore, I like to plan out my lecture schedule down to the days themselves. Here I hope to use some R code to quickly figure out (say) which days are on Tuesday or Thursday.
+ConstructionIn R, the seq command can be used with dates easily.
+semester_dates &amp;lt;- seq(as.</description>
+    </item>
+    
+  </channel>
+</rss>

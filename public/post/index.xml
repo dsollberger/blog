@@ -13,6 +13,17 @@
     
     
     <item>
+      <title>Semester Schedule Planner</title>
+      <link>/post/semester-schedule-planner/</link>
+      <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/semester-schedule-planner/</guid>
+      <description>As a lecturer at UC Merced, each semester I find myself needing to figure out how many days I get to teach. Furthermore, I like to plan out my lecture schedule down to the days themselves. Here I hope to use some R code to quickly figure out (say) which days are on Tuesday or Thursday.
+ConstructionIn R, the seq command can be used with dates easily.
+semester_dates &amp;lt;- seq(as.</description>
+    </item>
+    
+    <item>
       <title>Let&#39;s see if I can make posts (mostly) through RStudio</title>
       <link>/post/let-s-see-if-i-can-make-posts-mostly-through-rstudio/</link>
       <pubDate>Sat, 21 Jul 2018 00:00:00 +0000</pubDate>

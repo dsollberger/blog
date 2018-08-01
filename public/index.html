@@ -77,7 +77,7 @@
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2017-10-15T00:00:00-07:00">
+  <meta property="og:updated_time" content="2016-04-20T00:00:00&#43;00:00">
   
 
   
@@ -206,69 +206,6 @@
 
 
 
-
-  
-  
-  
-    
-
-
-
-<section id="hero" class="hero-overlay" style="
-
-background-color: #666;
-
-
-background-image:
-linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-url('/img/headers/bubbles-wide.jpg');
-
-;">
-
-  <div class="container">
-
-    <h1 class="hero-title" itemprop="headline">
-      Academic
-    </h1>
-
-    
-    <p class="hero-lead">The highly flexible website framework for Hugo with an extensible plugin mechanism. Create a beautifully simple site in under 10 minutes 🚀
-<br>
-<small><a id="academic-release" href="https://sourcethemes.com/academic/tags/updates">Latest release</a></small>
-<br><br>
-<iframe style="display: inline-block;" src="https://ghbtns.com/github-btn.html?user=gcushen&amp;repo=hugo-academic&amp;type=star&amp;count=true&amp;size=large" scrolling="0" width="160px" height="30px" frameborder="0"></iframe>
-<iframe style="display: inline-block;" src="https://ghbtns.com/github-btn.html?user=gcushen&amp;repo=hugo-academic&amp;type=fork&amp;count=true&amp;size=large" scrolling="0" width="158px" height="30px" frameborder="0"></iframe></p>
-
-<script type="text/javascript">
-  (function defer() {
-    if (window.jQuery) {
-      jQuery(document).ready(function(){
-        GetLatestReleaseInfo();
-      });
-    } else {
-      setTimeout(function() { defer() }, 50);
-    }
-  })();  
-  function GetLatestReleaseInfo() {
-    $.getJSON('https://api.github.com/repos/gcushen/hugo-academic/tags').done(function (json) {
-      let release = json[0];
-      // let downloadURL = release.zipball_url;
-      $('#academic-release').text('Latest release ' + release.name);  
-    });    
-}  
-</script>
-</p>
-    
-
-    
-    <p><a href="./post/getting-started/" class="btn btn-light btn-outline btn-large"><i class="fa fa-download"></i> Install Now</a></p>
-    
-
-  </div>
-
-</section>
-
-  
 
   
   
@@ -433,6 +370,91 @@ url('/img/headers/bubbles-wide.jpg');
       
 
       
+      
+
+        
+
+        
+        
+
+        
+        
+          
+      
+          
+      
+          
+      
+
+      
+      
+        
+        
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
+    <a href="/post/semester-schedule-planner/" itemprop="url">Semester Schedule Planner</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2018-08-01 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Aug 1, 2018
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/teaching">teaching</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    As a lecturer at UC Merced, each semester I find myself needing to figure out how many days I get to teach. Furthermore, I like to plan out my lecture schedule down to the days themselves. Here I hope to use some R code to quickly figure out (say) which days are on Tuesday or Thursday.
+ConstructionIn R, the seq command can be used with dates easily.
+semester_dates &lt;- seq(as.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/semester-schedule-planner/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+      
+
       
 
         
@@ -741,75 +763,6 @@ url('/img/headers/bubbles-wide.jpg');
       
 
       
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/managing-content/" itemprop="url">Managing content</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2016-04-18 00:00:00 -0700 PDT" itemprop="datePublished dateModified">
-      Apr 18, 2016
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    8 min read
-  </span>
-  
-
-  
-  
-
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    <p>This is a brief guide to managing content with the Academic framework. Content can include publications, projects, talks, news/blog articles, and widget pages. After you have read this guide about creating and managing content, you may also be interested to learn about <a href="/post/writing-markdown-latex/" target="_blank">writing content with Markdown, LaTeX, and Shortcodes</a>.</p>
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/managing-content/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
     
 
   </div>
@@ -947,6 +900,27 @@ url('/img/headers/bubbles-wide.jpg');
           
           
           <a href="/tags/regression" style="font-size:0.8rem">regression</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/teaching" style="font-size:0.8rem">teaching</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/timeseries" style="font-size:0.8rem">timeSeries</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/xts" style="font-size:0.8rem">xts</a>
         
       </div>
     

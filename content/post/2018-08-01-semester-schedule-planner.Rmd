@@ -1,0 +1,71 @@
+---
+title: Semester Schedule Planner
+author: Derek Sollberger
+date: '2018-08-01'
+slug: semester-schedule-planner
+categories:
+  - teaching
+tags:
+  - teaching
+  - xts
+  - timeSeries
+header:
+  caption: ''
+  image: ''
+---
+
+As a lecturer at UC Merced, each semester I find myself needing to figure out how many days I get to teach.  Furthermore, I like to plan out my lecture schedule down to the days themselves.  Here I hope to use some `R` code to quickly figure out (say) which days are on Tuesday or Thursday.
+
+## Construction
+
+In `R`, the `seq` command can be used with dates easily.
+
+```{r}
+semester_dates <- seq(as.Date("2018-08-22"), as.Date("2018-12-07"), by = "days")
+```
+
+When working with time data, the `xts` package ("extensible time series") offers convenient tools for manipulating time series.
+
+```{r, message = FALSE, warning = FALSE}
+library("xts")
+xts_dates <- as.xts( rep(NA, length(semester_dates)), order.by = semester_dates)
+```
+
+The convention is that "0" is a Sunday, "1" is a Monday, ..., and "5" is a Friday.
+
+## Monday and Wednesday
+
+```{r}
+Mondays <- xts_dates[.indexwday(xts_dates) == 1]
+head(Mondays)
+
+MW_dates <- xts_dates[.indexwday(xts_dates) %in% c(1, 3)]
+head(MW_dates)
+```
+
+## Tuesday and Thursday
+
+```{r}
+TuTh_dates <- xts_dates[.indexwday(xts_dates) %in% c(2, 4)]
+head(TuTh_dates)
+```
+
+## Friday
+
+```{r}
+Fri_dates <- xts_dates[.indexwday(xts_dates) == 5]
+head(Fri_dates)
+```
+
+## Exporting the Time Series
+
+From here, I might still want to use Excel for data entry in my planning.  `xts` objects are still `zoo` objects.
+
+```{r}
+#write.zoo(Mondays, sep = ",", file = "schedule.csv")
+#write.zoo(MW_dates, sep = ",", file = "schedule.csv")
+#write.zoo(TuTh_dates, sep = ",", file = "schedule.csv")
+write.zoo(Fri_dates, sep = ",", file = "schedule.csv")
+```
+
+Now I have a spreadsheet with the dates already arranged!
