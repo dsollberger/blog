@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Flexdashboard on The Median Data Scientist</title>
+    <link>/tags/flexdashboard/</link>
+    <description>Recent content in Flexdashboard on The Median Data Scientist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Mon, 20 Aug 2018 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/flexdashboard/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Trying Out FlexDashboard</title>
+      <link>/post/trying-out-flexdashboard/</link>
+      <pubDate>Mon, 20 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/trying-out-flexdashboard/</guid>
+      <description>Thanks to Dr. Elaine McVey’s course at DataCamp, I feel that I can convert my Data Science course’s lab assignments and slides to flexdashboard. Today, I converted the first lab assignment. The hope is that the students can clearly see the instructions that I am trying to convey rather than facing a wall of text.
+To convert my lab, which was previously in an R Markdown document for HTML output, I had to</description>
+    </item>
+    
+    <item>
+      <title>Trying Out FlexDashboard</title>
+      <link>/post/trying-out-flexdashboard/</link>
+      <pubDate>Mon, 20 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/trying-out-flexdashboard/</guid>
+      <description>Thanks to Dr. Elaine McVey&amp;rsquo;s course at DataCamp, I feel that I can convert my Data Science course&amp;rsquo;s lab assignments and slides to flexdashboard. Today, I converted the first lab assignment. The hope is that the students can clearly see the instructions that I am trying to convey rather than facing a wall of text.
+To convert my lab, which was previously in an R Markdown document for HTML output, I had to</description>
+    </item>
+    
+  </channel>
+</rss>

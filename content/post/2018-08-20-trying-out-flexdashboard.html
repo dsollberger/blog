@@ -1,0 +1,25 @@
+---
+title: Trying Out FlexDashboard
+author: Derek Sollberger
+date: '2018-08-20'
+slug: trying-out-flexdashboard
+categories:
+  - reporting
+tags:
+  - flexdashboard
+header:
+  caption: ''
+  image: ''
+---
+
+
+
+<p>Thanks to Dr. Elaine McVey’s course at DataCamp, I feel that I can convert my Data Science course’s lab assignments and slides to <code>flexdashboard</code>. Today, I converted the first lab assignment. The hope is that the students can clearly see the instructions that I am trying to convey rather than facing a wall of text.</p>
+<p>To convert my lab, which was previously in an R Markdown document for HTML output, I had to</p>
+<ul>
+<li>explicitly used <code>echo = TRUE</code> in each code block that should be presented to the student</li>
+<li>used the <code>\huge</code> LaTeX font size modifier on math-mode elements</li>
+<li>changed the YAML heading to call for <code>output:   flexdashboard::flex_dashboard: orientation: columns</code></li>
+</ul>
+<p>From there, I also started to arrange the “paragraphs” into separate columns for a nice arrangement.</p>
+<p><img src = "for%20Twitter.jpg"></p>

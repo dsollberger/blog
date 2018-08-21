@@ -11,6 +11,49 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Trying Out FlexDashboard</title>
+      <link>/post/trying-out-flexdashboard/</link>
+      <pubDate>Mon, 20 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/trying-out-flexdashboard/</guid>
+      <description>&lt;p&gt;Thanks to Dr. Elaine McVey’s course at DataCamp, I feel that I can convert my Data Science course’s lab assignments and slides to &lt;code&gt;flexdashboard&lt;/code&gt;. Today, I converted the first lab assignment. The hope is that the students can clearly see the instructions that I am trying to convey rather than facing a wall of text.&lt;/p&gt;
+&lt;p&gt;To convert my lab, which was previously in an R Markdown document for HTML output, I had to&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;explicitly used &lt;code&gt;echo = TRUE&lt;/code&gt; in each code block that should be presented to the student&lt;/li&gt;
+&lt;li&gt;used the &lt;code&gt;\huge&lt;/code&gt; LaTeX font size modifier on math-mode elements&lt;/li&gt;
+&lt;li&gt;changed the YAML heading to call for &lt;code&gt;output:   flexdashboard::flex_dashboard: orientation: columns&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;From there, I also started to arrange the “paragraphs” into separate columns for a nice arrangement.&lt;/p&gt;
+&lt;p&gt;&lt;img src = &#34;for%20Twitter.jpg&#34;&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Trying Out FlexDashboard</title>
+      <link>/post/trying-out-flexdashboard/</link>
+      <pubDate>Mon, 20 Aug 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/trying-out-flexdashboard/</guid>
+      <description>&lt;p&gt;Thanks to Dr. Elaine McVey&amp;rsquo;s course at DataCamp, I feel that I can convert my Data Science course&amp;rsquo;s lab assignments and slides to &lt;code&gt;flexdashboard&lt;/code&gt;.  Today, I converted the first lab assignment.  The hope is that the students can clearly see the instructions that I am trying to convey rather than facing a wall of text.&lt;/p&gt;
+
+&lt;p&gt;To convert my lab, which was previously in an R Markdown document for HTML output, I had to&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;explicitly used &lt;code&gt;echo = TRUE&lt;/code&gt; in each code block that should be presented to the student&lt;/li&gt;
+&lt;li&gt;used the &lt;code&gt;\huge&lt;/code&gt; LaTeX font size modifier on math-mode elements&lt;/li&gt;
+&lt;li&gt;changed the YAML heading to call for &lt;code&gt;output:
+flexdashboard::flex_dashboard:
+orientation: columns&lt;/code&gt;
+&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;From there, I also started to arrange the &amp;ldquo;paragraphs&amp;rdquo; into separate columns for a nice arrangement.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src = &#34;for Twitter.jpg&#34;&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Semester Schedule Planner</title>
       <link>/post/semester-schedule-planner/</link>
       <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
@@ -1253,60 +1296,6 @@ Figure 1: A fancy pie chart.
 &lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Migrate from Jekyll to Hugo</title>
-      <link>/post/migrate-from-jekyll/</link>
-      <pubDate>Mon, 10 Mar 2014 00:00:00 -0700</pubDate>
-      
-      <guid>/post/migrate-from-jekyll/</guid>
-      <description>
-
-&lt;p&gt;Here are a few tips for migrating an existing website from Jekyll to Hugo. These tips can be applied in conjunction with following Hugo Academic&amp;rsquo;s &lt;a href=&#34;/post/getting-started/&#34; target=&#34;_blank&#34;&gt;getting started guide&lt;/a&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;move-static-content-to-static&#34;&gt;Move static content to &lt;code&gt;static&lt;/code&gt;&lt;/h2&gt;
-
-&lt;p&gt;Jekyll has a rule that any directory not starting with &lt;code&gt;_&lt;/code&gt; will be copied as-is to the &lt;code&gt;_site&lt;/code&gt; output. Hugo keeps all static content under &lt;code&gt;static&lt;/code&gt;. You should therefore move it all there.
-With Jekyll, something that looked like&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;▾ &amp;lt;root&amp;gt;/
-    ▾ images/
-        logo.png
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;should become&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;▾ &amp;lt;root&amp;gt;/
-    ▾ static/
-        ▾ images/
-            logo.png
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as &lt;code&gt;CNAME&lt;/code&gt;) to be moved to &lt;code&gt;static&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&#34;fix-content&#34;&gt;Fix content&lt;/h2&gt;
-
-&lt;p&gt;Depending on the amount of customization that was done for each post in Jekyll, this step will require more or less effort. There are no hard and fast rules here except that &lt;code&gt;hugo server --watch&lt;/code&gt; and the Hugo Academic example site are your friends. Test your changes and fix errors as needed.&lt;/p&gt;
-
-&lt;h2 id=&#34;publish&#34;&gt;Publish&lt;/h2&gt;
-
-&lt;p&gt;The default is for Jekyll to publish the website to a &lt;code&gt;_site&lt;/code&gt; directory, whereas Hugo publishes to a &lt;code&gt;public&lt;/code&gt; directory.&lt;/p&gt;
-
-&lt;h2 id=&#34;a-practical-example&#34;&gt;A practical example&lt;/h2&gt;
-
-&lt;p&gt;Alexandre Normand migrated his website from Jekyll to Hugo in less than a day. You can see all his changes by looking at this GitHub &lt;a href=&#34;https://github.com/alexandre-normand/alexandre-normand/compare/869d69435bd2665c3fbf5b5c78d4c22759d7613a...b7f6605b1265e83b4b81495423294208cc74d610&#34; target=&#34;_blank&#34;&gt;diff&lt;/a&gt;. However, bear in mind that this example is &lt;strong&gt;not specific to the Academic theme nor does it use the latest version of Hugo&lt;/strong&gt;.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Mobile visual clothing search</title>
-      <link>/publication/clothing-search/</link>
-      <pubDate>Mon, 01 Jul 2013 00:00:00 +0000</pubDate>
-      
-      <guid>/publication/clothing-search/</guid>
-      <description>&lt;p&gt;More detail can easily be written here using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
 </description>
     </item>
     
