@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Thu, 23 Jul 2015 21:13:14 -0500</lastBuildDate>
+    <lastBuildDate>Sun, 30 Sep 2018 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Degree-One Polynomials</title>
+      <link>/post/degree-one-polynomials/</link>
+      <pubDate>Sun, 30 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/degree-one-polynomials/</guid>
+      <description>ProblemThe question that one of my teaching assistants posed was “What is the difference between lm(y ~ x) and lm(y ~ (poly,1)) for linear regression in R?” That is, it is quickly apparent that those commands produce different results, but for the same intention. Here I will try to explore the underlying difference.
+Disclaimer: I know that the following discussion is incomplete. These are simply notes that I threw together overnight.</description>
+    </item>
     
     <item>
       <title>Hello R Markdown</title>

@@ -11,6 +11,119 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Degree-One Polynomials</title>
+      <link>/post/degree-one-polynomials/</link>
+      <pubDate>Sun, 30 Sep 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/degree-one-polynomials/</guid>
+      <description>&lt;div id=&#34;problem&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Problem&lt;/h2&gt;
+&lt;p&gt;The question that one of my teaching assistants posed was “What is the difference between &lt;code&gt;lm(y ~ x)&lt;/code&gt; and &lt;code&gt;lm(y ~ (poly,1))&lt;/code&gt; for linear regression in R?” That is, it is quickly apparent that those commands produce different results, but for the same intention. Here I will try to explore the underlying difference.&lt;/p&gt;
+&lt;p&gt;Disclaimer: I know that the following discussion is incomplete. These are simply notes that I threw together overnight.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exposition&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exposition&lt;/h2&gt;
+&lt;p&gt;For a quick study, we can observe that the commands &lt;code&gt;lm(y ~ x)&lt;/code&gt; and &lt;code&gt;lm(y ~ (poly,1))&lt;/code&gt; produce different results:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# 50 ordered pairs of random numbers
+x &amp;lt;- runif(50)
+y &amp;lt;- runif(50, -3, 3)
+
+# first linear model
+lm1 &amp;lt;- lm(y ~ x)
+
+# second linear model
+lm2 &amp;lt;- lm(y ~ poly(x, 1))
+
+# found coefficients
+lm1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Coefficients:
+## (Intercept)            x  
+##    -0.03135     -0.37976&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = y ~ poly(x, 1))
+## 
+## Coefficients:
+## (Intercept)   poly(x, 1)  
+##     -0.2030      -0.7187&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# plot
+plot(x,y, main = &amp;quot;quick scatterplot and linear regression&amp;quot;)
+points(mean(x), mean(y), col = &amp;quot;purple&amp;quot;, pch = 8)
+abline(lm1, col = &amp;quot;red&amp;quot;, lwd = 3)
+abline(lm2, col = &amp;quot;blue&amp;quot;, lwd = 3)
+legend(0.5, 2, 
+       c(&amp;quot;lm(y ~ x)&amp;quot;, &amp;quot;lm(y ~ poly(x, 1))&amp;quot;),
+       col = c(&amp;quot;red&amp;quot;, &amp;quot;blue&amp;quot;),
+       lwd = c(3,3))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2018-09-30-degree-one-polynomials_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We observe that &lt;code&gt;lm(y ~ x)&lt;/code&gt; goes though the sample means &lt;span class=&#34;math inline&#34;&gt;\((\bar{x}, \bar{y})\)&lt;/span&gt;, while &lt;code&gt;lm(y ~ (poly,1))&lt;/code&gt; does not. Oddly enough, if we apply a metric such as the coefficient of determination (&lt;span class=&#34;math inline&#34;&gt;\(R^{2}\)&lt;/span&gt;), then the model metrics are the same!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(lm1)$adj.r.squared&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] -0.01688544&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(lm2)$adj.r.squared&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] -0.01688544&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;orthogonal-polynomials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Orthogonal Polynomials&lt;/h2&gt;
+&lt;p&gt;Some searches on the web point toward how the &lt;code&gt;poly&lt;/code&gt; command uses &lt;a href=&#34;https://mathoverflow.net/questions/38864/visualizing-orthogonal-polynomials&#34;&gt;othogonal polynomials&lt;/a&gt; by default. That is, modeling with &lt;span class=&#34;math display&#34;&gt;\[\hat{y} = a + bx + cx^{2} + ...\]&lt;/span&gt; is easy to interpret, higher degree terms will not add much to the predictive ability for our regression models (e.g. &lt;span class=&#34;math inline&#34;&gt;\(x^7\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(x^8\)&lt;/span&gt; are “too close” within some interval). Side note: with the &lt;span class=&#34;math display&#34;&gt;\[{1, x, x^{2}, ...}\]&lt;/span&gt; basis, we learn that the &lt;a href=&#34;https://math.stackexchange.com/questions/2211054/condition-number-for-polynomial-interpolation-matrix&#34;&gt;Vandermonde matrix&lt;/a&gt; for this basis has a &lt;em&gt;high condition number&lt;/em&gt; and calculations with this route are &lt;em&gt;ill-conditioned&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;coefficients-of-orthogonal-polynomials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Coefficients of Orthogonal Polynomials&lt;/h2&gt;
+&lt;p&gt;There has been a &lt;a href=&#34;https://stackoverflow.com/questions/39031172/how-poly-generates-orthogonal-polynomials-how-to-understand-the-coefs-ret&#34;&gt;lot of discussion&lt;/a&gt; about how &lt;code&gt;poly&lt;/code&gt; works and its internal and recursive algorithm to produce a set of orthogonal polynomials over an interval of values. Here I hope to produce a simple example where we can follow the numbers.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- 1:5       # mean is 3
+y &amp;lt;- 15*x + 18 # line of slope 15 and y-intercept 18&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using the &lt;code&gt;lm&lt;/code&gt; command quickly recovers the slope and intercept&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm_raw &amp;lt;- lm(y ~ x)
+lm_raw&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Coefficients:
+## (Intercept)            x  
+##          18           15&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, the route with orthogonal polynomials yields different coefficients.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm_orth &amp;lt;- lm(y ~ poly(x,1))
+lm_orth&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = y ~ poly(x, 1))
+## 
+## Coefficients:
+## (Intercept)   poly(x, 1)  
+##       63.00        47.43&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can &lt;a href=&#34;https://stackoverflow.com/questions/26728289/extracting-orthogonal-polynomial-coefficients-from-rs-poly-function&#34;&gt;extract the coefficents&lt;/a&gt; from the orthogonal polynomial route, along with some normalization factors.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;a &amp;lt;- attributes(poly(x,1))$coefs$alpha
+a&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;n &amp;lt;- attributes(poly(x,1))$coefs$norm2
+n&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  1  5 10&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;building-orthogonal-polynomials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Building Orthogonal Polynomials&lt;/h2&gt;
+&lt;p&gt;There are several ways to build orthogonal polynomials, and here I will try out the &lt;a href=&#34;http://www.math.tamu.edu/~yvorobet/MATH304-503/Lect4-04web.pdf&#34;&gt;Gram-Schmidt process&lt;/a&gt;. For the base case, &lt;span class=&#34;math display&#34;&gt;\[p_{0} := 1\]&lt;/span&gt; The degree-one term is &lt;span class=&#34;math display&#34;&gt;\[p_{1}(x) = x - \frac{&amp;lt;x, p_{0}&amp;gt;}{&amp;lt;p_{0}, p_{0}&amp;gt;} = x - \frac{\int_{1}^{5} \! x \, dx}{\int_{1}^{5} \, dx} = x - 3\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Note that &lt;span class=&#34;math inline&#34;&gt;\(p_{1}(x) = x - 3\)&lt;/span&gt; is centered at the mean &lt;span class=&#34;math inline&#34;&gt;\(\bar{x} = 3\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Combining the coefficients found from &lt;code&gt;lm(y ~ poly(x,1))&lt;/code&gt; and a normalization factor from above, we get&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\hat{y} = 63 + 47.43 \cdot \frac{x - 3}{\sqrt{10}}\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;which is indeed &lt;span class=&#34;math inline&#34;&gt;\(\hat{y} = 18 + 15x\)&lt;/span&gt; when simplified (up to rounding error, too much hand-waving, and a missing number).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sources&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sources&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://mathoverflow.net/questions/38864/visualizing-orthogonal-polynomials&#34; class=&#34;uri&#34;&gt;https://mathoverflow.net/questions/38864/visualizing-orthogonal-polynomials&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://math.stackexchange.com/questions/2211054/condition-number-for-polynomial-interpolation-matrix&#34; class=&#34;uri&#34;&gt;https://math.stackexchange.com/questions/2211054/condition-number-for-polynomial-interpolation-matrix&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://stackoverflow.com/questions/39031172/how-poly-generates-orthogonal-polynomials-how-to-understand-the-coefs-ret&#34; class=&#34;uri&#34;&gt;https://stackoverflow.com/questions/39031172/how-poly-generates-orthogonal-polynomials-how-to-understand-the-coefs-ret&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://stackoverflow.com/questions/26728289/extracting-orthogonal-polynomial-coefficients-from-rs-poly-function&#34; class=&#34;uri&#34;&gt;https://stackoverflow.com/questions/26728289/extracting-orthogonal-polynomial-coefficients-from-rs-poly-function&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.math.tamu.edu/~yvorobet/MATH304-503/Lect4-04web.pdf&#34; class=&#34;uri&#34;&gt;http://www.math.tamu.edu/~yvorobet/MATH304-503/Lect4-04web.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Trying Out FlexDashboard</title>
       <link>/post/trying-out-flexdashboard/</link>
       <pubDate>Mon, 20 Aug 2018 00:00:00 +0000</pubDate>
@@ -1248,54 +1361,6 @@ y &amp;amp;=&amp;amp; 1+1   \\\\\\
       
       <guid>/publication/person-re-identification/</guid>
       <description>&lt;p&gt;More detail can easily be written here using &lt;em&gt;Markdown&lt;/em&gt; and $\rm \LaTeX$ math code.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Hello R Markdown</title>
-      <link>/post/2015-07-23-r-rmarkdown/</link>
-      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
-      
-      <guid>/post/2015-07-23-r-rmarkdown/</guid>
-      <description>&lt;div id=&#34;r-markdown&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;R Markdown&lt;/h1&gt;
-&lt;p&gt;This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;a href=&#34;http://rmarkdown.rstudio.com&#34; class=&#34;uri&#34;&gt;http://rmarkdown.rstudio.com&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;You can embed an R code chunk like this:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(cars)
-##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00
-fit &amp;lt;- lm(dist ~ speed, data = cars)
-fit
-## 
-## Call:
-## lm(formula = dist ~ speed, data = cars)
-## 
-## Coefficients:
-## (Intercept)        speed  
-##     -17.579        3.932&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;including-plots&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Including Plots&lt;/h1&gt;
-&lt;p&gt;You can also embed plots. See Figure &lt;a href=&#34;#fig:pie&#34;&gt;1&lt;/a&gt; for example:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c(&amp;#39;Sky&amp;#39;, &amp;#39;Sunny side of pyramid&amp;#39;, &amp;#39;Shady side of pyramid&amp;#39;),
-  col = c(&amp;#39;#0292D8&amp;#39;, &amp;#39;#F7EA39&amp;#39;, &amp;#39;#C4B632&amp;#39;),
-  init.angle = -50, border = NA
-)&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&#34;figure&#34;&gt;&lt;span id=&#34;fig:pie&#34;&gt;&lt;/span&gt;
-&lt;img src=&#34;/dsollberger/blog/post/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png&#34; alt=&#34;A fancy pie chart.&#34; width=&#34;672&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;
-Figure 1: A fancy pie chart.
-&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
 </description>
     </item>
     

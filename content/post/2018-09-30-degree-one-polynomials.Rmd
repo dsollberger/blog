@@ -1,0 +1,123 @@
+---
+title: Degree-One Polynomials
+author: Derek Sollberger
+date: '2018-09-30'
+slug: degree-one-polynomials
+categories:
+  - R
+tags:
+  - regression
+header:
+  caption: ''
+  image: ''
+---
+
+## Problem
+
+The question that one of my teaching assistants posed was "What is the difference between `lm(y ~ x)` and `lm(y ~ (poly,1))` for linear regression in R?"  That is, it is quickly apparent that those commands produce different results, but for the same intention.  Here I will try to explore the underlying difference.
+
+Disclaimer:  I know that the following discussion is incomplete.  These are simply notes that I threw together overnight.
+
+## Exposition
+
+For a quick study, we can observe that the commands `lm(y ~ x)` and `lm(y ~ (poly,1))` produce different results:
+
+```{r}
+# 50 ordered pairs of random numbers
+x <- runif(50)
+y <- runif(50, -3, 3)
+
+# first linear model
+lm1 <- lm(y ~ x)
+
+# second linear model
+lm2 <- lm(y ~ poly(x, 1))
+
+# found coefficients
+lm1
+lm2
+
+# plot
+plot(x,y, main = "quick scatterplot and linear regression")
+points(mean(x), mean(y), col = "purple", pch = 8)
+abline(lm1, col = "red", lwd = 3)
+abline(lm2, col = "blue", lwd = 3)
+legend(0.5, 2, 
+       c("lm(y ~ x)", "lm(y ~ poly(x, 1))"),
+       col = c("red", "blue"),
+       lwd = c(3,3))
+```
+
+We observe that `lm(y ~ x)` goes though the sample means $(\bar{x}, \bar{y})$, while `lm(y ~ (poly,1))` does not.  Oddly enough, if we apply a metric such as the coefficient of determination ($R^{2}$), then the model metrics are the same!
+
+```{r}
+summary(lm1)$adj.r.squared
+summary(lm2)$adj.r.squared
+```
+
+## Orthogonal Polynomials
+
+Some searches on the web point toward how the `poly` command uses [othogonal polynomials](https://mathoverflow.net/questions/38864/visualizing-orthogonal-polynomials) by default.  That is, modeling with
+$$\hat{y} = a + bx + cx^{2} + ...$$
+is easy to interpret, higher degree terms will not add much to the predictive ability for our regression models (e.g. $x^7$ and $x^8$ are "too close" within some interval).  Side note: with the
+$${1, x, x^{2}, ...}$$
+basis, we learn that the [Vandermonde matrix](https://math.stackexchange.com/questions/2211054/condition-number-for-polynomial-interpolation-matrix) for this basis has a *high condition number* and calculations with this route are *ill-conditioned*.
+
+## Coefficients of Orthogonal Polynomials
+
+There has been a [lot of discussion](https://stackoverflow.com/questions/39031172/how-poly-generates-orthogonal-polynomials-how-to-understand-the-coefs-ret) about how `poly` works and its internal and recursive algorithm to produce a set of orthogonal polynomials over an interval of values.  Here I hope to produce a simple example where we can follow the numbers.
+
+```{r}
+x <- 1:5       # mean is 3
+y <- 15*x + 18 # line of slope 15 and y-intercept 18
+```
+
+Using the `lm` command quickly recovers the slope and intercept
+
+```{r}
+lm_raw <- lm(y ~ x)
+lm_raw
+```
+
+However, the route with orthogonal polynomials yields different coefficients.
+
+```{r}
+lm_orth <- lm(y ~ poly(x,1))
+lm_orth
+```
+
+We can [extract the coefficents](https://stackoverflow.com/questions/26728289/extracting-orthogonal-polynomial-coefficients-from-rs-poly-function) from the orthogonal polynomial route, along with some normalization factors.
+
+```{r}
+a <- attributes(poly(x,1))$coefs$alpha
+a
+n <- attributes(poly(x,1))$coefs$norm2
+n
+```
+
+## Building Orthogonal Polynomials
+
+There are several ways to build orthogonal polynomials, and here I will try out the [Gram-Schmidt process](http://www.math.tamu.edu/~yvorobet/MATH304-503/Lect4-04web.pdf).  For the base case,
+$$p_{0} := 1$$
+The degree-one term is
+$$p_{1}(x) = x - \frac{<x, p_{0}>}{<p_{0}, p_{0}>} = x - \frac{\int_{1}^{5} \! x \, dx}{\int_{1}^{5} \, dx} = x - 3$$
+
+Note that $p_{1}(x) = x - 3$ is centered at the mean $\bar{x} = 3$.
+
+Combining the coefficients found from `lm(y ~ poly(x,1))` and a normalization factor from above, we get
+
+$$\hat{y} = 63 + 47.43 \cdot \frac{x - 3}{\sqrt{10}}$$
+
+which is indeed $\hat{y} = 18 + 15x$ when simplified (up to rounding error, too much hand-waving, and a missing number).
+
+## Sources
+
+https://mathoverflow.net/questions/38864/visualizing-orthogonal-polynomials
+
+https://math.stackexchange.com/questions/2211054/condition-number-for-polynomial-interpolation-matrix
+
+https://stackoverflow.com/questions/39031172/how-poly-generates-orthogonal-polynomials-how-to-understand-the-coefs-ret
+
+https://stackoverflow.com/questions/26728289/extracting-orthogonal-polynomial-coefficients-from-rs-poly-function
+
+http://www.math.tamu.edu/~yvorobet/MATH304-503/Lect4-04web.pdf
