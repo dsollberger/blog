@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Supreme Court Confirmations (1967-present)</title>
+      <link>/post/supreme-court-confirmations-1967-present/</link>
+      <pubDate>Sun, 07 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/supreme-court-confirmations-1967-present/</guid>
+      <description>IntroductionFollowing up on Rachel Wellford’s tweet about Senate votes for Supreme Court confirmations, I decided to try to graph the data. Below, I have
+a ggplot picture with decent labelinga searchable datatablea plotly interactive graphThe data came from Senate.gov. I chose to focus on 1967 onward because it appeared that voting procedures were slightly different before Thurgood Marshall’s nomination process.</description>
+    </item>
+    
+    <item>
       <title>Degree-One Polynomials</title>
       <link>/post/degree-one-polynomials/</link>
       <pubDate>Sun, 30 Sep 2018 00:00:00 +0000</pubDate>
