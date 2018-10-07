@@ -1,0 +1,97 @@
+---
+title: Supreme Court Confirmations (1967-present)
+author: Derek Sollberger
+date: '2018-10-07'
+slug: supreme-court-confirmations-1967-present
+categories:
+  - politics
+tags:
+  - ggplot
+  - plotly
+header:
+  caption: ''
+  image: ''
+---
+
+### Introduction
+
+Following up on [Rachel Wellford's tweet](https://twitter.com/rachelwellford/status/1048308997219082240) about Senate votes for Supreme Court confirmations, I decided to try to graph the data.  Below, I have 
+
+* a `ggplot` picture with decent labeling
+* a searchable `datatable`
+* a `plotly` interactive graph
+
+The data came from [Senate.gov](https://www.senate.gov/pagelayout/reference/nominations/Nominations.htm).  I chose to focus on 1967 onward because it appeared that voting procedures were slightly different before Thurgood Marshall's nomination process.  Otherwise, I would have chosen to go back to when the Senate first had 100 members.
+
+```{r, message = FALSE, warning = FALSE}
+library("DT")
+library("ggplot2")
+library("ggrepel")
+library("plotly")
+library("readxl")
+scc <- read_excel("../../static/Supreme Court confirmations.xlsx")
+```
+
+### ggplot
+
+```{r}
+ggplot(scc, aes(x = Nay, y = Yea, label = Last)) +
+  geom_point() +
+  geom_text_repel() +
+  labs(x = "Nay votes", y = "Yea votes", 
+       title = "Supreme Court Confirmations (1967 to present)",
+       subtitle = "Marshall to Kavanaugh",
+       caption = "Source: Senate.gov") + 
+  xlim(c(-10, 60)) +
+  ylim(c(40, 110))
+```
+
+### Datatable
+
+```{r}
+DT::datatable(scc)
+```
+
+### Plotly
+
+Here is a slightly interactive graph built with a combination of `ggplot` and `plotly`:
+
+```{r}
+basemap <- ggplot(scc, aes(x = Nay, y = Yea, label = Last)) +
+  geom_point() +
+  geom_text(nudge_x = 5) + # geom_text_repel is not supported by Plotly yet
+  labs(x = "Nay votes", y = "Yea votes", 
+       title = "Supreme Court Confirmations (1967 to present)",
+       subtitle = "Marshall to Kavanaugh",
+       caption = "Source: Senate.gov") + 
+  xlim(c(-10, 60)) +
+  ylim(c(40, 110))
+ggplotly(basemap)
+```
+
+Here is a slightly interactive graph with readable labels:
+
+```{r}
+t <- list(
+  family = "sans serif",
+  size = 14,
+  color = toRGB("grey80"))
+
+plot_ly(scc, x = ~Nay, y = ~Yea, text = ~Nominee) %>%
+  add_markers() %>%
+  add_text(textfont = t, textposition = "top right")
+```
+
+Finally, here is a fully interactive graph, but the labels are not revealed until someone hovers their mouse cursor over the points:
+
+```{r}
+plot_ly(scc, x = ~Nay, y = ~Yea, type = 'scatter', mode = 'markers',
+        hoverinfo = 'text',
+        text = ~paste('<b>Nominee:</b> ', Nominee,
+                      '<br> Yea: ', Yea,
+                      '<br> Nay: ', Nay,
+                      '<br> Nominated: ', Nominated,
+                      '<br> Confirmed: ', Confirmed,
+                      '<br> President: ', President))
+```
+
