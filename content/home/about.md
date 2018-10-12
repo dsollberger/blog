@@ -35,4 +35,4 @@ weight = 5
 
 # Biography
 
-[TBD]
+When this shy teacher is not running from classes to committee meetings, Derek indulges in brief adventures with computer programming.  In his free time, Derek can be seen cooking culinary delights, destorying Zerg, climbing mountains, or falling asleep at math seminars.
