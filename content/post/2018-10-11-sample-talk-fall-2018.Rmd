@@ -1,0 +1,33 @@
+---
+title: SAMPLe talk (Fall 2018)
+author: Derek Sollberger
+date: '2018-10-11'
+slug: sample-talk-fall-2018
+categories:
+  - math
+tags:
+  - flexdashboard
+header:
+  caption: ''
+  image: ''
+---
+
+### ggplot2
+
+[http://rpubs.com/dsollberger/activelearning](http://rpubs.com/dsollberger/activelearning)
+
+### Plotly
+
+[http://rpubs.com/dsollberger/scc](http://rpubs.com/dsollberger/scc)
+
+### Shiny Dashboard
+
+[https://dsollberger.shinyapps.io/SHW3/](https://dsollberger.shinyapps.io/SHW3/)
+
+### Flex Dashboard
+
+[https://dsollberger.shinyapps.io/shw7/](https://dsollberger.shinyapps.io/shw7/)
+
+### Shiny and htmlwidgets
+
+[https://dsollberger.shinyapps.io/SAMPLe/](https://dsollberger.shinyapps.io/SAMPLe/)

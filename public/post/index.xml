@@ -13,6 +13,20 @@
     
     
     <item>
+      <title>SAMPLe talk (Fall 2018)</title>
+      <link>/post/sample-talk-fall-2018/</link>
+      <pubDate>Thu, 11 Oct 2018 00:00:00 +0000</pubDate>
+      
+      <guid>/post/sample-talk-fall-2018/</guid>
+      <description>ggplot2http://rpubs.com/dsollberger/activelearning
+Plotlyhttp://rpubs.com/dsollberger/scc
+Shiny Dashboardhttps://dsollberger.shinyapps.io/SHW3/
+Flex Dashboardhttps://dsollberger.shinyapps.io/shw7/
+Shiny and htmlwidgetshttps://dsollberger.shinyapps.io/SAMPLe/
+</description>
+    </item>
+    
+    <item>
       <title>Supreme Court Confirmations (1967-present)</title>
       <link>/post/supreme-court-confirmations-1967-present/</link>
       <pubDate>Sun, 07 Oct 2018 00:00:00 +0000</pubDate>

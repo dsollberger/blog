@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/sample-talk-fall-2018/</loc>
+      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/supreme-court-confirmations-1967-present/</loc>
       <lastmod>2018-10-07T00:00:00+00:00</lastmod>
     </url>
@@ -272,7 +281,7 @@
     <url>
     
       <loc>/tags/flexdashboard/</loc>
-      <lastmod>2018-08-20T00:00:00+00:00</lastmod>
+      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -313,6 +322,16 @@
     
       <loc>/tags/jekyll/</loc>
       <lastmod>2014-03-10T00:00:00-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/categories/math/</loc>
+      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -431,7 +450,7 @@
     
     <url>
     
-      <loc>/categories/teaching/</loc>
+      <loc>/tags/teaching/</loc>
       <lastmod>2018-08-01T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
@@ -441,7 +460,7 @@
     
     <url>
     
-      <loc>/tags/teaching/</loc>
+      <loc>/categories/teaching/</loc>
       <lastmod>2018-08-01T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
