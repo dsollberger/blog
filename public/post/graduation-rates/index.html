@@ -17,12 +17,12 @@
       
     
   
-  <meta name="description" content="Today, I hope to present a quick glimpse at the phenomenon called the “Curse of Dimensionality”. For this demonstration, I am simply calculating how much random data stays within two standard deviations (in the Euclidean norm) as we go from one dimension to higher dimensions.
-Random DataHere are 10 vectors of 100 random numbers each sampled from the standard normal distribution stored as a matrix …
-X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.">
+  <meta name="description" content="In this post, I want to run an example of absorbing states in stochastic processes. This example is based on Example 3.29 in Introduction to Stochastic Processes in R by Robert Dobrow.
+DataThe data I have assembled is based on IRDS reports from my own University of California at Merced.
+# weightsweights &lt;- c(20, 70, 0, 0, 10, 0, 0, 5, 89, 0, 6, 0, 0, 0, 3, 94, 3, 0, 0, 0, 0, 24, 1, 76, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100)sparse_weights &lt;- weights[weights &gt; 0]# transition matrix (row stochastic)P &lt;- matrix(weights, nrow = 6, byrow = TRUE)*0.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/curse-of-dimensionality/">
+  <link rel="alternate" hreflang="en-us" href="/post/graduation-rates/">
 
   
 
@@ -70,7 +70,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/post/curse-of-dimensionality/">
+  <link rel="canonical" href="/post/graduation-rates/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -78,11 +78,11 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.">
   <meta property="twitter:creator" content="@DerekSollberger">
   
   <meta property="og:site_name" content="The Median Data Scientist">
-  <meta property="og:url" content="/post/curse-of-dimensionality/">
-  <meta property="og:title" content="Curse of Dimensionality | The Median Data Scientist">
-  <meta property="og:description" content="Today, I hope to present a quick glimpse at the phenomenon called the “Curse of Dimensionality”. For this demonstration, I am simply calculating how much random data stays within two standard deviations (in the Euclidean norm) as we go from one dimension to higher dimensions.
-Random DataHere are 10 vectors of 100 random numbers each sampled from the standard normal distribution stored as a matrix …
-X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.">
+  <meta property="og:url" content="/post/graduation-rates/">
+  <meta property="og:title" content="Graduation Rates | The Median Data Scientist">
+  <meta property="og:description" content="In this post, I want to run an example of absorbing states in stochastic processes. This example is based on Example 3.29 in Introduction to Stochastic Processes in R by Robert Dobrow.
+DataThe data I have assembled is based on IRDS reports from my own University of California at Merced.
+# weightsweights &lt;- c(20, 70, 0, 0, 10, 0, 0, 5, 89, 0, 6, 0, 0, 0, 3, 94, 3, 0, 0, 0, 0, 24, 1, 76, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100)sparse_weights &lt;- weights[weights &gt; 0]# transition matrix (row stochastic)P &lt;- matrix(weights, nrow = 6, byrow = TRUE)*0.">
   <meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2019-01-08T00:00:00&#43;00:00">
@@ -92,7 +92,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.">
 
   
 
-  <title>Curse of Dimensionality | The Median Data Scientist</title>
+  <title>Graduation Rates | The Median Data Scientist</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
@@ -214,7 +214,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.">
 
   <div class="article-container">
     <div class="article-inner">
-      <h1 itemprop="name">Curse of Dimensionality</h1>
+      <h1 itemprop="name">Graduation Rates</h1>
 
       
 
@@ -233,7 +233,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.">
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    3 min read
+    2 min read
   </span>
   
 
@@ -247,7 +247,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.">
   <span class="article-categories">
     <i class="fa fa-folder"></i>
     
-    <a href="/categories/linear-algebra">linear algebra</a
+    <a href="/categories/stochastic-processes">stochastic processes</a
     >
     
   </span>
@@ -260,35 +260,35 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.">
   <ul class="share">
     <li>
       <a class="twitter"
-         href="https://twitter.com/intent/tweet?text=Curse%20of%20Dimensionality&amp;url=%2fpost%2fcurse-of-dimensionality%2f"
+         href="https://twitter.com/intent/tweet?text=Graduation%20Rates&amp;url=%2fpost%2fgraduation-rates%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-twitter"></i>
       </a>
     </li>
     <li>
       <a class="facebook"
-         href="https://www.facebook.com/sharer.php?u=%2fpost%2fcurse-of-dimensionality%2f"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fgraduation-rates%2f"
          target="_blank" rel="noopener">
         <i class="fa fa-facebook"></i>
       </a>
     </li>
     <li>
       <a class="linkedin"
-         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fcurse-of-dimensionality%2f&amp;title=Curse%20of%20Dimensionality"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fgraduation-rates%2f&amp;title=Graduation%20Rates"
          target="_blank" rel="noopener">
         <i class="fa fa-linkedin"></i>
       </a>
     </li>
     <li>
       <a class="weibo"
-         href="http://service.weibo.com/share/share.php?url=%2fpost%2fcurse-of-dimensionality%2f&amp;title=Curse%20of%20Dimensionality"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fgraduation-rates%2f&amp;title=Graduation%20Rates"
          target="_blank" rel="noopener">
         <i class="fa fa-weibo"></i>
       </a>
     </li>
     <li>
       <a class="email"
-         href="mailto:?subject=Curse%20of%20Dimensionality&amp;body=%2fpost%2fcurse-of-dimensionality%2f">
+         href="mailto:?subject=Graduation%20Rates&amp;body=%2fpost%2fgraduation-rates%2f">
         <i class="fa fa-envelope"></i>
       </a>
     </li>
@@ -302,92 +302,64 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.">
 
 
       <div class="article-style" itemprop="articleBody">
-        <p>Today, I hope to present a quick glimpse at the phenomenon called the “Curse of Dimensionality”. For this demonstration, I am simply calculating how much random data stays within two standard deviations (in the Euclidean norm) as we go from one dimension to higher dimensions.</p>
-<div id="random-data" class="section level3">
-<h3>Random Data</h3>
-<p>Here are 10 vectors of 100 random numbers each sampled from the standard normal distribution stored as a matrix …</p>
-<pre class="r"><code>X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)</code></pre>
-<p>… and as a data frame.</p>
-<pre class="r"><code>df &lt;- data.frame(X)
-head(df)</code></pre>
-<pre><code>##           X1          X2          X3          X4         X5         X6
-## 1  0.0256453  0.28398713  0.67057945  1.09584061  0.3824753  1.4061483
-## 2 -0.6176034 -0.40257645  1.13756561 -0.25761710 -0.1488482 -0.1959629
-## 3 -0.5235474 -0.68893524 -0.70737197  0.80125649  0.4926702 -1.9662689
-## 4 -0.3737617  0.06833939 -0.02937106 -0.60665832  0.2656111  1.2102051
-## 5 -0.9429225  0.05136859  1.89588703  0.30911255 -0.2143345 -0.2801334
-## 6  0.4515558 -0.31945406 -2.42236506  0.06607036  0.3371893 -0.3928504
-##             X7         X8          X9         X10
-## 1  0.671601688 -1.9165923 -0.81464512  0.01496321
-## 2 -0.005786507  0.2001263  1.59233921  0.53711798
-## 3 -0.712297275  0.8505601 -2.58287100  1.04165643
-## 4  0.892004771 -1.0628529  0.37102924  0.19434494
-## 5 -1.365184181  0.3970239  0.08127754  2.02421067
-## 6  0.746595767 -1.1335422 -0.54150029 -0.56877836</code></pre>
+        <p>In this post, I want to run an example of absorbing states in stochastic processes. This example is based on Example 3.29 in <em>Introduction to Stochastic Processes</em> in R by Robert Dobrow.</p>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>The data I have assembled is based on <a href="https://irds.ucmerced.edu/student-data">IRDS reports</a> from my own University of California at Merced.</p>
+<pre class="r"><code># weights
+weights &lt;- c(20, 70, 0, 0, 10, 0, 
+       0, 5, 89, 0, 6, 0, 
+       0, 0, 3, 94, 3, 0, 
+       0, 0, 0, 24, 1, 76, 
+       0, 0, 0, 0, 100, 0, 
+       0, 0, 0, 0, 0, 100)
+sparse_weights &lt;- weights[weights &gt; 0]
+
+# transition matrix (row stochastic)
+P &lt;- matrix(weights, nrow = 6, byrow = TRUE)*0.01
+
+# states
+rownames(P) &lt;- c(&quot;Freshman&quot;, &quot;Sophomore&quot;, &quot;Junior&quot;, &quot;Senior&quot;, &quot;Dropped&quot;, &quot;Graduated&quot;)
+colnames(P) &lt;- c(&quot;Freshman&quot;, &quot;Sophomore&quot;, &quot;Junior&quot;, &quot;Senior&quot;, &quot;Dropped&quot;, &quot;Graduated&quot;)
+P</code></pre>
+<pre><code>##           Freshman Sophomore Junior Senior Dropped Graduated
+## Freshman       0.2      0.70   0.00   0.00    0.10      0.00
+## Sophomore      0.0      0.05   0.89   0.00    0.06      0.00
+## Junior         0.0      0.00   0.03   0.94    0.03      0.00
+## Senior         0.0      0.00   0.00   0.24    0.01      0.76
+## Dropped        0.0      0.00   0.00   0.00    1.00      0.00
+## Graduated      0.0      0.00   0.00   0.00    0.00      1.00</code></pre>
+<p>This formulation assumes that about 10 percent of students drop after the first year, and about 24 percent of seniors continue to take classes into the fifth year or more.</p>
 </div>
-<div id="one-dimension" class="section level3">
-<h3>One Dimension</h3>
-<p>For normally distributed data, we expect that about 95% of data falls within two standard deviations.</p>
-<pre class="r"><code>x1 &lt;- X[,1]
-within2sd &lt;- abs(x1) &lt;= 2
-df1 &lt;- data.frame(x1, within2sd)
-mean(within2sd)</code></pre>
-<pre><code>## [1] 0.96</code></pre>
-<p>In this example, 96 percent of the data in the first vector is within two standard deviations of the mean.</p>
-<pre class="r"><code>library(tidyverse)
-df1 %&gt;% 
-  ggplot(aes(x = x1, , y = 0, color = within2sd)) +
-  geom_point() + 
-  labs(title = &quot;One Dimension of Normal Distribution Data&quot;)</code></pre>
-<p><img src="/post/2019-01-08-curse-of-dimensionality_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<div id="network-graph" class="section level1">
+<h1>Network Graph</h1>
+<pre class="r"><code>library(igraph)
+network &lt;- graph_from_adjacency_matrix(P, mode = &quot;directed&quot;, weighted = TRUE)
+plot(network,
+     edge.arrow.size = 0.5,
+     edge.color = &quot;#D4AE00&quot;,
+     edge.label = sparse_weights,
+     layout = layout_in_circle(network))</code></pre>
+<p><img src="/post/2019-01-08-graduation-rates_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
-<div id="two-dimensions" class="section level3">
-<h3>Two Dimensions</h3>
-<p>However, when we go into two or more dimensions, the colloquial “95%” expection starts to fade. To aid calculations, the <code>row_norms</code> function in the <code>slam</code> package uses the Euclidean norm by default. To aid visualization, we will use a helper function (found on Stack Overflow at <a href="https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2" class="uri">https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2</a>) to draw one circle.</p>
-<pre class="r"><code>library(slam)
-within2sd &lt;- row_norms(X[,1:2]) &lt;= 2
+<div id="absorbing-states" class="section level1">
+<h1>Absorbing States</h1>
+<pre class="r"><code># canonical form
+Q &lt;- P[1:4, 1:4]
+R &lt;- P[1:4, 5:6]
 
-gg_circle &lt;- function(r = 1, xc = 0, yc = 0, color=&quot;black&quot;, fill=NA, ...) {
-    x &lt;- xc + r*cos(seq(0, pi, length.out=100))
-    ymax &lt;- yc + r*sin(seq(0, pi, length.out=100))
-    ymin &lt;- yc + r*sin(seq(0, -pi, length.out=100))
-    annotate(&quot;ribbon&quot;, x=x, ymin=ymin, ymax=ymax, color=color, fill=fill, ...)
-}
+# fundamental matrix (inverse of (I - Q))
+fundamental_matrix &lt;- solve(diag(4) - Q)
 
-df2 &lt;- data.frame(X[,1:2], within2sd)
-df2 %&gt;%
-  ggplot(aes(x = X1, y = X2, color = within2sd)) +
-  geom_point() + 
-  gg_circle(r = 2, color = &quot;red&quot;) +
-  coord_fixed() + 
-  labs(title = &quot;Two Dimensions of Normal Distribution Data&quot;)</code></pre>
-<p><img src="/post/2019-01-08-curse-of-dimensionality_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<pre class="r"><code>mean(within2sd)</code></pre>
-<pre><code>## [1] 0.88</code></pre>
-<p>In this example, 88 percent of the data in the first 2 vectors is within two standard deviations of the mean.</p>
-</div>
-<div id="higher-dimensions" class="section level3">
-<h3>Higher Dimensions</h3>
-<p>Plotting scatterplots in higher dimensions is much more complicated, but we can still perform the <code>norm</code> calculations pretty quickly.</p>
-<pre class="r"><code>N &lt;- 10 #total number of dimensions
-within2sd &lt;- rep(0, N) #initialization
-
-# one dimension
-within2sd[1] &lt;- mean(abs(x1) &lt;= 2)
-
-# higher dimensions
-for(d in 2:N){
-  within2sd[d] &lt;- mean(row_norms(X[,1:d]) &lt;= 2)
-}
-
-# plot
-dimensions &lt;- 1:N
-df &lt;- data.frame(dimensions, within2sd)
-df %&gt;%
-  ggplot(aes(x = dimensions, y = within2sd)) +
-  geom_bar(stat = &quot;identity&quot;, fill = &quot;blue&quot;) +
-  scale_x_continuous(&quot;Dimensions&quot;, breaks = 1:N)</code></pre>
-<p><img src="/post/2019-01-08-curse-of-dimensionality_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+# absorption
+absorption &lt;- fundamental_matrix %*% R
+absorption</code></pre>
+<pre><code>##              Dropped Graduated
+## Freshman  0.21606827 0.7943842
+## Sophomore 0.10407802 0.9078676
+## Junior    0.04367878 0.9690722
+## Senior    0.01315789 1.0000000</code></pre>
+<p>This model predicts that, starting with incoming students, about 79 percent of those students will eventually graduate while about 21 percent will eventually drop from UC Merced enrollment.</p>
 </div>
 
       </div>
@@ -415,7 +387,7 @@ df %&gt;%
   <h3>Related</h3>
   <ul>
     
-    <li><a href="/post/graduation-rates/">Graduation Rates</a></li>
+    <li><a href="/post/curse-of-dimensionality/">Curse of Dimensionality</a></li>
     
   </ul>
 </div>

@@ -1,0 +1,70 @@
+---
+title: Graduation Rates
+author: Derek Sollberger
+date: '2019-01-08'
+slug: graduation-rates
+categories:
+  - stochastic processes
+tags:
+  - math
+header:
+  caption: ''
+  image: ''
+---
+
+In this post, I want to run an example of absorbing states in stochastic processes.  This example is based on Example 3.29 in *Introduction to Stochastic Processes* in R by Robert Dobrow.
+
+# Data
+
+The data I have assembled is based on [IRDS reports](https://irds.ucmerced.edu/student-data) from my own University of California at Merced.
+
+```{r}
+# weights
+weights <- c(20, 70, 0, 0, 10, 0, 
+       0, 5, 89, 0, 6, 0, 
+       0, 0, 3, 94, 3, 0, 
+       0, 0, 0, 24, 1, 76, 
+       0, 0, 0, 0, 100, 0, 
+       0, 0, 0, 0, 0, 100)
+sparse_weights <- weights[weights > 0]
+
+# transition matrix (row stochastic)
+P <- matrix(weights, nrow = 6, byrow = TRUE)*0.01
+
+# states
+rownames(P) <- c("Freshman", "Sophomore", "Junior", "Senior", "Dropped", "Graduated")
+colnames(P) <- c("Freshman", "Sophomore", "Junior", "Senior", "Dropped", "Graduated")
+P
+```
+
+This formulation assumes that about 10 percent of students drop after the first year, and about 24 percent of seniors continue to take classes into the fifth year or more.
+
+# Network Graph
+
+```{r, message = FALSE, warning = FALSE}
+library(igraph)
+network <- graph_from_adjacency_matrix(P, mode = "directed", weighted = TRUE)
+plot(network,
+     edge.arrow.size = 0.5,
+     edge.color = "#D4AE00",
+     edge.label = sparse_weights,
+     layout = layout_in_circle(network))
+```
+
+
+# Absorbing States
+
+```{r}
+# canonical form
+Q <- P[1:4, 1:4]
+R <- P[1:4, 5:6]
+
+# fundamental matrix (inverse of (I - Q))
+fundamental_matrix <- solve(diag(4) - Q)
+
+# absorption
+absorption <- fundamental_matrix %*% R
+absorption
+```
+
+This model predicts that, starting with incoming students, about 79 percent of those students will eventually graduate while about 21 percent will eventually drop from UC Merced enrollment.

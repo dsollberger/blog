@@ -472,6 +472,87 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
   
   
   <h3 class="article-title" itemprop="headline">
+    <a href="/post/graduation-rates/" itemprop="url">Graduation Rates</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2019-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jan 8, 2019
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/stochastic-processes">stochastic processes</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    In this post, I want to run an example of absorbing states in stochastic processes. This example is based on Example 3.29 in Introduction to Stochastic Processes in R by Robert Dobrow.
+DataThe data I have assembled is based on IRDS reports from my own University of California at Merced.
+# weightsweights &lt;- c(20, 70, 0, 0, 10, 0, 0, 5, 89, 0, 6, 0, 0, 0, 3, 94, 3, 0, 0, 0, 0, 24, 1, 76, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100)sparse_weights &lt;- weights[weights &gt; 0]# transition matrix (row stochastic)P &lt;- matrix(weights, nrow = 6, byrow = TRUE)*0.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/graduation-rates/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+      
+
+      
+
+        
+
+        
+        
+
+        
+        
+          
+      
+
+      
+      
+        
+        
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
     <a href="/post/my-first-gganimate-plot/" itemprop="url">My First gganimate Plot</a>
   </h3>
   
@@ -714,86 +795,6 @@ N &lt;- 100 # number of dotsT &lt;- 20 # number of iterationsnode_names &lt;- 
       
 
       
-
-        
-
-        
-        
-
-        
-        
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/degree-one-polynomials/" itemprop="url">Degree-One Polynomials</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2018-09-30 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Sep 30, 2018
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/r">R</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    ProblemThe question that one of my teaching assistants posed was “What is the difference between lm(y ~ x) and lm(y ~ (poly,1)) for linear regression in R?” That is, it is quickly apparent that those commands produce different results, but for the same intention. Here I will try to explore the underlying difference.
-Disclaimer: I know that the following discussion is incomplete. These are simply notes that I threw together overnight.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/degree-one-polynomials/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
     
 
   </div>
@@ -944,7 +945,7 @@ Disclaimer: I know that the following discussion is incomplete. These are simply
           
           
           
-          <a href="/tags/math" style="font-size:0.8rem">math</a>
+          <a href="/tags/math" style="font-size:1.5321501487247682rem">math</a>
         
           
           

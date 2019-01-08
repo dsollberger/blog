@@ -223,6 +223,27 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)
     </div>
   </div>
   
+  <div>
+    <h2><a href="/post/graduation-rates/">Graduation Rates</a></h2>
+    <div class="article-style">
+      
+      <p>In this post, I want to run an example of absorbing states in stochastic processes. This example is based on Example 3.29 in Introduction to Stochastic Processes in R by Robert Dobrow.
+Data
+The data I have assembled is based on IRDS reports from my own University of California at Merced.</p>
+
+<h1 id="weights">weights</h1>
+
+<p>weights &lt;- c(20, 70, 0, 0, 10, 0, 0, 5, 89, 0, 6, 0, 0, 0, 3, 94, 3, 0, 0, 0, 0, 24, 1, 76, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100)
+sparse_weights &lt;- weights[weights &gt; 0]</p>
+
+<h1 id="transition-matrix-row-stochastic">transition matrix (row stochastic)</h1>
+
+<p>P &lt;- matrix(weights, nrow = 6, byrow = TRUE)*0.</p>
+
+      
+    </div>
+  </div>
+  
 
   
 

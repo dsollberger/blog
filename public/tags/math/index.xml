@@ -23,5 +23,16 @@ Random DataHere are 10 vectors of 100 random numbers each sampled from the stan
 X &amp;lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.</description>
     </item>
     
+    <item>
+      <title>Graduation Rates</title>
+      <link>/post/graduation-rates/</link>
+      <pubDate>Tue, 08 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/graduation-rates/</guid>
+      <description>In this post, I want to run an example of absorbing states in stochastic processes. This example is based on Example 3.29 in Introduction to Stochastic Processes in R by Robert Dobrow.
+DataThe data I have assembled is based on IRDS reports from my own University of California at Merced.
+# weightsweights &amp;lt;- c(20, 70, 0, 0, 10, 0, 0, 5, 89, 0, 6, 0, 0, 0, 3, 94, 3, 0, 0, 0, 0, 24, 1, 76, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100)sparse_weights &amp;lt;- weights[weights &amp;gt; 0]# transition matrix (row stochastic)P &amp;lt;- matrix(weights, nrow = 6, byrow = TRUE)*0.</description>
+    </item>
+    
   </channel>
 </rss>

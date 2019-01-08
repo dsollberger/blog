@@ -274,6 +274,72 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
   
   
   <h3 class="article-title" itemprop="headline">
+    <a href="/post/graduation-rates/" itemprop="url">Graduation Rates</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2019-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jan 8, 2019
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/stochastic-processes">stochastic processes</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    In this post, I want to run an example of absorbing states in stochastic processes. This example is based on Example 3.29 in Introduction to Stochastic Processes in R by Robert Dobrow.
+DataThe data I have assembled is based on IRDS reports from my own University of California at Merced.
+# weightsweights &lt;- c(20, 70, 0, 0, 10, 0, 0, 5, 89, 0, 6, 0, 0, 0, 3, 94, 3, 0, 0, 0, 0, 24, 1, 76, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100)sparse_weights &lt;- weights[weights &gt; 0]# transition matrix (row stochastic)P &lt;- matrix(weights, nrow = 6, byrow = TRUE)*0.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/graduation-rates/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
     <a href="/post/my-first-gganimate-plot/" itemprop="url">My First gganimate Plot</a>
   </h3>
   
@@ -802,72 +868,6 @@ semester_dates &lt;- seq(as.
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/let-s-see-if-i-can-make-posts-mostly-through-rstudio/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/trying-out-github-pages-with-blogdown/" itemprop="url">Trying out GitHub Pages with Blogdown</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2018-01-11 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jan 11, 2018
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/science-communication">science communication</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    <p>Today I am trying to get a <code>blogdown</code> site to work with GitHub pages, but I cannot seem to get the posts to link correctly with relative links.</p>
-<p>Well, I hope to delete the pre-included widgets for now since I do not have publications.</p>
-
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/trying-out-github-pages-with-blogdown/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>
