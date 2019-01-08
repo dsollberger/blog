@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/curse-of-dimensionality/</loc>
+      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/sample-talk-fall-2018/</loc>
       <lastmod>2018-10-11T00:00:00+00:00</lastmod>
     </url>
@@ -322,6 +331,26 @@
     
       <loc>/tags/jekyll/</loc>
       <lastmod>2014-03-10T00:00:00-07:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/categories/linear-algebra/</loc>
+      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/tags/math/</loc>
+      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

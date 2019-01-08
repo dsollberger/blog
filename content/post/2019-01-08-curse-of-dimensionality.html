@@ -1,0 +1,103 @@
+---
+title: Curse of Dimensionality
+author: Derek Sollberger
+date: '2019-01-08'
+slug: curse-of-dimensionality
+categories:
+  - linear algebra
+tags:
+  - math
+header:
+  caption: ''
+  image: ''
+---
+
+
+
+<p>Today, I hope to present a quick glimpse at the phenomenon called the “Curse of Dimensionality”. For this demonstration, I am simply calculating how much random data stays within two standard deviations (in the Euclidean norm) as we go from one dimension to higher dimensions.</p>
+<div id="random-data" class="section level3">
+<h3>Random Data</h3>
+<p>Here are 10 vectors of 100 random numbers each sampled from the standard normal distribution stored as a matrix …</p>
+<pre class="r"><code>X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)</code></pre>
+<p>… and as a data frame.</p>
+<pre class="r"><code>df &lt;- data.frame(X)
+head(df)</code></pre>
+<pre><code>##           X1          X2          X3          X4         X5         X6
+## 1  0.0256453  0.28398713  0.67057945  1.09584061  0.3824753  1.4061483
+## 2 -0.6176034 -0.40257645  1.13756561 -0.25761710 -0.1488482 -0.1959629
+## 3 -0.5235474 -0.68893524 -0.70737197  0.80125649  0.4926702 -1.9662689
+## 4 -0.3737617  0.06833939 -0.02937106 -0.60665832  0.2656111  1.2102051
+## 5 -0.9429225  0.05136859  1.89588703  0.30911255 -0.2143345 -0.2801334
+## 6  0.4515558 -0.31945406 -2.42236506  0.06607036  0.3371893 -0.3928504
+##             X7         X8          X9         X10
+## 1  0.671601688 -1.9165923 -0.81464512  0.01496321
+## 2 -0.005786507  0.2001263  1.59233921  0.53711798
+## 3 -0.712297275  0.8505601 -2.58287100  1.04165643
+## 4  0.892004771 -1.0628529  0.37102924  0.19434494
+## 5 -1.365184181  0.3970239  0.08127754  2.02421067
+## 6  0.746595767 -1.1335422 -0.54150029 -0.56877836</code></pre>
+</div>
+<div id="one-dimension" class="section level3">
+<h3>One Dimension</h3>
+<p>For normally distributed data, we expect that about 95% of data falls within two standard deviations.</p>
+<pre class="r"><code>x1 &lt;- X[,1]
+within2sd &lt;- abs(x1) &lt;= 2
+df1 &lt;- data.frame(x1, within2sd)
+mean(within2sd)</code></pre>
+<pre><code>## [1] 0.96</code></pre>
+<p>In this example, 96 percent of the data in the first vector is within two standard deviations of the mean.</p>
+<pre class="r"><code>library(tidyverse)
+df1 %&gt;% 
+  ggplot(aes(x = x1, , y = 0, color = within2sd)) +
+  geom_point() + 
+  labs(title = &quot;One Dimension of Normal Distribution Data&quot;)</code></pre>
+<p><img src="/post/2019-01-08-curse-of-dimensionality_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="two-dimensions" class="section level3">
+<h3>Two Dimensions</h3>
+<p>However, when we go into two or more dimensions, the colloquial “95%” expection starts to fade. To aid calculations, the <code>row_norms</code> function in the <code>slam</code> package uses the Euclidean norm by default. To aid visualization, we will use a helper function (found on Stack Overflow at <a href="https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2" class="uri">https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2</a>) to draw one circle.</p>
+<pre class="r"><code>library(slam)
+within2sd &lt;- row_norms(X[,1:2]) &lt;= 2
+
+gg_circle &lt;- function(r = 1, xc = 0, yc = 0, color=&quot;black&quot;, fill=NA, ...) {
+    x &lt;- xc + r*cos(seq(0, pi, length.out=100))
+    ymax &lt;- yc + r*sin(seq(0, pi, length.out=100))
+    ymin &lt;- yc + r*sin(seq(0, -pi, length.out=100))
+    annotate(&quot;ribbon&quot;, x=x, ymin=ymin, ymax=ymax, color=color, fill=fill, ...)
+}
+
+df2 &lt;- data.frame(X[,1:2], within2sd)
+df2 %&gt;%
+  ggplot(aes(x = X1, y = X2, color = within2sd)) +
+  geom_point() + 
+  gg_circle(r = 2, color = &quot;red&quot;) +
+  coord_fixed() + 
+  labs(title = &quot;Two Dimensions of Normal Distribution Data&quot;)</code></pre>
+<p><img src="/post/2019-01-08-curse-of-dimensionality_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>mean(within2sd)</code></pre>
+<pre><code>## [1] 0.88</code></pre>
+<p>In this example, 88 percent of the data in the first 2 vectors is within two standard deviations of the mean.</p>
+</div>
+<div id="higher-dimensions" class="section level3">
+<h3>Higher Dimensions</h3>
+<p>Plotting scatterplots in higher dimensions is much more complicated, but we can still perform the <code>norm</code> calculations pretty quickly.</p>
+<pre class="r"><code>N &lt;- 10 #total number of dimensions
+within2sd &lt;- rep(0, N) #initialization
+
+# one dimension
+within2sd[1] &lt;- mean(abs(x1) &lt;= 2)
+
+# higher dimensions
+for(d in 2:N){
+  within2sd[d] &lt;- mean(row_norms(X[,1:d]) &lt;= 2)
+}
+
+# plot
+dimensions &lt;- 1:N
+df &lt;- data.frame(dimensions, within2sd)
+df %&gt;%
+  ggplot(aes(x = dimensions, y = within2sd)) +
+  geom_bar(stat = &quot;identity&quot;, fill = &quot;blue&quot;) +
+  scale_x_continuous(&quot;Dimensions&quot;, breaks = 1:N)</code></pre>
+<p><img src="/post/2019-01-08-curse-of-dimensionality_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>

@@ -13,6 +13,17 @@
     
     
     <item>
+      <title>Curse of Dimensionality</title>
+      <link>/post/curse-of-dimensionality/</link>
+      <pubDate>Tue, 08 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/curse-of-dimensionality/</guid>
+      <description>Today, I hope to present a quick glimpse at the phenomenon called the “Curse of Dimensionality”. For this demonstration, I am simply calculating how much random data stays within two standard deviations (in the Euclidean norm) as we go from one dimension to higher dimensions.
+Random DataHere are 10 vectors of 100 random numbers each sampled from the standard normal distribution stored as a matrix …
+X &amp;lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.</description>
+    </item>
+    
+    <item>
       <title>SAMPLe talk (Fall 2018)</title>
       <link>/post/sample-talk-fall-2018/</link>
       <pubDate>Thu, 11 Oct 2018 00:00:00 +0000</pubDate>
