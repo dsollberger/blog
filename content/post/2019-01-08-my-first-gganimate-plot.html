@@ -1,0 +1,63 @@
+---
+title: My First gganimate Plot
+author: Derek Sollberger
+date: '2019-01-08'
+slug: my-first-gganimate-plot
+categories:
+  - stochastic processes
+tags:
+  - gganimate
+header:
+  caption: ''
+  image: ''
+---
+
+
+
+<p>Today I finally read a <a href="https://gganimate.com/articles/gganimate.html">tutorial</a> on <code>gganimate</code>, and here I will build my first example. My hope is to eventually simulate traversal on a directed graph.</p>
+<pre class="r"><code>library(tidyverse)
+library(gganimate)</code></pre>
+<div id="create-node-data" class="section level1">
+<h1>Create Node Data</h1>
+<p>For this example, I will have 3 nodes (located at 3 vertices of a triangle), 100 dots distributed among the nodes, and a new placement over 21 states in time.</p>
+<pre class="r"><code>N &lt;- 100 # number of dots
+T &lt;- 20 # number of iterations
+
+node_names &lt;- c(&quot;Node 1&quot;, &quot;Node 2&quot;, &quot;Node 3&quot;)
+iter &lt;- rep(0, N)
+node &lt;- rep(&quot;Node 1&quot;, N)
+x &lt;- 10 + rnorm(N, 0, 2)
+y &lt;- 20 + rnorm(N, 0, 2)
+states &lt;- data.frame(iter, node, x, y)
+
+for(t in 1:T){
+  iter &lt;- rep(t, N)
+  node &lt;- sample(node_names, N, replace = TRUE)
+  x &lt;- case_when(
+    node == &quot;Node 1&quot; ~ 10 + rnorm(N, 0, 2),
+    node == &quot;Node 2&quot; ~ 20 + rnorm(N, 0, 2),
+    TRUE             ~ 30 + rnorm(N, 0, 2)
+  )
+  y &lt;- case_when(
+    node == &quot;Node 1&quot; ~ 20 + rnorm(N, 0, 2),
+    node == &quot;Node 2&quot; ~ 30 + rnorm(N, 0, 2),
+    TRUE             ~ 10 + rnorm(N, 0, 2)
+  )
+  this_state &lt;- data.frame(iter, node, x, y)
+  
+  states &lt;- rbind(states, this_state)
+}</code></pre>
+</div>
+<div id="plot-network" class="section level1">
+<h1>Plot Network</h1>
+<p>Having made a new set of data at each state, the main tool is to use <code>transition_states</code> over the iterations.</p>
+<pre class="r"><code>states %&gt;% 
+  ggplot(aes(x = x, y = y)) +
+  geom_point(aes(color = node), alpha = 0.33) +
+  labs(title = &quot;Draft of Network Animation&quot;,
+       subtitle = &quot;Iteration: {closest_state} of 20&quot;,
+       caption = &quot;Simulation of random placement&quot;) +
+  theme_minimal() +
+  transition_states(iter, transition_length = 1, state_length = 1)</code></pre>
+<p><img src="/post/2019-01-08-my-first-gganimate-plot_files/figure-html/unnamed-chunk-3-1.gif" /><!-- --></p>
+</div>

@@ -18,7 +18,7 @@
   <meta name="description" content="Continuing Lecturer of Applied Mathematics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/categories/">
+  <link rel="alternate" hreflang="en-us" href="/tags/gganimate/">
 
   
 
@@ -58,15 +58,15 @@
   
 
   
-  <link rel="alternate" href="/categories/index.xml" type="application/rss+xml" title="The Median Data Scientist">
-  <link rel="feed" href="/categories/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="alternate" href="/tags/gganimate/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="feed" href="/tags/gganimate/index.xml" type="application/rss+xml" title="The Median Data Scientist">
   
 
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/categories/">
+  <link rel="canonical" href="/tags/gganimate/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -74,17 +74,17 @@
   <meta property="twitter:creator" content="@DerekSollberger">
   
   <meta property="og:site_name" content="The Median Data Scientist">
-  <meta property="og:url" content="/categories/">
-  <meta property="og:title" content="Categories | The Median Data Scientist">
+  <meta property="og:url" content="/tags/gganimate/">
+  <meta property="og:title" content="Gganimate | The Median Data Scientist">
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  
-  
-
+  <meta property="og:updated_time" content="2019-01-08T00:00:00&#43;00:00">
   
 
-  <title>Categories | The Median Data Scientist</title>
+  
+
+  <title>Gganimate | The Median Data Scientist</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
@@ -204,64 +204,29 @@
 
 <div class="universal-wrapper">
 
-  <h1>Categories</h1>
+  <h1>Gganimate</h1>
 
   
 
   
   
   <div>
-    <h2><a href="/categories/linear-algebra/">Linear algebra</a></h2>
+    <h2><a href="/post/my-first-gganimate-plot/">My First gganimate Plot</a></h2>
     <div class="article-style">
       
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/math/">Math</a></h2>
-    <div class="article-style">
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/politics/">Politics</a></h2>
-    <div class="article-style">
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/r/">R</a></h2>
-    <div class="article-style">
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/reporting/">Reporting</a></h2>
-    <div class="article-style">
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/science-communication/">Science communication</a></h2>
-    <div class="article-style">
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/stochastic-processes/">Stochastic processes</a></h2>
-    <div class="article-style">
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/teaching/">Teaching</a></h2>
-    <div class="article-style">
+      Today I finally read a tutorial on gganimate, and here I will build my first example. My hope is to eventually simulate traversal on a directed graph.
+library(tidyverse)
+library(gganimate)
+Create Node Data
+For this example, I will have 3 nodes (located at 3 vertices of a triangle), 100 dots distributed among the nodes, and a new placement over 21 states in time.
+N &lt;- 100 # number of dots
+T &lt;- 20 # number of iterations
+node_names &lt;- c(&quot;Node 1&quot;, &quot;Node 2&quot;, &quot;Node 3&quot;)
+iter &lt;- rep(0, N)
+node &lt;- rep(&quot;Node 1&quot;, N)
+x &lt;- 10 + rnorm(N, 0, 2)
+y &lt;- 20 + rnorm(N, 0, 2)
+states &lt;- data.
       
     </div>
   </div>

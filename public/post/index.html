@@ -274,6 +274,72 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
   
   
   <h3 class="article-title" itemprop="headline">
+    <a href="/post/my-first-gganimate-plot/" itemprop="url">My First gganimate Plot</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2019-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jan 8, 2019
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/stochastic-processes">stochastic processes</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    Today I finally read a tutorial on gganimate, and here I will build my first example. My hope is to eventually simulate traversal on a directed graph.
+library(tidyverse)library(gganimate)Create Node DataFor this example, I will have 3 nodes (located at 3 vertices of a triangle), 100 dots distributed among the nodes, and a new placement over 21 states in time.
+N &lt;- 100 # number of dotsT &lt;- 20 # number of iterationsnode_names &lt;- c(&quot;Node 1&quot;, &quot;Node 2&quot;, &quot;Node 3&quot;)iter &lt;- rep(0, N)node &lt;- rep(&quot;Node 1&quot;, N)x &lt;- 10 + rnorm(N, 0, 2)y &lt;- 20 + rnorm(N, 0, 2)states &lt;- data.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/my-first-gganimate-plot/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
     <a href="/post/sample-talk-fall-2018/" itemprop="url">SAMPLe talk (Fall 2018)</a>
   </h3>
   
@@ -802,64 +868,6 @@ semester_dates &lt;- seq(as.
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/trying-out-github-pages-with-blogdown/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <a href="/post/getting-started/">
-    <img src="/img/headers/getting-started.png" class="article-banner" itemprop="image">
-  </a>
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/getting-started/" itemprop="url">Getting started with the Academic framework for Hugo</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-        Last updated on
-    
-    <time datetime="2016-04-20 00:00:00 -0700 PDT" itemprop="datePublished dateModified">
-      Sep 3, 2017
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    8 min read
-  </span>
-  
-
-  
-  
-
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    <p>Create a beautifully simple personal or academic website in under 10 minutes.</p>
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/getting-started/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>

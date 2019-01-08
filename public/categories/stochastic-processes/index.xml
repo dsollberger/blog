@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Stochastic processes on The Median Data Scientist</title>
+    <link>/categories/stochastic-processes/</link>
+    <description>Recent content in Stochastic processes on The Median Data Scientist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Tue, 08 Jan 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/stochastic-processes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>My First gganimate Plot</title>
+      <link>/post/my-first-gganimate-plot/</link>
+      <pubDate>Tue, 08 Jan 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/my-first-gganimate-plot/</guid>
+      <description>Today I finally read a tutorial on gganimate, and here I will build my first example. My hope is to eventually simulate traversal on a directed graph.
+library(tidyverse)library(gganimate)Create Node DataFor this example, I will have 3 nodes (located at 3 vertices of a triangle), 100 dots distributed among the nodes, and a new placement over 21 states in time.
+N &amp;lt;- 100 # number of dotsT &amp;lt;- 20 # number of iterationsnode_names &amp;lt;- c(&amp;quot;Node 1&amp;quot;, &amp;quot;Node 2&amp;quot;, &amp;quot;Node 3&amp;quot;)iter &amp;lt;- rep(0, N)node &amp;lt;- rep(&amp;quot;Node 1&amp;quot;, N)x &amp;lt;- 10 + rnorm(N, 0, 2)y &amp;lt;- 20 + rnorm(N, 0, 2)states &amp;lt;- data.</description>
+    </item>
+    
+  </channel>
+</rss>

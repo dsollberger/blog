@@ -1,0 +1,69 @@
+---
+title: My First gganimate Plot
+author: Derek Sollberger
+date: '2019-01-08'
+slug: my-first-gganimate-plot
+categories:
+  - stochastic processes
+tags:
+  - gganimate
+header:
+  caption: ''
+  image: ''
+---
+
+Today I finally read a [tutorial](https://gganimate.com/articles/gganimate.html) on `gganimate`, and here I will build my first example.  My hope is to eventually simulate traversal on a directed graph.
+
+```{r, message = FALSE, warning = FALSE}
+library(tidyverse)
+library(gganimate)
+```
+
+# Create Node Data
+
+For this example, I will have 3 nodes (located at 3 vertices of a triangle), 100 dots distributed among the nodes, and a new placement over 21 states in time.
+
+```{r}
+N <- 100 # number of dots
+T <- 20 # number of iterations
+
+node_names <- c("Node 1", "Node 2", "Node 3")
+iter <- rep(0, N)
+node <- rep("Node 1", N)
+x <- 10 + rnorm(N, 0, 2)
+y <- 20 + rnorm(N, 0, 2)
+states <- data.frame(iter, node, x, y)
+
+for(t in 1:T){
+  iter <- rep(t, N)
+  node <- sample(node_names, N, replace = TRUE)
+  x <- case_when(
+    node == "Node 1" ~ 10 + rnorm(N, 0, 2),
+    node == "Node 2" ~ 20 + rnorm(N, 0, 2),
+    TRUE             ~ 30 + rnorm(N, 0, 2)
+  )
+  y <- case_when(
+    node == "Node 1" ~ 20 + rnorm(N, 0, 2),
+    node == "Node 2" ~ 30 + rnorm(N, 0, 2),
+    TRUE             ~ 10 + rnorm(N, 0, 2)
+  )
+  this_state <- data.frame(iter, node, x, y)
+  
+  states <- rbind(states, this_state)
+}
+```
+
+# Plot Network
+
+Having made a new set of data at each state, the main tool is to use `transition_states` over the iterations.
+
+```{r}
+states %>% 
+  ggplot(aes(x = x, y = y)) +
+  geom_point(aes(color = node), alpha = 0.33) +
+  labs(title = "Draft of Network Animation",
+       subtitle = "Iteration: {closest_state} of 20",
+       caption = "Simulation of random placement") +
+  theme_minimal() +
+  transition_states(iter, transition_length = 1, state_length = 1)
+```
