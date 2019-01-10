@@ -353,12 +353,12 @@ fundamental_matrix &lt;- solve(diag(4) - Q)
 
 # absorption
 absorption &lt;- fundamental_matrix %*% R
-absorption</code></pre>
-<pre><code>##              Dropped Graduated
-## Freshman  0.21606827 0.7943842
-## Sophomore 0.10407802 0.9078676
-## Junior    0.04367878 0.9690722
-## Senior    0.01315789 1.0000000</code></pre>
+round(100*absorption)</code></pre>
+<pre><code>##           Dropped Graduated
+## Freshman       22        79
+## Sophomore      10        91
+## Junior          4        97
+## Senior          1       100</code></pre>
 <p>This model predicts that, starting with incoming students, about 79 percent of those students will eventually graduate while about 21 percent will eventually drop from UC Merced enrollment.</p>
 </div>
 

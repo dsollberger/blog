@@ -79,7 +79,7 @@
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2019-01-08T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2019-01-10T00:00:00&#43;00:00">
   
 
   
@@ -209,6 +209,44 @@
   
 
   
+  
+  <div>
+    <h2><a href="/post/gganatogram-and-gganimate/">gganatogram and gganimate</a></h2>
+    <div class="article-style">
+      
+      <p>Today I wanted to see if I could create a slideshow of pictures from the gganatogram package. I wanted to combine them with the gganimate package, but I have not figured out how to get that to work. (In particular, the gganatogram() function seems to return a different list layout than ggplot objects.)
+library(gganatogram)</p>
+
+<h2 id="loading-required-package-ggpolypath">Loading required package: ggpolypath</h2>
+
+<h2 id="loading-required-package-ggplot2">Loading required package: ggplot2</h2>
+
+<p>library(gganimate)
+library(profvis)
+N &lt;- 25 # number of cell samples
+num_cell_parts &lt;- nrow(cell_key$cell)</p>
+
+<h1 id="randomly-select-a-random-number-of-cell-parts">randomly select a random number of cell parts</h1>
+
+<p>part_picker &lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+cell_num &lt;- rep(1, length(part_picker))
+this_cell &lt;- cell_key[[&#39;cell&#39;]][part_picker, ]
+cell_samples &lt;- cbind(this_cell, cell_num)
+for(j in 2:N){
+part_picker &lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+cell_num &lt;- rep(j, length(part_picker))
+this_cell &lt;- cbind( cell_key[[&#39;cell&#39;]][part_picker, ], cell_num)
+cell_samples &lt;- rbind(cell_samples, this_cell)</p>
+
+<h1 id="figure-list-j-lt-gganatogram-data-this-cell">figure_list[j] &lt;- gganatogram(data = this_cell,</h1>
+
+<h1 id="outline-false-filloutline-39-steelblue-39-organism-quot-cell-quot-fill-quot-colour-quot-theme-void-coord-fixed">outline = FALSE, fillOutline=&#39;steelblue&#39;, organism=&quot;cell&quot;, fill=&quot;colour&quot;) + # theme_void() + # coord_fixed()</h1>
+
+<p>png(filename = paste0(j, &quot;.</p>
+
+      
+    </div>
+  </div>
   
   <div>
     <h2><a href="/post/my-first-gganimate-plot/">My First gganimate Plot</a></h2>

@@ -1,0 +1,67 @@
+---
+title: gganatogram and gganimate
+author: Derek Sollberger
+date: '2019-01-10'
+slug: gganatogram-and-gganimate
+categories:
+  - bioinformatics
+tags:
+  - gganatogram
+  - gganimate
+header:
+  caption: ''
+  image: ''
+---
+
+
+
+<p>Today I wanted to see if I could create a slideshow of pictures from the <code>gganatogram</code> package. I wanted to combine them with the <code>gganimate</code> package, but I have not figured out how to get that to work. (In particular, the <code>gganatogram()</code> function seems to return a different list layout than <code>ggplot</code> objects.)</p>
+<pre class="r"><code>library(gganatogram)</code></pre>
+<pre><code>## Loading required package: ggpolypath</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre class="r"><code>library(gganimate)
+library(profvis)
+
+N &lt;- 25 # number of cell samples</code></pre>
+<pre class="r"><code>num_cell_parts &lt;- nrow(cell_key$cell)
+
+# randomly select a random number of cell parts
+part_picker &lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+
+cell_num &lt;- rep(1, length(part_picker))
+this_cell &lt;- cell_key[[&#39;cell&#39;]][part_picker, ]
+cell_samples &lt;- cbind(this_cell, cell_num)
+
+
+for(j in 2:N){
+  part_picker &lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+  cell_num &lt;- rep(j, length(part_picker))
+  this_cell &lt;- cbind( cell_key[[&#39;cell&#39;]][part_picker, ], cell_num)
+  cell_samples &lt;- rbind(cell_samples, this_cell)
+  
+  # figure_list[j] &lt;- gganatogram(data = this_cell,
+  #           outline = FALSE, fillOutline=&#39;steelblue&#39;, organism=&quot;cell&quot;, fill=&quot;colour&quot;) + 
+  # theme_void() + 
+  # coord_fixed()
+  
+  png(filename = paste0(j, &quot;.png&quot;))
+  
+  p &lt;- gganatogram(data = this_cell,
+            outline = FALSE, fillOutline=&#39;steelblue&#39;, organism=&quot;cell&quot;, fill=&quot;colour&quot;) +
+  theme_void() +
+  coord_fixed() +
+    labs(title = &quot;Sample of Cell Parts&quot;,
+         subtitle = paste0(&quot;sample &quot;, j, &quot; of &quot;, N),
+         caption = &quot;Bio 18, UC Merced&quot;)
+  
+  plot(p)
+  
+  dev.off()
+  
+  # pause(0.5)
+}</code></pre>
+<div class="figure">
+<img src="img/cell_samples.gif" alt="the picture" />
+<p class="caption">the picture</p>
+</div>
+<p>What I ended up doing to produce the picture above was using the <code>png()</code> and <code>dev.off()</code> functions to simply output individual pictures into my computer, and then using the <a href="https://gifmaker.me/">GIFmaker</a> website to combine the images into an animated GIF.</p>

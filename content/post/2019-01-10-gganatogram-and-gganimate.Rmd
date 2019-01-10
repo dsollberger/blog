@@ -1,0 +1,68 @@
+---
+title: gganatogram and gganimate
+author: Derek Sollberger
+date: '2019-01-10'
+slug: gganatogram-and-gganimate
+categories:
+  - bioinformatics
+tags:
+  - gganatogram
+  - gganimate
+header:
+  caption: ''
+  image: ''
+---
+
+Today I wanted to see if I could create a slideshow of pictures from the `gganatogram` package.  I wanted to combine them with the `gganimate` package, but I have not figured out how to get that to work.  (In particular, the `gganatogram()` function seems to return a different list layout than `ggplot` objects.)
+
+```{r}
+library(gganatogram)
+library(gganimate)
+library(profvis)
+
+N <- 25 # number of cell samples
+```
+
+```{r}
+num_cell_parts <- nrow(cell_key$cell)
+
+# randomly select a random number of cell parts
+part_picker <- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+
+cell_num <- rep(1, length(part_picker))
+this_cell <- cell_key[['cell']][part_picker, ]
+cell_samples <- cbind(this_cell, cell_num)
+
+
+for(j in 2:N){
+  part_picker <- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+  cell_num <- rep(j, length(part_picker))
+  this_cell <- cbind( cell_key[['cell']][part_picker, ], cell_num)
+  cell_samples <- rbind(cell_samples, this_cell)
+  
+  # figure_list[j] <- gganatogram(data = this_cell,
+  #           outline = FALSE, fillOutline='steelblue', organism="cell", fill="colour") + 
+  # theme_void() + 
+  # coord_fixed()
+  
+  png(filename = paste0(j, ".png"))
+  
+  p <- gganatogram(data = this_cell,
+            outline = FALSE, fillOutline='steelblue', organism="cell", fill="colour") +
+  theme_void() +
+  coord_fixed() +
+    labs(title = "Sample of Cell Parts",
+         subtitle = paste0("sample ", j, " of ", N),
+         caption = "Bio 18, UC Merced")
+  
+  plot(p)
+  
+  dev.off()
+  
+  # pause(0.5)
+}
+```
+
+![the picture](img/cell_samples.gif)
+
+What I ended up doing to produce the picture above was using the `png()` and `dev.off()` functions to simply output individual pictures into my computer, and then using the [GIFmaker](https://gifmaker.me/) website to combine the images into an animated GIF.

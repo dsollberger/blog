@@ -208,6 +208,71 @@
   
   
   <h3 class="article-title" itemprop="headline">
+    <a href="/post/gganatogram-and-gganimate/" itemprop="url">gganatogram and gganimate</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2019-01-10 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jan 10, 2019
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/bioinformatics">bioinformatics</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    Today I wanted to see if I could create a slideshow of pictures from the gganatogram package. I wanted to combine them with the gganimate package, but I have not figured out how to get that to work. (In particular, the gganatogram() function seems to return a different list layout than ggplot objects.)
+library(gganatogram)## Loading required package: ggpolypath## Loading required package: ggplot2library(gganimate)library(profvis)N &lt;- 25 # number of cell samplesnum_cell_parts &lt;- nrow(cell_key$cell)# randomly select a random number of cell partspart_picker &lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))cell_num &lt;- rep(1, length(part_picker))this_cell &lt;- cell_key[[&#39;cell&#39;]][part_picker, ]cell_samples &lt;- cbind(this_cell, cell_num)for(j in 2:N){part_picker &lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))cell_num &lt;- rep(j, length(part_picker))this_cell &lt;- cbind( cell_key[[&#39;cell&#39;]][part_picker, ], cell_num)cell_samples &lt;- rbind(cell_samples, this_cell)# figure_list[j] &lt;- gganatogram(data = this_cell,# outline = FALSE, fillOutline=&#39;steelblue&#39;, organism=&quot;cell&quot;, fill=&quot;colour&quot;) + # theme_void() + # coord_fixed()png(filename = paste0(j, &quot;.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/gganatogram-and-gganimate/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
     <a href="/post/curse-of-dimensionality/" itemprop="url">Curse of Dimensionality</a>
   </h3>
   
@@ -803,71 +868,6 @@ semester_dates &lt;- seq(as.
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/semester-schedule-planner/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/let-s-see-if-i-can-make-posts-mostly-through-rstudio/" itemprop="url">Let&#39;s see if I can make posts (mostly) through RStudio</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2018-07-21 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jul 21, 2018
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    1 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/science-communication">science communication</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    <p>Let’s see if I can make posts (mostly) through RStudio</p>
-
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/let-s-see-if-i-can-make-posts-mostly-through-rstudio/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>

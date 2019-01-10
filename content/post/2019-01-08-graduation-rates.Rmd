@@ -64,7 +64,7 @@ fundamental_matrix <- solve(diag(4) - Q)
 
 # absorption
 absorption <- fundamental_matrix %*% R
-absorption
+round(100*absorption)
 ```
 
 This model predicts that, starting with incoming students, about 79 percent of those students will eventually graduate while about 21 percent will eventually drop from UC Merced enrollment.

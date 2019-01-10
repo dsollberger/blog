@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/gganatogram-and-gganimate/</loc>
+      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/curse-of-dimensionality/</loc>
       <lastmod>2019-01-08T00:00:00+00:00</lastmod>
     </url>
@@ -268,6 +277,16 @@
     
     <url>
     
+      <loc>/categories/bioinformatics/</loc>
+      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/blogdown/</loc>
       <lastmod>2018-07-21T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -279,6 +298,7 @@
     <url>
     
       <loc>/categories/</loc>
+      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -317,8 +337,18 @@
     
     <url>
     
+      <loc>/tags/gganatogram/</loc>
+      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/gganimate/</loc>
-      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
+      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -377,8 +407,8 @@
     
     <url>
     
-      <loc>/tags/math/</loc>
-      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
+      <loc>/categories/math/</loc>
+      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -387,8 +417,8 @@
     
     <url>
     
-      <loc>/categories/math/</loc>
-      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
+      <loc>/tags/math/</loc>
+      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -517,7 +547,7 @@
     
     <url>
     
-      <loc>/tags/teaching/</loc>
+      <loc>/categories/teaching/</loc>
       <lastmod>2018-08-01T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
@@ -527,7 +557,7 @@
     
     <url>
     
-      <loc>/categories/teaching/</loc>
+      <loc>/tags/teaching/</loc>
       <lastmod>2018-08-01T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
