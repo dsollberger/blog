@@ -62,7 +62,7 @@ for(j in 2:N){
   # pause(0.5)
 }&lt;/code&gt;&lt;/pre&gt;
 &lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;img/cell_samples.gif&#34; alt=&#34;the picture&#34; /&gt;
+&lt;img src=&#34;/img/cell_samples.gif&#34; alt=&#34;the picture&#34; /&gt;
 &lt;p class=&#34;caption&#34;&gt;the picture&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;What I ended up doing to produce the picture above was using the &lt;code&gt;png()&lt;/code&gt; and &lt;code&gt;dev.off()&lt;/code&gt; functions to simply output individual pictures into my computer, and then using the &lt;a href=&#34;https://gifmaker.me/&#34;&gt;GIFmaker&lt;/a&gt; website to combine the images into an animated GIF.&lt;/p&gt;

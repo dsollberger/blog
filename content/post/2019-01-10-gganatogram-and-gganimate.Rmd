@@ -63,6 +63,6 @@ for(j in 2:N){
 }
 ```
 
-![the picture](img/cell_samples.gif)
+![the picture](/img/cell_samples.gif)
 
 What I ended up doing to produce the picture above was using the `png()` and `dev.off()` functions to simply output individual pictures into my computer, and then using the [GIFmaker](https://gifmaker.me/) website to combine the images into an animated GIF.
