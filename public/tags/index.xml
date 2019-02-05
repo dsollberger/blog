@@ -49,6 +49,15 @@
     </item>
     
     <item>
+      <title>ESL</title>
+      <link>/tags/esl/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/esl/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Flexdashboard</title>
       <link>/tags/flexdashboard/</link>
       <pubDate>Thu, 11 Oct 2018 00:00:00 +0000</pubDate>
@@ -69,7 +78,7 @@
     <item>
       <title>Gganimate</title>
       <link>/tags/gganimate/</link>
-      <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/gganimate/</guid>
       <description></description>
@@ -78,7 +87,7 @@
     <item>
       <title>Ggplot</title>
       <link>/tags/ggplot/</link>
-      <pubDate>Sun, 07 Oct 2018 00:00:00 +0000</pubDate>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>/tags/ggplot/</guid>
       <description></description>
@@ -171,6 +180,15 @@
       <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
       
       <guid>/tags/timeseries/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Workshop</title>
+      <link>/tags/workshop/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/tags/workshop/</guid>
       <description></description>
     </item>
     

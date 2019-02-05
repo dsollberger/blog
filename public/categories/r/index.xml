@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Sun, 30 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 05 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/r/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Introduction to R Workshop</title>
+      <link>/post/introduction-to-r-workshop/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introduction-to-r-workshop/</guid>
+      <description>Packagesworkshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;)install.packages(workshop_packages)library(&amp;quot;gganimate&amp;quot;)## Loading required package: ggplot2library(&amp;quot;ggplot2&amp;quot;)library(&amp;quot;mosaic&amp;quot;)## Loading required package: dplyr## ## Attaching package: &amp;#39;dplyr&amp;#39;## The following objects are masked from &amp;#39;package:stats&amp;#39;:## ## filter, lag## The following objects are masked from &amp;#39;package:base&amp;#39;:## ## intersect, setdiff, setequal, union## Loading required package: lattice## Loading required package: ggformula## Loading required package: ggstance## ## Attaching package: &amp;#39;ggstance&amp;#39;## The following objects are masked from &amp;#39;package:ggplot2&amp;#39;:## ## geom_errorbarh, GeomErrorbarh## ## New to ggformula?</description>
+    </item>
+    
+    <item>
+      <title>Introduction to R Workshop</title>
+      <link>/post/introduction-to-r-workshop/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introduction-to-r-workshop/</guid>
+      <description>Packages workshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;) install.packages(workshop_packages)  library(&amp;quot;gganimate&amp;quot;)  ## Loading required package: ggplot2  library(&amp;quot;ggplot2&amp;quot;) library(&amp;quot;mosaic&amp;quot;)  ## Loading required package: dplyr  ## ## Attaching package: &#39;dplyr&#39;  ## The following objects are masked from &#39;package:stats&#39;: ## ## filter, lag  ## The following objects are masked from &#39;package:base&#39;: ## ## intersect, setdiff, setequal, union  ## Loading required package: lattice  ## Loading required package: ggformula  ## Loading required package: ggstance  ## ## Attaching package: &#39;ggstance&#39;  ## The following objects are masked from &#39;package:ggplot2&#39;: ## ## geom_errorbarh, GeomErrorbarh  ## ## New to ggformula?</description>
+    </item>
     
     <item>
       <title>Degree-One Polynomials</title>

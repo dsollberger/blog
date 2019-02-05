@@ -1,0 +1,95 @@
+---
+title: Introduction to R Workshop
+author: Derek Sollberger
+date: '2019-02-05'
+slug: introduction-to-r-workshop
+categories:
+  - R
+tags:
+  - ggplot
+  - gganimate
+  - ESL
+  - workshop
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+# Packages
+
+```{r, eval = FALSE,message = FALSE, warning = FALSE}
+workshop_packages <-c("ggplot2", "mosaic", "gganimate")
+install.packages(workshop_packages)
+```
+
+```{r}
+library("gganimate")
+library("ggplot2")
+library("mosaic")
+```
+
+# Data
+
+```{r}
+head(Weather)
+table(Weather$city)
+table(Weather$year)
+```
+
+# Sample Statistics
+
+```{r}
+mean(Weather$high_temp)
+median(Weather$precip)
+sd(Weather$avg_wind)
+```
+
+# Plotting
+
+```{r}
+Chicago <- subset(Weather, city == "Chicago")
+
+# boxplots
+ggplot(Chicago, aes(x = month, y = high_temp, group = month, fill = month)) +
+  geom_boxplot() +
+  labs(title = "Chicago Weather (2016-2017)",
+       x = "month",
+       y = "high temperature")
+```
+
+# Regression
+
+```{r}
+ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+  labs(title = "Chicago Weather (2016-2017)",
+       x = "high temperature",
+       y = "low temperature") +
+  theme_minimal()
+```
+
+# Hypothesis Testing
+
+```{r}
+SanDiego <- subset(Weather, city == "San Diego")
+
+# Do Chicago and San Diego have the same high temperatures?
+t.test(Chicago$high_temp, SanDiego$high_temp, alternative = "two.sided")
+```
+
+# Animation
+
+```{r}
+ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
+  geom_point() +
+  labs(title = "Worldwide Weather (2016-2017)",
+       caption = "Source: Mosaic Foundation",
+       subtitle = "(by months)",
+       x = "high temperature",
+       y = "low temperature") +
+  theme_minimal() +
+  transition_states(month, transition_length = 1, state_length = 1)
+```
+

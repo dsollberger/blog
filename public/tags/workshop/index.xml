@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Ggplot on The Median Data Scientist</title>
-    <link>/tags/ggplot/</link>
-    <description>Recent content in Ggplot on The Median Data Scientist</description>
+    <title>Workshop on The Median Data Scientist</title>
+    <link>/tags/workshop/</link>
+    <description>Recent content in Workshop on The Median Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
     <lastBuildDate>Tue, 05 Feb 2019 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/workshop/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -28,16 +28,6 @@
       
       <guid>/post/introduction-to-r-workshop/</guid>
       <description>Packages workshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;) install.packages(workshop_packages)  library(&amp;quot;gganimate&amp;quot;)  ## Loading required package: ggplot2  library(&amp;quot;ggplot2&amp;quot;) library(&amp;quot;mosaic&amp;quot;)  ## Loading required package: dplyr  ## ## Attaching package: &#39;dplyr&#39;  ## The following objects are masked from &#39;package:stats&#39;: ## ## filter, lag  ## The following objects are masked from &#39;package:base&#39;: ## ## intersect, setdiff, setequal, union  ## Loading required package: lattice  ## Loading required package: ggformula  ## Loading required package: ggstance  ## ## Attaching package: &#39;ggstance&#39;  ## The following objects are masked from &#39;package:ggplot2&#39;: ## ## geom_errorbarh, GeomErrorbarh  ## ## New to ggformula?</description>
-    </item>
-    
-    <item>
-      <title>Supreme Court Confirmations (1967-present)</title>
-      <link>/post/supreme-court-confirmations-1967-present/</link>
-      <pubDate>Sun, 07 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/supreme-court-confirmations-1967-present/</guid>
-      <description>IntroductionFollowing up on Rachel Wellford’s tweet about Senate votes for Supreme Court confirmations, I decided to try to graph the data. Below, I have
-a ggplot picture with decent labelinga searchable datatablea plotly interactive graphThe data came from Senate.gov. I chose to focus on 1967 onward because it appeared that voting procedures were slightly different before Thurgood Marshall’s nomination process.</description>
     </item>
     
   </channel>

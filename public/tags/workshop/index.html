@@ -18,7 +18,7 @@
   <meta name="description" content="Continuing Lecturer of Applied Mathematics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/tags/gganimate/">
+  <link rel="alternate" hreflang="en-us" href="/tags/workshop/">
 
   
 
@@ -58,15 +58,15 @@
   
 
   
-  <link rel="alternate" href="/tags/gganimate/index.xml" type="application/rss+xml" title="The Median Data Scientist">
-  <link rel="feed" href="/tags/gganimate/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="alternate" href="/tags/workshop/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="feed" href="/tags/workshop/index.xml" type="application/rss+xml" title="The Median Data Scientist">
   
 
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/tags/gganimate/">
+  <link rel="canonical" href="/tags/workshop/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -74,8 +74,8 @@
   <meta property="twitter:creator" content="@DerekSollberger">
   
   <meta property="og:site_name" content="The Median Data Scientist">
-  <meta property="og:url" content="/tags/gganimate/">
-  <meta property="og:title" content="Gganimate | The Median Data Scientist">
+  <meta property="og:url" content="/tags/workshop/">
+  <meta property="og:title" content="Workshop | The Median Data Scientist">
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
@@ -84,7 +84,7 @@
 
   
 
-  <title>Gganimate | The Median Data Scientist</title>
+  <title>Workshop | The Median Data Scientist</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
@@ -204,7 +204,7 @@
 
 <div class="universal-wrapper">
 
-  <h1>Gganimate</h1>
+  <h1>Workshop</h1>
 
   
 
@@ -259,65 +259,6 @@ library(&quot;mosaic&quot;)</p>
     <div class="article-style">
       
       Packages workshop_packages &lt;-c(&quot;ggplot2&quot;, &quot;mosaic&quot;, &quot;gganimate&quot;) install.packages(workshop_packages)  library(&quot;gganimate&quot;)  ## Loading required package: ggplot2  library(&quot;ggplot2&quot;) library(&quot;mosaic&quot;)  ## Loading required package: dplyr  ## ## Attaching package: &lsquo;dplyr&rsquo;  ## The following objects are masked from &lsquo;package:stats&rsquo;: ## ## filter, lag  ## The following objects are masked from &lsquo;package:base&rsquo;: ## ## intersect, setdiff, setequal, union  ## Loading required package: lattice  ## Loading required package: ggformula  ## Loading required package: ggstance  ## ## Attaching package: &lsquo;ggstance&rsquo;  ## The following objects are masked from &lsquo;package:ggplot2&rsquo;: ## ## geom_errorbarh, GeomErrorbarh  ## ## New to ggformula?
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/gganatogram-and-gganimate/">gganatogram and gganimate</a></h2>
-    <div class="article-style">
-      
-      <p>Today I wanted to see if I could create a slideshow of pictures from the gganatogram package. I wanted to combine them with the gganimate package, but I have not figured out how to get that to work. (In particular, the gganatogram() function seems to return a different list layout than ggplot objects.)
-library(gganatogram)</p>
-
-<h2 id="loading-required-package-ggpolypath">Loading required package: ggpolypath</h2>
-
-<h2 id="loading-required-package-ggplot2">Loading required package: ggplot2</h2>
-
-<p>library(gganimate)
-library(profvis)
-N &lt;- 25 # number of cell samples
-num_cell_parts &lt;- nrow(cell_key$cell)</p>
-
-<h1 id="randomly-select-a-random-number-of-cell-parts">randomly select a random number of cell parts</h1>
-
-<p>part_picker &lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
-cell_num &lt;- rep(1, length(part_picker))
-this_cell &lt;- cell_key[[&#39;cell&#39;]][part_picker, ]
-cell_samples &lt;- cbind(this_cell, cell_num)
-for(j in 2:N){
-part_picker &lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
-cell_num &lt;- rep(j, length(part_picker))
-this_cell &lt;- cbind( cell_key[[&#39;cell&#39;]][part_picker, ], cell_num)
-cell_samples &lt;- rbind(cell_samples, this_cell)</p>
-
-<h1 id="figure-list-j-lt-gganatogram-data-this-cell">figure_list[j] &lt;- gganatogram(data = this_cell,</h1>
-
-<h1 id="outline-false-filloutline-39-steelblue-39-organism-quot-cell-quot-fill-quot-colour-quot-theme-void-coord-fixed">outline = FALSE, fillOutline=&#39;steelblue&#39;, organism=&quot;cell&quot;, fill=&quot;colour&quot;) + # theme_void() + # coord_fixed()</h1>
-
-<p>png(filename = paste0(j, &quot;.</p>
-
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/my-first-gganimate-plot/">My First gganimate Plot</a></h2>
-    <div class="article-style">
-      
-      Today I finally read a tutorial on gganimate, and here I will build my first example. My hope is to eventually simulate traversal on a directed graph.
-library(tidyverse)
-library(gganimate)
-Create Node Data
-For this example, I will have 3 nodes (located at 3 vertices of a triangle), 100 dots distributed among the nodes, and a new placement over 21 states in time.
-N &lt;- 100 # number of dots
-T &lt;- 20 # number of iterations
-node_names &lt;- c(&quot;Node 1&quot;, &quot;Node 2&quot;, &quot;Node 3&quot;)
-iter &lt;- rep(0, N)
-node &lt;- rep(&quot;Node 1&quot;, N)
-x &lt;- 10 + rnorm(N, 0, 2)
-y &lt;- 20 + rnorm(N, 0, 2)
-states &lt;- data.
       
     </div>
   </div>
