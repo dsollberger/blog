@@ -233,7 +233,7 @@ circles &lt;- data.frame(x0 = c(-1,1),y0 = rep(1,2),r = rep(1, 2))right_pt 
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    1 min read
+    2 min read
   </span>
   
 
@@ -324,6 +324,70 @@ ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) +
   geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.aes = FALSE) +
   stat_function(fun = f, geom = &quot;line&quot;)</code></pre>
 <p><img src="/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="generate-some-dots" class="section level1">
+<h1>Generate Some Dots</h1>
+<p>Now let’s see if I can get some red dots into a heart shape and green dots outside of the heart.</p>
+<pre class="r"><code># initialization
+N &lt;- 10000
+x &lt;- runif(N, -2, 2)
+y &lt;- runif(N, -sqrt(2), 2)
+colors = c(&quot;white&quot;, &quot;red&quot;, rep(&quot;green&quot;, N-2)) #factor levels set early
+state = rep(1, N)
+
+# separate colors
+for (i in 4:N){
+  if (y[i] &lt; 1){
+    if (y[i] &gt; (abs(x[i]) - sqrt(2))){colors[i] = &quot;red&quot;}
+  } else {
+    if(sqrt((x[i] - 1)^2 + (y[i] - 1)^2) &lt; 1 | 
+       sqrt((x[i] + 1)^2 + (y[i] - 1)^2) &lt; 1){colors[i] = &quot;red&quot;}
+  }
+}
+
+dot_df &lt;- data.frame(x,y, colors, state)
+dot_df %&gt;%
+  ggplot(aes(x = x, y = y)) +
+    coord_fixed() +
+    geom_point(color = colors) +
+    theme_minimal()</code></pre>
+<p><img src="/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="animation" class="section level1">
+<h1>Animation</h1>
+<p>My initial plan was to have the dots appear one at a time to gradually make the heart, but the data storage was prohibitive. This back up plan was to literally make a new set of dots for each animation frame—and color the dots again!—and it comes with a neat “heartbeat” effect. The render time for the animated GIF was about 2 minutes on my computer.</p>
+<pre class="r"><code>max_iter &lt;- 14 #number of animation frames
+
+for(j in 1:max_iter){
+  x &lt;- runif(N, -2, 2)
+  y &lt;- runif(N, -sqrt(2), 2)
+  colors = c(&quot;white&quot;, &quot;red&quot;, rep(&quot;green&quot;, N-2)) #factor levels set early
+  
+  for (i in 4:N){
+    if (y[i] &lt; 1){
+      if (y[i] &gt; (abs(x[i]) - sqrt(2))){colors[i] = &quot;red&quot;}
+    } else {
+      if(sqrt((x[i] - 1)^2 + (y[i] - 1)^2) &lt; 1 | 
+         sqrt((x[i] + 1)^2 + (y[i] - 1)^2) &lt; 1){colors[i] = &quot;red&quot;}
+    }
+  }
+
+  state &lt;- rep(j, N)
+  this_df &lt;- data.frame(x, y, colors, state)
+  #colnames(this_df) &lt;- c(&quot;x&quot;, &quot;y&quot;, &quot;colors&quot;, &quot;state&quot;)
+  dot_df &lt;- rbind(dot_df, this_df)
+}
+
+dot_df %&gt;%
+  ggplot(aes(x = x, y = y)) +
+    coord_fixed() +
+    geom_point(color = dot_df$colors) +
+    labs(title = &quot;Valentine&#39;s Day 2019&quot;,
+         subtitle = &quot;Frame: {closest_state}&quot;,
+         caption = &quot;Made by Derek Sollberger with the #gganimate package&quot;) +
+    theme_minimal() +
+    transition_states(state, transition_length = 1, state_length = 1)</code></pre>
+<p><img src="/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-4-1.gif" /><!-- --></p>
 </div>
 
       </div>

@@ -42,3 +42,72 @@ ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) +
   geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.aes = FALSE) +
   stat_function(fun = f, geom = "line")
 ```
+
+# Generate Some Dots
+
+Now let's see if I can get some red dots into a heart shape and green dots outside of the heart.
+
+```{r}
+# initialization
+N <- 10000
+x <- runif(N, -2, 2)
+y <- runif(N, -sqrt(2), 2)
+colors = c("white", "red", rep("green", N-2)) #factor levels set early
+state = rep(1, N)
+
+# separate colors
+for (i in 4:N){
+  if (y[i] < 1){
+    if (y[i] > (abs(x[i]) - sqrt(2))){colors[i] = "red"}
+  } else {
+    if(sqrt((x[i] - 1)^2 + (y[i] - 1)^2) < 1 | 
+       sqrt((x[i] + 1)^2 + (y[i] - 1)^2) < 1){colors[i] = "red"}
+  }
+}
+
+dot_df <- data.frame(x,y, colors, state)
+dot_df %>%
+  ggplot(aes(x = x, y = y)) +
+    coord_fixed() +
+    geom_point(color = colors) +
+    theme_minimal()
+```
+
+# Animation
+
+My initial plan was to have the dots appear one at a time to gradually make the heart, but the data storage was prohibitive.  This back up plan was to literally make a new set of dots for each animation frame---and color the dots again!---and it comes with a neat "heartbeat" effect.  The render time for the animated GIF was about 2 minutes on my computer.
+
+```{r}
+max_iter <- 14 #number of animation frames
+
+for(j in 1:max_iter){
+  x <- runif(N, -2, 2)
+  y <- runif(N, -sqrt(2), 2)
+  colors = c("white", "red", rep("green", N-2)) #factor levels set early
+  
+  for (i in 4:N){
+    if (y[i] < 1){
+      if (y[i] > (abs(x[i]) - sqrt(2))){colors[i] = "red"}
+    } else {
+      if(sqrt((x[i] - 1)^2 + (y[i] - 1)^2) < 1 | 
+         sqrt((x[i] + 1)^2 + (y[i] - 1)^2) < 1){colors[i] = "red"}
+    }
+  }
+
+  state <- rep(j, N)
+  this_df <- data.frame(x, y, colors, state)
+  #colnames(this_df) <- c("x", "y", "colors", "state")
+  dot_df <- rbind(dot_df, this_df)
+}
+
+dot_df %>%
+  ggplot(aes(x = x, y = y)) +
+    coord_fixed() +
+    geom_point(color = dot_df$colors) +
+    labs(title = "Valentine's Day 2019",
+         subtitle = "Frame: {closest_state}",
+         caption = "Made by Derek Sollberger with the #gganimate package") +
+    theme_minimal() +
+    transition_states(state, transition_length = 1, state_length = 1)
+```
+
