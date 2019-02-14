@@ -79,7 +79,7 @@
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2019-02-05T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2019-02-14T00:00:00&#43;00:00">
   
 
   
@@ -209,6 +209,31 @@
   
 
   
+  
+  <div>
+    <h2><a href="/post/valentine-s-day-2019/">Valentine&#39;s Day 2019</a></h2>
+    <div class="article-style">
+      
+      In this short project, I hope to draw a heart through an animation of appearing dots.
+library(&quot;gganimate&quot;)
+library(&quot;ggforce&quot;)
+library(&quot;tidyverse&quot;)
+Draw a Heart
+Here I will place two circles centered at ((\pm 1, 1)) with the same radius (r = \sqrt{2}).
+circles &lt;- data.frame(
+x0 = c(-1,1),
+y0 = rep(1,2),
+r = rep(1, 2)
+)
+right_pt &lt;- (sqrt(2) + 1) / sqrt(2)
+left_pt &lt;- -1*right_pt
+f &lt;- function(x){abs(x) - sqrt(2)}
+ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) +
+coord_fixed() +
+geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.
+      
+    </div>
+  </div>
   
   <div>
     <h2><a href="/post/introduction-to-r-workshop/">Introduction to R Workshop</a></h2>

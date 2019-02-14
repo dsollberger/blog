@@ -13,10 +13,16 @@
   
   
   
-  <meta name="description" content="Continuing Lecturer of Applied Mathematics">
+    
+      
+    
+  
+  <meta name="description" content="In this short project, I hope to draw a heart through an animation of appearing dots.
+library(&quot;gganimate&quot;)library(&quot;ggforce&quot;)library(&quot;tidyverse&quot;)Draw a HeartHere I will place two circles centered at \((\pm 1, 1)\) with the same radius \(r = \sqrt{2}\).
+circles &lt;- data.frame(x0 = c(-1,1),y0 = rep(1,2),r = rep(1, 2))right_pt &lt;- (sqrt(2) &#43; 1) / sqrt(2)left_pt &lt;- -1*right_ptf &lt;- function(x){abs(x) - sqrt(2)}ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) &#43;coord_fixed() &#43;geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.">
 
   
-  <link rel="alternate" hreflang="en-us" href="/post/">
+  <link rel="alternate" hreflang="en-us" href="/post/valentine-s-day-2019/">
 
   
 
@@ -32,6 +38,13 @@
   
     
   
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+      
+    
   
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
@@ -49,15 +62,15 @@
   
 
   
-  <link rel="alternate" href="/post/index.xml" type="application/rss+xml" title="The Median Data Scientist">
-  <link rel="feed" href="/post/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
   
 
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/post/">
+  <link rel="canonical" href="/post/valentine-s-day-2019/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -65,17 +78,21 @@
   <meta property="twitter:creator" content="@DerekSollberger">
   
   <meta property="og:site_name" content="The Median Data Scientist">
-  <meta property="og:url" content="/post/">
-  <meta property="og:title" content="Posts | The Median Data Scientist">
-  <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
+  <meta property="og:url" content="/post/valentine-s-day-2019/">
+  <meta property="og:title" content="Valentine&#39;s Day 2019 | The Median Data Scientist">
+  <meta property="og:description" content="In this short project, I hope to draw a heart through an animation of appearing dots.
+library(&quot;gganimate&quot;)library(&quot;ggforce&quot;)library(&quot;tidyverse&quot;)Draw a HeartHere I will place two circles centered at \((\pm 1, 1)\) with the same radius \(r = \sqrt{2}\).
+circles &lt;- data.frame(x0 = c(-1,1),y0 = rep(1,2),r = rep(1, 2))right_pt &lt;- (sqrt(2) &#43; 1) / sqrt(2)left_pt &lt;- -1*right_ptf &lt;- function(x){abs(x) - sqrt(2)}ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) &#43;coord_fixed() &#43;geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2015-07-23T21:13:14-05:00">
+  <meta property="article:published_time" content="2019-02-14T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2019-02-14T00:00:00&#43;00:00">
   
 
   
 
-  <title>Posts | The Median Data Scientist</title>
+  <title>Valentine&#39;s Day 2019 | The Median Data Scientist</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
@@ -190,34 +207,23 @@
 </nav>
 
 
-
-
-
-<div class="universal-wrapper">
-
-  <h1>Posts</h1>
+<article class="article" itemscope itemtype="http://schema.org/Article">
 
   
 
-  
-  
-    
-    
 
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/2015-07-23-r-rmarkdown/" itemprop="url">Hello R Markdown</a>
-  </h3>
-  
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Valentine&#39;s Day 2019</h1>
+
+      
 
 <div class="article-metadata">
 
   <span class="article-date">
     
-    <time datetime="2015-07-23 21:13:14 -0500 -0500" itemprop="datePublished dateModified">
-      Jul 23, 2015
+    <time datetime="2019-02-14 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Feb 14, 2019
     </time>
   </span>
   <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
@@ -241,7 +247,7 @@
   <span class="article-categories">
     <i class="fa fa-folder"></i>
     
-    <a href="/categories/r">R</a
+    <a href="/categories/gganimate">gganimate</a
     >
     
   </span>
@@ -249,90 +255,123 @@
   
 
   
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Valentine%27s%20Day%202019&amp;url=%2fpost%2fvalentine-s-day-2019%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fvalentine-s-day-2019%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fvalentine-s-day-2019%2f&amp;title=Valentine%27s%20Day%202019"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fvalentine-s-day-2019%2f&amp;title=Valentine%27s%20Day%202019"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Valentine%27s%20Day%202019&amp;body=%2fpost%2fvalentine-s-day-2019%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
 
 </div>
 
-  <div class="article-style" itemprop="articleBody">
-    
-    R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.rstudio.com.
-You can embed an R code chunk like this:
-summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 26.00 ## Median :15.0 Median : 36.00 ## Mean :15.4 Mean : 42.98 ## 3rd Qu.
-    
+
+      <div class="article-style" itemprop="articleBody">
+        <p>In this short project, I hope to draw a heart through an animation of appearing dots.</p>
+<pre class="r"><code>library(&quot;gganimate&quot;)
+library(&quot;ggforce&quot;)
+library(&quot;tidyverse&quot;)</code></pre>
+<div id="draw-a-heart" class="section level1">
+<h1>Draw a Heart</h1>
+<p>Here I will place two circles centered at <span class="math inline">\((\pm 1, 1)\)</span> with the same radius <span class="math inline">\(r = \sqrt{2}\)</span>.</p>
+<pre class="r"><code>circles &lt;- data.frame(
+  x0 = c(-1,1),
+  y0 = rep(1,2),
+  r = rep(1, 2)
+)
+
+right_pt &lt;- (sqrt(2) + 1) / sqrt(2)
+left_pt &lt;-  -1*right_pt
+f &lt;- function(x){abs(x) - sqrt(2)}
+
+ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) +
+  coord_fixed() +
+  geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.aes = FALSE) +
+  stat_function(fun = f, geom = &quot;line&quot;)</code></pre>
+<p><img src="/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/gganimate">gganimate</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/heart">heart</a>
+  
+</div>
+
+
+
+    </div>
   </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/2015-07-23-r-rmarkdown/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
 
-  
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
     
+    <li><a href="/post/introduction-to-r-workshop/">Introduction to R Workshop</a></li>
     
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/migrate-from-jekyll/" itemprop="url">Migrate from Jekyll to Hugo</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
+    <li><a href="/post/introduction-to-r-workshop/">Introduction to R Workshop</a></li>
     
-    <time datetime="2014-03-10 00:00:00 -0700 PDT" itemprop="datePublished dateModified">
-      Mar 10, 2014
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
+    <li><a href="/post/gganatogram-and-gganimate/">gganatogram and gganimate</a></li>
     
-    <p>Learn how to migrate an existing website from Jekyll to Hugo.</p>
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/migrate-from-jekyll/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-
-  
-<nav>
-  <ul class="pager">
-    
-    <li><a href="/post/page/2/">&lt;</a></li>
-    
+    <li><a href="/post/my-first-gganimate-plot/">My First gganimate Plot</a></li>
     
   </ul>
-</nav>
+</div>
 
 
+
+
+<div class="article-container">
+  
 
 </div>
+
 <footer class="site-footer">
   <div class="container">
     <p class="powered-by">
@@ -397,6 +436,17 @@ summary(cars)## speed dist ## Min. : 4.0 Min. : 2.00 ## 1st Qu.:12.0 1st Qu.: 2
     
 
     
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
     
 
     

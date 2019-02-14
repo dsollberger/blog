@@ -1,0 +1,44 @@
+---
+title: Valentine's Day 2019
+author: Derek Sollberger
+date: '2019-02-14'
+slug: valentine-s-day-2019
+categories:
+  - gganimate
+tags:
+  - gganimate
+  - heart
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+In this short project, I hope to draw a heart through an animation of appearing dots.
+
+```{r, message = FALSE, warning = FALSE}
+library("gganimate")
+library("ggforce")
+library("tidyverse")
+```
+
+# Draw a Heart
+
+Here I will place two circles centered at $(\pm 1, 1)$ with the same radius $r = \sqrt{2}$.
+
+```{r}
+circles <- data.frame(
+  x0 = c(-1,1),
+  y0 = rep(1,2),
+  r = rep(1, 2)
+)
+
+right_pt <- (sqrt(2) + 1) / sqrt(2)
+left_pt <-  -1*right_pt
+f <- function(x){abs(x) - sqrt(2)}
+
+ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) +
+  coord_fixed() +
+  geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.aes = FALSE) +
+  stat_function(fun = f, geom = "line")
+```

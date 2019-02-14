@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Heart on The Median Data Scientist</title>
+    <link>/tags/heart/</link>
+    <description>Recent content in Heart on The Median Data Scientist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Thu, 14 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/heart/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Valentine&#39;s Day 2019</title>
+      <link>/post/valentine-s-day-2019/</link>
+      <pubDate>Thu, 14 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/valentine-s-day-2019/</guid>
+      <description>In this short project, I hope to draw a heart through an animation of appearing dots.
+library(&amp;quot;gganimate&amp;quot;)library(&amp;quot;ggforce&amp;quot;)library(&amp;quot;tidyverse&amp;quot;)Draw a HeartHere I will place two circles centered at \((\pm 1, 1)\) with the same radius \(r = \sqrt{2}\).
+circles &amp;lt;- data.frame(x0 = c(-1,1),y0 = rep(1,2),r = rep(1, 2))right_pt &amp;lt;- (sqrt(2) + 1) / sqrt(2)left_pt &amp;lt;- -1*right_ptf &amp;lt;- function(x){abs(x) - sqrt(2)}ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) +coord_fixed() +geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.</description>
+    </item>
+    
+  </channel>
+</rss>

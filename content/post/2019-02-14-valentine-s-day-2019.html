@@ -1,0 +1,41 @@
+---
+title: Valentine's Day 2019
+author: Derek Sollberger
+date: '2019-02-14'
+slug: valentine-s-day-2019
+categories:
+  - gganimate
+tags:
+  - gganimate
+  - heart
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<p>In this short project, I hope to draw a heart through an animation of appearing dots.</p>
+<pre class="r"><code>library(&quot;gganimate&quot;)
+library(&quot;ggforce&quot;)
+library(&quot;tidyverse&quot;)</code></pre>
+<div id="draw-a-heart" class="section level1">
+<h1>Draw a Heart</h1>
+<p>Here I will place two circles centered at <span class="math inline">\((\pm 1, 1)\)</span> with the same radius <span class="math inline">\(r = \sqrt{2}\)</span>.</p>
+<pre class="r"><code>circles &lt;- data.frame(
+  x0 = c(-1,1),
+  y0 = rep(1,2),
+  r = rep(1, 2)
+)
+
+right_pt &lt;- (sqrt(2) + 1) / sqrt(2)
+left_pt &lt;-  -1*right_pt
+f &lt;- function(x){abs(x) - sqrt(2)}
+
+ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) +
+  coord_fixed() +
+  geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.aes = FALSE) +
+  stat_function(fun = f, geom = &quot;line&quot;)</code></pre>
+<p><img src="/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
