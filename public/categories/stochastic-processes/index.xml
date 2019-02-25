@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Tue, 08 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 25 Feb 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/stochastic-processes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Random Walks (draft)</title>
+      <link>/post/random-walks-draft/</link>
+      <pubDate>Mon, 25 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/random-walks-draft/</guid>
+      <description>library(&amp;quot;gganimate&amp;quot;)library(&amp;quot;ggplot2&amp;quot;)p = 1/2# parametersp &amp;lt;- 0.5Tmax = 60# start at the originx = 0y = 0t = 0df &amp;lt;- data.frame(x,y,t)# random walkfor(i in 1:Tmax){t &amp;lt;- t + 1if(runif(1) &amp;lt; p){x &amp;lt;- x - 1} else {x &amp;lt;- x + 1}# reset process if dot leaves viewif(abs(x) &amp;gt; 10){x &amp;lt;- 0}this_step &amp;lt;- data.</description>
+    </item>
     
     <item>
       <title>Graduation Rates</title>

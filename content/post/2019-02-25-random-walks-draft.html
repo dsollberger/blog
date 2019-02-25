@@ -1,0 +1,251 @@
+---
+title: Random Walks (draft)
+author: Derek Sollberger
+date: '2019-02-25'
+slug: random-walks-draft
+categories:
+  - stochastic processes
+tags:
+  - gganimate
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<pre class="r"><code>library(&quot;gganimate&quot;)
+library(&quot;ggplot2&quot;)</code></pre>
+<div id="p-12" class="section level1">
+<h1>p = 1/2</h1>
+<pre class="r"><code># parameters
+p &lt;- 0.5
+Tmax = 60
+
+# start at the origin
+x = 0
+y = 0
+t = 0
+df &lt;- data.frame(x,y,t)
+
+# random walk
+for(i in 1:Tmax){
+  t &lt;- t + 1
+  if(runif(1) &lt; p){
+    x &lt;- x - 1
+  } else {
+    x &lt;- x + 1
+  }
+  
+  # reset process if dot leaves view
+  if(abs(x) &gt; 10){
+    x &lt;- 0
+  }
+  
+  this_step &lt;- data.frame(x,y,t)
+  df &lt;- rbind(df, this_step)
+}
+
+p &lt;- ggplot(df, aes(x,y)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_point(color = &quot;blue&quot;, size = 10) +
+  labs(title = &quot;Random Walk (p = 1/2)&quot;,
+       subtitle = &quot;t = {closest_state}&quot;,
+       caption = &quot;Math 181&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(breaks = NULL) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1) +
+  shadow_wake(colour = &quot;gray&quot;, wake_length = 0.2, alpha = 0.4)
+
+animate(p, fps = 2)</code></pre>
+<p><img src="/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-2-1.gif" /><!-- --></p>
+</div>
+<div id="histogram" class="section level1">
+<h1>histogram</h1>
+<pre class="r"><code>p &lt;- 1/2
+Tmax = 60
+N &lt;- 100 # number of starting &quot;dots&quot;
+
+# start at the origin
+x &lt;- rep(0,N)
+t &lt;- rep(0,N)
+df &lt;- data.frame(x,t)
+
+# random walk
+for(i in 1:Tmax){
+  for(j in 1:N){
+    if(runif(1) &lt; p){
+      x[j] &lt;- x[j] - 1
+    } else {
+      x[j] &lt;- x[j] + 1
+    }
+  }
+  t &lt;- rep(i,N)
+  
+  this_step &lt;- data.frame(x,t)
+  df &lt;- rbind(df, this_step)
+}
+
+p &lt;- ggplot(df, aes(x)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_bar(fill = &quot;blue&quot;, stat = &quot;count&quot;) +
+  labs(title = &quot;Random Walk (p = 1/2)&quot;,
+       subtitle = &quot;t = {closest_state}&quot;,
+       caption = &quot;Math 181&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(breaks = NULL) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1)
+
+animate(p, fps = 2)</code></pre>
+<p><img src="/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-3-1.gif" /><!-- --></p>
+</div>
+<div id="multiple-random-walks" class="section level1">
+<h1>Multiple Random Walks</h1>
+<pre class="r"><code>pL &lt;- 3/4
+pM &lt;- 1/2
+pR &lt;- 7/16
+Tmax = 60
+N &lt;- 300 # number of starting &quot;dots&quot; (use a number divisible by 3)
+
+# start at the origin
+x &lt;- rep(0,N)
+t &lt;- rep(0,N)
+group &lt;- c(rep(&quot;transient left&quot;, N/3),
+           rep(&quot;recurrent&quot;, N/3), 
+           rep(&quot;transient right&quot;, N/3))
+df &lt;- data.frame(x,t, group)
+
+# random walk
+for(i in 1:Tmax){
+  for(j in 1:(N/3)){
+    if(runif(1) &lt; pL){
+      x[j] &lt;- x[j] - 1
+    } else {
+      x[j] &lt;- x[j] + 1
+    }
+  }
+  for(j in (N/3+1):(2*N/3)){
+    if(runif(1) &lt; pM){
+      x[j] &lt;- x[j] - 1
+    } else {
+      x[j] &lt;- x[j] + 1
+    }
+  }
+  for(j in (2*N/3+1):N){
+    if(runif(1) &lt; pR){
+      x[j] &lt;- x[j] - 1
+    } else {
+      x[j] &lt;- x[j] + 1
+    }
+  }
+  
+  t &lt;- rep(i,N)
+  this_step &lt;- data.frame(x,t,group)
+  df &lt;- rbind(df, this_step)
+}
+
+p &lt;- ggplot(df, aes(x)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_bar(aes(fill = group),
+           stat = &quot;count&quot;, position=position_dodge()) +
+  labs(title = &quot;Random Walks&quot;,
+       subtitle = &quot;t = {closest_state}&quot;,
+       caption = &quot;Math 181&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(trans=&#39;log2&#39;, breaks = NULL) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1)
+
+animate(p, fps = 2)</code></pre>
+<pre><code>## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals</code></pre>
+<p><img src="/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-4-1.gif" /><!-- --></p>
+</div>
+<div id="drunkards-walk" class="section level1">
+<h1>Drunkard’s Walk</h1>
+<pre class="r"><code># parameters
+Tmax = 60
+
+# start at the origin
+x = 0
+y = 0
+t = 0
+df &lt;- data.frame(x,y,t)
+
+# random walk
+for(i in 1:Tmax){
+  t &lt;- t + 1
+  rand_num &lt;- runif(1)
+  if(rand_num &lt; 0.25){
+    x &lt;- x - 1
+  } else if(rand_num &lt; 0.5){
+    y &lt;- y - 1
+  } else if(rand_num &lt; 0.75){
+    x &lt;- x + 1
+  } else {
+    y &lt;- y + 1
+  }
+  
+  # reset process if dot leaves view
+  if(abs(x) &gt; 10){
+    x &lt;- 0
+    y &lt;- 0
+  }
+  if(abs(y) &gt; 10){
+    x &lt;- 0
+    y &lt;- 0
+  }
+  
+  this_step &lt;- data.frame(x,y,t)
+  df &lt;- rbind(df, this_step)
+}
+
+p &lt;- ggplot(df, aes(x,y)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_point(color = &quot;blue&quot;, size = 10) +
+  labs(title = &quot;Drunkard&#39;s Walk&quot;,
+       subtitle = &quot;t = {closest_state}&quot;,
+       caption = &quot;Math 181&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(breaks = -10:10) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1) +
+  shadow_wake(colour = &quot;gray&quot;, wake_length = 0.2, alpha = 0.4)
+
+animate(p, fps = 2)</code></pre>
+<p><img src="/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-5-1.gif" /><!-- --></p>
+</div>

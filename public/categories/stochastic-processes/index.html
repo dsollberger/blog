@@ -79,7 +79,7 @@
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2019-01-08T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2019-02-25T00:00:00&#43;00:00">
   
 
   
@@ -209,6 +209,47 @@
   
 
   
+  
+  <div>
+    <h2><a href="/post/random-walks-draft/">Random Walks (draft)</a></h2>
+    <div class="article-style">
+      
+      <p>library(&quot;gganimate&quot;)
+library(&quot;ggplot2&quot;)
+p = <sup>1</sup>&frasl;<sub>2</sub></p>
+
+<h1 id="parameters">parameters</h1>
+
+<p>p &lt;- 0.5
+Tmax = 60</p>
+
+<h1 id="start-at-the-origin">start at the origin</h1>
+
+<p>x = 0
+y = 0
+t = 0
+df &lt;- data.frame(x,y,t)</p>
+
+<h1 id="random-walk">random walk</h1>
+
+<p>for(i in 1:Tmax){
+t &lt;- t + 1
+if(runif(1) &lt; p){
+x &lt;- x - 1
+} else {
+x &lt;- x + 1
+}</p>
+
+<h1 id="reset-process-if-dot-leaves-view">reset process if dot leaves view</h1>
+
+<p>if(abs(x) &gt; 10){
+x &lt;- 0
+}
+this_step &lt;- data.</p>
+
+      
+    </div>
+  </div>
   
   <div>
     <h2><a href="/post/graduation-rates/">Graduation Rates</a></h2>

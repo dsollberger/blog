@@ -11,6 +11,249 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Random Walks (draft)</title>
+      <link>/post/random-walks-draft/</link>
+      <pubDate>Mon, 25 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/random-walks-draft/</guid>
+      <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;gganimate&amp;quot;)
+library(&amp;quot;ggplot2&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;p-12&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;p = 1/2&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# parameters
+p &amp;lt;- 0.5
+Tmax = 60
+
+# start at the origin
+x = 0
+y = 0
+t = 0
+df &amp;lt;- data.frame(x,y,t)
+
+# random walk
+for(i in 1:Tmax){
+  t &amp;lt;- t + 1
+  if(runif(1) &amp;lt; p){
+    x &amp;lt;- x - 1
+  } else {
+    x &amp;lt;- x + 1
+  }
+  
+  # reset process if dot leaves view
+  if(abs(x) &amp;gt; 10){
+    x &amp;lt;- 0
+  }
+  
+  this_step &amp;lt;- data.frame(x,y,t)
+  df &amp;lt;- rbind(df, this_step)
+}
+
+p &amp;lt;- ggplot(df, aes(x,y)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_point(color = &amp;quot;blue&amp;quot;, size = 10) +
+  labs(title = &amp;quot;Random Walk (p = 1/2)&amp;quot;,
+       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
+       caption = &amp;quot;Math 181&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(breaks = NULL) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1) +
+  shadow_wake(colour = &amp;quot;gray&amp;quot;, wake_length = 0.2, alpha = 0.4)
+
+animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-2-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;histogram&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;histogram&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p &amp;lt;- 1/2
+Tmax = 60
+N &amp;lt;- 100 # number of starting &amp;quot;dots&amp;quot;
+
+# start at the origin
+x &amp;lt;- rep(0,N)
+t &amp;lt;- rep(0,N)
+df &amp;lt;- data.frame(x,t)
+
+# random walk
+for(i in 1:Tmax){
+  for(j in 1:N){
+    if(runif(1) &amp;lt; p){
+      x[j] &amp;lt;- x[j] - 1
+    } else {
+      x[j] &amp;lt;- x[j] + 1
+    }
+  }
+  t &amp;lt;- rep(i,N)
+  
+  this_step &amp;lt;- data.frame(x,t)
+  df &amp;lt;- rbind(df, this_step)
+}
+
+p &amp;lt;- ggplot(df, aes(x)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_bar(fill = &amp;quot;blue&amp;quot;, stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Random Walk (p = 1/2)&amp;quot;,
+       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
+       caption = &amp;quot;Math 181&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(breaks = NULL) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1)
+
+animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-3-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;multiple-random-walks&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Multiple Random Walks&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pL &amp;lt;- 3/4
+pM &amp;lt;- 1/2
+pR &amp;lt;- 7/16
+Tmax = 60
+N &amp;lt;- 300 # number of starting &amp;quot;dots&amp;quot; (use a number divisible by 3)
+
+# start at the origin
+x &amp;lt;- rep(0,N)
+t &amp;lt;- rep(0,N)
+group &amp;lt;- c(rep(&amp;quot;transient left&amp;quot;, N/3),
+           rep(&amp;quot;recurrent&amp;quot;, N/3), 
+           rep(&amp;quot;transient right&amp;quot;, N/3))
+df &amp;lt;- data.frame(x,t, group)
+
+# random walk
+for(i in 1:Tmax){
+  for(j in 1:(N/3)){
+    if(runif(1) &amp;lt; pL){
+      x[j] &amp;lt;- x[j] - 1
+    } else {
+      x[j] &amp;lt;- x[j] + 1
+    }
+  }
+  for(j in (N/3+1):(2*N/3)){
+    if(runif(1) &amp;lt; pM){
+      x[j] &amp;lt;- x[j] - 1
+    } else {
+      x[j] &amp;lt;- x[j] + 1
+    }
+  }
+  for(j in (2*N/3+1):N){
+    if(runif(1) &amp;lt; pR){
+      x[j] &amp;lt;- x[j] - 1
+    } else {
+      x[j] &amp;lt;- x[j] + 1
+    }
+  }
+  
+  t &amp;lt;- rep(i,N)
+  this_step &amp;lt;- data.frame(x,t,group)
+  df &amp;lt;- rbind(df, this_step)
+}
+
+p &amp;lt;- ggplot(df, aes(x)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_bar(aes(fill = group),
+           stat = &amp;quot;count&amp;quot;, position=position_dodge()) +
+  labs(title = &amp;quot;Random Walks&amp;quot;,
+       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
+       caption = &amp;quot;Math 181&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(trans=&amp;#39;log2&amp;#39;, breaks = NULL) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1)
+
+animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-4-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;drunkards-walk&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Drunkard’s Walk&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# parameters
+Tmax = 60
+
+# start at the origin
+x = 0
+y = 0
+t = 0
+df &amp;lt;- data.frame(x,y,t)
+
+# random walk
+for(i in 1:Tmax){
+  t &amp;lt;- t + 1
+  rand_num &amp;lt;- runif(1)
+  if(rand_num &amp;lt; 0.25){
+    x &amp;lt;- x - 1
+  } else if(rand_num &amp;lt; 0.5){
+    y &amp;lt;- y - 1
+  } else if(rand_num &amp;lt; 0.75){
+    x &amp;lt;- x + 1
+  } else {
+    y &amp;lt;- y + 1
+  }
+  
+  # reset process if dot leaves view
+  if(abs(x) &amp;gt; 10){
+    x &amp;lt;- 0
+    y &amp;lt;- 0
+  }
+  if(abs(y) &amp;gt; 10){
+    x &amp;lt;- 0
+    y &amp;lt;- 0
+  }
+  
+  this_step &amp;lt;- data.frame(x,y,t)
+  df &amp;lt;- rbind(df, this_step)
+}
+
+p &amp;lt;- ggplot(df, aes(x,y)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_point(color = &amp;quot;blue&amp;quot;, size = 10) +
+  labs(title = &amp;quot;Drunkard&amp;#39;s Walk&amp;quot;,
+       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
+       caption = &amp;quot;Math 181&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(breaks = -10:10) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1) +
+  shadow_wake(colour = &amp;quot;gray&amp;quot;, wake_length = 0.2, alpha = 0.4)
+
+animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-5-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Valentine&#39;s Day 2019</title>
       <link>/post/valentine-s-day-2019/</link>
       <pubDate>Thu, 14 Feb 2019 00:00:00 +0000</pubDate>
@@ -1132,17 +1375,6 @@ write.zoo(Fri_dates, sep = &amp;quot;,&amp;quot;, file = &amp;quot;schedule.csv&
       
       <guid>/post/let-s-see-if-i-can-make-posts-mostly-through-rstudio/</guid>
       <description>&lt;p&gt;Let’s see if I can make posts (mostly) through RStudio&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Trying out GitHub Pages with Blogdown</title>
-      <link>/post/trying-out-github-pages-with-blogdown/</link>
-      <pubDate>Thu, 11 Jan 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/trying-out-github-pages-with-blogdown/</guid>
-      <description>&lt;p&gt;Today I am trying to get a &lt;code&gt;blogdown&lt;/code&gt; site to work with GitHub pages, but I cannot seem to get the posts to link correctly with relative links.&lt;/p&gt;
-&lt;p&gt;Well, I hope to delete the pre-included widgets for now since I do not have publications.&lt;/p&gt;
 </description>
     </item>
     

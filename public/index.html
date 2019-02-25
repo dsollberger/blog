@@ -381,6 +381,85 @@
         
           
       
+
+      
+      
+        
+        
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
+    <a href="/post/random-walks-draft/" itemprop="url">Random Walks (draft)</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2019-02-25 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Feb 25, 2019
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/stochastic-processes">stochastic processes</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    library(&quot;gganimate&quot;)library(&quot;ggplot2&quot;)p = 1/2# parametersp &lt;- 0.5Tmax = 60# start at the originx = 0y = 0t = 0df &lt;- data.frame(x,y,t)# random walkfor(i in 1:Tmax){t &lt;- t + 1if(runif(1) &lt; p){x &lt;- x - 1} else {x &lt;- x + 1}# reset process if dot leaves viewif(abs(x) &gt; 10){x &lt;- 0}this_step &lt;- data.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/random-walks-draft/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+      
+
+      
+
+        
+
+        
+        
+
+        
+        
+          
+      
           
       
 
@@ -706,87 +785,6 @@ library(gganatogram)## Loading required package: ggpolypath## Loading required
       
 
       
-
-        
-
-        
-        
-
-        
-        
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/curse-of-dimensionality/" itemprop="url">Curse of Dimensionality</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2019-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jan 8, 2019
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/linear-algebra">linear algebra</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    Today, I hope to present a quick glimpse at the phenomenon called the “Curse of Dimensionality”. For this demonstration, I am simply calculating how much random data stays within two standard deviations (in the Euclidean norm) as we go from one dimension to higher dimensions.
-Random DataHere are 10 vectors of 100 random numbers each sampled from the standard normal distribution stored as a matrix …
-X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/curse-of-dimensionality/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
     
 
   </div>
@@ -860,7 +858,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
           
           
           
-          <a href="/tags/esl" style="font-size:1.4576497722987207rem">ESL</a>
+          <a href="/tags/esl" style="font-size:1.4055522180836377rem">ESL</a>
         
           
           
@@ -874,14 +872,14 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
           
           
           
-          <a href="/tags/academic" style="font-size:2.115299544597441rem">academic</a>
+          <a href="/tags/academic" style="font-size:2.011104436167275rem">academic</a>
         
           
           
           
           
           
-          <a href="/tags/blogdown" style="font-size:1.4576497722987207rem">blogdown</a>
+          <a href="/tags/blogdown" style="font-size:1.4055522180836377rem">blogdown</a>
         
           
           
@@ -902,7 +900,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
           
           
           
-          <a href="/tags/flexdashboard" style="font-size:1.8423502277012793rem">flexdashboard</a>
+          <a href="/tags/flexdashboard" style="font-size:1.7597775578910853rem">flexdashboard</a>
         
           
           
@@ -916,14 +914,14 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
           
           
           
-          <a href="/tags/gganimate" style="font-size:2.3270154828966763rem">gganimate</a>
+          <a href="/tags/gganimate" style="font-size:2.365329775974723rem">gganimate</a>
         
           
           
           
           
           
-          <a href="/tags/ggplot" style="font-size:1.8423502277012793rem">ggplot</a>
+          <a href="/tags/ggplot" style="font-size:1.7597775578910853rem">ggplot</a>
         
           
           
@@ -944,7 +942,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
           
           
           
-          <a href="/tags/hugo" style="font-size:2.115299544597441rem">hugo</a>
+          <a href="/tags/hugo" style="font-size:2.011104436167275rem">hugo</a>
         
           
           
@@ -958,7 +956,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
           
           
           
-          <a href="/tags/math" style="font-size:1.4576497722987207rem">math</a>
+          <a href="/tags/math" style="font-size:1.4055522180836377rem">math</a>
         
           
           
@@ -979,7 +977,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
           
           
           
-          <a href="/tags/regression" style="font-size:1.4576497722987207rem">regression</a>
+          <a href="/tags/regression" style="font-size:1.4055522180836377rem">regression</a>
         
           
           
@@ -1000,7 +998,7 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
           
           
           
-          <a href="/tags/workshop" style="font-size:1.4576497722987207rem">workshop</a>
+          <a href="/tags/workshop" style="font-size:1.4055522180836377rem">workshop</a>
         
           
           
