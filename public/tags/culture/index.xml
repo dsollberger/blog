@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Culture on The Median Data Scientist</title>
+    <link>/tags/culture/</link>
+    <description>Recent content in Culture on The Median Data Scientist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Sat, 06 Apr 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/culture/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Response to DataCamp&#39;s 20190404 Community Post</title>
+      <link>/post/response-to-datacamp-s-20190404-community-post/</link>
+      <pubDate>Sat, 06 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/response-to-datacamp-s-20190404-community-post/</guid>
+      <description>This is the letter I sent out to my data science organization about the news that came out of DataCamp this week.
+4/6/2019
+Dear DatASci,
+I write to ask you for your input in developing a group response to these recent events.
+Overnight on Thursday, April 4, DataCamp released a statement in their official blog that you can find here: https://www.datacamp.com/community/blog/note-to-our-community. To summarize, in October of 2017, an executive at the company sexually harassed an employee at a company social event.</description>
+    </item>
+    
+    <item>
+      <title>Response to DataCamp&#39;s 20190404 Community Post</title>
+      <link>/post/response-to-datacamp-s-20190404-community-post/</link>
+      <pubDate>Sat, 06 Apr 2019 00:00:00 +0000</pubDate>
+      
+      <guid>/post/response-to-datacamp-s-20190404-community-post/</guid>
+      <description>This is the letter I sent out to my data science organization about the news that came out of DataCamp this week.
+4/6/2019
+Dear DatASci,
+I write to ask you for your input in developing a group response to these recent events.
+Overnight on Thursday, April 4, DataCamp released a statement in their official blog that you can find here: https://www.datacamp.com/community/blog/note-to-our-community. To summarize, in October of 2017, an executive at the company sexually harassed an employee at a company social event.</description>
+    </item>
+    
+  </channel>
+</rss>
