@@ -1,0 +1,14 @@
+---
+title: Gender of Frasier Characters
+author: Derek Sollberger
+date: '2020-01-09'
+slug: gender-of-frasier-characters
+categories:
+  - tidyverse
+tags:
+  - data mining
+header:
+  caption: ''
+  image: ''
+---
+

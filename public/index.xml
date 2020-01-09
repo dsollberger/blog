@@ -11,6 +11,15 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Gender of Frasier Characters</title>
+      <link>/post/gender-of-frasier-characters/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/gender-of-frasier-characters/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Response to DataCamp&#39;s 20190404 Community Post</title>
       <link>/post/response-to-datacamp-s-20190404-community-post/</link>
       <pubDate>Sat, 06 Apr 2019 00:00:00 +0000</pubDate>
@@ -1321,31 +1330,6 @@ n&lt;/code&gt;&lt;/pre&gt;
 &lt;/ul&gt;
 &lt;p&gt;From there, I also started to arrange the “paragraphs” into separate columns for a nice arrangement.&lt;/p&gt;
 &lt;p&gt;&lt;img src = &#34;for%20Twitter.jpg&#34;&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Trying Out FlexDashboard</title>
-      <link>/post/trying-out-flexdashboard/</link>
-      <pubDate>Mon, 20 Aug 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/trying-out-flexdashboard/</guid>
-      <description>&lt;p&gt;Thanks to Dr. Elaine McVey&amp;rsquo;s course at DataCamp, I feel that I can convert my Data Science course&amp;rsquo;s lab assignments and slides to &lt;code&gt;flexdashboard&lt;/code&gt;.  Today, I converted the first lab assignment.  The hope is that the students can clearly see the instructions that I am trying to convey rather than facing a wall of text.&lt;/p&gt;
-
-&lt;p&gt;To convert my lab, which was previously in an R Markdown document for HTML output, I had to&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;explicitly used &lt;code&gt;echo = TRUE&lt;/code&gt; in each code block that should be presented to the student&lt;/li&gt;
-&lt;li&gt;used the &lt;code&gt;\huge&lt;/code&gt; LaTeX font size modifier on math-mode elements&lt;/li&gt;
-&lt;li&gt;changed the YAML heading to call for &lt;code&gt;output:
-flexdashboard::flex_dashboard:
-orientation: columns&lt;/code&gt;
-&lt;br /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;From there, I also started to arrange the &amp;ldquo;paragraphs&amp;rdquo; into separate columns for a nice arrangement.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src = &#34;for Twitter.jpg&#34;&gt;&lt;/p&gt;
 </description>
     </item>
     
