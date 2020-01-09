@@ -18,7 +18,9 @@
       <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/gender-of-frasier-characters/</guid>
-      <description></description>
+      <description>“I am not a man…”
+For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show Fraiser.
+The gender package#install.packages(&amp;quot;gender&amp;quot;) #works fine## user needs to download database too#install_genderdata_package() #did not work (&amp;quot;error reading from connection&amp;quot;)## as suggested by the bug report at https://github.com/ropensci/drat/issues/6#install.packages(&amp;quot;devtools&amp;quot;)#library(devtools)#devtools::install_github(&amp;quot;ropensci/genderdata&amp;quot;)Trial Runlibrary(gender)library(ggpubr)library(tidyverse)gender(&amp;quot;frasier&amp;quot;, method = &amp;quot;ssa&amp;quot;, years = c(1940, 1990))## # A tibble: 1 x 6## name proportion_male proportion_female gender year_min year_max## &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;## 1 frasier 1 0 male 1940 1990Cast of CharactersNow I will try to run the gender function over a list of names (criteria: characters that appeared in at least 6 episodes).</description>
     </item>
     
     <item>

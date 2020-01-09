@@ -12,3 +12,74 @@ header:
   image: ''
 ---
 
+"I am not a man..."
+
+For work, I need to take a list of names and try to infer the gender.  Here I try an R package on the character names in the TV show *Fraiser*.
+
+# The gender package
+
+```{r}
+#install.packages("gender") #works fine
+
+## user needs to download database too
+#install_genderdata_package() #did not work ("error reading from connection")
+
+## as suggested by the bug report at https://github.com/ropensci/drat/issues/6
+#install.packages("devtools")
+#library(devtools)
+#devtools::install_github("ropensci/genderdata")
+```
+
+# Trial Run
+
+```{r, message = FALSE, warning = FALSE}
+library(gender)
+library(ggpubr)
+library(tidyverse)
+
+gender("frasier", method = "ssa", years = c(1940, 1990))
+```
+
+# Cast of Characters
+
+Now I will try to run the `gender` function over a list of names (criteria: characters that appeared in at least 6 episodes).
+
+```{r}
+#making a data frame of characters (i.e. the TV show characters)
+name <- c("frasier", "daphne", "niles", "roz", "martin", 
+          "eddie", "bulldog", "kenny", "gil", "noel", 
+          "gertrude", "donny", "lilith", "bebe", "mel",
+          "ronee", "alice", "julia", "frederick", "simon",
+          "lana", "sherry", "kirby", "charlotte")
+start_year <- 1940
+end_year <- 1990
+df <- data.frame(name, start_year, end_year, stringsAsFactors=FALSE)
+main_cast <- df %>% slice(1:5)
+
+gender_df(df, method = "ssa", name_col = "name", year_col = c("start_year", "end_year"))
+```
+
+# Sorting the Data
+
+```{r}
+results <- gender_df(df, method = "ssa", name_col = "name", year_col = c("start_year", "end_year"))
+
+results_classified <- results %>%
+  select(name, proportion_male, gender) %>%
+  arrange(desc(proportion_male)) 
+
+ggtexttable(results_classified, rows = NULL)
+```
+
+Note that "Mel" is a female character in the TV show.  The calculations are tougher when the input is a nickname.
+
+```{r}
+# just the main cast
+main_cast_classified <- gender_df(main_cast, 
+          method = "ssa", name_col = "name", 
+          year_col = c("start_year", "end_year")) %>%
+  select(name, proportion_male, gender) %>%
+  arrange(desc(proportion_male))
+
+ggtexttable(main_cast_classified, rows = NULL)
+```

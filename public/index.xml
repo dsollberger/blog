@@ -16,7 +16,84 @@
       <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/gender-of-frasier-characters/</guid>
-      <description></description>
+      <description>&lt;p&gt;“I am not a man…”&lt;/p&gt;
+&lt;p&gt;For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show &lt;em&gt;Fraiser&lt;/em&gt;.&lt;/p&gt;
+&lt;div id=&#34;the-gender-package&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The gender package&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#install.packages(&amp;quot;gender&amp;quot;) #works fine
+
+## user needs to download database too
+#install_genderdata_package() #did not work (&amp;quot;error reading from connection&amp;quot;)
+
+## as suggested by the bug report at https://github.com/ropensci/drat/issues/6
+#install.packages(&amp;quot;devtools&amp;quot;)
+#library(devtools)
+#devtools::install_github(&amp;quot;ropensci/genderdata&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;trial-run&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Trial Run&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gender)
+library(ggpubr)
+library(tidyverse)
+
+gender(&amp;quot;frasier&amp;quot;, method = &amp;quot;ssa&amp;quot;, years = c(1940, 1990))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 6
+##   name    proportion_male proportion_female gender year_min year_max
+##   &amp;lt;chr&amp;gt;             &amp;lt;dbl&amp;gt;             &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
+## 1 frasier               1                 0 male       1940     1990&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cast-of-characters&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Cast of Characters&lt;/h1&gt;
+&lt;p&gt;Now I will try to run the &lt;code&gt;gender&lt;/code&gt; function over a list of names (criteria: characters that appeared in at least 6 episodes).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#making a data frame of characters (i.e. the TV show characters)
+name &amp;lt;- c(&amp;quot;frasier&amp;quot;, &amp;quot;daphne&amp;quot;, &amp;quot;niles&amp;quot;, &amp;quot;roz&amp;quot;, &amp;quot;martin&amp;quot;, 
+          &amp;quot;eddie&amp;quot;, &amp;quot;bulldog&amp;quot;, &amp;quot;kenny&amp;quot;, &amp;quot;gil&amp;quot;, &amp;quot;noel&amp;quot;, 
+          &amp;quot;gertrude&amp;quot;, &amp;quot;donny&amp;quot;, &amp;quot;lilith&amp;quot;, &amp;quot;bebe&amp;quot;, &amp;quot;mel&amp;quot;,
+          &amp;quot;ronee&amp;quot;, &amp;quot;alice&amp;quot;, &amp;quot;julia&amp;quot;, &amp;quot;frederick&amp;quot;, &amp;quot;simon&amp;quot;,
+          &amp;quot;lana&amp;quot;, &amp;quot;sherry&amp;quot;, &amp;quot;kirby&amp;quot;, &amp;quot;charlotte&amp;quot;)
+start_year &amp;lt;- 1940
+end_year &amp;lt;- 1990
+df &amp;lt;- data.frame(name, start_year, end_year, stringsAsFactors=FALSE)
+main_cast &amp;lt;- df %&amp;gt;% slice(1:5)
+
+gender_df(df, method = &amp;quot;ssa&amp;quot;, name_col = &amp;quot;name&amp;quot;, year_col = c(&amp;quot;start_year&amp;quot;, &amp;quot;end_year&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 23 x 6
+##    name      proportion_male proportion_female gender year_min year_max
+##  * &amp;lt;chr&amp;gt;               &amp;lt;dbl&amp;gt;             &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
+##  1 alice              0.0033            0.997  female     1940     1990
+##  2 bebe               0                 1      female     1940     1990
+##  3 charlotte          0.0026            0.997  female     1940     1990
+##  4 daphne             0.0004            1.00   female     1940     1990
+##  5 donny              0.996             0.0039 male       1940     1990
+##  6 eddie              0.959             0.0414 male       1940     1990
+##  7 frasier            1                 0      male       1940     1990
+##  8 frederick          0.995             0.0052 male       1940     1990
+##  9 gertrude           0.0008            0.999  female     1940     1990
+## 10 gil                1                 0      male       1940     1990
+## # ... with 13 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sorting-the-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sorting the Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;results &amp;lt;- gender_df(df, method = &amp;quot;ssa&amp;quot;, name_col = &amp;quot;name&amp;quot;, year_col = c(&amp;quot;start_year&amp;quot;, &amp;quot;end_year&amp;quot;))
+
+results_classified &amp;lt;- results %&amp;gt;%
+  select(name, proportion_male, gender) %&amp;gt;%
+  arrange(desc(proportion_male)) 
+
+ggtexttable(results_classified, rows = NULL)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-01-09-gender-of-frasier-characters_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Note that “Mel” is a female character in the TV show. The calculations are tougher when the input is a nickname.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# just the main cast
+main_cast_classified &amp;lt;- gender_df(main_cast, 
+          method = &amp;quot;ssa&amp;quot;, name_col = &amp;quot;name&amp;quot;, 
+          year_col = c(&amp;quot;start_year&amp;quot;, &amp;quot;end_year&amp;quot;)) %&amp;gt;%
+  select(name, proportion_male, gender) %&amp;gt;%
+  arrange(desc(proportion_male))
+
+ggtexttable(main_cast_classified, rows = NULL)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-01-09-gender-of-frasier-characters_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
     </item>
     
     <item>

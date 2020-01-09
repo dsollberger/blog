@@ -410,7 +410,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    0 min read
+    2 min read
   </span>
   
 
@@ -437,7 +437,9 @@
 
   <div class="article-style" itemprop="articleBody">
     
-    
+    “I am not a man…”
+For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show Fraiser.
+The gender package#install.packages(&quot;gender&quot;) #works fine## user needs to download database too#install_genderdata_package() #did not work (&quot;error reading from connection&quot;)## as suggested by the bug report at https://github.com/ropensci/drat/issues/6#install.packages(&quot;devtools&quot;)#library(devtools)#devtools::install_github(&quot;ropensci/genderdata&quot;)Trial Runlibrary(gender)library(ggpubr)library(tidyverse)gender(&quot;frasier&quot;, method = &quot;ssa&quot;, years = c(1940, 1990))## # A tibble: 1 x 6## name proportion_male proportion_female gender year_min year_max## &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;## 1 frasier 1 0 male 1940 1990Cast of CharactersNow I will try to run the gender function over a list of names (criteria: characters that appeared in at least 6 episodes).
     
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">

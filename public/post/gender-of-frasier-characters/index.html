@@ -17,7 +17,9 @@
       
     
   
-  <meta name="description" content="">
+  <meta name="description" content="“I am not a man…”
+For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show Fraiser.
+The gender package#install.packages(&quot;gender&quot;) #works fine## user needs to download database too#install_genderdata_package() #did not work (&quot;error reading from connection&quot;)## as suggested by the bug report at https://github.com/ropensci/drat/issues/6#install.packages(&quot;devtools&quot;)#library(devtools)#devtools::install_github(&quot;ropensci/genderdata&quot;)Trial Runlibrary(gender)library(ggpubr)library(tidyverse)gender(&quot;frasier&quot;, method = &quot;ssa&quot;, years = c(1940, 1990))## # A tibble: 1 x 6## name proportion_male proportion_female gender year_min year_max## &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;## 1 frasier 1 0 male 1940 1990Cast of CharactersNow I will try to run the gender function over a list of names (criteria: characters that appeared in at least 6 episodes).">
 
   
   <link rel="alternate" hreflang="en-us" href="/post/gender-of-frasier-characters/">
@@ -78,7 +80,9 @@
   <meta property="og:site_name" content="The Median Data Scientist">
   <meta property="og:url" content="/post/gender-of-frasier-characters/">
   <meta property="og:title" content="Gender of Frasier Characters | The Median Data Scientist">
-  <meta property="og:description" content="">
+  <meta property="og:description" content="“I am not a man…”
+For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show Fraiser.
+The gender package#install.packages(&quot;gender&quot;) #works fine## user needs to download database too#install_genderdata_package() #did not work (&quot;error reading from connection&quot;)## as suggested by the bug report at https://github.com/ropensci/drat/issues/6#install.packages(&quot;devtools&quot;)#library(devtools)#devtools::install_github(&quot;ropensci/genderdata&quot;)Trial Runlibrary(gender)library(ggpubr)library(tidyverse)gender(&quot;frasier&quot;, method = &quot;ssa&quot;, years = c(1940, 1990))## # A tibble: 1 x 6## name proportion_male proportion_female gender year_min year_max## &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;## 1 frasier 1 0 male 1940 1990Cast of CharactersNow I will try to run the gender function over a list of names (criteria: characters that appeared in at least 6 episodes).">
   <meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2020-01-09T00:00:00&#43;00:00">
@@ -229,7 +233,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    0 min read
+    2 min read
   </span>
   
 
@@ -298,7 +302,84 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        
+        <p>“I am not a man…”</p>
+<p>For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show <em>Fraiser</em>.</p>
+<div id="the-gender-package" class="section level1">
+<h1>The gender package</h1>
+<pre class="r"><code>#install.packages(&quot;gender&quot;) #works fine
+
+## user needs to download database too
+#install_genderdata_package() #did not work (&quot;error reading from connection&quot;)
+
+## as suggested by the bug report at https://github.com/ropensci/drat/issues/6
+#install.packages(&quot;devtools&quot;)
+#library(devtools)
+#devtools::install_github(&quot;ropensci/genderdata&quot;)</code></pre>
+</div>
+<div id="trial-run" class="section level1">
+<h1>Trial Run</h1>
+<pre class="r"><code>library(gender)
+library(ggpubr)
+library(tidyverse)
+
+gender(&quot;frasier&quot;, method = &quot;ssa&quot;, years = c(1940, 1990))</code></pre>
+<pre><code>## # A tibble: 1 x 6
+##   name    proportion_male proportion_female gender year_min year_max
+##   &lt;chr&gt;             &lt;dbl&gt;             &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 frasier               1                 0 male       1940     1990</code></pre>
+</div>
+<div id="cast-of-characters" class="section level1">
+<h1>Cast of Characters</h1>
+<p>Now I will try to run the <code>gender</code> function over a list of names (criteria: characters that appeared in at least 6 episodes).</p>
+<pre class="r"><code>#making a data frame of characters (i.e. the TV show characters)
+name &lt;- c(&quot;frasier&quot;, &quot;daphne&quot;, &quot;niles&quot;, &quot;roz&quot;, &quot;martin&quot;, 
+          &quot;eddie&quot;, &quot;bulldog&quot;, &quot;kenny&quot;, &quot;gil&quot;, &quot;noel&quot;, 
+          &quot;gertrude&quot;, &quot;donny&quot;, &quot;lilith&quot;, &quot;bebe&quot;, &quot;mel&quot;,
+          &quot;ronee&quot;, &quot;alice&quot;, &quot;julia&quot;, &quot;frederick&quot;, &quot;simon&quot;,
+          &quot;lana&quot;, &quot;sherry&quot;, &quot;kirby&quot;, &quot;charlotte&quot;)
+start_year &lt;- 1940
+end_year &lt;- 1990
+df &lt;- data.frame(name, start_year, end_year, stringsAsFactors=FALSE)
+main_cast &lt;- df %&gt;% slice(1:5)
+
+gender_df(df, method = &quot;ssa&quot;, name_col = &quot;name&quot;, year_col = c(&quot;start_year&quot;, &quot;end_year&quot;))</code></pre>
+<pre><code>## # A tibble: 23 x 6
+##    name      proportion_male proportion_female gender year_min year_max
+##  * &lt;chr&gt;               &lt;dbl&gt;             &lt;dbl&gt; &lt;chr&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+##  1 alice              0.0033            0.997  female     1940     1990
+##  2 bebe               0                 1      female     1940     1990
+##  3 charlotte          0.0026            0.997  female     1940     1990
+##  4 daphne             0.0004            1.00   female     1940     1990
+##  5 donny              0.996             0.0039 male       1940     1990
+##  6 eddie              0.959             0.0414 male       1940     1990
+##  7 frasier            1                 0      male       1940     1990
+##  8 frederick          0.995             0.0052 male       1940     1990
+##  9 gertrude           0.0008            0.999  female     1940     1990
+## 10 gil                1                 0      male       1940     1990
+## # ... with 13 more rows</code></pre>
+</div>
+<div id="sorting-the-data" class="section level1">
+<h1>Sorting the Data</h1>
+<pre class="r"><code>results &lt;- gender_df(df, method = &quot;ssa&quot;, name_col = &quot;name&quot;, year_col = c(&quot;start_year&quot;, &quot;end_year&quot;))
+
+results_classified &lt;- results %&gt;%
+  select(name, proportion_male, gender) %&gt;%
+  arrange(desc(proportion_male)) 
+
+ggtexttable(results_classified, rows = NULL)</code></pre>
+<p><img src="/post/2020-01-09-gender-of-frasier-characters_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Note that “Mel” is a female character in the TV show. The calculations are tougher when the input is a nickname.</p>
+<pre class="r"><code># just the main cast
+main_cast_classified &lt;- gender_df(main_cast, 
+          method = &quot;ssa&quot;, name_col = &quot;name&quot;, 
+          year_col = c(&quot;start_year&quot;, &quot;end_year&quot;)) %&gt;%
+  select(name, proportion_male, gender) %&gt;%
+  arrange(desc(proportion_male))
+
+ggtexttable(main_cast_classified, rows = NULL)</code></pre>
+<p><img src="/post/2020-01-09-gender-of-frasier-characters_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+
       </div>
 
       
