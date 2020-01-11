@@ -1,0 +1,57 @@
+---
+title: Hikes I've Completed
+author: Derek Sollberger
+date: '2020-01-11'
+slug: hikes-i-ve-completed
+categories:
+  - hiking
+tags:
+  - ggplot
+header:
+  caption: ''
+  image: ''
+---
+
+Here I will plot some of the hikes I have done as elevation (from sea level) versus distance.  I was inspired by [this Reddit post](https://www.reddit.com/r/dataisbeautiful/comments/bwm184/my_first_attempt_at_data_visualization_hikes_ive/)
+
+Today's code was great practice with
+
+* `geom_segment`
+* `geom_label_repel`
+
+and using `xlim` and `ylim` to expand the plot.
+
+```{r, message = FALSE, warning = FALSE}
+library(ggrepel)
+library(tidyverse)
+library(readxl)
+```
+
+```{r}
+df_info <- read_excel("hikes.xlsx", sheet = "info")
+df_info %>% print()
+```
+
+```{r}
+df_info %>%
+  mutate(start = 0) %>% #the first x-value for each line segment
+  ggplot() +
+  geom_segment(aes(x = start, y = trailhead, 
+                   xend = distance, yend = peak, 
+                   color = Region)) +
+  geom_label_repel(aes(x = distance, y = peak, 
+                       color = Region,
+                       label = trail),
+                   box.padding = 1,
+                   segment.color = "grey50",
+                   segment.size = 0.5) +
+  geom_point(aes(x = distance, y = peak, color = Region), size = 5) +
+  labs(title = "Hikes I've Completed",
+       subtitle = "Derek Sollberger",
+       caption = "2010 to 2019",
+       x = "One-Way Distance (in miles)",
+       y = "Elevation (in feet)") +
+  theme_minimal() +
+  xlim(0,8) +
+  ylim(0, 15000)
+```

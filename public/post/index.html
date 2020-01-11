@@ -208,6 +208,73 @@
   
   
   <h3 class="article-title" itemprop="headline">
+    <a href="/post/hikes-i-ve-completed/" itemprop="url">Hikes I&#39;ve Completed</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-01-11 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jan 11, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/hiking">hiking</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    Here I will plot some of the hikes I have done as elevation (from sea level) versus distance. I was inspired by this Reddit post
+Today’s code was great practice with
+geom_segmentgeom_label_repeland using xlim and ylim to expand the plot.
+library(ggrepel)library(tidyverse)library(readxl)df_info &lt;- read_excel(&quot;hikes.xlsx&quot;, sheet = &quot;info&quot;)df_info %&gt;% print()## # A tibble: 9 x 6## Region trail distance trailhead elevation peak## &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;## 1 Tahoe Mt Tallac 5.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/hikes-i-ve-completed/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
     <a href="/post/gender-of-frasier-characters/" itemprop="url">Gender of Frasier Characters</a>
   </h3>
   
@@ -786,72 +853,6 @@ X &lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)… and as a data frame.
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/curse-of-dimensionality/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/graduation-rates/" itemprop="url">Graduation Rates</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2019-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jan 8, 2019
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/stochastic-processes">stochastic processes</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    In this post, I want to run an example of absorbing states in stochastic processes. This example is based on Example 3.29 in Introduction to Stochastic Processes in R by Robert Dobrow.
-DataThe data I have assembled is based on IRDS reports from my own University of California at Merced.
-# weightsweights &lt;- c(20, 70, 0, 0, 10, 0, 0, 5, 89, 0, 6, 0, 0, 0, 3, 94, 3, 0, 0, 0, 0, 24, 1, 76, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0, 100)sparse_weights &lt;- weights[weights &gt; 0]# transition matrix (row stochastic)P &lt;- matrix(weights, nrow = 6, byrow = TRUE)*0.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/graduation-rates/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>
