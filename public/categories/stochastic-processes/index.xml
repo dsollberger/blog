@@ -7,10 +7,21 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Mon, 25 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 13 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/stochastic-processes/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Duolingo Leagues</title>
+      <link>/post/duolingo-leagues/</link>
+      <pubDate>Mon, 13 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/duolingo-leagues/</guid>
+      <description>Duolingo, the language learning app, places users in groups of 50 and assigns a league to each user to encourage competition. The leagues are
+Bronze, Silver, Gold, Sapphire, Ruby, Emerald, Amethyst, Pearl, Obsidian, and Diamond (in that increasing order)What proportion of Duolingo users are in each league?The rules are
+everyone starts in the Bronze Leaguethe top 15 percent of each group gets promoted to the next league up (measured weekly)the bottom 10 percent of each group is related downwardIn this post, I will try out some stochastic processes calculations to answer that question.</description>
+    </item>
     
     <item>
       <title>Random Walks (draft)</title>

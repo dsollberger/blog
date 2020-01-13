@@ -1,0 +1,78 @@
+---
+title: Duolingo Leagues
+author: Derek Sollberger
+date: '2020-01-13'
+slug: duolingo-leagues
+categories:
+  - stochastic processes
+tags:
+  - math
+header:
+  caption: ''
+  image: ''
+---
+
+`Duolingo`, the language learning app, places users in groups of 50 and assigns a `league` to each user to encourage competition.  The leagues are
+
+* Bronze, Silver, Gold, Sapphire, Ruby, Emerald, Amethyst, Pearl, Obsidian, and Diamond (in that increasing order)
+
+# What proportion of Duolingo users are in each league?
+
+The rules are
+
+* everyone starts in the Bronze League
+* the top 15 percent of each group gets promoted to the next league up (measured weekly)
+* the bottom 10 percent of each group is related downward
+
+In this post, I will try out some stochastic processes calculations to answer that question.
+
+```{r}
+leagues <- c("Bronze", "Silver", "Gold", "Sapphire", "Ruby",
+             "Emerald", "Amethyst", "Pearl", "Obsidian", "Diamond")
+
+transition_matrix <- matrix( rep(0, 100), 10)
+
+# trying shortcuts
+diag(transition_matrix[-10,-1]) <- 15 #top 15 percent of each group gets promoted
+diag(transition_matrix[-1,-10]) <- 10 #bottom 10 percent of each group is relegated
+diag(transition_matrix)         <- 75 #the rest stay where they are
+
+# fix the corners
+transition_matrix[1,1]    <- 85
+transition_matrix[10, 10] <- 85
+
+# make row-stochastic (i.e. so each row adds up to one)
+transition_matrix <- transition_matrix/100
+
+# R allows user to label rows and columns
+rownames(transition_matrix) <- leagues
+colnames(transition_matrix) <- leagues
+
+print(transition_matrix)
+```
+
+Knowing some about stochastic processes, we can either implement an initial distribution and employ matrix-vector multiplication over many iterations, or we can find an eigenvector.
+
+```{r}
+findStatDist <- function(P){
+  # This function will compute the stationary distribution for a transition matrix
+  # Input: row-stochastic matrix P
+  # Output: row vector pi_vec
+  
+  # obtain left-eigenvector for lambda = 1
+  x <- eigen(t(P))$vectors[,1] 
+  
+  # normalize the eigenvector in the one-norm
+  pi_vec <- x / sum(x)
+  pi_vec #return this vector
+}
+
+answer <- as.data.frame(round(100*findStatDist(transition_matrix)))
+
+# R allows user to label rows and columns
+rownames(answer) <- leagues
+colnames(answer) <- "percentage"
+
+print(answer)
+```
+

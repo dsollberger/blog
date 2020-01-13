@@ -1,0 +1,106 @@
+---
+title: Duolingo Leagues
+author: Derek Sollberger
+date: '2020-01-13'
+slug: duolingo-leagues
+categories:
+  - stochastic processes
+tags:
+  - math
+header:
+  caption: ''
+  image: ''
+---
+
+
+
+<p><code>Duolingo</code>, the language learning app, places users in groups of 50 and assigns a <code>league</code> to each user to encourage competition. The leagues are</p>
+<ul>
+<li>Bronze, Silver, Gold, Sapphire, Ruby, Emerald, Amethyst, Pearl, Obsidian, and Diamond (in that increasing order)</li>
+</ul>
+<div id="what-proportion-of-duolingo-users-are-in-each-league" class="section level1">
+<h1>What proportion of Duolingo users are in each league?</h1>
+<p>The rules are</p>
+<ul>
+<li>everyone starts in the Bronze League</li>
+<li>the top 15 percent of each group gets promoted to the next league up (measured weekly)</li>
+<li>the bottom 10 percent of each group is related downward</li>
+</ul>
+<p>In this post, I will try out some stochastic processes calculations to answer that question.</p>
+<pre class="r"><code>leagues &lt;- c(&quot;Bronze&quot;, &quot;Silver&quot;, &quot;Gold&quot;, &quot;Sapphire&quot;, &quot;Ruby&quot;,
+             &quot;Emerald&quot;, &quot;Amethyst&quot;, &quot;Pearl&quot;, &quot;Obsidian&quot;, &quot;Diamond&quot;)
+
+transition_matrix &lt;- matrix( rep(0, 100), 10)
+
+# trying shortcuts
+diag(transition_matrix[-10,-1]) &lt;- 15 #top 15 percent of each group gets promoted
+diag(transition_matrix[-1,-10]) &lt;- 10 #bottom 10 percent of each group is relegated
+diag(transition_matrix)         &lt;- 75 #the rest stay where they are
+
+# fix the corners
+transition_matrix[1,1]    &lt;- 85
+transition_matrix[10, 10] &lt;- 85
+
+# make row-stochastic (i.e. so each row adds up to one)
+transition_matrix &lt;- transition_matrix/100
+
+# R allows user to label rows and columns
+rownames(transition_matrix) &lt;- leagues
+colnames(transition_matrix) &lt;- leagues
+
+print(transition_matrix)</code></pre>
+<pre><code>##          Bronze Silver Gold Sapphire Ruby Emerald Amethyst Pearl Obsidian
+## Bronze     0.85   0.15 0.00     0.00 0.00    0.00     0.00  0.00     0.00
+## Silver     0.10   0.75 0.15     0.00 0.00    0.00     0.00  0.00     0.00
+## Gold       0.00   0.10 0.75     0.15 0.00    0.00     0.00  0.00     0.00
+## Sapphire   0.00   0.00 0.10     0.75 0.15    0.00     0.00  0.00     0.00
+## Ruby       0.00   0.00 0.00     0.10 0.75    0.15     0.00  0.00     0.00
+## Emerald    0.00   0.00 0.00     0.00 0.10    0.75     0.15  0.00     0.00
+## Amethyst   0.00   0.00 0.00     0.00 0.00    0.10     0.75  0.15     0.00
+## Pearl      0.00   0.00 0.00     0.00 0.00    0.00     0.10  0.75     0.15
+## Obsidian   0.00   0.00 0.00     0.00 0.00    0.00     0.00  0.10     0.75
+## Diamond    0.00   0.00 0.00     0.00 0.00    0.00     0.00  0.00     0.10
+##          Diamond
+## Bronze      0.00
+## Silver      0.00
+## Gold        0.00
+## Sapphire    0.00
+## Ruby        0.00
+## Emerald     0.00
+## Amethyst    0.00
+## Pearl       0.00
+## Obsidian    0.15
+## Diamond     0.85</code></pre>
+<p>Knowing some about stochastic processes, we can either implement an initial distribution and employ matrix-vector multiplication over many iterations, or we can find an eigenvector.</p>
+<pre class="r"><code>findStatDist &lt;- function(P){
+  # This function will compute the stationary distribution for a transition matrix
+  # Input: row-stochastic matrix P
+  # Output: row vector pi_vec
+  
+  # obtain left-eigenvector for lambda = 1
+  x &lt;- eigen(t(P))$vectors[,1] 
+  
+  # normalize the eigenvector in the one-norm
+  pi_vec &lt;- x / sum(x)
+  pi_vec #return this vector
+}
+
+answer &lt;- as.data.frame(round(100*findStatDist(transition_matrix)))
+
+# R allows user to label rows and columns
+rownames(answer) &lt;- leagues
+colnames(answer) &lt;- &quot;percentage&quot;
+
+print(answer)</code></pre>
+<pre><code>##          percentage
+## Bronze            3
+## Silver            4
+## Gold              5
+## Sapphire          7
+## Ruby              9
+## Emerald          11
+## Amethyst         13
+## Pearl            15
+## Obsidian         16
+## Diamond          17</code></pre>
+</div>
