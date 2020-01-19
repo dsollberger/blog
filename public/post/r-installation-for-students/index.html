@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.44" />
+  <meta name="author" content="Derek Sollberger">
+
+  
+  
+  
+  
+    
+      
+    
+  
+  <meta name="description" content="# update to current versionR_version &lt;- &quot;3.6.2&quot;RStudio_version &lt;- &quot;1.2.5033&quot;If you are planning to do the R assignments on your own computer (recommended), then here is a quick outline for obtaining the software.
+There are two separate software programs. Most people find it easier to use RStudio. than just R, but you need to install R first before installing RStudio (analogously speaking: you need an cell phone before you can use an cell phone case).">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/r-installation-for-students/">
+
+  
+
+
+  
+
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/r-installation-for-students/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@DerekSollberger">
+  <meta property="twitter:creator" content="@DerekSollberger">
+  
+  <meta property="og:site_name" content="The Median Data Scientist">
+  <meta property="og:url" content="/post/r-installation-for-students/">
+  <meta property="og:title" content="R Installation (for students) | The Median Data Scientist">
+  <meta property="og:description" content="# update to current versionR_version &lt;- &quot;3.6.2&quot;RStudio_version &lt;- &quot;1.2.5033&quot;If you are planning to do the R assignments on your own computer (recommended), then here is a quick outline for obtaining the software.
+There are two separate software programs. Most people find it easier to use RStudio. than just R, but you need to install R first before installing RStudio (analogously speaking: you need an cell phone before you can use an cell phone case).">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2020-01-19T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2020-01-19T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>R Installation (for students) | The Median Data Scientist</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">The Median Data Scientist</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#teaching">
+            
+            <span>Teaching</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">R Installation (for students)</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-01-19 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jan 19, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/teaching">teaching</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=R%20Installation%20%28for%20students%29&amp;url=%2fpost%2fr-installation-for-students%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fr-installation-for-students%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fr-installation-for-students%2f&amp;title=R%20Installation%20%28for%20students%29"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fr-installation-for-students%2f&amp;title=R%20Installation%20%28for%20students%29"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=R%20Installation%20%28for%20students%29&amp;body=%2fpost%2fr-installation-for-students%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <pre class="r"><code># update to current version
+R_version &lt;- &quot;3.6.2&quot;
+RStudio_version &lt;- &quot;1.2.5033&quot;</code></pre>
+<p>If you are planning to do the <code>R</code> assignments on your own computer (recommended), then here is a quick outline for obtaining the software.</p>
+<ul>
+<li><em>There are two separate software programs</em>. Most people find it easier to use <code>RStudio</code>. than just <code>R</code>, but you need to install <code>R</code> first before installing <code>RStudio</code> (analogously speaking: you need an cell phone before you can use an cell phone case).</li>
+<li><em>If you have R and RStudio from a previous course, you still need to update to the current versions!</em> (version 3.6.2 of R and version 1.2.5033 of RStudio)</li>
+</ul>
+<div id="downloading-r" class="section level1">
+<h1>Downloading R</h1>
+<p>Go to <a href="https://cran.r-project.org/">The Comprehensive R Archive Network</a> (CRAN)</p>
+<p>Windows:</p>
+<ul>
+<li>click “Download R for Windows”</li>
+<li>click “install R for the first time”</li>
+<li>click “Download R 3.6.2 for Windows”</li>
+<li>click “Save File”</li>
+</ul>
+<p>Mac:</p>
+<ul>
+<li>click “Download R for (Mac) OS X”</li>
+<li>click “R-3.6.2.pkg”</li>
+<li>click “Ok”</li>
+</ul>
+</div>
+<div id="installing-r" class="section level1">
+<h1>Installing R</h1>
+<ul>
+<li>Windows: double-check icon for R-3.6.2-win.exe</li>
+<li>Mac: double-click icon for R-3.6.2.pkg</li>
+</ul>
+<p>For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):</p>
+<ul>
+<li>give computer permission to install</li>
+<li>select language</li>
+<li>agree to GNU General Public License</li>
+<li>select destination location</li>
+<li>select components</li>
+<li>Startup options: select “No (accept defaults)”</li>
+<li>select Start Menu Folder</li>
+<li>select Additional Tasks</li>
+<li>(wait a minute or two for installation to take place)</li>
+<li>“Click Finish to exit Setup”</li>
+</ul>
+</div>
+<div id="downloading-rstudio" class="section level1">
+<h1>Downloading RStudio</h1>
+<p>Go to the <a href="https://rstudio.com/products/rstudio/download/#download">RStudio Desktop download page</a> (i.e. we are using the <em>free</em>, desktop version of RStudio)</p>
+<ul>
+<li>Windows: click RStudio-1.2.5033.exe, click “Save File”</li>
+<li>Mac: click RStudio-1.2.5033.dmg, click “Ok”</li>
+</ul>
+</div>
+<div id="installing-rstudio" class="section level1">
+<h1>Installing RStudio</h1>
+<ul>
+<li>Windows: double-check icon for RStudio-1.2.5033.exe</li>
+<li>Mac: double-click icon for RStudio-1.2.5033.dmg</li>
+</ul>
+<p>For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):</p>
+<ul>
+<li>give computer permission to install</li>
+<li>“Click Next to continue”</li>
+<li>Choose Install Location</li>
+<li>Choose Start Menu Folder</li>
+<li>(wait a minute or two for installation to take place)</li>
+<li>“Click Finish to close Setup”</li>
+</ul>
+</div>
+<div id="code-packages" class="section level1">
+<h1>Code Packages</h1>
+<p>For R coding, we will often need more code—called code packages. To ease our coding sessions, please run the following lines of code before class (in the lower-left <code>console</code> area of RStudio, just has to be done once this semester).</p>
+<pre class="r"><code>package_list &lt;- c(&quot;tidyverse&quot;, &quot;readxl&quot;, &quot;mosaic&quot;, &quot;titanic&quot;)
+install.packages(package_list)</code></pre>
+</div>
+<div id="file-types" class="section level1">
+<h1>File Types</h1>
+<p>Also, while we are learning how I want homework assignments to be submitted, it will be useful if you can see file types in your computer.</p>
+<ul>
+<li>instructions for <a href="http://kb.winzip.com/kb/entry/26/">Windows</a></li>
+<li>instructions for <a href="https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/">Mac OS X</a></li>
+</ul>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/workshop">workshop</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/introduction-to-r-workshop/">Introduction to R Workshop</a></li>
+    
+    <li><a href="/post/introduction-to-r-workshop/">Introduction to R Workshop</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2018 &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+

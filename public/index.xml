@@ -11,6 +11,98 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>R Installation (for students)</title>
+      <link>/post/r-installation-for-students/</link>
+      <pubDate>Sun, 19 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-installation-for-students/</guid>
+      <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# update to current version
+R_version &amp;lt;- &amp;quot;3.6.2&amp;quot;
+RStudio_version &amp;lt;- &amp;quot;1.2.5033&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you are planning to do the &lt;code&gt;R&lt;/code&gt; assignments on your own computer (recommended), then here is a quick outline for obtaining the software.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;There are two separate software programs&lt;/em&gt;. Most people find it easier to use &lt;code&gt;RStudio&lt;/code&gt;. than just &lt;code&gt;R&lt;/code&gt;, but you need to install &lt;code&gt;R&lt;/code&gt; first before installing &lt;code&gt;RStudio&lt;/code&gt; (analogously speaking: you need an cell phone before you can use an cell phone case).&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;If you have R and RStudio from a previous course, you still need to update to the current versions!&lt;/em&gt; (version 3.6.2 of R and version 1.2.5033 of RStudio)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;downloading-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Downloading R&lt;/h1&gt;
+&lt;p&gt;Go to &lt;a href=&#34;https://cran.r-project.org/&#34;&gt;The Comprehensive R Archive Network&lt;/a&gt; (CRAN)&lt;/p&gt;
+&lt;p&gt;Windows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click “Download R for Windows”&lt;/li&gt;
+&lt;li&gt;click “install R for the first time”&lt;/li&gt;
+&lt;li&gt;click “Download R 3.6.2 for Windows”&lt;/li&gt;
+&lt;li&gt;click “Save File”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Mac:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click “Download R for (Mac) OS X”&lt;/li&gt;
+&lt;li&gt;click “R-3.6.2.pkg”&lt;/li&gt;
+&lt;li&gt;click “Ok”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing R&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: double-check icon for R-3.6.2-win.exe&lt;/li&gt;
+&lt;li&gt;Mac: double-click icon for R-3.6.2.pkg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;give computer permission to install&lt;/li&gt;
+&lt;li&gt;select language&lt;/li&gt;
+&lt;li&gt;agree to GNU General Public License&lt;/li&gt;
+&lt;li&gt;select destination location&lt;/li&gt;
+&lt;li&gt;select components&lt;/li&gt;
+&lt;li&gt;Startup options: select “No (accept defaults)”&lt;/li&gt;
+&lt;li&gt;select Start Menu Folder&lt;/li&gt;
+&lt;li&gt;select Additional Tasks&lt;/li&gt;
+&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
+&lt;li&gt;“Click Finish to exit Setup”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;downloading-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Downloading RStudio&lt;/h1&gt;
+&lt;p&gt;Go to the &lt;a href=&#34;https://rstudio.com/products/rstudio/download/#download&#34;&gt;RStudio Desktop download page&lt;/a&gt; (i.e. we are using the &lt;em&gt;free&lt;/em&gt;, desktop version of RStudio)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: click RStudio-1.2.5033.exe, click “Save File”&lt;/li&gt;
+&lt;li&gt;Mac: click RStudio-1.2.5033.dmg, click “Ok”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing RStudio&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: double-check icon for RStudio-1.2.5033.exe&lt;/li&gt;
+&lt;li&gt;Mac: double-click icon for RStudio-1.2.5033.dmg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;give computer permission to install&lt;/li&gt;
+&lt;li&gt;“Click Next to continue”&lt;/li&gt;
+&lt;li&gt;Choose Install Location&lt;/li&gt;
+&lt;li&gt;Choose Start Menu Folder&lt;/li&gt;
+&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
+&lt;li&gt;“Click Finish to close Setup”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;code-packages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Code Packages&lt;/h1&gt;
+&lt;p&gt;For R coding, we will often need more code—called code packages. To ease our coding sessions, please run the following lines of code before class (in the lower-left &lt;code&gt;console&lt;/code&gt; area of RStudio, just has to be done once this semester).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_list &amp;lt;- c(&amp;quot;tidyverse&amp;quot;, &amp;quot;readxl&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;titanic&amp;quot;)
+install.packages(package_list)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;file-types&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;File Types&lt;/h1&gt;
+&lt;p&gt;Also, while we are learning how I want homework assignments to be submitted, it will be useful if you can see file types in your computer.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;http://kb.winzip.com/kb/entry/26/&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/&#34;&gt;Mac OS X&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Duolingo Leagues</title>
       <link>/post/duolingo-leagues/</link>
       <pubDate>Mon, 13 Jan 2020 00:00:00 +0000</pubDate>
@@ -1332,103 +1424,6 @@ for(t in 1:T){
 &lt;div id=&#34;shiny-and-htmlwidgets&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;Shiny and htmlwidgets&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://dsollberger.shinyapps.io/SAMPLe/&#34; class=&#34;uri&#34;&gt;https://dsollberger.shinyapps.io/SAMPLe/&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Supreme Court Confirmations (1967-present)</title>
-      <link>/post/supreme-court-confirmations-1967-present/</link>
-      <pubDate>Sun, 07 Oct 2018 00:00:00 +0000</pubDate>
-      
-      <guid>/post/supreme-court-confirmations-1967-present/</guid>
-      <description>&lt;script src=&#34;/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/datatables-css/datatables-crosstalk.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/datatables-binding/datatables.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/dt-core/css/jquery.dataTables.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;link href=&#34;/rmarkdown-libs/dt-core/css/jquery.dataTables.extra.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/dt-core/js/jquery.dataTables.min.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/crosstalk/css/crosstalk.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/crosstalk/js/crosstalk.min.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/plotly-binding/plotly.js&#34;&gt;&lt;/script&gt;
-&lt;script src=&#34;/rmarkdown-libs/typedarray/typedarray.min.js&#34;&gt;&lt;/script&gt;
-&lt;link href=&#34;/rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css&#34; rel=&#34;stylesheet&#34; /&gt;
-&lt;script src=&#34;/rmarkdown-libs/plotly-main/plotly-latest.min.js&#34;&gt;&lt;/script&gt;
-
-
-&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Introduction&lt;/h3&gt;
-&lt;p&gt;Following up on &lt;a href=&#34;https://twitter.com/rachelwellford/status/1048308997219082240&#34;&gt;Rachel Wellford’s tweet&lt;/a&gt; about Senate votes for Supreme Court confirmations, I decided to try to graph the data. Below, I have&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;a &lt;code&gt;ggplot&lt;/code&gt; picture with decent labeling&lt;/li&gt;
-&lt;li&gt;a searchable &lt;code&gt;datatable&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;a &lt;code&gt;plotly&lt;/code&gt; interactive graph&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;The data came from &lt;a href=&#34;https://www.senate.gov/pagelayout/reference/nominations/Nominations.htm&#34;&gt;Senate.gov&lt;/a&gt;. I chose to focus on 1967 onward because it appeared that voting procedures were slightly different before Thurgood Marshall’s nomination process. Otherwise, I would have chosen to go back to when the Senate first had 100 members.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;DT&amp;quot;)
-library(&amp;quot;ggplot2&amp;quot;)
-library(&amp;quot;ggrepel&amp;quot;)
-library(&amp;quot;plotly&amp;quot;)
-library(&amp;quot;readxl&amp;quot;)
-scc &amp;lt;- read_excel(&amp;quot;../../static/Supreme Court confirmations.xlsx&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;ggplot&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;ggplot&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(scc, aes(x = Nay, y = Yea, label = Last)) +
-  geom_point() +
-  geom_text_repel() +
-  labs(x = &amp;quot;Nay votes&amp;quot;, y = &amp;quot;Yea votes&amp;quot;, 
-       title = &amp;quot;Supreme Court Confirmations (1967 to present)&amp;quot;,
-       subtitle = &amp;quot;Marshall to Kavanaugh&amp;quot;,
-       caption = &amp;quot;Source: Senate.gov&amp;quot;) + 
-  xlim(c(-10, 60)) +
-  ylim(c(40, 110))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2018-10-07-supreme-court-confirmations-1967-present_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;datatable&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Datatable&lt;/h3&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;DT::datatable(scc)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:100%;height:auto;&#34; class=&#34;datatables html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;filter&#34;:&#34;none&#34;,&#34;data&#34;:[[&#34;1&#34;,&#34;2&#34;,&#34;3&#34;,&#34;4&#34;,&#34;5&#34;,&#34;6&#34;,&#34;7&#34;,&#34;8&#34;,&#34;9&#34;,&#34;10&#34;,&#34;11&#34;,&#34;12&#34;,&#34;13&#34;,&#34;14&#34;,&#34;15&#34;,&#34;16&#34;,&#34;17&#34;,&#34;18&#34;,&#34;19&#34;],[&#34;Brett Kavanaugh&#34;,&#34;Neil Gorsuch&#34;,&#34;Elena Kagan&#34;,&#34;Sonia Sotomayor&#34;,&#34;Samuel Alito&#34;,&#34;John Roberts&#34;,&#34;Steven Breyer&#34;,&#34;Ruth Bader Ginsburg&#34;,&#34;Clarence Thomas&#34;,&#34;David Souter&#34;,&#34;Anthony Kennedy&#34;,&#34;Antonin Scalia&#34;,&#34;Sandra Day O&#39;Connor&#34;,&#34;John Paul Stevens&#34;,&#34;William Rehnquist&#34;,&#34;Lewis Powell&#34;,&#34;Harry Blackmun&#34;,&#34;Warren Burger&#34;,&#34;Thurgood Marshall&#34;],[&#34;2018-07-10T00:00:00Z&#34;,&#34;2017-02-01T00:00:00Z&#34;,&#34;2010-05-10T00:00:00Z&#34;,&#34;2009-06-01T00:00:00Z&#34;,&#34;2005-11-10T00:00:00Z&#34;,&#34;2005-09-06T00:00:00Z&#34;,&#34;1994-05-17T00:00:00Z&#34;,&#34;1993-07-22T00:00:00Z&#34;,&#34;1991-07-08T00:00:00Z&#34;,&#34;1990-07-25T00:00:00Z&#34;,&#34;1987-11-30T00:00:00Z&#34;,&#34;1986-06-24T00:00:00Z&#34;,&#34;1981-08-19T00:00:00Z&#34;,&#34;1975-11-28T00:00:00Z&#34;,&#34;1971-10-22T00:00:00Z&#34;,&#34;1971-10-22T00:00:00Z&#34;,&#34;1970-04-15T00:00:00Z&#34;,&#34;1969-05-23T00:00:00Z&#34;,&#34;1967-06-13T00:00:00Z&#34;],[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],[48,45,37,31,42,22,9,3,48,9,0,0,0,0,26,1,0,3,11],[&#34;2018-10-06T00:00:00Z&#34;,&#34;2017-04-07T00:00:00Z&#34;,&#34;2010-08-05T00:00:00Z&#34;,&#34;2009-08-06T00:00:00Z&#34;,&#34;2006-01-31T00:00:00Z&#34;,&#34;2005-09-29T00:00:00Z&#34;,&#34;1994-07-29T00:00:00Z&#34;,&#34;1993-08-03T00:00:00Z&#34;,&#34;1991-10-15T00:00:00Z&#34;,&#34;1990-10-02T00:00:00Z&#34;,&#34;1998-02-03T00:00:00Z&#34;,&#34;1986-09-17T00:00:00Z&#34;,&#34;1981-09-21T00:00:00Z&#34;,&#34;1975-12-17T00:00:00Z&#34;,&#34;1971-12-10T00:00:00Z&#34;,&#34;1971-12-06T00:00:00Z&#34;,&#34;1970-05-12T00:00:00Z&#34;,&#34;1969-06-09T00:00:00Z&#34;,&#34;1967-08-30T00:00:00Z&#34;],[&#34;Donald Trump&#34;,&#34;Donald Trump&#34;,&#34;Barack Obama&#34;,&#34;Barack Obama&#34;,&#34;George W. Bush&#34;,&#34;George W. Bush&#34;,&#34;Bill Clinton&#34;,&#34;Bill Clinton&#34;,&#34;George H.W. Bush&#34;,&#34;George H.W. Bush&#34;,&#34;Ronald Reagan&#34;,&#34;Ronald Reagan&#34;,&#34;Ronald Reagan&#34;,&#34;Gerald Ford&#34;,&#34;Richard Nixon&#34;,&#34;Richard Nixon&#34;,&#34;Richard Nixon&#34;,&#34;Richard Nixon&#34;,&#34;Lyndon Johnson&#34;],[&#34;Brett&#34;,&#34;Neil&#34;,&#34;Elena&#34;,&#34;Sonia&#34;,&#34;Samuel&#34;,&#34;John&#34;,&#34;Steven&#34;,&#34;Ruth Bader&#34;,&#34;Clarence&#34;,&#34;David&#34;,&#34;Anthony&#34;,&#34;Antonin&#34;,&#34;Sandra Day&#34;,&#34;John Paul&#34;,&#34;William&#34;,&#34;Lewis&#34;,&#34;Harry&#34;,&#34;Warren&#34;,&#34;Thurgood&#34;],[&#34;Kavanaugh&#34;,&#34;Gorsuch&#34;,&#34;Kagan&#34;,&#34;Sotomayor&#34;,&#34;Alito&#34;,&#34;Roberts&#34;,&#34;Breyer&#34;,&#34;Ginsburg&#34;,&#34;Thomas&#34;,&#34;Souter&#34;,&#34;Kennedy&#34;,&#34;Scalia&#34;,&#34;O&#39;Conner&#34;,&#34;Stevens&#34;,&#34;Rehnquist&#34;,&#34;Powell&#34;,&#34;Blackmun&#34;,&#34;Burger&#34;,&#34;Marshall&#34;]],&#34;container&#34;:&#34;&lt;table class=\&#34;display\&#34;&gt;\n  &lt;thead&gt;\n    &lt;tr&gt;\n      &lt;th&gt; &lt;\/th&gt;\n      &lt;th&gt;Nominee&lt;\/th&gt;\n      &lt;th&gt;Nominated&lt;\/th&gt;\n      &lt;th&gt;Yea&lt;\/th&gt;\n      &lt;th&gt;Nay&lt;\/th&gt;\n      &lt;th&gt;Confirmed&lt;\/th&gt;\n      &lt;th&gt;President&lt;\/th&gt;\n      &lt;th&gt;First&lt;\/th&gt;\n      &lt;th&gt;Last&lt;\/th&gt;\n    &lt;\/tr&gt;\n  &lt;\/thead&gt;\n&lt;\/table&gt;&#34;,&#34;options&#34;:{&#34;columnDefs&#34;:[{&#34;className&#34;:&#34;dt-right&#34;,&#34;targets&#34;:[3,4]},{&#34;orderable&#34;:false,&#34;targets&#34;:0}],&#34;order&#34;:[],&#34;autoWidth&#34;:false,&#34;orderClasses&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;/div&gt;
-&lt;div id=&#34;plotly&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Plotly&lt;/h3&gt;
-&lt;p&gt;Here is a slightly interactive graph built with a combination of &lt;code&gt;ggplot&lt;/code&gt; and &lt;code&gt;plotly&lt;/code&gt;:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;basemap &amp;lt;- ggplot(scc, aes(x = Nay, y = Yea, label = Last)) +
-  geom_point() +
-  geom_text(nudge_x = 5) + # geom_text_repel is not supported by Plotly yet
-  labs(x = &amp;quot;Nay votes&amp;quot;, y = &amp;quot;Yea votes&amp;quot;, 
-       title = &amp;quot;Supreme Court Confirmations (1967 to present)&amp;quot;,
-       subtitle = &amp;quot;Marshall to Kavanaugh&amp;quot;,
-       caption = &amp;quot;Source: Senate.gov&amp;quot;) + 
-  xlim(c(-10, 60)) +
-  ylim(c(40, 110))
-ggplotly(basemap)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-2&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;plotly html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;x&#34;:[48,45,37,31,42,22,9,3,48,9,0,0,0,0,26,1,0,3,11],&#34;y&#34;:[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],&#34;text&#34;:[&#34;Nay: 48&lt;br /&gt;Yea: 50&lt;br /&gt;Last: Kavanaugh&#34;,&#34;Nay: 45&lt;br /&gt;Yea: 54&lt;br /&gt;Last: Gorsuch&#34;,&#34;Nay: 37&lt;br /&gt;Yea: 63&lt;br /&gt;Last: Kagan&#34;,&#34;Nay: 31&lt;br /&gt;Yea: 68&lt;br /&gt;Last: Sotomayor&#34;,&#34;Nay: 42&lt;br /&gt;Yea: 58&lt;br /&gt;Last: Alito&#34;,&#34;Nay: 22&lt;br /&gt;Yea: 78&lt;br /&gt;Last: Roberts&#34;,&#34;Nay:  9&lt;br /&gt;Yea: 87&lt;br /&gt;Last: Breyer&#34;,&#34;Nay:  3&lt;br /&gt;Yea: 96&lt;br /&gt;Last: Ginsburg&#34;,&#34;Nay: 48&lt;br /&gt;Yea: 52&lt;br /&gt;Last: Thomas&#34;,&#34;Nay:  9&lt;br /&gt;Yea: 90&lt;br /&gt;Last: Souter&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 97&lt;br /&gt;Last: Kennedy&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 98&lt;br /&gt;Last: Scalia&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 99&lt;br /&gt;Last: O&#39;Conner&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 98&lt;br /&gt;Last: Stevens&#34;,&#34;Nay: 26&lt;br /&gt;Yea: 68&lt;br /&gt;Last: Rehnquist&#34;,&#34;Nay:  1&lt;br /&gt;Yea: 89&lt;br /&gt;Last: Powell&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 94&lt;br /&gt;Last: Blackmun&#34;,&#34;Nay:  3&lt;br /&gt;Yea: 73&lt;br /&gt;Last: Burger&#34;,&#34;Nay: 11&lt;br /&gt;Yea: 69&lt;br /&gt;Last: Marshall&#34;],&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;markers&#34;,&#34;marker&#34;:{&#34;autocolorscale&#34;:false,&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;opacity&#34;:1,&#34;size&#34;:5.66929133858268,&#34;symbol&#34;:&#34;circle&#34;,&#34;line&#34;:{&#34;width&#34;:1.88976377952756,&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;}},&#34;hoveron&#34;:&#34;points&#34;,&#34;showlegend&#34;:false,&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;frame&#34;:null},{&#34;x&#34;:[53,50,42,36,47,27,14,8,53,14,5,5,5,5,31,6,5,8,16],&#34;y&#34;:[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],&#34;text&#34;:[&#34;Kavanaugh&#34;,&#34;Gorsuch&#34;,&#34;Kagan&#34;,&#34;Sotomayor&#34;,&#34;Alito&#34;,&#34;Roberts&#34;,&#34;Breyer&#34;,&#34;Ginsburg&#34;,&#34;Thomas&#34;,&#34;Souter&#34;,&#34;Kennedy&#34;,&#34;Scalia&#34;,&#34;O&#39;Conner&#34;,&#34;Stevens&#34;,&#34;Rehnquist&#34;,&#34;Powell&#34;,&#34;Blackmun&#34;,&#34;Burger&#34;,&#34;Marshall&#34;],&#34;hovertext&#34;:[&#34;Nay: 48&lt;br /&gt;Yea: 50&lt;br /&gt;Last: Kavanaugh&#34;,&#34;Nay: 45&lt;br /&gt;Yea: 54&lt;br /&gt;Last: Gorsuch&#34;,&#34;Nay: 37&lt;br /&gt;Yea: 63&lt;br /&gt;Last: Kagan&#34;,&#34;Nay: 31&lt;br /&gt;Yea: 68&lt;br /&gt;Last: Sotomayor&#34;,&#34;Nay: 42&lt;br /&gt;Yea: 58&lt;br /&gt;Last: Alito&#34;,&#34;Nay: 22&lt;br /&gt;Yea: 78&lt;br /&gt;Last: Roberts&#34;,&#34;Nay:  9&lt;br /&gt;Yea: 87&lt;br /&gt;Last: Breyer&#34;,&#34;Nay:  3&lt;br /&gt;Yea: 96&lt;br /&gt;Last: Ginsburg&#34;,&#34;Nay: 48&lt;br /&gt;Yea: 52&lt;br /&gt;Last: Thomas&#34;,&#34;Nay:  9&lt;br /&gt;Yea: 90&lt;br /&gt;Last: Souter&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 97&lt;br /&gt;Last: Kennedy&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 98&lt;br /&gt;Last: Scalia&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 99&lt;br /&gt;Last: O&#39;Conner&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 98&lt;br /&gt;Last: Stevens&#34;,&#34;Nay: 26&lt;br /&gt;Yea: 68&lt;br /&gt;Last: Rehnquist&#34;,&#34;Nay:  1&lt;br /&gt;Yea: 89&lt;br /&gt;Last: Powell&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 94&lt;br /&gt;Last: Blackmun&#34;,&#34;Nay:  3&lt;br /&gt;Yea: 73&lt;br /&gt;Last: Burger&#34;,&#34;Nay: 11&lt;br /&gt;Yea: 69&lt;br /&gt;Last: Marshall&#34;],&#34;textfont&#34;:{&#34;size&#34;:14.6645669291339,&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;},&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;text&#34;,&#34;hoveron&#34;:&#34;points&#34;,&#34;showlegend&#34;:false,&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;frame&#34;:null}],&#34;layout&#34;:{&#34;margin&#34;:{&#34;t&#34;:43.7625570776256,&#34;r&#34;:7.30593607305936,&#34;b&#34;:40.1826484018265,&#34;l&#34;:43.1050228310502},&#34;plot_bgcolor&#34;:&#34;rgba(235,235,235,1)&#34;,&#34;paper_bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;title&#34;:&#34;Supreme Court Confirmations (1967 to present)&#34;,&#34;titlefont&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:17.5342465753425},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[-13.5,63.5],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;0&#34;,&#34;20&#34;,&#34;40&#34;,&#34;60&#34;],&#34;tickvals&#34;:[0,20,40,60],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;0&#34;,&#34;20&#34;,&#34;40&#34;,&#34;60&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;y&#34;,&#34;title&#34;:&#34;Nay votes&#34;,&#34;titlefont&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[36.5,113.5],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;40&#34;,&#34;60&#34;,&#34;80&#34;,&#34;100&#34;],&#34;tickvals&#34;:[40,60,80,100],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;40&#34;,&#34;60&#34;,&#34;80&#34;,&#34;100&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;x&#34;,&#34;title&#34;:&#34;Yea votes&#34;,&#34;titlefont&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;shapes&#34;:[{&#34;type&#34;:&#34;rect&#34;,&#34;fillcolor&#34;:null,&#34;line&#34;:{&#34;color&#34;:null,&#34;width&#34;:0,&#34;linetype&#34;:[]},&#34;yref&#34;:&#34;paper&#34;,&#34;xref&#34;:&#34;paper&#34;,&#34;x0&#34;:0,&#34;x1&#34;:1,&#34;y0&#34;:0,&#34;y1&#34;:1}],&#34;showlegend&#34;:false,&#34;legend&#34;:{&#34;bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;bordercolor&#34;:&#34;transparent&#34;,&#34;borderwidth&#34;:1.88976377952756,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895}},&#34;hovermode&#34;:&#34;closest&#34;,&#34;barmode&#34;:&#34;relative&#34;},&#34;config&#34;:{&#34;doubleClick&#34;:&#34;reset&#34;,&#34;modeBarButtonsToAdd&#34;:[{&#34;name&#34;:&#34;Collaborate&#34;,&#34;icon&#34;:{&#34;width&#34;:1000,&#34;ascent&#34;:500,&#34;descent&#34;:-50,&#34;path&#34;:&#34;M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z&#34;},&#34;click&#34;:&#34;function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == &#39;?viewer_pane=1&#39;) {\n          alert(&#39;To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;);\n        } else {\n          window.open(&#39;https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;, &#39;_blank&#39;);\n        }\n      }&#34;}],&#34;cloud&#34;:false},&#34;source&#34;:&#34;A&#34;,&#34;attrs&#34;:{&#34;160cd611208&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;label&#34;:{},&#34;type&#34;:&#34;scatter&#34;},&#34;160c1b9a1bd8&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;label&#34;:{}}},&#34;cur_data&#34;:&#34;160cd611208&#34;,&#34;visdat&#34;:{&#34;160cd611208&#34;:[&#34;function (y) &#34;,&#34;x&#34;],&#34;160c1b9a1bd8&#34;:[&#34;function (y) &#34;,&#34;x&#34;]},&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[&#34;config.modeBarButtonsToAdd.0.click&#34;],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p&gt;Here is a slightly interactive graph with readable labels:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;t &amp;lt;- list(
-  family = &amp;quot;sans serif&amp;quot;,
-  size = 14,
-  color = toRGB(&amp;quot;grey80&amp;quot;))
-
-plot_ly(scc, x = ~Nay, y = ~Yea, text = ~Nominee) %&amp;gt;%
-  add_markers() %&amp;gt;%
-  add_text(textfont = t, textposition = &amp;quot;top right&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-3&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;plotly html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;visdat&#34;:{&#34;160c25b918be&#34;:[&#34;function () &#34;,&#34;plotlyVisDat&#34;]},&#34;cur_data&#34;:&#34;160c25b918be&#34;,&#34;attrs&#34;:{&#34;160c25b918be&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;text&#34;:{},&#34;alpha_stroke&#34;:1,&#34;sizes&#34;:[10,100],&#34;spans&#34;:[1,20],&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;markers&#34;,&#34;inherit&#34;:true},&#34;160c25b918be.1&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;text&#34;:{},&#34;alpha_stroke&#34;:1,&#34;sizes&#34;:[10,100],&#34;spans&#34;:[1,20],&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;text&#34;,&#34;textfont&#34;:{&#34;family&#34;:&#34;sans serif&#34;,&#34;size&#34;:14,&#34;color&#34;:&#34;rgba(204,204,204,1)&#34;},&#34;textposition&#34;:&#34;top right&#34;,&#34;inherit&#34;:true}},&#34;layout&#34;:{&#34;margin&#34;:{&#34;b&#34;:40,&#34;l&#34;:60,&#34;t&#34;:25,&#34;r&#34;:10},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;title&#34;:&#34;Nay&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;title&#34;:&#34;Yea&#34;},&#34;hovermode&#34;:&#34;closest&#34;,&#34;showlegend&#34;:true},&#34;source&#34;:&#34;A&#34;,&#34;config&#34;:{&#34;modeBarButtonsToAdd&#34;:[{&#34;name&#34;:&#34;Collaborate&#34;,&#34;icon&#34;:{&#34;width&#34;:1000,&#34;ascent&#34;:500,&#34;descent&#34;:-50,&#34;path&#34;:&#34;M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z&#34;},&#34;click&#34;:&#34;function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == &#39;?viewer_pane=1&#39;) {\n          alert(&#39;To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;);\n        } else {\n          window.open(&#39;https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;, &#39;_blank&#39;);\n        }\n      }&#34;}],&#34;cloud&#34;:false},&#34;data&#34;:[{&#34;x&#34;:[48,45,37,31,42,22,9,3,48,9,0,0,0,0,26,1,0,3,11],&#34;y&#34;:[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],&#34;text&#34;:[&#34;Brett Kavanaugh&#34;,&#34;Neil Gorsuch&#34;,&#34;Elena Kagan&#34;,&#34;Sonia Sotomayor&#34;,&#34;Samuel Alito&#34;,&#34;John Roberts&#34;,&#34;Steven Breyer&#34;,&#34;Ruth Bader Ginsburg&#34;,&#34;Clarence Thomas&#34;,&#34;David Souter&#34;,&#34;Anthony Kennedy&#34;,&#34;Antonin Scalia&#34;,&#34;Sandra Day O&#39;Connor&#34;,&#34;John Paul Stevens&#34;,&#34;William Rehnquist&#34;,&#34;Lewis Powell&#34;,&#34;Harry Blackmun&#34;,&#34;Warren Burger&#34;,&#34;Thurgood Marshall&#34;],&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;markers&#34;,&#34;marker&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;,&#34;line&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;}},&#34;error_y&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;error_x&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;line&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;frame&#34;:null},{&#34;x&#34;:[48,45,37,31,42,22,9,3,48,9,0,0,0,0,26,1,0,3,11],&#34;y&#34;:[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],&#34;text&#34;:[&#34;Brett Kavanaugh&#34;,&#34;Neil Gorsuch&#34;,&#34;Elena Kagan&#34;,&#34;Sonia Sotomayor&#34;,&#34;Samuel Alito&#34;,&#34;John Roberts&#34;,&#34;Steven Breyer&#34;,&#34;Ruth Bader Ginsburg&#34;,&#34;Clarence Thomas&#34;,&#34;David Souter&#34;,&#34;Anthony Kennedy&#34;,&#34;Antonin Scalia&#34;,&#34;Sandra Day O&#39;Connor&#34;,&#34;John Paul Stevens&#34;,&#34;William Rehnquist&#34;,&#34;Lewis Powell&#34;,&#34;Harry Blackmun&#34;,&#34;Warren Burger&#34;,&#34;Thurgood Marshall&#34;],&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;text&#34;,&#34;textfont&#34;:{&#34;family&#34;:&#34;sans serif&#34;,&#34;size&#34;:14,&#34;color&#34;:&#34;rgba(204,204,204,1)&#34;},&#34;textposition&#34;:[&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;],&#34;marker&#34;:{&#34;color&#34;:&#34;rgba(255,127,14,1)&#34;,&#34;line&#34;:{&#34;color&#34;:&#34;rgba(255,127,14,1)&#34;}},&#34;error_y&#34;:{&#34;color&#34;:&#34;rgba(255,127,14,1)&#34;},&#34;error_x&#34;:{&#34;color&#34;:&#34;rgba(255,127,14,1)&#34;},&#34;line&#34;:{&#34;color&#34;:&#34;rgba(255,127,14,1)&#34;},&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;frame&#34;:null}],&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[&#34;config.modeBarButtonsToAdd.0.click&#34;],&#34;jsHooks&#34;:[]}&lt;/script&gt;
-&lt;p&gt;Finally, here is a fully interactive graph, but the labels are not revealed until someone hovers their mouse cursor over the points:&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_ly(scc, x = ~Nay, y = ~Yea, type = &amp;#39;scatter&amp;#39;, mode = &amp;#39;markers&amp;#39;,
-        hoverinfo = &amp;#39;text&amp;#39;,
-        text = ~paste(&amp;#39;&amp;lt;b&amp;gt;Nominee:&amp;lt;/b&amp;gt; &amp;#39;, Nominee,
-                      &amp;#39;&amp;lt;br&amp;gt; Yea: &amp;#39;, Yea,
-                      &amp;#39;&amp;lt;br&amp;gt; Nay: &amp;#39;, Nay,
-                      &amp;#39;&amp;lt;br&amp;gt; Nominated: &amp;#39;, Nominated,
-                      &amp;#39;&amp;lt;br&amp;gt; Confirmed: &amp;#39;, Confirmed,
-                      &amp;#39;&amp;lt;br&amp;gt; President: &amp;#39;, President))&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;htmlwidget-4&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;plotly html-widget&#34;&gt;&lt;/div&gt;
-&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;visdat&#34;:{&#34;160cb0ac56&#34;:[&#34;function () &#34;,&#34;plotlyVisDat&#34;]},&#34;cur_data&#34;:&#34;160cb0ac56&#34;,&#34;attrs&#34;:{&#34;160cb0ac56&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;mode&#34;:&#34;markers&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;text&#34;:{},&#34;alpha_stroke&#34;:1,&#34;sizes&#34;:[10,100],&#34;spans&#34;:[1,20],&#34;type&#34;:&#34;scatter&#34;}},&#34;layout&#34;:{&#34;margin&#34;:{&#34;b&#34;:40,&#34;l&#34;:60,&#34;t&#34;:25,&#34;r&#34;:10},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;title&#34;:&#34;Nay&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;title&#34;:&#34;Yea&#34;},&#34;hovermode&#34;:&#34;closest&#34;,&#34;showlegend&#34;:false},&#34;source&#34;:&#34;A&#34;,&#34;config&#34;:{&#34;modeBarButtonsToAdd&#34;:[{&#34;name&#34;:&#34;Collaborate&#34;,&#34;icon&#34;:{&#34;width&#34;:1000,&#34;ascent&#34;:500,&#34;descent&#34;:-50,&#34;path&#34;:&#34;M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z&#34;},&#34;click&#34;:&#34;function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == &#39;?viewer_pane=1&#39;) {\n          alert(&#39;To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;);\n        } else {\n          window.open(&#39;https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;, &#39;_blank&#39;);\n        }\n      }&#34;}],&#34;cloud&#34;:false},&#34;data&#34;:[{&#34;x&#34;:[48,45,37,31,42,22,9,3,48,9,0,0,0,0,26,1,0,3,11],&#34;y&#34;:[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],&#34;mode&#34;:&#34;markers&#34;,&#34;hoverinfo&#34;:[&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;],&#34;text&#34;:[&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Brett Kavanaugh &lt;br&gt; Yea:  50 &lt;br&gt; Nay:  48 &lt;br&gt; Nominated:  2018-07-10 &lt;br&gt; Confirmed:  2018-10-06 &lt;br&gt; President:  Donald Trump&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Neil Gorsuch &lt;br&gt; Yea:  54 &lt;br&gt; Nay:  45 &lt;br&gt; Nominated:  2017-02-01 &lt;br&gt; Confirmed:  2017-04-07 &lt;br&gt; President:  Donald Trump&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Elena Kagan &lt;br&gt; Yea:  63 &lt;br&gt; Nay:  37 &lt;br&gt; Nominated:  2010-05-10 &lt;br&gt; Confirmed:  2010-08-05 &lt;br&gt; President:  Barack Obama&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Sonia Sotomayor &lt;br&gt; Yea:  68 &lt;br&gt; Nay:  31 &lt;br&gt; Nominated:  2009-06-01 &lt;br&gt; Confirmed:  2009-08-06 &lt;br&gt; President:  Barack Obama&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Samuel Alito &lt;br&gt; Yea:  58 &lt;br&gt; Nay:  42 &lt;br&gt; Nominated:  2005-11-10 &lt;br&gt; Confirmed:  2006-01-31 &lt;br&gt; President:  George W. Bush&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  John Roberts &lt;br&gt; Yea:  78 &lt;br&gt; Nay:  22 &lt;br&gt; Nominated:  2005-09-06 &lt;br&gt; Confirmed:  2005-09-29 &lt;br&gt; President:  George W. Bush&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Steven Breyer &lt;br&gt; Yea:  87 &lt;br&gt; Nay:  9 &lt;br&gt; Nominated:  1994-05-17 &lt;br&gt; Confirmed:  1994-07-29 &lt;br&gt; President:  Bill Clinton&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Ruth Bader Ginsburg &lt;br&gt; Yea:  96 &lt;br&gt; Nay:  3 &lt;br&gt; Nominated:  1993-07-22 &lt;br&gt; Confirmed:  1993-08-03 &lt;br&gt; President:  Bill Clinton&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Clarence Thomas &lt;br&gt; Yea:  52 &lt;br&gt; Nay:  48 &lt;br&gt; Nominated:  1991-07-08 &lt;br&gt; Confirmed:  1991-10-15 &lt;br&gt; President:  George H.W. Bush&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  David Souter &lt;br&gt; Yea:  90 &lt;br&gt; Nay:  9 &lt;br&gt; Nominated:  1990-07-25 &lt;br&gt; Confirmed:  1990-10-02 &lt;br&gt; President:  George H.W. Bush&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Anthony Kennedy &lt;br&gt; Yea:  97 &lt;br&gt; Nay:  0 &lt;br&gt; Nominated:  1987-11-30 &lt;br&gt; Confirmed:  1998-02-03 &lt;br&gt; President:  Ronald Reagan&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Antonin Scalia &lt;br&gt; Yea:  98 &lt;br&gt; Nay:  0 &lt;br&gt; Nominated:  1986-06-24 &lt;br&gt; Confirmed:  1986-09-17 &lt;br&gt; President:  Ronald Reagan&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Sandra Day O&#39;Connor &lt;br&gt; Yea:  99 &lt;br&gt; Nay:  0 &lt;br&gt; Nominated:  1981-08-19 &lt;br&gt; Confirmed:  1981-09-21 &lt;br&gt; President:  Ronald Reagan&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  John Paul Stevens &lt;br&gt; Yea:  98 &lt;br&gt; Nay:  0 &lt;br&gt; Nominated:  1975-11-28 &lt;br&gt; Confirmed:  1975-12-17 &lt;br&gt; President:  Gerald Ford&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  William Rehnquist &lt;br&gt; Yea:  68 &lt;br&gt; Nay:  26 &lt;br&gt; Nominated:  1971-10-22 &lt;br&gt; Confirmed:  1971-12-10 &lt;br&gt; President:  Richard Nixon&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Lewis Powell &lt;br&gt; Yea:  89 &lt;br&gt; Nay:  1 &lt;br&gt; Nominated:  1971-10-22 &lt;br&gt; Confirmed:  1971-12-06 &lt;br&gt; President:  Richard Nixon&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Harry Blackmun &lt;br&gt; Yea:  94 &lt;br&gt; Nay:  0 &lt;br&gt; Nominated:  1970-04-15 &lt;br&gt; Confirmed:  1970-05-12 &lt;br&gt; President:  Richard Nixon&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Warren Burger &lt;br&gt; Yea:  73 &lt;br&gt; Nay:  3 &lt;br&gt; Nominated:  1969-05-23 &lt;br&gt; Confirmed:  1969-06-09 &lt;br&gt; President:  Richard Nixon&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Thurgood Marshall &lt;br&gt; Yea:  69 &lt;br&gt; Nay:  11 &lt;br&gt; Nominated:  1967-06-13 &lt;br&gt; Confirmed:  1967-08-30 &lt;br&gt; President:  Lyndon Johnson&#34;],&#34;type&#34;:&#34;scatter&#34;,&#34;marker&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;,&#34;line&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;}},&#34;error_y&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;error_x&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;line&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;frame&#34;:null}],&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[&#34;config.modeBarButtonsToAdd.0.click&#34;],&#34;jsHooks&#34;:[]}&lt;/script&gt;
 &lt;/div&gt;
 </description>
     </item>
