@@ -17,7 +17,7 @@
       
     
   
-  <meta name="description" content="Packages workshop_packages &lt;-c(&quot;ggplot2&quot;, &quot;mosaic&quot;, &quot;gganimate&quot;) install.packages(workshop_packages)  library(&quot;gganimate&quot;)  ## Loading required package: ggplot2  library(&quot;ggplot2&quot;) library(&quot;mosaic&quot;)  ## Loading required package: dplyr  ## ## Attaching package: &#39;dplyr&#39;  ## The following objects are masked from &#39;package:stats&#39;: ## ## filter, lag  ## The following objects are masked from &#39;package:base&#39;: ## ## intersect, setdiff, setequal, union  ## Loading required package: lattice  ## Loading required package: ggformula  ## Loading required package: ggstance  ## ## Attaching package: &#39;ggstance&#39;  ## The following objects are masked from &#39;package:ggplot2&#39;: ## ## geom_errorbarh, GeomErrorbarh  ## ## New to ggformula?">
+  <meta name="description" content="Packagesworkshop_packages &lt;-c(&quot;ggplot2&quot;, &quot;mosaic&quot;, &quot;gganimate&quot;)install.packages(workshop_packages)library(&quot;gganimate&quot;)## Loading required package: ggplot2library(&quot;ggplot2&quot;)library(&quot;mosaic&quot;)## Loading required package: dplyr## ## Attaching package: &#39;dplyr&#39;## The following objects are masked from &#39;package:stats&#39;:## ## filter, lag## The following objects are masked from &#39;package:base&#39;:## ## intersect, setdiff, setequal, union## Loading required package: lattice## Loading required package: ggformula## Loading required package: ggstance## ## Attaching package: &#39;ggstance&#39;## The following objects are masked from &#39;package:ggplot2&#39;:## ## geom_errorbarh, GeomErrorbarh## ## New to ggformula?">
 
   
   <link rel="alternate" hreflang="en-us" href="/post/introduction-to-r-workshop/">
@@ -78,7 +78,7 @@
   <meta property="og:site_name" content="The Median Data Scientist">
   <meta property="og:url" content="/post/introduction-to-r-workshop/">
   <meta property="og:title" content="Introduction to R Workshop | The Median Data Scientist">
-  <meta property="og:description" content="Packages workshop_packages &lt;-c(&quot;ggplot2&quot;, &quot;mosaic&quot;, &quot;gganimate&quot;) install.packages(workshop_packages)  library(&quot;gganimate&quot;)  ## Loading required package: ggplot2  library(&quot;ggplot2&quot;) library(&quot;mosaic&quot;)  ## Loading required package: dplyr  ## ## Attaching package: &#39;dplyr&#39;  ## The following objects are masked from &#39;package:stats&#39;: ## ## filter, lag  ## The following objects are masked from &#39;package:base&#39;: ## ## intersect, setdiff, setequal, union  ## Loading required package: lattice  ## Loading required package: ggformula  ## Loading required package: ggstance  ## ## Attaching package: &#39;ggstance&#39;  ## The following objects are masked from &#39;package:ggplot2&#39;: ## ## geom_errorbarh, GeomErrorbarh  ## ## New to ggformula?">
+  <meta property="og:description" content="Packagesworkshop_packages &lt;-c(&quot;ggplot2&quot;, &quot;mosaic&quot;, &quot;gganimate&quot;)install.packages(workshop_packages)library(&quot;gganimate&quot;)## Loading required package: ggplot2library(&quot;ggplot2&quot;)library(&quot;mosaic&quot;)## Loading required package: dplyr## ## Attaching package: &#39;dplyr&#39;## The following objects are masked from &#39;package:stats&#39;:## ## filter, lag## The following objects are masked from &#39;package:base&#39;:## ## intersect, setdiff, setequal, union## Loading required package: lattice## Loading required package: ggformula## Loading required package: ggstance## ## Attaching package: &#39;ggstance&#39;## The following objects are masked from &#39;package:ggplot2&#39;:## ## geom_errorbarh, GeomErrorbarh## ## New to ggformula?">
   <meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2019-02-05T00:00:00&#43;00:00">
@@ -298,113 +298,64 @@
 
 
       <div class="article-style" itemprop="articleBody">
-        
-
-<h1 id="packages">Packages</h1>
-
-<pre><code class="language-r">workshop_packages &lt;-c(&quot;ggplot2&quot;, &quot;mosaic&quot;, &quot;gganimate&quot;)
-install.packages(workshop_packages)
-</code></pre>
-
-<pre><code class="language-r">library(&quot;gganimate&quot;)
-</code></pre>
-
-<pre><code>## Loading required package: ggplot2
-</code></pre>
-
-<pre><code class="language-r">library(&quot;ggplot2&quot;)
-library(&quot;mosaic&quot;)
-</code></pre>
-
-<pre><code>## Loading required package: dplyr
-</code></pre>
-
+        <div id="packages" class="section level1">
+<h1>Packages</h1>
+<pre class="r"><code>workshop_packages &lt;-c(&quot;ggplot2&quot;, &quot;mosaic&quot;, &quot;gganimate&quot;)
+install.packages(workshop_packages)</code></pre>
+<pre class="r"><code>library(&quot;gganimate&quot;)</code></pre>
+<pre><code>## Loading required package: ggplot2</code></pre>
+<pre class="r"><code>library(&quot;ggplot2&quot;)
+library(&quot;mosaic&quot;)</code></pre>
+<pre><code>## Loading required package: dplyr</code></pre>
 <pre><code>## 
-## Attaching package: 'dplyr'
-</code></pre>
-
-<pre><code>## The following objects are masked from 'package:stats':
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
 ## 
-##     filter, lag
-</code></pre>
-
-<pre><code>## The following objects are masked from 'package:base':
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
-##     intersect, setdiff, setequal, union
-</code></pre>
-
-<pre><code>## Loading required package: lattice
-</code></pre>
-
-<pre><code>## Loading required package: ggformula
-</code></pre>
-
-<pre><code>## Loading required package: ggstance
-</code></pre>
-
+##     intersect, setdiff, setequal, union</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## Loading required package: ggformula</code></pre>
+<pre><code>## Loading required package: ggstance</code></pre>
 <pre><code>## 
-## Attaching package: 'ggstance'
-</code></pre>
-
-<pre><code>## The following objects are masked from 'package:ggplot2':
+## Attaching package: &#39;ggstance&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:ggplot2&#39;:
 ## 
-##     geom_errorbarh, GeomErrorbarh
-</code></pre>
-
+##     geom_errorbarh, GeomErrorbarh</code></pre>
 <pre><code>## 
 ## New to ggformula?  Try the tutorials: 
 ##  learnr::run_tutorial(&quot;introduction&quot;, package = &quot;ggformula&quot;)
-##  learnr::run_tutorial(&quot;refining&quot;, package = &quot;ggformula&quot;)
-</code></pre>
-
-<pre><code>## Loading required package: mosaicData
-</code></pre>
-
-<pre><code>## Loading required package: Matrix
-</code></pre>
-
+##  learnr::run_tutorial(&quot;refining&quot;, package = &quot;ggformula&quot;)</code></pre>
+<pre><code>## Loading required package: mosaicData</code></pre>
+<pre><code>## Loading required package: Matrix</code></pre>
 <pre><code>## 
-## The 'mosaic' package masks several functions from core packages in order to add 
+## The &#39;mosaic&#39; package masks several functions from core packages in order to add 
 ## additional features.  The original behavior of these functions should not be affected by this.
 ## 
-## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.
-</code></pre>
-
+## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.</code></pre>
 <pre><code>## 
-## Attaching package: 'mosaic'
-</code></pre>
-
-<pre><code>## The following object is masked from 'package:Matrix':
+## Attaching package: &#39;mosaic&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:Matrix&#39;:
 ## 
-##     mean
-</code></pre>
-
-<pre><code>## The following objects are masked from 'package:dplyr':
+##     mean</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
 ## 
-##     count, do, tally
-</code></pre>
-
-<pre><code>## The following object is masked from 'package:ggplot2':
+##     count, do, tally</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
 ## 
-##     stat
-</code></pre>
-
-<pre><code>## The following objects are masked from 'package:stats':
+##     stat</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
 ## 
 ##     binom.test, cor, cor.test, cov, fivenum, IQR, median,
-##     prop.test, quantile, sd, t.test, var
-</code></pre>
-
-<pre><code>## The following objects are masked from 'package:base':
+##     prop.test, quantile, sd, t.test, var</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
 ## 
-##     max, mean, min, prod, range, sample, sum
-</code></pre>
-
-<h1 id="data">Data</h1>
-
-<pre><code class="language-r">head(Weather)
-</code></pre>
-
+##     max, mean, min, prod, range, sample, sum</code></pre>
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<pre class="r"><code>head(Weather)</code></pre>
 <pre><code>## # A tibble: 6 x 25
 ## # Groups:   city, year [1]
 ##   city  date        year month   day high_temp avg_temp low_temp high_dewpt
@@ -419,80 +370,54 @@ library(&quot;mosaic&quot;)
 ## #   high_humidity &lt;dbl&gt;, avg_humidity &lt;dbl&gt;, low_humidity &lt;dbl&gt;,
 ## #   high_hg &lt;dbl&gt;, avg_hg &lt;dbl&gt;, low_hg &lt;dbl&gt;, high_vis &lt;dbl&gt;,
 ## #   avg_vis &lt;dbl&gt;, low_vis &lt;dbl&gt;, high_wind &lt;dbl&gt;, avg_wind &lt;dbl&gt;,
-## #   low_wind &lt;dbl&gt;, precip &lt;chr&gt;, events &lt;chr&gt;
-</code></pre>
-
-<pre><code class="language-r">table(Weather$city)
-</code></pre>
-
+## #   low_wind &lt;dbl&gt;, precip &lt;chr&gt;, events &lt;chr&gt;</code></pre>
+<pre class="r"><code>table(Weather$city)</code></pre>
 <pre><code>## 
 ##  Auckland   Beijing   Chicago    Mumbai San Diego 
-##       731       731       731       731       731
-</code></pre>
-
-<pre><code class="language-r">table(Weather$year)
-</code></pre>
-
+##       731       731       731       731       731</code></pre>
+<pre class="r"><code>table(Weather$year)</code></pre>
 <pre><code>## 
 ## 2016 2017 
-## 1830 1825
-</code></pre>
-
-<h1 id="sample-statistics">Sample Statistics</h1>
-
-<pre><code class="language-r">mean(Weather$high_temp)
-</code></pre>
-
-<pre><code>## [1] 71.32421
-</code></pre>
-
-<pre><code class="language-r">median(Weather$precip)
-</code></pre>
-
-<pre><code>## [1] &quot;0&quot;
-</code></pre>
-
-<pre><code class="language-r">sd(Weather$avg_wind)
-</code></pre>
-
-<pre><code>## [1] 3.865026
-</code></pre>
-
-<h1 id="plotting">Plotting</h1>
-
-<pre><code class="language-r">Chicago &lt;- subset(Weather, city == &quot;Chicago&quot;)
+## 1830 1825</code></pre>
+</div>
+<div id="sample-statistics" class="section level1">
+<h1>Sample Statistics</h1>
+<pre class="r"><code>mean(Weather$high_temp)</code></pre>
+<pre><code>## [1] 71.32421</code></pre>
+<pre class="r"><code>median(Weather$precip)</code></pre>
+<pre><code>## [1] &quot;0&quot;</code></pre>
+<pre class="r"><code>sd(Weather$avg_wind)</code></pre>
+<pre><code>## [1] 3.865026</code></pre>
+</div>
+<div id="plotting" class="section level1">
+<h1>Plotting</h1>
+<pre class="r"><code>Chicago &lt;- subset(Weather, city == &quot;Chicago&quot;)
 
 # boxplots
 ggplot(Chicago, aes(x = month, y = high_temp, group = month, fill = month)) +
   geom_boxplot() +
   labs(title = &quot;Chicago Weather (2016-2017)&quot;,
        x = &quot;month&quot;,
-       y = &quot;high temperature&quot;)
-</code></pre>
-
-<p><img src="2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-
-<h1 id="regression">Regression</h1>
-
-<pre><code class="language-r">ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
+       y = &quot;high temperature&quot;)</code></pre>
+<p><img src="/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="regression" class="section level1">
+<h1>Regression</h1>
+<pre class="r"><code>ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
   geom_point() +
   geom_smooth(method = &quot;lm&quot;) +
   labs(title = &quot;Chicago Weather (2016-2017)&quot;,
        x = &quot;high temperature&quot;,
        y = &quot;low temperature&quot;) +
-  theme_minimal()
-</code></pre>
-
-<p><img src="2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
-
-<h1 id="hypothesis-testing">Hypothesis Testing</h1>
-
-<pre><code class="language-r">SanDiego &lt;- subset(Weather, city == &quot;San Diego&quot;)
+  theme_minimal()</code></pre>
+<p><img src="/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="hypothesis-testing" class="section level1">
+<h1>Hypothesis Testing</h1>
+<pre class="r"><code>SanDiego &lt;- subset(Weather, city == &quot;San Diego&quot;)
 
 # Do Chicago and San Diego have the same high temperatures?
-t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &quot;two.sided&quot;)
-</code></pre>
-
+t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &quot;two.sided&quot;)</code></pre>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
@@ -503,12 +428,11 @@ t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &quot;two.sided&quot
 ##  -13.21560 -10.01012
 ## sample estimates:
 ## mean of x mean of y 
-##  61.00821  72.62107
-</code></pre>
-
-<h1 id="animation">Animation</h1>
-
-<pre><code class="language-r">ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
+##  61.00821  72.62107</code></pre>
+</div>
+<div id="animation" class="section level1">
+<h1>Animation</h1>
+<pre class="r"><code>ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
   geom_point() +
   labs(title = &quot;Worldwide Weather (2016-2017)&quot;,
        caption = &quot;Source: Mosaic Foundation&quot;,
@@ -516,10 +440,9 @@ t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &quot;two.sided&quot
        x = &quot;high temperature&quot;,
        y = &quot;low temperature&quot;) +
   theme_minimal() +
-  transition_states(month, transition_length = 1, state_length = 1)
-</code></pre>
-
-<p><img src="2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif" alt="" /><!-- --></p>
+  transition_states(month, transition_length = 1, state_length = 1)</code></pre>
+<p><img src="/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif" /><!-- --></p>
+</div>
 
       </div>
 

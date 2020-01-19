@@ -1,5 +1,5 @@
 ---
-title: R Installation (for students)
+title: R Installation
 author: Derek Sollberger
 date: '2020-01-19'
 slug: r-installation-for-students
