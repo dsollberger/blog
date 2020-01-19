@@ -16,10 +16,7 @@
       <pubDate>Sun, 19 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>/post/r-installation-for-students/</guid>
-      <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# update to current version
-R_version &amp;lt;- &amp;quot;3.6.2&amp;quot;
-RStudio_version &amp;lt;- &amp;quot;1.2.5033&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;If you are planning to do the &lt;code&gt;R&lt;/code&gt; assignments on your own computer (recommended), then here is a quick outline for obtaining the software.&lt;/p&gt;
+      <description>&lt;p&gt;If you are planning to do the &lt;code&gt;R&lt;/code&gt; assignments on your own computer (recommended), then here is a quick outline for obtaining the software.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;em&gt;There are two separate software programs&lt;/em&gt;. Most people find it easier to use &lt;code&gt;RStudio&lt;/code&gt;. than just &lt;code&gt;R&lt;/code&gt;, but you need to install &lt;code&gt;R&lt;/code&gt; first before installing &lt;code&gt;RStudio&lt;/code&gt; (analogously speaking: you need an cell phone before you can use an cell phone case).&lt;/li&gt;
 &lt;li&gt;&lt;em&gt;If you have R and RStudio from a previous course, you still need to update to the current versions!&lt;/em&gt; (version 3.6.2 of R and version 1.2.5033 of RStudio)&lt;/li&gt;

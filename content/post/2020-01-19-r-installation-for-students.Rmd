@@ -12,7 +12,7 @@ header:
   image: ''
 ---
 
-```{r}
+```{r, echo = FALSE}
 # update to current version
 R_version <- "3.6.2"
 RStudio_version <- "1.2.5033"
