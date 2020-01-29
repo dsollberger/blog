@@ -1,0 +1,88 @@
+---
+title: Troubleshooting for R, RStudio, and Tidyverse installation
+author: Derek Sollberger
+date: '2020-01-29'
+slug: r-troubleshooting-for-students
+categories:
+  - troubleshooting
+tags:
+  - r
+  - rstudio
+  - tidyverse
+header:
+  caption: ''
+  image: ''
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+
+<div id="TOC">
+<ul>
+<li><a href="#why-doesnt-my-r-look-like-your-r-software">Why doesn’t my R look like your R [software]?</a></li>
+<li><a href="#rstudio-says-that-it-cannot-find-the-r-binaries.">RStudio says that it cannot find the R binaries.</a></li>
+<li><a href="#we-cannot-install-software-on-ipad-chromebook-etc.">We cannot install software (on iPad, Chromebook, etc.)</a></li>
+<li><a href="#tidyverse-cannot-be-found">tidyverse cannot be found</a></li>
+<li><a href="#package-is-not-available-for-r-version">[package] is not available for R version …</a></li>
+<li><a href="#there-is-no-package-rlang">there is no package ‘rlang’</a></li>
+<li><a href="#there-is-no-package-broom">there is no package ‘broom’</a></li>
+<li><a href="#how-do-we-know-which-is-the-rmd-file-and-which-is-the-html-file">How do we know which is the RMD file and which is the HTML file?</a></li>
+</ul>
+</div>
+
+<p>In this site, I hope to address most of the issues that appear when we try to install <code>R</code>, <code>RStudio</code>, and <code>tidyverse</code> in the classroom setting.</p>
+<div id="why-doesnt-my-r-look-like-your-r-software" class="section level1">
+<h1>Why doesn’t my R look like your R [software]?</h1>
+<p>There are two programs to install: <code>R</code>, then <code>RStudio</code>. Please follow the installation instructions at <a href="https://dsollberger.netlify.com/post/r-installation-for-students/" class="uri">https://dsollberger.netlify.com/post/r-installation-for-students/</a></p>
+</div>
+<div id="rstudio-says-that-it-cannot-find-the-r-binaries." class="section level1">
+<h1>RStudio says that it cannot find the R binaries.</h1>
+<p>There are two programs to install: <code>R</code>, then <code>RStudio</code>. Please follow the installation instructions at <a href="https://dsollberger.netlify.com/post/r-installation-for-students/" class="uri">https://dsollberger.netlify.com/post/r-installation-for-students/</a></p>
+</div>
+<div id="we-cannot-install-software-on-ipad-chromebook-etc." class="section level1">
+<h1>We cannot install software (on iPad, Chromebook, etc.)</h1>
+<p>There is a fantastic alternative at <a href="https://rstudio.cloud/">RStudio Cloud</a>. That is, one can do their R programming online. There will be a few more steps involved compared to what we do in <code>RStudio</code> Desktop, but past students have gotten <code>RStudio Cloud</code> to work.</p>
+</div>
+<div id="tidyverse-cannot-be-found" class="section level1">
+<h1>tidyverse cannot be found</h1>
+<p>We need to install code packages before using code packages. Run <code>install.packages("tidyverse")</code> in the console (lower-left area). The installation will take up to 5 minutes. This has to be done only once during the semester.</p>
+</div>
+<div id="package-is-not-available-for-r-version" class="section level1">
+<h1>[package] is not available for R version …</h1>
+<p>To ensure compatibility between <code>R</code> and code packages, the R community almost always asks users to use the newest version of <code>R</code>. Please install the newest versions of <code>R</code> and <code>RStudio</code>. This semester we are using <code>R</code> version 3.6.2 and <code>RStudio</code> version 1.2.5033.</p>
+</div>
+<div id="there-is-no-package-rlang" class="section level1">
+<h1>there is no package ‘rlang’</h1>
+<p>Run these commands in the console</p>
+<ul>
+<li><code>install.packages("stringi", dependencies=TRUE, INSTALL_opts = c('--no-lock'))</code></li>
+<li>then <code>install.packages("stringr", dependencies=TRUE, INSTALL_opts = c('--no-lock'))</code></li>
+<li>then <code>install.packages("tidyverse")</code></li>
+</ul>
+<p>Source: <a href="https://stackoverflow.com/questions/49721356/trouble-downloading-rlang-with-tidyverse" class="uri">https://stackoverflow.com/questions/49721356/trouble-downloading-rlang-with-tidyverse</a></p>
+</div>
+<div id="there-is-no-package-broom" class="section level1">
+<h1>there is no package ‘broom’</h1>
+<p>The explanation would be a deep dive into the notion of <em>dependencies</em> (beyond the scope of the course). For now, we dive right into this case’s dependencies. Run these commands in the console.</p>
+<ul>
+<li><code>install.packages("backports")</code></li>
+<li>then <code>install.packages("zeallot")</code></li>
+<li>then <code>install.packages("broom")</code></li>
+<li>then <code>install.packages("tidyverse")</code></li>
+</ul>
+<p>Sources:</p>
+<ul>
+<li><a href="https://community.rstudio.com/t/fail-to-install-package-broom/11307/3" class="uri">https://community.rstudio.com/t/fail-to-install-package-broom/11307/3</a></li>
+<li><a href="https://community.rstudio.com/t/error-lazy-loading-failed-for-package-broom/50777" class="uri">https://community.rstudio.com/t/error-lazy-loading-failed-for-package-broom/50777</a></li>
+</ul>
+</div>
+<div id="how-do-we-know-which-is-the-rmd-file-and-which-is-the-html-file" class="section level1">
+<h1>How do we know which is the RMD file and which is the HTML file?</h1>
+<p>It will be useful if you can see file types in your computer.</p>
+<ul>
+<li>instructions for <a href="http://kb.winzip.com/kb/entry/26/">Windows</a></li>
+<li>instructions for <a href="https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/">Mac OS X</a></li>
+</ul>
+<p>Also, the HTML file will probably have a similar icon as your web browser (Chrome, Firefox, etc.)</p>
+</div>

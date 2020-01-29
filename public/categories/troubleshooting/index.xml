@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Troubleshooting on The Median Data Scientist</title>
+    <link>/categories/troubleshooting/</link>
+    <description>Recent content in Troubleshooting on The Median Data Scientist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Wed, 29 Jan 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/troubleshooting/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Troubleshooting for R, RStudio, and Tidyverse installation</title>
+      <link>/post/r-troubleshooting-for-students/</link>
+      <pubDate>Wed, 29 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-troubleshooting-for-students/</guid>
+      <description>Why doesn’t my R look like your R [software]?RStudio says that it cannot find the R binaries.We cannot install software (on iPad, Chromebook, etc.)tidyverse cannot be found[package] is not available for R version …there is no package ‘rlang’there is no package ‘broom’How do we know which is the RMD file and which is the HTML file?In this site, I hope to address most of the issues that appear when we try to install R, RStudio, and tidyverse in the classroom setting.</description>
+    </item>
+    
+  </channel>
+</rss>

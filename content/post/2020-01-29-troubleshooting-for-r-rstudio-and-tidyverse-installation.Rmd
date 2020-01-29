@@ -1,0 +1,87 @@
+---
+title: Troubleshooting for R, RStudio, and Tidyverse installation
+author: Derek Sollberger
+date: '2020-01-29'
+slug: r-troubleshooting-for-students
+categories:
+  - troubleshooting
+tags:
+  - r
+  - rstudio
+  - tidyverse
+header:
+  caption: ''
+  image: ''
+output:
+  blogdown::html_page:
+    toc: true
+---
+
+In this site, I hope to address most of the issues that appear when we try to install `R`, `RStudio`, and `tidyverse` in the classroom setting.
+
+```{r, echo = FALSE}
+# update to current version
+R_version <- "3.6.2"
+RStudio_version <- "1.2.5033"
+```
+
+# Why doesn't my R look like your R [software]?
+
+There are two programs to install: `R`, then `RStudio`.  Please follow the installation instructions at https://dsollberger.netlify.com/post/r-installation-for-students/
+
+
+# RStudio says that it cannot find the R binaries.
+
+There are two programs to install: `R`, then `RStudio`.  Please follow the installation instructions at https://dsollberger.netlify.com/post/r-installation-for-students/
+
+
+# We cannot install software (on iPad, Chromebook, etc.)
+
+There is a fantastic alternative at [RStudio Cloud](https://rstudio.cloud/).  That is, one can do their R programming online.  There will be a few more steps involved compared to what we do in `RStudio` Desktop, but past students have gotten `RStudio Cloud` to work.
+
+
+# tidyverse cannot be found
+
+We need to install code packages before using code packages.  Run `install.packages("tidyverse")` in the console (lower-left area).  The installation will take up to 5 minutes.  This has to be done only once during the semester.
+
+
+# [package] is not available for R version ...
+
+To ensure compatibility between `R` and code packages, the R community almost always asks users to use the newest version of `R`.  Please install the newest versions of `R` and `RStudio`.  This semester we are using `R` version `r R_version` and `RStudio` version `r RStudio_version`.
+
+
+# there is no package 'rlang'
+
+Run these commands in the console
+
+* `install.packages("stringi", dependencies=TRUE, INSTALL_opts = c('--no-lock'))`
+* then `install.packages("stringr", dependencies=TRUE, INSTALL_opts = c('--no-lock'))`
+* then `install.packages("tidyverse")`
+
+Source: https://stackoverflow.com/questions/49721356/trouble-downloading-rlang-with-tidyverse
+
+
+# there is no package 'broom'
+
+The explanation would be a deep dive into the notion of *dependencies* (beyond the scope of the course).  For now, we dive right into this case's dependencies.  Run these commands in the console.
+
+* `install.packages("backports")`
+* then `install.packages("zeallot")`
+* then `install.packages("broom")`
+* then `install.packages("tidyverse")`
+
+Sources:
+
+* https://community.rstudio.com/t/fail-to-install-package-broom/11307/3
+* https://community.rstudio.com/t/error-lazy-loading-failed-for-package-broom/50777
+
+
+# How do we know which is the RMD file and which is the HTML file?
+
+It will be useful if you can see file types in your computer.
+
+* instructions for [Windows](http://kb.winzip.com/kb/entry/26/)
+* instructions for [Mac OS X](https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/)
+
+Also, the HTML file will probably have a similar icon as your web browser (Chrome, Firefox, etc.)
+

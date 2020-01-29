@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/r-troubleshooting-for-students/</loc>
+      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/r-installation-for-students/</loc>
       <lastmod>2020-01-19T00:00:00+00:00</lastmod>
     </url>
@@ -477,8 +486,8 @@
     
     <url>
     
-      <loc>/categories/gganimate/</loc>
-      <lastmod>2019-02-14T00:00:00+00:00</lastmod>
+      <loc>/tags/gganimate/</loc>
+      <lastmod>2019-02-25T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -487,8 +496,8 @@
     
     <url>
     
-      <loc>/tags/gganimate/</loc>
-      <lastmod>2019-02-25T00:00:00+00:00</lastmod>
+      <loc>/categories/gganimate/</loc>
+      <lastmod>2019-02-14T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -567,8 +576,8 @@
     
     <url>
     
-      <loc>/categories/math/</loc>
-      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
+      <loc>/tags/math/</loc>
+      <lastmod>2020-01-13T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -577,8 +586,8 @@
     
     <url>
     
-      <loc>/tags/math/</loc>
-      <lastmod>2020-01-13T00:00:00+00:00</lastmod>
+      <loc>/categories/math/</loc>
+      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -637,6 +646,16 @@
     
     <url>
     
+      <loc>/tags/r/</loc>
+      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/categories/r/</loc>
       <lastmod>2019-02-05T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -677,6 +696,16 @@
     
     <url>
     
+      <loc>/tags/rstudio/</loc>
+      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/categories/science-communication/</loc>
       <lastmod>2018-07-21T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -707,8 +736,8 @@
     
     <url>
     
-      <loc>/categories/teaching/</loc>
-      <lastmod>2020-01-19T00:00:00+00:00</lastmod>
+      <loc>/tags/teaching/</loc>
+      <lastmod>2018-08-01T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -717,8 +746,8 @@
     
     <url>
     
-      <loc>/tags/teaching/</loc>
-      <lastmod>2018-08-01T00:00:00+00:00</lastmod>
+      <loc>/categories/teaching/</loc>
+      <lastmod>2020-01-19T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -747,6 +776,16 @@
     
     <url>
     
+      <loc>/tags/tidyverse/</loc>
+      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/categories/tidyverse/</loc>
       <lastmod>2020-01-09T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -759,6 +798,16 @@
     
       <loc>/tags/timeseries/</loc>
       <lastmod>2018-08-01T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>/categories/troubleshooting/</loc>
+      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
