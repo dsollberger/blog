@@ -17,7 +17,7 @@
       
     
   
-  <meta name="description" content="Why doesn’t my R look like your R [software]?RStudio says that it cannot find the R binaries.We cannot install software (on iPad, Chromebook, etc.)tidyverse cannot be found[package] is not available for R version …there is no package ‘rlang’there is no package ‘broom’How do we know which is the RMD file and which is the HTML file?In this site, I hope to address most of the issues that appear when we try to install R, RStudio, and tidyverse in the classroom setting.">
+  <meta name="description" content="Why doesn’t my R look like your R [software]?RStudio says that it cannot find the R binaries.We cannot install software (on iPad, Chromebook, etc.)tidyverse cannot be found[package] is not available for R version …there is no package ‘rlang’there is no package ‘broom’rlang and/or broom still do not workHow do we know which is the RMD file and which is the HTML file?">
 
   
   <link rel="alternate" hreflang="en-us" href="/post/r-troubleshooting-for-students/">
@@ -78,7 +78,7 @@
   <meta property="og:site_name" content="The Median Data Scientist">
   <meta property="og:url" content="/post/r-troubleshooting-for-students/">
   <meta property="og:title" content="Troubleshooting for R, RStudio, and Tidyverse installation | The Median Data Scientist">
-  <meta property="og:description" content="Why doesn’t my R look like your R [software]?RStudio says that it cannot find the R binaries.We cannot install software (on iPad, Chromebook, etc.)tidyverse cannot be found[package] is not available for R version …there is no package ‘rlang’there is no package ‘broom’How do we know which is the RMD file and which is the HTML file?In this site, I hope to address most of the issues that appear when we try to install R, RStudio, and tidyverse in the classroom setting.">
+  <meta property="og:description" content="Why doesn’t my R look like your R [software]?RStudio says that it cannot find the R binaries.We cannot install software (on iPad, Chromebook, etc.)tidyverse cannot be found[package] is not available for R version …there is no package ‘rlang’there is no package ‘broom’rlang and/or broom still do not workHow do we know which is the RMD file and which is the HTML file?">
   <meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2020-01-29T00:00:00&#43;00:00">
@@ -229,7 +229,7 @@
   
   <span class="middot-divider"></span>
   <span class="article-reading-time">
-    2 min read
+    3 min read
   </span>
   
 
@@ -307,6 +307,7 @@
 <li><a href="#package-is-not-available-for-r-version">[package] is not available for R version …</a></li>
 <li><a href="#there-is-no-package-rlang">there is no package ‘rlang’</a></li>
 <li><a href="#there-is-no-package-broom">there is no package ‘broom’</a></li>
+<li><a href="#rlang-andor-broom-still-do-not-work">rlang and/or broom still do not work</a></li>
 <li><a href="#how-do-we-know-which-is-the-rmd-file-and-which-is-the-html-file">How do we know which is the RMD file and which is the HTML file?</a></li>
 </ul>
 </div>
@@ -356,6 +357,17 @@
 <li><a href="https://community.rstudio.com/t/fail-to-install-package-broom/11307/3" class="uri">https://community.rstudio.com/t/fail-to-install-package-broom/11307/3</a></li>
 <li><a href="https://community.rstudio.com/t/error-lazy-loading-failed-for-package-broom/50777" class="uri">https://community.rstudio.com/t/error-lazy-loading-failed-for-package-broom/50777</a></li>
 </ul>
+</div>
+<div id="rlang-andor-broom-still-do-not-work" class="section level1">
+<h1>rlang and/or broom still do not work</h1>
+<p>Let’s try this. <code>tidyverse</code> is a <em>set</em> of packages that are supposed to work together well and emulate programming practices from other programming languages. In our introductory forays into <code>R</code> programming, we do not need every package in the <code>tidyverse</code>. Therefore, the simplest work-around is to load the needed packages individually.</p>
+<pre class="r"><code>#### instead of library(&quot;tidyverse&quot;) ####
+library(&quot;dplyr&quot;)    #for the pipe function %&gt;% and other SQL commands
+library(&quot;ggplot2&quot;)  #modern data visualization
+#library(&quot;readr&quot;)    #to load CSV data files
+#library(&quot;readxl&quot;)   #to load Excel data files
+#library(&quot;stringr&quot;)  #manipulate strings and regular expressions
+library(&quot;tidyr&quot;)    #to reshape data frames with functions like gather or spread</code></pre>
 </div>
 <div id="how-do-we-know-which-is-the-rmd-file-and-which-is-the-html-file" class="section level1">
 <h1>How do we know which is the RMD file and which is the HTML file?</h1>
