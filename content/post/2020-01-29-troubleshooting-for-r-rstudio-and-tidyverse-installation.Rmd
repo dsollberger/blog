@@ -75,6 +75,20 @@ Sources:
 * https://community.rstudio.com/t/fail-to-install-package-broom/11307/3
 * https://community.rstudio.com/t/error-lazy-loading-failed-for-package-broom/50777
 
+# rlang and/or broom still do not work
+
+Let's try this.  `tidyverse` is a *set* of packages that are supposed to work together well and emulate programming practices from other programming languages.  In our introductory forays into `R` programming, we do not need every package in the `tidyverse`.  Therefore, the simplest work-around is to load the needed packages individually.
+
+```{r, message = FALSE, warning = FALSE}
+#### instead of library("tidyverse") ####
+library("dplyr")    #for the pipe function %>% and other SQL commands
+library("ggplot2")  #modern data visualization
+#library("readr")    #to load CSV data files
+#library("readxl")   #to load Excel data files
+#library("stringr")  #manipulate strings and regular expressions
+library("tidyr")    #to reshape data frames with functions like gather or spread
+```
+
 
 # How do we know which is the RMD file and which is the HTML file?
 
