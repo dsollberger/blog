@@ -52,18 +52,20 @@ To ensure compatibility between `R` and code packages, the R community almost al
 
 # there is no package 'rlang'
 
-Run these commands in the console
+Run this command in the console
 
-* `install.packages("stringi", dependencies=TRUE, INSTALL_opts = c('--no-lock'))`
-* then `install.packages("stringr", dependencies=TRUE, INSTALL_opts = c('--no-lock'))`
-* then `install.packages("tidyverse")`
+* `install.packages("dplyr")`
 
-Source: https://stackoverflow.com/questions/49721356/trouble-downloading-rlang-with-tidyverse
+If a choice appears that says something like `Do you want to install from sources the package which needs compilation?.`, select "No".
+
+Alternatively: https://stackoverflow.com/questions/49721356/trouble-downloading-rlang-with-tidyverse
 
 
 # there is no package 'broom'
 
 The explanation would be a deep dive into the notion of *dependencies* (beyond the scope of the course).  For now, we dive right into this case's dependencies.  Run these commands in the console.
+
+If a choice appears that says something like `Do you want to install from sources the package which needs compilation?.`, select "No".
 
 * `install.packages("backports")`
 * then `install.packages("zeallot")`
@@ -86,7 +88,7 @@ library("ggplot2")  #modern data visualization
 #library("readr")    #to load CSV data files
 #library("readxl")   #to load Excel data files
 #library("stringr")  #manipulate strings and regular expressions
-library("tidyr")    #to reshape data frames with functions like gather or spread
+#library("tidyr")    #to reshape data frames with functions like gather or spread
 ```
 
 
