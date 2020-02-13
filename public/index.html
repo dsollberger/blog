@@ -379,6 +379,86 @@
 
         
         
+
+      
+      
+        
+        
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
+    <a href="/post/introduction-to-bioconductor/" itemprop="url">Introduction to Bioconductor</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-02-12 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Feb 12, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/bioinformatics">bioinformatics</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    “Bioconductor provides tools for the analysis and comprehension of high-throughput genomic data. Bioconductor uses the R statistical programming language, and is open source and open development.”
+https://www.bioconductor.org/
+library(&quot;dplyr&quot;)library(&quot;ggplot2&quot;)InstallationTo install core packages, type the following in an R command window.
+This may take around 5 minutesWhen the option for updating packages appears, type in “a” for “all”#leave as eval = FALSE when knittingif (!
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/introduction-to-bioconductor/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+      
+
+      
+
+        
+
+        
+        
+
+        
+        
           
       
           
@@ -689,87 +769,6 @@ library(ggrepel)library(tidyverse)library(readxl)df_info &lt;- read_excel(&qu
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/hikes-i-ve-completed/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
-
-        
-
-        
-        
-
-        
-        
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/gender-of-frasier-characters/" itemprop="url">Gender of Frasier Characters</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-01-09 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jan 9, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/tidyverse">tidyverse</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    “I am not a man…”
-For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show Fraiser.
-The gender package#install.packages(&quot;gender&quot;) #works fine## user needs to download database too#install_genderdata_package() #did not work (&quot;error reading from connection&quot;)## as suggested by the bug report at https://github.com/ropensci/drat/issues/6#install.packages(&quot;devtools&quot;)#library(devtools)#devtools::install_github(&quot;ropensci/genderdata&quot;)Trial Runlibrary(gender)library(ggpubr)library(tidyverse)gender(&quot;frasier&quot;, method = &quot;ssa&quot;, years = c(1940, 1990))## # A tibble: 1 x 6## name proportion_male proportion_female gender year_min year_max## &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;## 1 frasier 1 0 male 1940 1990Cast of CharactersNow I will try to run the gender function over a list of names (criteria: characters that appeared in at least 6 episodes).
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/gender-of-frasier-characters/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>

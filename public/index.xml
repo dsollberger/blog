@@ -11,6 +11,149 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Introduction to Bioconductor</title>
+      <link>/post/introduction-to-bioconductor/</link>
+      <pubDate>Wed, 12 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introduction-to-bioconductor/</guid>
+      <description>&lt;p&gt;“&lt;a href=&#34;https://www.bioconductor.org/&#34;&gt;Bioconductor&lt;/a&gt; provides tools for the analysis and comprehension of high-throughput genomic data. Bioconductor uses the R statistical programming language, and is open source and open development.”&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.bioconductor.org/&#34;&gt;https://www.bioconductor.org/&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;dplyr&amp;quot;)
+library(&amp;quot;ggplot2&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;installation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installation&lt;/h1&gt;
+&lt;p&gt;To install core packages, type the following in an R command window.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This may take around 5 minutes&lt;/li&gt;
+&lt;li&gt;When the option for updating packages appears, type in “a” for “all”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#leave as eval = FALSE when knitting
+
+if (!requireNamespace(&amp;quot;BiocManager&amp;quot;, quietly = TRUE))
+    install.packages(&amp;quot;BiocManager&amp;quot;)
+BiocManager::install()&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;installing-bioconductor-packages&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Installing Bioconductor packages&lt;/h2&gt;
+&lt;p&gt;There are about 20000 packages in the &lt;em&gt;Bioconductor&lt;/em&gt; universe. For now, let us install a couple of the more popular packages with the following code. To install a &lt;code&gt;BioConductor&lt;/code&gt; package, simply type in the name of the package in quotes inside of &lt;code&gt;BiocManager::install()&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This may take around 5 minutes&lt;/li&gt;
+&lt;li&gt;Hereafter, when the option for updating packages appears, type in “n” for “no”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#leave as eval = FALSE when knitting
+
+BiocManager::install(&amp;quot;GenomicFeatures&amp;quot;)
+BiocManager::install(&amp;quot;Biostrings&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploring-genomicfeatures&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Exploring GenomicFeatures&lt;/h1&gt;
+&lt;p&gt;The following instructions were extracted from the vignette for Genomic Features&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;browseVignettes(package = &#34;GenomicFeatures&#34;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Load the &lt;code&gt;GenomicFeatures&lt;/code&gt; package. It is suggested that you load the packages with the following code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+suppressPackageStartupMessages(library(&amp;#39;GenomicFeatures&amp;#39;))&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;“The &lt;code&gt;GenomicFeatures&lt;/code&gt; package retrieves and manages transcript-related features fromthe UCSC Genome Bioinformatics and BioMart data resources. The package isuseful for ChIP-chip, ChIP-seq, and RNA-seq analyses.”&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;txdb-objects&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TxDb Objects&lt;/h2&gt;
+&lt;p&gt;&#34;The &lt;code&gt;GenomicFeatures&lt;/code&gt; package uses TxDb objects to store transcript metadata. This class maps the 5’ and 3’ untranslated regions (UTRs), protein coding sequences(CDSs) and exons for a set of mRNA transcripts to their associated genome. TxDb objects have numerous accessors functions to allow such features to be retrieved individually or grouped together in a way that reflects the underlying biology.&lt;/p&gt;
+&lt;p&gt;All TxDb objects are backed by a SQLite database that manages genomic locations and the relationships between pre-processed mRNA transcripts, exons, protein coding sequences, and their related gene identifiers.&#34;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+samplefile &amp;lt;- system.file(&amp;quot;extdata&amp;quot;,
+                          &amp;quot;hg19_knownGene_sample.sqlite&amp;quot;,
+                          package=&amp;quot;GenomicFeatures&amp;quot;)
+txdb &amp;lt;- loadDb(samplefile)
+txdb&lt;/code&gt;&lt;/pre&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Write a couple of sentences about what you observe in the output (the description of the txdb sample file)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;loading-and-viewing-a-sequence&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Loading and Viewing a Sequence&lt;/h2&gt;
+&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Install the following packages (i.e. figure out how from some code earlier in this tutorial)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;BSgenome.Hsapiens.UCSC.hg19&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TxDb.Hsapiens.UCSC.hg19.knownGene&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Run the following code and then write a couple of sentences about what you observe in the output.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+library(BSgenome.Hsapiens.UCSC.hg19)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+
+tx_seqs1 &amp;lt;- extractTranscriptSeqs(Hsapiens,
+                                  TxDb.Hsapiens.UCSC.hg19.knownGene,
+                                  use.names=TRUE)
+suppressWarnings(translate(tx_seqs1))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploring-biostrings&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Exploring Biostrings&lt;/h1&gt;
+&lt;p&gt;The following instructions were extracted from the vignette for &lt;code&gt;Biostrings&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;browseVignettes(package = &#34;Biostrings&#34;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Install the following packages (i.e. figure out how from some code earlier in this tutorial)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;hgu95av2probe&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hgu95av2cdf&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Load the &lt;code&gt;Biostrings&lt;/code&gt; package. It is suggested that you load the packages with the following code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+suppressPackageStartupMessages(library(&amp;#39;Biostrings&amp;#39;))
+suppressPackageStartupMessages(library(&amp;#39;hgu95av2probe&amp;#39;))
+suppressPackageStartupMessages(library(&amp;#39;hgu95av2cdf&amp;#39;))&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;5&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;The following code will load an example of a “Large DNAStringSet” and perform a couple of simple data analyses. Run the code and write a couple of sentences about the results.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+this_DNAString_set &amp;lt;- DNAStringSet(hgu95av2probe)
+this_DNAString_set_bc &amp;lt;- alphabetFrequency(this_DNAString_set, baseOnly = TRUE)
+nrow(this_DNAString_set_bc)
+head(this_DNAString_set_bc)
+alphabetFrequency(this_DNAString_set_bc, baseOnly=TRUE, collapse=TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;6&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;The following code will perform a calculation called the &lt;code&gt;GC content&lt;/code&gt; of a DNA sequence and graph the resulting amounts as a histogram. Run the code and write a couple of sentences about the results.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+this_DNAString_df &amp;lt;- data.frame(this_DNAString_set_bc)
+
+# alas &amp;quot;T&amp;quot; is treated as &amp;quot;TRUE&amp;quot; in R, so let&amp;#39;s use the full names of the nucleotides
+colnames(this_DNAString_df) &amp;lt;- c(&amp;quot;Adenine&amp;quot;, &amp;quot;Cytosine&amp;quot;, &amp;quot;Guanine&amp;quot;, &amp;quot;Thymine&amp;quot;, &amp;quot;other&amp;quot;)
+
+this_DNAString_df %&amp;gt;%
+  select(c(&amp;quot;Adenine&amp;quot;, &amp;quot;Cytosine&amp;quot;, &amp;quot;Guanine&amp;quot;, &amp;quot;Thymine&amp;quot;)) %&amp;gt;%
+  mutate(GC_content = 100*(Cytosine + Guanine) / 
+           (Adenine + Cytosine + Guanine + Thymine)) %&amp;gt;%
+  ggplot(aes(x = GC_content, fill = ..x..)) +
+  geom_histogram(binwidth = 5) + 
+  labs(title = &amp;quot;Affymetrix Human Genome U95 Set annotation data&amp;quot;,
+       subtitle = &amp;quot;GC Content of hgu95av2probe&amp;quot;,
+       caption = &amp;quot;Source: Bioconductor&amp;quot;,
+       x = &amp;quot;GC content (percentage)&amp;quot;) +
+  scale_fill_gradient(low = &amp;quot;yellow&amp;quot;, high= &amp;quot;blue&amp;quot;) +
+  theme_minimal() +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Troubleshooting for R, RStudio, and Tidyverse installation</title>
       <link>/post/r-troubleshooting-for-students/</link>
       <pubDate>Wed, 29 Jan 2020 00:00:00 +0000</pubDate>
@@ -1425,62 +1568,6 @@ round(100*absorption)&lt;/code&gt;&lt;/pre&gt;
 ## Junior          4        97
 ## Senior          1       100&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This model predicts that, starting with incoming students, about 79 percent of those students will eventually graduate while about 21 percent will eventually drop from UC Merced enrollment.&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>My First gganimate Plot</title>
-      <link>/post/my-first-gganimate-plot/</link>
-      <pubDate>Tue, 08 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/my-first-gganimate-plot/</guid>
-      <description>&lt;p&gt;Today I finally read a &lt;a href=&#34;https://gganimate.com/articles/gganimate.html&#34;&gt;tutorial&lt;/a&gt; on &lt;code&gt;gganimate&lt;/code&gt;, and here I will build my first example. My hope is to eventually simulate traversal on a directed graph.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
-library(gganimate)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;create-node-data&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Create Node Data&lt;/h1&gt;
-&lt;p&gt;For this example, I will have 3 nodes (located at 3 vertices of a triangle), 100 dots distributed among the nodes, and a new placement over 21 states in time.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;N &amp;lt;- 100 # number of dots
-T &amp;lt;- 20 # number of iterations
-
-node_names &amp;lt;- c(&amp;quot;Node 1&amp;quot;, &amp;quot;Node 2&amp;quot;, &amp;quot;Node 3&amp;quot;)
-iter &amp;lt;- rep(0, N)
-node &amp;lt;- rep(&amp;quot;Node 1&amp;quot;, N)
-x &amp;lt;- 10 + rnorm(N, 0, 2)
-y &amp;lt;- 20 + rnorm(N, 0, 2)
-states &amp;lt;- data.frame(iter, node, x, y)
-
-for(t in 1:T){
-  iter &amp;lt;- rep(t, N)
-  node &amp;lt;- sample(node_names, N, replace = TRUE)
-  x &amp;lt;- case_when(
-    node == &amp;quot;Node 1&amp;quot; ~ 10 + rnorm(N, 0, 2),
-    node == &amp;quot;Node 2&amp;quot; ~ 20 + rnorm(N, 0, 2),
-    TRUE             ~ 30 + rnorm(N, 0, 2)
-  )
-  y &amp;lt;- case_when(
-    node == &amp;quot;Node 1&amp;quot; ~ 20 + rnorm(N, 0, 2),
-    node == &amp;quot;Node 2&amp;quot; ~ 30 + rnorm(N, 0, 2),
-    TRUE             ~ 10 + rnorm(N, 0, 2)
-  )
-  this_state &amp;lt;- data.frame(iter, node, x, y)
-  
-  states &amp;lt;- rbind(states, this_state)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;plot-network&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Plot Network&lt;/h1&gt;
-&lt;p&gt;Having made a new set of data at each state, the main tool is to use &lt;code&gt;transition_states&lt;/code&gt; over the iterations.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;states %&amp;gt;% 
-  ggplot(aes(x = x, y = y)) +
-  geom_point(aes(color = node), alpha = 0.33) +
-  labs(title = &amp;quot;Draft of Network Animation&amp;quot;,
-       subtitle = &amp;quot;Iteration: {closest_state} of 20&amp;quot;,
-       caption = &amp;quot;Simulation of random placement&amp;quot;) +
-  theme_minimal() +
-  transition_states(iter, transition_length = 1, state_length = 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-01-08-my-first-gganimate-plot_files/figure-html/unnamed-chunk-3-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

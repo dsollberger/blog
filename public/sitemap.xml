@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/introduction-to-bioconductor/</loc>
+      <lastmod>2020-02-12T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/r-troubleshooting-for-students/</loc>
       <lastmod>2020-01-29T00:00:00+00:00</lastmod>
     </url>
@@ -377,7 +386,7 @@
     <url>
     
       <loc>/categories/bioinformatics/</loc>
-      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
+      <lastmod>2020-02-12T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -397,7 +406,7 @@
     <url>
     
       <loc>/categories/</loc>
-      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
+      <lastmod>2020-02-12T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

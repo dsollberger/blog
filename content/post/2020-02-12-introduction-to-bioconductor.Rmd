@@ -1,0 +1,167 @@
+---
+title: Introduction to Bioconductor
+author: Derek Sollberger
+date: '2020-02-12'
+slug: introduction-to-bioconductor
+categories:
+  - bioinformatics
+tags: []
+header:
+  caption: ''
+  image: ''
+---
+
+"[Bioconductor](https://www.bioconductor.org/) provides tools for the analysis and comprehension of high-throughput genomic data. Bioconductor uses the R statistical programming language, and is open source and open development."
+
+[https://www.bioconductor.org/](https://www.bioconductor.org/)
+
+```{r, message = FALSE, warning = FALSE}
+library("dplyr")
+library("ggplot2")
+```
+
+
+# Installation
+
+To install core packages, type the following in an R command window.
+
+* This may take around 5 minutes
+* When the option for updating packages appears, type in "a" for "all"
+
+```{r, eval = FALSE}
+#leave as eval = FALSE when knitting
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install()
+```
+
+## Installing Bioconductor packages
+
+There are about 20000 packages in the *Bioconductor* universe.  For now, let us install a couple of the more popular packages with the following code.  To install a `BioConductor` package, simply type in the name of the package in quotes inside of `BiocManager::install()`
+
+* This may take around 5 minutes
+* Hereafter, when the option for updating packages appears, type in "n" for "no"
+
+```{r, eval = FALSE}
+#leave as eval = FALSE when knitting
+
+BiocManager::install("GenomicFeatures")
+BiocManager::install("Biostrings")
+```
+
+# Exploring GenomicFeatures
+
+The following instructions were extracted from the vignette for Genomic Features
+
+* `browseVignettes(package = "GenomicFeatures")`
+
+Load the `GenomicFeatures` package.  It is suggested that you load the packages with the following code.
+
+```{r, eval = FALSE, message = FALSE, warning = FALSE}
+#set as eval = TRUE when knitting
+
+suppressPackageStartupMessages(library('GenomicFeatures'))
+```
+
+## Introduction
+
+"The `GenomicFeatures` package retrieves and manages transcript-related features fromthe UCSC Genome Bioinformatics and BioMart data resources. The package isuseful for ChIP-chip, ChIP-seq, and RNA-seq analyses."
+
+## TxDb Objects
+
+"The `GenomicFeatures` package uses TxDb objects to store transcript metadata. This class maps the 5’ and 3’ untranslated regions (UTRs), protein coding sequences(CDSs) and exons for a set of mRNA transcripts to their associated genome. TxDb objects have numerous accessors functions to allow such features to be retrieved individually or grouped together in a way that reflects the underlying biology.
+
+All TxDb objects are backed by a SQLite database that manages genomic locations and the relationships between pre-processed mRNA transcripts, exons, protein coding sequences, and their related gene identifiers."
+
+```{r, eval = FALSE}
+#set as eval = TRUE when knitting
+
+samplefile <- system.file("extdata",
+                          "hg19_knownGene_sample.sqlite",
+                          package="GenomicFeatures")
+txdb <- loadDb(samplefile)
+txdb
+```
+
+1. Write a couple of sentences about what you observe in the output (the description of the txdb sample file)
+
+## Loading and Viewing a Sequence
+
+2. Install the following packages (i.e. figure out how from some code earlier in this tutorial)
+
+* `BSgenome.Hsapiens.UCSC.hg19`
+* `TxDb.Hsapiens.UCSC.hg19.knownGene`
+
+3. Run the following code and then write a couple of sentences about what you observe in the output.
+
+```{r, eval = FALSE, message = FALSE, warning = FALSE}
+#set as eval = TRUE when knitting
+
+library(BSgenome.Hsapiens.UCSC.hg19)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+
+tx_seqs1 <- extractTranscriptSeqs(Hsapiens,
+                                  TxDb.Hsapiens.UCSC.hg19.knownGene,
+                                  use.names=TRUE)
+suppressWarnings(translate(tx_seqs1))
+```
+
+
+# Exploring Biostrings
+
+The following instructions were extracted from the vignette for `Biostrings`
+
+* `browseVignettes(package = "Biostrings")`
+
+4. Install the following packages (i.e. figure out how from some code earlier in this tutorial)
+
+* `hgu95av2probe`
+* `hgu95av2cdf`
+
+Load the `Biostrings` package.  It is suggested that you load the packages with the following code.
+
+```{r, eval = FALSE, message = FALSE, warning = FALSE}
+#set as eval = TRUE when knitting
+
+suppressPackageStartupMessages(library('Biostrings'))
+suppressPackageStartupMessages(library('hgu95av2probe'))
+suppressPackageStartupMessages(library('hgu95av2cdf'))
+```
+
+5.  The following code will load an example of a "Large DNAStringSet" and perform a couple of simple data analyses.  Run the code and write a couple of sentences about the results.
+
+```{r, eval = FALSE}
+#set as eval = TRUE when knitting
+
+this_DNAString_set <- DNAStringSet(hgu95av2probe)
+this_DNAString_set_bc <- alphabetFrequency(this_DNAString_set, baseOnly = TRUE)
+nrow(this_DNAString_set_bc)
+head(this_DNAString_set_bc)
+alphabetFrequency(this_DNAString_set_bc, baseOnly=TRUE, collapse=TRUE)
+```
+
+6.  The following code will perform a calculation called the `GC content` of a DNA sequence and graph the resulting amounts as a histogram. Run the code and write a couple of sentences about the results.
+
+```{r, eval = FALSE}
+#set as eval = TRUE when knitting
+
+this_DNAString_df <- data.frame(this_DNAString_set_bc)
+
+# alas "T" is treated as "TRUE" in R, so let's use the full names of the nucleotides
+colnames(this_DNAString_df) <- c("Adenine", "Cytosine", "Guanine", "Thymine", "other")
+
+this_DNAString_df %>%
+  select(c("Adenine", "Cytosine", "Guanine", "Thymine")) %>%
+  mutate(GC_content = 100*(Cytosine + Guanine) / 
+           (Adenine + Cytosine + Guanine + Thymine)) %>%
+  ggplot(aes(x = GC_content, fill = ..x..)) +
+  geom_histogram(binwidth = 5) + 
+  labs(title = "Affymetrix Human Genome U95 Set annotation data",
+       subtitle = "GC Content of hgu95av2probe",
+       caption = "Source: Bioconductor",
+       x = "GC content (percentage)") +
+  scale_fill_gradient(low = "yellow", high= "blue") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```

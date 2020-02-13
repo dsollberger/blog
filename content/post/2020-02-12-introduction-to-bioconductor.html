@@ -1,0 +1,149 @@
+---
+title: Introduction to Bioconductor
+author: Derek Sollberger
+date: '2020-02-12'
+slug: introduction-to-bioconductor
+categories:
+  - bioinformatics
+tags: []
+header:
+  caption: ''
+  image: ''
+---
+
+
+
+<p>“<a href="https://www.bioconductor.org/">Bioconductor</a> provides tools for the analysis and comprehension of high-throughput genomic data. Bioconductor uses the R statistical programming language, and is open source and open development.”</p>
+<p><a href="https://www.bioconductor.org/">https://www.bioconductor.org/</a></p>
+<pre class="r"><code>library(&quot;dplyr&quot;)
+library(&quot;ggplot2&quot;)</code></pre>
+<div id="installation" class="section level1">
+<h1>Installation</h1>
+<p>To install core packages, type the following in an R command window.</p>
+<ul>
+<li>This may take around 5 minutes</li>
+<li>When the option for updating packages appears, type in “a” for “all”</li>
+</ul>
+<pre class="r"><code>#leave as eval = FALSE when knitting
+
+if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))
+    install.packages(&quot;BiocManager&quot;)
+BiocManager::install()</code></pre>
+<div id="installing-bioconductor-packages" class="section level2">
+<h2>Installing Bioconductor packages</h2>
+<p>There are about 20000 packages in the <em>Bioconductor</em> universe. For now, let us install a couple of the more popular packages with the following code. To install a <code>BioConductor</code> package, simply type in the name of the package in quotes inside of <code>BiocManager::install()</code></p>
+<ul>
+<li>This may take around 5 minutes</li>
+<li>Hereafter, when the option for updating packages appears, type in “n” for “no”</li>
+</ul>
+<pre class="r"><code>#leave as eval = FALSE when knitting
+
+BiocManager::install(&quot;GenomicFeatures&quot;)
+BiocManager::install(&quot;Biostrings&quot;)</code></pre>
+</div>
+</div>
+<div id="exploring-genomicfeatures" class="section level1">
+<h1>Exploring GenomicFeatures</h1>
+<p>The following instructions were extracted from the vignette for Genomic Features</p>
+<ul>
+<li><code>browseVignettes(package = "GenomicFeatures")</code></li>
+</ul>
+<p>Load the <code>GenomicFeatures</code> package. It is suggested that you load the packages with the following code.</p>
+<pre class="r"><code>#set as eval = TRUE when knitting
+
+suppressPackageStartupMessages(library(&#39;GenomicFeatures&#39;))</code></pre>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>“The <code>GenomicFeatures</code> package retrieves and manages transcript-related features fromthe UCSC Genome Bioinformatics and BioMart data resources. The package isuseful for ChIP-chip, ChIP-seq, and RNA-seq analyses.”</p>
+</div>
+<div id="txdb-objects" class="section level2">
+<h2>TxDb Objects</h2>
+<p>"The <code>GenomicFeatures</code> package uses TxDb objects to store transcript metadata. This class maps the 5’ and 3’ untranslated regions (UTRs), protein coding sequences(CDSs) and exons for a set of mRNA transcripts to their associated genome. TxDb objects have numerous accessors functions to allow such features to be retrieved individually or grouped together in a way that reflects the underlying biology.</p>
+<p>All TxDb objects are backed by a SQLite database that manages genomic locations and the relationships between pre-processed mRNA transcripts, exons, protein coding sequences, and their related gene identifiers."</p>
+<pre class="r"><code>#set as eval = TRUE when knitting
+
+samplefile &lt;- system.file(&quot;extdata&quot;,
+                          &quot;hg19_knownGene_sample.sqlite&quot;,
+                          package=&quot;GenomicFeatures&quot;)
+txdb &lt;- loadDb(samplefile)
+txdb</code></pre>
+<ol style="list-style-type: decimal">
+<li>Write a couple of sentences about what you observe in the output (the description of the txdb sample file)</li>
+</ol>
+</div>
+<div id="loading-and-viewing-a-sequence" class="section level2">
+<h2>Loading and Viewing a Sequence</h2>
+<ol start="2" style="list-style-type: decimal">
+<li>Install the following packages (i.e. figure out how from some code earlier in this tutorial)</li>
+</ol>
+<ul>
+<li><code>BSgenome.Hsapiens.UCSC.hg19</code></li>
+<li><code>TxDb.Hsapiens.UCSC.hg19.knownGene</code></li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Run the following code and then write a couple of sentences about what you observe in the output.</li>
+</ol>
+<pre class="r"><code>#set as eval = TRUE when knitting
+
+library(BSgenome.Hsapiens.UCSC.hg19)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+
+tx_seqs1 &lt;- extractTranscriptSeqs(Hsapiens,
+                                  TxDb.Hsapiens.UCSC.hg19.knownGene,
+                                  use.names=TRUE)
+suppressWarnings(translate(tx_seqs1))</code></pre>
+</div>
+</div>
+<div id="exploring-biostrings" class="section level1">
+<h1>Exploring Biostrings</h1>
+<p>The following instructions were extracted from the vignette for <code>Biostrings</code></p>
+<ul>
+<li><code>browseVignettes(package = "Biostrings")</code></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>Install the following packages (i.e. figure out how from some code earlier in this tutorial)</li>
+</ol>
+<ul>
+<li><code>hgu95av2probe</code></li>
+<li><code>hgu95av2cdf</code></li>
+</ul>
+<p>Load the <code>Biostrings</code> package. It is suggested that you load the packages with the following code.</p>
+<pre class="r"><code>#set as eval = TRUE when knitting
+
+suppressPackageStartupMessages(library(&#39;Biostrings&#39;))
+suppressPackageStartupMessages(library(&#39;hgu95av2probe&#39;))
+suppressPackageStartupMessages(library(&#39;hgu95av2cdf&#39;))</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>The following code will load an example of a “Large DNAStringSet” and perform a couple of simple data analyses. Run the code and write a couple of sentences about the results.</li>
+</ol>
+<pre class="r"><code>#set as eval = TRUE when knitting
+
+this_DNAString_set &lt;- DNAStringSet(hgu95av2probe)
+this_DNAString_set_bc &lt;- alphabetFrequency(this_DNAString_set, baseOnly = TRUE)
+nrow(this_DNAString_set_bc)
+head(this_DNAString_set_bc)
+alphabetFrequency(this_DNAString_set_bc, baseOnly=TRUE, collapse=TRUE)</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>The following code will perform a calculation called the <code>GC content</code> of a DNA sequence and graph the resulting amounts as a histogram. Run the code and write a couple of sentences about the results.</li>
+</ol>
+<pre class="r"><code>#set as eval = TRUE when knitting
+
+this_DNAString_df &lt;- data.frame(this_DNAString_set_bc)
+
+# alas &quot;T&quot; is treated as &quot;TRUE&quot; in R, so let&#39;s use the full names of the nucleotides
+colnames(this_DNAString_df) &lt;- c(&quot;Adenine&quot;, &quot;Cytosine&quot;, &quot;Guanine&quot;, &quot;Thymine&quot;, &quot;other&quot;)
+
+this_DNAString_df %&gt;%
+  select(c(&quot;Adenine&quot;, &quot;Cytosine&quot;, &quot;Guanine&quot;, &quot;Thymine&quot;)) %&gt;%
+  mutate(GC_content = 100*(Cytosine + Guanine) / 
+           (Adenine + Cytosine + Guanine + Thymine)) %&gt;%
+  ggplot(aes(x = GC_content, fill = ..x..)) +
+  geom_histogram(binwidth = 5) + 
+  labs(title = &quot;Affymetrix Human Genome U95 Set annotation data&quot;,
+       subtitle = &quot;GC Content of hgu95av2probe&quot;,
+       caption = &quot;Source: Bioconductor&quot;,
+       x = &quot;GC content (percentage)&quot;) +
+  scale_fill_gradient(low = &quot;yellow&quot;, high= &quot;blue&quot;) +
+  theme_minimal() +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+</div>
