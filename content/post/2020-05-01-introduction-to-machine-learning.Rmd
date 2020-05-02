@@ -1,0 +1,250 @@
+---
+title: Introduction to Machine Learning
+author: Derek Sollberger
+date: '2020-05-01'
+slug: introduction-to-machine-learning
+categories:
+  - machine learning
+tags:
+  - tidymodels
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+# Goals for today
+
+* introduce machine learning (ideas and terminology)
+* introduce `tidymodels` package
+* practice with a `TidyTuesday` data set
+
+```{r, message = FALSE, warning = FALSE}
+library("tidymodels")
+library("tidyverse")
+```
+
+# Data: Tour de France
+
+Source:  [TidyTuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md) data set from April 7, 2020
+
+```{r, message = FALSE, warning = FALSE}
+tdf_winners <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv')
+```
+
+```{r}
+str(tdf_winners)
+colnames(tdf_winners)
+```
+
+# Cleaning Data
+
+```{r}
+df <- tdf_winners %>%
+  select(c(distance, time_overall, 
+           height, weight, age)) %>%
+  filter(complete.cases(.)) %>%
+  filter(height >= 1.7) %>%
+  mutate(pace = distance / time_overall) %>%
+  select(c(pace, height, weight, age))
+```
+
+```{r}
+dim(df)
+```
+
+
+# Data Visualization
+
+```{r}
+df %>%
+  ggplot(aes(x = height, y = pace)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Are taller bicyclists faster?",
+       subtitle = "featuring Tour de France winners",
+       caption = "Source: TidyTuesday",
+       x = "height (meters)",
+       y = "pace (km/hr)") +
+  theme_minimal()
+```
+
+```{r}
+df %>%
+  ggplot(aes(x = age, y = pace)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Are older bicyclists faster?",
+       subtitle = "featuring Tour de France winners",
+       caption = "Source: TidyTuesday",
+       x = "age",
+       y = "pace (km/hr)") +
+  theme_minimal()
+```
+
+```{r}
+df %>%
+  ggplot(aes(x = weight, y = pace)) +
+  geom_point(color = "blue") +
+  geom_smooth(method = "lm", se = FALSE, color = "red") +
+  labs(title = "Are heavier bicyclists faster?",
+       subtitle = "featuring Tour de France winners",
+       caption = "Source: TidyTuesday",
+       x = "weight (kg)",
+       y = "pace (km/hr)") +
+  theme_minimal()
+```
+
+
+# First Model
+
+"With tidymodels, we start by specifying the functional form of the model that we want using the `parsnip` package."
+
+```{r}
+linear_reg()
+```
+
+## model engine
+
+"However, now that the type of model has been specified, a method for fitting or training the model can be stated using the engine. The engine value is often a mash-up of the software that can be used to fit or train the model as well as the estimation method."
+
+```{r}
+linear_reg() %>% 
+  set_engine("lm") #linear model
+```
+
+## fitting a model
+
+```{r}
+lm_fit <- linear_reg() %>% 
+  set_engine("lm") %>%
+  fit(pace ~ height + weight + age, data = df)
+lm_fit
+```
+
+## examining a model
+
+```{r}
+tidy(lm_fit)
+```
+
+## interaction terms
+
+```{r}
+lm_fit_with_interaction <- linear_reg() %>% 
+  set_engine("lm") %>%
+  fit(pace ~ height + weight + age + height:weight + height:age + weight:age +
+        height:weight:age,
+      data = df)
+lm_fit_with_interaction
+```
+
+```{r}
+tidy(lm_fit_with_interaction)
+```
+
+
+# Predictions
+
+## new data
+
+* SpongeBob is a 26-year-old, 1.77 m tall bicyclist who weighs 55 kg
+* Patrick is a 25-year-old, 1.81 m tall bicyclist who weighs 75 kg
+* Squidward is a 31-year-old, 1.89 m tall bicyclist who weighs 65 kg
+
+```{r}
+new_contestants <- data.frame(name = c("SpongeBob", "Patrick", "Squidward"),
+                              age = c(26, 25, 31),
+                              height = c(1.77, 1.81, 1.89),
+                              weight = c(55, 75, 65))
+
+mean_predictions <- predict(lm_fit, new_data = new_contestants)
+mean_predictions
+```
+
+## confidence intervals
+
+```{r}
+CI_predictions <- predict(lm_fit,
+                          new_data = new_contestants,
+                          type = "conf_int")
+CI_predictions
+```
+
+## error bars
+
+```{r}
+plot_df <- new_contestants %>%
+  bind_cols(mean_predictions) %>%
+  bind_cols(CI_predictions)
+plot_df
+```
+
+```{r}
+plot_df %>%
+  ggplot(aes(x = name)) +
+  geom_errorbar(aes(ymin = .pred_lower,
+                    ymax = .pred_upper),
+                color = "red",
+                width = 0.32) +
+  geom_point(aes(y = .pred), color = "blue", size = 5) +
+  labs(title = "Tour de Under the Sea",
+       subtitle = "Welcome the new contestants!",
+       caption = "Math 32",
+       x = "",
+       y = "pace (km/hr)") +
+  theme_minimal()
+```
+
+
+# Data Splitting
+
+* "The *training set* is used to estimate parameters, compare models and feature engineering techniques, tune models, etc."
+
+* "The *test set* is held in reserve until the end of the project, at which point there should only be one or two models under serious consideration. It is used as an unbiased source for measuring final model performance."
+
+```{r}
+data_split <- initial_split(df)
+train_df <- training(data_split)
+test_df <- testing(data_split)
+```
+
+```{r}
+print(paste("The number of observations in the training set is:", nrow(train_df)))
+print(paste("The number of observations in the testing set is:", nrow(test_df)))
+```
+
+# visualizing the split
+
+```{r}
+data_split <- initial_split(df)
+train_df <- training(data_split)
+test_df <- testing(data_split)
+
+train_df %>%
+  ggplot(aes(x = height, y = pace)) +
+  geom_point(aes(color = "training set"), 
+             # color = "black"
+             ) +
+  geom_smooth(method = "lm",
+              aes(x = height, y = pace),
+              color = "black",
+              data = train_df,
+               se = FALSE) +
+  geom_point(aes(x = height, y = pace, color = "testing set"),
+             # color = "red",
+             data = test_df,
+             size = 3) +
+  labs(title = "Training and Testing Sets",
+       subtitle = "approx 75-25 percent split",
+       caption = "Math 32",
+       x = "height (meters)",
+       y = "pace (km/hr)") +
+  scale_color_manual(name = "Data Split",
+                     breaks = c("training set", "testing set"),
+                     values = c("training set" = "black",
+                                "testing set" = "red")) +
+  theme_minimal()
+```
+
+Tip: run the last code block several times (keyboard shortcut: CTRL-SHFT-ENTER) for the full effect!
