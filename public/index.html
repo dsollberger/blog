@@ -379,6 +379,86 @@
 
         
         
+          
+      
+
+      
+      
+        
+        
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
+    <a href="/post/introduction-to-machine-learning/" itemprop="url">Introduction to Machine Learning</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-05-01 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      May 1, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    7 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/machine-learning">machine learning</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    Goals for todayintroduce machine learning (ideas and terminology)introduce tidymodels packagepractice with a TidyTuesday data setlibrary(&quot;tidymodels&quot;)library(&quot;tidyverse&quot;)Data: Tour de FranceSource: TidyTuesday data set from April 7, 2020
+tdf_winners &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&#39;)str(tdf_winners)## Classes &#39;spec_tbl_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 106 obs. of 19 variables:## $ edition : num 1 2 3 4 5 6 7 8 9 10 ...## $ start_date : Date, format: &quot;1903-07-01&quot; &quot;1904-07-02&quot; .
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/introduction-to-machine-learning/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+      
+
+      
+
+        
+
+        
+        
+
+        
+        
 
       
       
@@ -695,88 +775,6 @@ library(&quot;dplyr&quot;)library(&quot;ggplot2&quot;)InstallationTo install 
       
 
       
-
-        
-
-        
-        
-
-        
-        
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/hikes-i-ve-completed/" itemprop="url">Hikes I&#39;ve Completed</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-01-11 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jan 11, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/hiking">hiking</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    Here I will plot some of the hikes I have done as elevation (from sea level) versus distance. I was inspired by this Reddit post
-Today’s code was great practice with
-geom_segmentgeom_label_repeland using xlim and ylim to expand the plot.
-library(ggrepel)library(tidyverse)library(readxl)df_info &lt;- read_excel(&quot;hikes.xlsx&quot;, sheet = &quot;info&quot;)df_info %&gt;% print()## # A tibble: 9 x 6## Region trail distance trailhead elevation peak## &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;## 1 Tahoe Mt Tallac 5.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/hikes-i-ve-completed/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
     
 
   </div>
@@ -1012,6 +1010,13 @@ library(ggrepel)library(tidyverse)library(readxl)df_info &lt;- read_excel(&qu
           
           
           <a href="/tags/teaching" style="font-size:0.8rem">teaching</a>
+        
+          
+          
+          
+          
+          
+          <a href="/tags/tidymodels" style="font-size:0.8rem">tidymodels</a>
         
           
           

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tidymodels on The Median Data Scientist</title>
+    <link>/tags/tidymodels/</link>
+    <description>Recent content in Tidymodels on The Median Data Scientist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Fri, 01 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/tidymodels/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Introduction to Machine Learning</title>
+      <link>/post/introduction-to-machine-learning/</link>
+      <pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introduction-to-machine-learning/</guid>
+      <description>Goals for todayintroduce machine learning (ideas and terminology)introduce tidymodels packagepractice with a TidyTuesday data setlibrary(&amp;quot;tidymodels&amp;quot;)library(&amp;quot;tidyverse&amp;quot;)Data: Tour de FranceSource: TidyTuesday data set from April 7, 2020
+tdf_winners &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&amp;#39;)str(tdf_winners)## Classes &amp;#39;spec_tbl_df&amp;#39;, &amp;#39;tbl_df&amp;#39;, &amp;#39;tbl&amp;#39; and &amp;#39;data.frame&amp;#39;: 106 obs. of 19 variables:## $ edition : num 1 2 3 4 5 6 7 8 9 10 ...## $ start_date : Date, format: &amp;quot;1903-07-01&amp;quot; &amp;quot;1904-07-02&amp;quot; .</description>
+    </item>
+    
+  </channel>
+</rss>

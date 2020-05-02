@@ -18,7 +18,7 @@
   <meta name="description" content="Continuing Lecturer of Applied Mathematics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/categories/">
+  <link rel="alternate" hreflang="en-us" href="/categories/machine-learning/">
 
   
 
@@ -58,15 +58,15 @@
   
 
   
-  <link rel="alternate" href="/categories/index.xml" type="application/rss+xml" title="The Median Data Scientist">
-  <link rel="feed" href="/categories/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="alternate" href="/categories/machine-learning/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="feed" href="/categories/machine-learning/index.xml" type="application/rss+xml" title="The Median Data Scientist">
   
 
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/categories/">
+  <link rel="canonical" href="/categories/machine-learning/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -74,17 +74,17 @@
   <meta property="twitter:creator" content="@DerekSollberger">
   
   <meta property="og:site_name" content="The Median Data Scientist">
-  <meta property="og:url" content="/categories/">
-  <meta property="og:title" content="Categories | The Median Data Scientist">
+  <meta property="og:url" content="/categories/machine-learning/">
+  <meta property="og:title" content="Machine learning | The Median Data Scientist">
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2020-01-13T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2020-05-01T00:00:00&#43;00:00">
   
 
   
 
-  <title>Categories | The Median Data Scientist</title>
+  <title>Machine learning | The Median Data Scientist</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
@@ -204,58 +204,42 @@
 
 <div class="universal-wrapper">
 
-  <h1>Categories</h1>
+  <h1>Machine learning</h1>
 
   
 
   
   
   <div>
-    <h2><a href="/categories/stochastic-processes/">Stochastic processes</a></h2>
+    <h2><a href="/post/introduction-to-machine-learning/">Introduction to Machine Learning</a></h2>
     <div class="article-style">
       
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/teaching/">Teaching</a></h2>
-    <div class="article-style">
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/tech-culture/">Tech culture</a></h2>
-    <div class="article-style">
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/tidyverse/">Tidyverse</a></h2>
-    <div class="article-style">
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/categories/troubleshooting/">Troubleshooting</a></h2>
-    <div class="article-style">
+      <p>Goals for today</p>
+
+<p>introduce machine learning (ideas and terminology)
+introduce tidymodels package
+practice with a TidyTuesday data set</p>
+
+<p>library(&quot;tidymodels&quot;)
+library(&quot;tidyverse&quot;)</p>
+
+<p>Data: Tour de France
+Source: TidyTuesday data set from April 7, 2020
+tdf_winners &lt;- readr::read_csv(&#39;<a href="https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&amp;#39;" target="_blank">https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&amp;#39;</a>)
+str(tdf_winners)</p>
+
+<h2 id="classes-39-spec-tbl-df-39-39-tbl-df-39-39-tbl-39-and-39-data-frame-39-106-obs-of-19-variables">Classes &#39;spec_tbl_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 106 obs. of 19 variables:</h2>
+
+<h2 id="edition-num-1-2-3-4-5-6-7-8-9-10">$ edition : num 1 2 3 4 5 6 7 8 9 10 &hellip;</h2>
+
+<h2 id="start-date-date-format-quot-1903-07-01-quot-quot-1904-07-02-quot">$ start_date : Date, format: &quot;1903-07-01&quot; &quot;1904-07-02&quot; .</h2>
+
       
     </div>
   </div>
   
 
   
-<nav>
-  <ul class="pager">
-    
-    <li><a href="/categories/">&lt;</a></li>
-    
-    
-  </ul>
-</nav>
-
 
 
 </div>

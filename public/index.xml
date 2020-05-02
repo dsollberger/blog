@@ -11,6 +11,312 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Introduction to Machine Learning</title>
+      <link>/post/introduction-to-machine-learning/</link>
+      <pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introduction-to-machine-learning/</guid>
+      <description>&lt;div id=&#34;goals-for-today&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Goals for today&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;introduce machine learning (ideas and terminology)&lt;/li&gt;
+&lt;li&gt;introduce &lt;code&gt;tidymodels&lt;/code&gt; package&lt;/li&gt;
+&lt;li&gt;practice with a &lt;code&gt;TidyTuesday&lt;/code&gt; data set&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidymodels&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-tour-de-france&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data: Tour de France&lt;/h1&gt;
+&lt;p&gt;Source: &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md&#34;&gt;TidyTuesday&lt;/a&gt; data set from April 7, 2020&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tdf_winners &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;str(tdf_winners)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Classes &amp;#39;spec_tbl_df&amp;#39;, &amp;#39;tbl_df&amp;#39;, &amp;#39;tbl&amp;#39; and &amp;#39;data.frame&amp;#39;: 106 obs. of  19 variables:
+##  $ edition      : num  1 2 3 4 5 6 7 8 9 10 ...
+##  $ start_date   : Date, format: &amp;quot;1903-07-01&amp;quot; &amp;quot;1904-07-02&amp;quot; ...
+##  $ winner_name  : chr  &amp;quot;Maurice Garin&amp;quot; &amp;quot;Henri Cornet&amp;quot; &amp;quot;Louis Trousselier&amp;quot; &amp;quot;René Pottier&amp;quot; ...
+##  $ winner_team  : chr  &amp;quot;La Française&amp;quot; &amp;quot;Conte&amp;quot; &amp;quot;Peugeot–Wolber&amp;quot; &amp;quot;Peugeot–Wolber&amp;quot; ...
+##  $ distance     : num  2428 2428 2994 4637 4488 ...
+##  $ time_overall : num  94.6 96.1 NA NA NA ...
+##  $ time_margin  : num  2.99 2.27 NA NA NA ...
+##  $ stage_wins   : num  3 1 5 5 2 5 6 4 2 3 ...
+##  $ stages_led   : num  6 3 10 12 5 13 13 3 13 13 ...
+##  $ height       : num  1.62 NA NA NA NA NA 1.78 NA NA NA ...
+##  $ weight       : num  60 NA NA NA NA NA 88 NA NA NA ...
+##  $ age          : num  32 19 24 27 24 25 22 22 26 23 ...
+##  $ born         : Date, format: &amp;quot;1871-03-03&amp;quot; &amp;quot;1884-08-04&amp;quot; ...
+##  $ died         : Date, format: &amp;quot;1957-02-19&amp;quot; &amp;quot;1941-03-18&amp;quot; ...
+##  $ full_name    : chr  NA NA NA NA ...
+##  $ nickname     : chr  &amp;quot;The Little Chimney-sweep&amp;quot; &amp;quot;Le rigolo (The joker)&amp;quot; &amp;quot;Levaloy / Trou-trou&amp;quot; NA ...
+##  $ birth_town   : chr  &amp;quot;Arvier&amp;quot; &amp;quot;Desvres&amp;quot; &amp;quot;Paris&amp;quot; &amp;quot;Moret-sur-Loing&amp;quot; ...
+##  $ birth_country: chr  &amp;quot;Italy&amp;quot; &amp;quot;France&amp;quot; &amp;quot;France&amp;quot; &amp;quot;France&amp;quot; ...
+##  $ nationality  : chr  &amp;quot; France&amp;quot; &amp;quot; France&amp;quot; &amp;quot; France&amp;quot; &amp;quot; France&amp;quot; ...
+##  - attr(*, &amp;quot;spec&amp;quot;)=
+##   .. cols(
+##   ..   edition = col_double(),
+##   ..   start_date = col_date(format = &amp;quot;&amp;quot;),
+##   ..   winner_name = col_character(),
+##   ..   winner_team = col_character(),
+##   ..   distance = col_double(),
+##   ..   time_overall = col_double(),
+##   ..   time_margin = col_double(),
+##   ..   stage_wins = col_double(),
+##   ..   stages_led = col_double(),
+##   ..   height = col_double(),
+##   ..   weight = col_double(),
+##   ..   age = col_double(),
+##   ..   born = col_date(format = &amp;quot;&amp;quot;),
+##   ..   died = col_date(format = &amp;quot;&amp;quot;),
+##   ..   full_name = col_character(),
+##   ..   nickname = col_character(),
+##   ..   birth_town = col_character(),
+##   ..   birth_country = col_character(),
+##   ..   nationality = col_character()
+##   .. )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;colnames(tdf_winners)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;edition&amp;quot;       &amp;quot;start_date&amp;quot;    &amp;quot;winner_name&amp;quot;   &amp;quot;winner_team&amp;quot;  
+##  [5] &amp;quot;distance&amp;quot;      &amp;quot;time_overall&amp;quot;  &amp;quot;time_margin&amp;quot;   &amp;quot;stage_wins&amp;quot;   
+##  [9] &amp;quot;stages_led&amp;quot;    &amp;quot;height&amp;quot;        &amp;quot;weight&amp;quot;        &amp;quot;age&amp;quot;          
+## [13] &amp;quot;born&amp;quot;          &amp;quot;died&amp;quot;          &amp;quot;full_name&amp;quot;     &amp;quot;nickname&amp;quot;     
+## [17] &amp;quot;birth_town&amp;quot;    &amp;quot;birth_country&amp;quot; &amp;quot;nationality&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cleaning-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Cleaning Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df &amp;lt;- tdf_winners %&amp;gt;%
+  select(c(distance, time_overall, 
+           height, weight, age)) %&amp;gt;%
+  filter(complete.cases(.)) %&amp;gt;%
+  filter(height &amp;gt;= 1.7) %&amp;gt;%
+  mutate(pace = distance / time_overall) %&amp;gt;%
+  select(c(pace, height, weight, age))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 62  4&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-visualization&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Visualization&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = height, y = pace)) +
+  geom_point(color = &amp;quot;blue&amp;quot;) +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = FALSE, color = &amp;quot;red&amp;quot;) +
+  labs(title = &amp;quot;Are taller bicyclists faster?&amp;quot;,
+       subtitle = &amp;quot;featuring Tour de France winners&amp;quot;,
+       caption = &amp;quot;Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;height (meters)&amp;quot;,
+       y = &amp;quot;pace (km/hr)&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = age, y = pace)) +
+  geom_point(color = &amp;quot;blue&amp;quot;) +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = FALSE, color = &amp;quot;red&amp;quot;) +
+  labs(title = &amp;quot;Are older bicyclists faster?&amp;quot;,
+       subtitle = &amp;quot;featuring Tour de France winners&amp;quot;,
+       caption = &amp;quot;Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;age&amp;quot;,
+       y = &amp;quot;pace (km/hr)&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = weight, y = pace)) +
+  geom_point(color = &amp;quot;blue&amp;quot;) +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = FALSE, color = &amp;quot;red&amp;quot;) +
+  labs(title = &amp;quot;Are heavier bicyclists faster?&amp;quot;,
+       subtitle = &amp;quot;featuring Tour de France winners&amp;quot;,
+       caption = &amp;quot;Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;weight (kg)&amp;quot;,
+       y = &amp;quot;pace (km/hr)&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;first-model&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;First Model&lt;/h1&gt;
+&lt;p&gt;“With tidymodels, we start by specifying the functional form of the model that we want using the &lt;code&gt;parsnip&lt;/code&gt; package.”&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;linear_reg()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Linear Regression Model Specification (regression)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;model-engine&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;model engine&lt;/h2&gt;
+&lt;p&gt;“However, now that the type of model has been specified, a method for fitting or training the model can be stated using the engine. The engine value is often a mash-up of the software that can be used to fit or train the model as well as the estimation method.”&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;linear_reg() %&amp;gt;% 
+  set_engine(&amp;quot;lm&amp;quot;) #linear model&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;fitting-a-model&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;fitting a model&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm_fit &amp;lt;- linear_reg() %&amp;gt;% 
+  set_engine(&amp;quot;lm&amp;quot;) %&amp;gt;%
+  fit(pace ~ height + weight + age, data = df)
+lm_fit&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## parsnip model object
+## 
+## Fit time:  0ms 
+## 
+## Call:
+## stats::lm(formula = formula, data = data)
+## 
+## Coefficients:
+## (Intercept)       height       weight          age  
+##      3.8455      21.0987      -0.1387       0.2113&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;examining-a-model&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;examining a model&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tidy(lm_fit)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 4 x 5
+##   term        estimate std.error statistic p.value
+##   &amp;lt;chr&amp;gt;          &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
+## 1 (Intercept)    3.85    12.3        0.313  0.755 
+## 2 height        21.1      8.06       2.62   0.0112
+## 3 weight        -0.139    0.0685    -2.03   0.0474
+## 4 age            0.211    0.0979     2.16   0.0350&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;interaction-terms&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;interaction terms&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm_fit_with_interaction &amp;lt;- linear_reg() %&amp;gt;% 
+  set_engine(&amp;quot;lm&amp;quot;) %&amp;gt;%
+  fit(pace ~ height + weight + age + height:weight + height:age + weight:age +
+        height:weight:age,
+      data = df)
+lm_fit_with_interaction&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## parsnip model object
+## 
+## Fit time:  0ms 
+## 
+## Call:
+## stats::lm(formula = formula, data = data)
+## 
+## Coefficients:
+##       (Intercept)             height             weight                age  
+##          924.8499          -444.1560           -15.6339           -27.8628  
+##     height:weight         height:age         weight:age  height:weight:age  
+##            7.9297            13.9352             0.4802            -0.2425&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tidy(lm_fit_with_interaction)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 8 x 5
+##   term              estimate std.error statistic p.value
+##   &amp;lt;chr&amp;gt;                &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
+## 1 (Intercept)        925.     2272.        0.407   0.686
+## 2 height            -444.     1287.       -0.345   0.731
+## 3 weight             -15.6      32.8      -0.477   0.635
+## 4 age                -27.9      80.3      -0.347   0.730
+## 5 height:weight        7.93     18.5       0.428   0.670
+## 6 height:age          13.9      45.5       0.306   0.761
+## 7 weight:age           0.480     1.16      0.414   0.680
+## 8 height:weight:age   -0.243     0.656    -0.370   0.713&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;predictions&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Predictions&lt;/h1&gt;
+&lt;div id=&#34;new-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;new data&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;SpongeBob is a 26-year-old, 1.77 m tall bicyclist who weighs 55 kg&lt;/li&gt;
+&lt;li&gt;Patrick is a 25-year-old, 1.81 m tall bicyclist who weighs 75 kg&lt;/li&gt;
+&lt;li&gt;Squidward is a 31-year-old, 1.89 m tall bicyclist who weighs 65 kg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;new_contestants &amp;lt;- data.frame(name = c(&amp;quot;SpongeBob&amp;quot;, &amp;quot;Patrick&amp;quot;, &amp;quot;Squidward&amp;quot;),
+                              age = c(26, 25, 31),
+                              height = c(1.77, 1.81, 1.89),
+                              weight = c(55, 75, 65))
+
+mean_predictions &amp;lt;- predict(lm_fit, new_data = new_contestants)
+mean_predictions&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 1
+##   .pred
+##   &amp;lt;dbl&amp;gt;
+## 1  39.1
+## 2  36.9
+## 3  41.3&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;confidence-intervals&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;confidence intervals&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;CI_predictions &amp;lt;- predict(lm_fit,
+                          new_data = new_contestants,
+                          type = &amp;quot;conf_int&amp;quot;)
+CI_predictions&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
+##   .pred_lower .pred_upper
+##         &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;
+## 1        37.1        41.0
+## 2        35.9        38.0
+## 3        39.0        43.5&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;error-bars&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;error bars&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_df &amp;lt;- new_contestants %&amp;gt;%
+  bind_cols(mean_predictions) %&amp;gt;%
+  bind_cols(CI_predictions)
+plot_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##        name age height weight    .pred .pred_lower .pred_upper
+## 1 SpongeBob  26   1.77     55 39.05386    37.07966    41.02807
+## 2   Patrick  25   1.81     75 36.91179    35.85758    37.96601
+## 3 Squidward  31   1.89     65 41.25491    38.97189    43.53794&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_df %&amp;gt;%
+  ggplot(aes(x = name)) +
+  geom_errorbar(aes(ymin = .pred_lower,
+                    ymax = .pred_upper),
+                color = &amp;quot;red&amp;quot;,
+                width = 0.32) +
+  geom_point(aes(y = .pred), color = &amp;quot;blue&amp;quot;, size = 5) +
+  labs(title = &amp;quot;Tour de Under the Sea&amp;quot;,
+       subtitle = &amp;quot;Welcome the new contestants!&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;pace (km/hr)&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-splitting&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Splitting&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;“The &lt;em&gt;training set&lt;/em&gt; is used to estimate parameters, compare models and feature engineering techniques, tune models, etc.”&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“The &lt;em&gt;test set&lt;/em&gt; is held in reserve until the end of the project, at which point there should only be one or two models under serious consideration. It is used as an unbiased source for measuring final model performance.”&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data_split &amp;lt;- initial_split(df)
+train_df &amp;lt;- training(data_split)
+test_df &amp;lt;- testing(data_split)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(paste(&amp;quot;The number of observations in the training set is:&amp;quot;, nrow(train_df)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;The number of observations in the training set is: 47&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(paste(&amp;quot;The number of observations in the testing set is:&amp;quot;, nrow(test_df)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;The number of observations in the testing set is: 15&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizing-the-split&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;visualizing the split&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data_split &amp;lt;- initial_split(df)
+train_df &amp;lt;- training(data_split)
+test_df &amp;lt;- testing(data_split)
+
+train_df %&amp;gt;%
+  ggplot(aes(x = height, y = pace)) +
+  geom_point(aes(color = &amp;quot;training set&amp;quot;), 
+             # color = &amp;quot;black&amp;quot;
+             ) +
+  geom_smooth(method = &amp;quot;lm&amp;quot;,
+              aes(x = height, y = pace),
+              color = &amp;quot;black&amp;quot;,
+              data = train_df,
+               se = FALSE) +
+  geom_point(aes(x = height, y = pace, color = &amp;quot;testing set&amp;quot;),
+             # color = &amp;quot;red&amp;quot;,
+             data = test_df,
+             size = 3) +
+  labs(title = &amp;quot;Training and Testing Sets&amp;quot;,
+       subtitle = &amp;quot;approx 75-25 percent split&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;,
+       x = &amp;quot;height (meters)&amp;quot;,
+       y = &amp;quot;pace (km/hr)&amp;quot;) +
+  scale_color_manual(name = &amp;quot;Data Split&amp;quot;,
+                     breaks = c(&amp;quot;training set&amp;quot;, &amp;quot;testing set&amp;quot;),
+                     values = c(&amp;quot;training set&amp;quot; = &amp;quot;black&amp;quot;,
+                                &amp;quot;testing set&amp;quot; = &amp;quot;red&amp;quot;)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-21-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Tip: run the last code block several times (keyboard shortcut: CTRL-SHFT-ENTER) for the full effect!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Introduction to Bioconductor</title>
       <link>/post/introduction-to-bioconductor/</link>
       <pubDate>Wed, 12 Feb 2020 00:00:00 +0000</pubDate>
@@ -1500,74 +1806,6 @@ df %&amp;gt;%
   geom_bar(stat = &amp;quot;identity&amp;quot;, fill = &amp;quot;blue&amp;quot;) +
   scale_x_continuous(&amp;quot;Dimensions&amp;quot;, breaks = 1:N)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/2019-01-08-curse-of-dimensionality_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Graduation Rates</title>
-      <link>/post/graduation-rates/</link>
-      <pubDate>Tue, 08 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/graduation-rates/</guid>
-      <description>&lt;p&gt;In this post, I want to run an example of absorbing states in stochastic processes. This example is based on Example 3.29 in &lt;em&gt;Introduction to Stochastic Processes&lt;/em&gt; in R by Robert Dobrow.&lt;/p&gt;
-&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Data&lt;/h1&gt;
-&lt;p&gt;The data I have assembled is based on &lt;a href=&#34;https://irds.ucmerced.edu/student-data&#34;&gt;IRDS reports&lt;/a&gt; from my own University of California at Merced.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# weights
-weights &amp;lt;- c(20, 70, 0, 0, 10, 0, 
-       0, 5, 89, 0, 6, 0, 
-       0, 0, 3, 94, 3, 0, 
-       0, 0, 0, 24, 1, 76, 
-       0, 0, 0, 0, 100, 0, 
-       0, 0, 0, 0, 0, 100)
-sparse_weights &amp;lt;- weights[weights &amp;gt; 0]
-
-# transition matrix (row stochastic)
-P &amp;lt;- matrix(weights, nrow = 6, byrow = TRUE)*0.01
-
-# states
-rownames(P) &amp;lt;- c(&amp;quot;Freshman&amp;quot;, &amp;quot;Sophomore&amp;quot;, &amp;quot;Junior&amp;quot;, &amp;quot;Senior&amp;quot;, &amp;quot;Dropped&amp;quot;, &amp;quot;Graduated&amp;quot;)
-colnames(P) &amp;lt;- c(&amp;quot;Freshman&amp;quot;, &amp;quot;Sophomore&amp;quot;, &amp;quot;Junior&amp;quot;, &amp;quot;Senior&amp;quot;, &amp;quot;Dropped&amp;quot;, &amp;quot;Graduated&amp;quot;)
-P&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##           Freshman Sophomore Junior Senior Dropped Graduated
-## Freshman       0.2      0.70   0.00   0.00    0.10      0.00
-## Sophomore      0.0      0.05   0.89   0.00    0.06      0.00
-## Junior         0.0      0.00   0.03   0.94    0.03      0.00
-## Senior         0.0      0.00   0.00   0.24    0.01      0.76
-## Dropped        0.0      0.00   0.00   0.00    1.00      0.00
-## Graduated      0.0      0.00   0.00   0.00    0.00      1.00&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This formulation assumes that about 10 percent of students drop after the first year, and about 24 percent of seniors continue to take classes into the fifth year or more.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;network-graph&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Network Graph&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(igraph)
-network &amp;lt;- graph_from_adjacency_matrix(P, mode = &amp;quot;directed&amp;quot;, weighted = TRUE)
-plot(network,
-     edge.arrow.size = 0.5,
-     edge.color = &amp;quot;#D4AE00&amp;quot;,
-     edge.label = sparse_weights,
-     layout = layout_in_circle(network))&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-01-08-graduation-rates_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;absorbing-states&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Absorbing States&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# canonical form
-Q &amp;lt;- P[1:4, 1:4]
-R &amp;lt;- P[1:4, 5:6]
-
-# fundamental matrix (inverse of (I - Q))
-fundamental_matrix &amp;lt;- solve(diag(4) - Q)
-
-# absorption
-absorption &amp;lt;- fundamental_matrix %*% R
-round(100*absorption)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##           Dropped Graduated
-## Freshman       22        79
-## Sophomore      10        91
-## Junior          4        97
-## Senior          1       100&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This model predicts that, starting with incoming students, about 79 percent of those students will eventually graduate while about 21 percent will eventually drop from UC Merced enrollment.&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

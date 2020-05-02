@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.44" />
+  <meta name="author" content="Derek Sollberger">
+
+  
+  
+  
+  
+    
+      
+    
+  
+  <meta name="description" content="Goals for todayintroduce machine learning (ideas and terminology)introduce tidymodels packagepractice with a TidyTuesday data setlibrary(&quot;tidymodels&quot;)library(&quot;tidyverse&quot;)Data: Tour de FranceSource: TidyTuesday data set from April 7, 2020
+tdf_winners &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&#39;)str(tdf_winners)## Classes &#39;spec_tbl_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 106 obs. of 19 variables:## $ edition : num 1 2 3 4 5 6 7 8 9 10 ...## $ start_date : Date, format: &quot;1903-07-01&quot; &quot;1904-07-02&quot; .">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/introduction-to-machine-learning/">
+
+  
+
+
+  
+
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/introduction-to-machine-learning/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@DerekSollberger">
+  <meta property="twitter:creator" content="@DerekSollberger">
+  
+  <meta property="og:site_name" content="The Median Data Scientist">
+  <meta property="og:url" content="/post/introduction-to-machine-learning/">
+  <meta property="og:title" content="Introduction to Machine Learning | The Median Data Scientist">
+  <meta property="og:description" content="Goals for todayintroduce machine learning (ideas and terminology)introduce tidymodels packagepractice with a TidyTuesday data setlibrary(&quot;tidymodels&quot;)library(&quot;tidyverse&quot;)Data: Tour de FranceSource: TidyTuesday data set from April 7, 2020
+tdf_winners &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&#39;)str(tdf_winners)## Classes &#39;spec_tbl_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 106 obs. of 19 variables:## $ edition : num 1 2 3 4 5 6 7 8 9 10 ...## $ start_date : Date, format: &quot;1903-07-01&quot; &quot;1904-07-02&quot; .">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2020-05-01T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2020-05-01T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Introduction to Machine Learning | The Median Data Scientist</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">The Median Data Scientist</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#teaching">
+            
+            <span>Teaching</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Introduction to Machine Learning</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-05-01 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      May 1, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    7 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/machine-learning">machine learning</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Introduction%20to%20Machine%20Learning&amp;url=%2fpost%2fintroduction-to-machine-learning%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fintroduction-to-machine-learning%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fintroduction-to-machine-learning%2f&amp;title=Introduction%20to%20Machine%20Learning"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fintroduction-to-machine-learning%2f&amp;title=Introduction%20to%20Machine%20Learning"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Introduction%20to%20Machine%20Learning&amp;body=%2fpost%2fintroduction-to-machine-learning%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <div id="goals-for-today" class="section level1">
+<h1>Goals for today</h1>
+<ul>
+<li>introduce machine learning (ideas and terminology)</li>
+<li>introduce <code>tidymodels</code> package</li>
+<li>practice with a <code>TidyTuesday</code> data set</li>
+</ul>
+<pre class="r"><code>library(&quot;tidymodels&quot;)
+library(&quot;tidyverse&quot;)</code></pre>
+</div>
+<div id="data-tour-de-france" class="section level1">
+<h1>Data: Tour de France</h1>
+<p>Source: <a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md">TidyTuesday</a> data set from April 7, 2020</p>
+<pre class="r"><code>tdf_winners &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&#39;)</code></pre>
+<pre class="r"><code>str(tdf_winners)</code></pre>
+<pre><code>## Classes &#39;spec_tbl_df&#39;, &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;: 106 obs. of  19 variables:
+##  $ edition      : num  1 2 3 4 5 6 7 8 9 10 ...
+##  $ start_date   : Date, format: &quot;1903-07-01&quot; &quot;1904-07-02&quot; ...
+##  $ winner_name  : chr  &quot;Maurice Garin&quot; &quot;Henri Cornet&quot; &quot;Louis Trousselier&quot; &quot;René Pottier&quot; ...
+##  $ winner_team  : chr  &quot;La Française&quot; &quot;Conte&quot; &quot;Peugeot–Wolber&quot; &quot;Peugeot–Wolber&quot; ...
+##  $ distance     : num  2428 2428 2994 4637 4488 ...
+##  $ time_overall : num  94.6 96.1 NA NA NA ...
+##  $ time_margin  : num  2.99 2.27 NA NA NA ...
+##  $ stage_wins   : num  3 1 5 5 2 5 6 4 2 3 ...
+##  $ stages_led   : num  6 3 10 12 5 13 13 3 13 13 ...
+##  $ height       : num  1.62 NA NA NA NA NA 1.78 NA NA NA ...
+##  $ weight       : num  60 NA NA NA NA NA 88 NA NA NA ...
+##  $ age          : num  32 19 24 27 24 25 22 22 26 23 ...
+##  $ born         : Date, format: &quot;1871-03-03&quot; &quot;1884-08-04&quot; ...
+##  $ died         : Date, format: &quot;1957-02-19&quot; &quot;1941-03-18&quot; ...
+##  $ full_name    : chr  NA NA NA NA ...
+##  $ nickname     : chr  &quot;The Little Chimney-sweep&quot; &quot;Le rigolo (The joker)&quot; &quot;Levaloy / Trou-trou&quot; NA ...
+##  $ birth_town   : chr  &quot;Arvier&quot; &quot;Desvres&quot; &quot;Paris&quot; &quot;Moret-sur-Loing&quot; ...
+##  $ birth_country: chr  &quot;Italy&quot; &quot;France&quot; &quot;France&quot; &quot;France&quot; ...
+##  $ nationality  : chr  &quot; France&quot; &quot; France&quot; &quot; France&quot; &quot; France&quot; ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   edition = col_double(),
+##   ..   start_date = col_date(format = &quot;&quot;),
+##   ..   winner_name = col_character(),
+##   ..   winner_team = col_character(),
+##   ..   distance = col_double(),
+##   ..   time_overall = col_double(),
+##   ..   time_margin = col_double(),
+##   ..   stage_wins = col_double(),
+##   ..   stages_led = col_double(),
+##   ..   height = col_double(),
+##   ..   weight = col_double(),
+##   ..   age = col_double(),
+##   ..   born = col_date(format = &quot;&quot;),
+##   ..   died = col_date(format = &quot;&quot;),
+##   ..   full_name = col_character(),
+##   ..   nickname = col_character(),
+##   ..   birth_town = col_character(),
+##   ..   birth_country = col_character(),
+##   ..   nationality = col_character()
+##   .. )</code></pre>
+<pre class="r"><code>colnames(tdf_winners)</code></pre>
+<pre><code>##  [1] &quot;edition&quot;       &quot;start_date&quot;    &quot;winner_name&quot;   &quot;winner_team&quot;  
+##  [5] &quot;distance&quot;      &quot;time_overall&quot;  &quot;time_margin&quot;   &quot;stage_wins&quot;   
+##  [9] &quot;stages_led&quot;    &quot;height&quot;        &quot;weight&quot;        &quot;age&quot;          
+## [13] &quot;born&quot;          &quot;died&quot;          &quot;full_name&quot;     &quot;nickname&quot;     
+## [17] &quot;birth_town&quot;    &quot;birth_country&quot; &quot;nationality&quot;</code></pre>
+</div>
+<div id="cleaning-data" class="section level1">
+<h1>Cleaning Data</h1>
+<pre class="r"><code>df &lt;- tdf_winners %&gt;%
+  select(c(distance, time_overall, 
+           height, weight, age)) %&gt;%
+  filter(complete.cases(.)) %&gt;%
+  filter(height &gt;= 1.7) %&gt;%
+  mutate(pace = distance / time_overall) %&gt;%
+  select(c(pace, height, weight, age))</code></pre>
+<pre class="r"><code>dim(df)</code></pre>
+<pre><code>## [1] 62  4</code></pre>
+</div>
+<div id="data-visualization" class="section level1">
+<h1>Data Visualization</h1>
+<pre class="r"><code>df %&gt;%
+  ggplot(aes(x = height, y = pace)) +
+  geom_point(color = &quot;blue&quot;) +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE, color = &quot;red&quot;) +
+  labs(title = &quot;Are taller bicyclists faster?&quot;,
+       subtitle = &quot;featuring Tour de France winners&quot;,
+       caption = &quot;Source: TidyTuesday&quot;,
+       x = &quot;height (meters)&quot;,
+       y = &quot;pace (km/hr)&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>df %&gt;%
+  ggplot(aes(x = age, y = pace)) +
+  geom_point(color = &quot;blue&quot;) +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE, color = &quot;red&quot;) +
+  labs(title = &quot;Are older bicyclists faster?&quot;,
+       subtitle = &quot;featuring Tour de France winners&quot;,
+       caption = &quot;Source: TidyTuesday&quot;,
+       x = &quot;age&quot;,
+       y = &quot;pace (km/hr)&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>df %&gt;%
+  ggplot(aes(x = weight, y = pace)) +
+  geom_point(color = &quot;blue&quot;) +
+  geom_smooth(method = &quot;lm&quot;, se = FALSE, color = &quot;red&quot;) +
+  labs(title = &quot;Are heavier bicyclists faster?&quot;,
+       subtitle = &quot;featuring Tour de France winners&quot;,
+       caption = &quot;Source: TidyTuesday&quot;,
+       x = &quot;weight (kg)&quot;,
+       y = &quot;pace (km/hr)&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="first-model" class="section level1">
+<h1>First Model</h1>
+<p>“With tidymodels, we start by specifying the functional form of the model that we want using the <code>parsnip</code> package.”</p>
+<pre class="r"><code>linear_reg()</code></pre>
+<pre><code>## Linear Regression Model Specification (regression)</code></pre>
+<div id="model-engine" class="section level2">
+<h2>model engine</h2>
+<p>“However, now that the type of model has been specified, a method for fitting or training the model can be stated using the engine. The engine value is often a mash-up of the software that can be used to fit or train the model as well as the estimation method.”</p>
+<pre class="r"><code>linear_reg() %&gt;% 
+  set_engine(&quot;lm&quot;) #linear model</code></pre>
+<pre><code>## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm</code></pre>
+</div>
+<div id="fitting-a-model" class="section level2">
+<h2>fitting a model</h2>
+<pre class="r"><code>lm_fit &lt;- linear_reg() %&gt;% 
+  set_engine(&quot;lm&quot;) %&gt;%
+  fit(pace ~ height + weight + age, data = df)
+lm_fit</code></pre>
+<pre><code>## parsnip model object
+## 
+## Fit time:  0ms 
+## 
+## Call:
+## stats::lm(formula = formula, data = data)
+## 
+## Coefficients:
+## (Intercept)       height       weight          age  
+##      3.8455      21.0987      -0.1387       0.2113</code></pre>
+</div>
+<div id="examining-a-model" class="section level2">
+<h2>examining a model</h2>
+<pre class="r"><code>tidy(lm_fit)</code></pre>
+<pre><code>## # A tibble: 4 x 5
+##   term        estimate std.error statistic p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)    3.85    12.3        0.313  0.755 
+## 2 height        21.1      8.06       2.62   0.0112
+## 3 weight        -0.139    0.0685    -2.03   0.0474
+## 4 age            0.211    0.0979     2.16   0.0350</code></pre>
+</div>
+<div id="interaction-terms" class="section level2">
+<h2>interaction terms</h2>
+<pre class="r"><code>lm_fit_with_interaction &lt;- linear_reg() %&gt;% 
+  set_engine(&quot;lm&quot;) %&gt;%
+  fit(pace ~ height + weight + age + height:weight + height:age + weight:age +
+        height:weight:age,
+      data = df)
+lm_fit_with_interaction</code></pre>
+<pre><code>## parsnip model object
+## 
+## Fit time:  0ms 
+## 
+## Call:
+## stats::lm(formula = formula, data = data)
+## 
+## Coefficients:
+##       (Intercept)             height             weight                age  
+##          924.8499          -444.1560           -15.6339           -27.8628  
+##     height:weight         height:age         weight:age  height:weight:age  
+##            7.9297            13.9352             0.4802            -0.2425</code></pre>
+<pre class="r"><code>tidy(lm_fit_with_interaction)</code></pre>
+<pre><code>## # A tibble: 8 x 5
+##   term              estimate std.error statistic p.value
+##   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)        925.     2272.        0.407   0.686
+## 2 height            -444.     1287.       -0.345   0.731
+## 3 weight             -15.6      32.8      -0.477   0.635
+## 4 age                -27.9      80.3      -0.347   0.730
+## 5 height:weight        7.93     18.5       0.428   0.670
+## 6 height:age          13.9      45.5       0.306   0.761
+## 7 weight:age           0.480     1.16      0.414   0.680
+## 8 height:weight:age   -0.243     0.656    -0.370   0.713</code></pre>
+</div>
+</div>
+<div id="predictions" class="section level1">
+<h1>Predictions</h1>
+<div id="new-data" class="section level2">
+<h2>new data</h2>
+<ul>
+<li>SpongeBob is a 26-year-old, 1.77 m tall bicyclist who weighs 55 kg</li>
+<li>Patrick is a 25-year-old, 1.81 m tall bicyclist who weighs 75 kg</li>
+<li>Squidward is a 31-year-old, 1.89 m tall bicyclist who weighs 65 kg</li>
+</ul>
+<pre class="r"><code>new_contestants &lt;- data.frame(name = c(&quot;SpongeBob&quot;, &quot;Patrick&quot;, &quot;Squidward&quot;),
+                              age = c(26, 25, 31),
+                              height = c(1.77, 1.81, 1.89),
+                              weight = c(55, 75, 65))
+
+mean_predictions &lt;- predict(lm_fit, new_data = new_contestants)
+mean_predictions</code></pre>
+<pre><code>## # A tibble: 3 x 1
+##   .pred
+##   &lt;dbl&gt;
+## 1  39.1
+## 2  36.9
+## 3  41.3</code></pre>
+</div>
+<div id="confidence-intervals" class="section level2">
+<h2>confidence intervals</h2>
+<pre class="r"><code>CI_predictions &lt;- predict(lm_fit,
+                          new_data = new_contestants,
+                          type = &quot;conf_int&quot;)
+CI_predictions</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   .pred_lower .pred_upper
+##         &lt;dbl&gt;       &lt;dbl&gt;
+## 1        37.1        41.0
+## 2        35.9        38.0
+## 3        39.0        43.5</code></pre>
+</div>
+<div id="error-bars" class="section level2">
+<h2>error bars</h2>
+<pre class="r"><code>plot_df &lt;- new_contestants %&gt;%
+  bind_cols(mean_predictions) %&gt;%
+  bind_cols(CI_predictions)
+plot_df</code></pre>
+<pre><code>##        name age height weight    .pred .pred_lower .pred_upper
+## 1 SpongeBob  26   1.77     55 39.05386    37.07966    41.02807
+## 2   Patrick  25   1.81     75 36.91179    35.85758    37.96601
+## 3 Squidward  31   1.89     65 41.25491    38.97189    43.53794</code></pre>
+<pre class="r"><code>plot_df %&gt;%
+  ggplot(aes(x = name)) +
+  geom_errorbar(aes(ymin = .pred_lower,
+                    ymax = .pred_upper),
+                color = &quot;red&quot;,
+                width = 0.32) +
+  geom_point(aes(y = .pred), color = &quot;blue&quot;, size = 5) +
+  labs(title = &quot;Tour de Under the Sea&quot;,
+       subtitle = &quot;Welcome the new contestants!&quot;,
+       caption = &quot;Math 32&quot;,
+       x = &quot;&quot;,
+       y = &quot;pace (km/hr)&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+</div>
+</div>
+<div id="data-splitting" class="section level1">
+<h1>Data Splitting</h1>
+<ul>
+<li><p>“The <em>training set</em> is used to estimate parameters, compare models and feature engineering techniques, tune models, etc.”</p></li>
+<li><p>“The <em>test set</em> is held in reserve until the end of the project, at which point there should only be one or two models under serious consideration. It is used as an unbiased source for measuring final model performance.”</p></li>
+</ul>
+<pre class="r"><code>data_split &lt;- initial_split(df)
+train_df &lt;- training(data_split)
+test_df &lt;- testing(data_split)</code></pre>
+<pre class="r"><code>print(paste(&quot;The number of observations in the training set is:&quot;, nrow(train_df)))</code></pre>
+<pre><code>## [1] &quot;The number of observations in the training set is: 47&quot;</code></pre>
+<pre class="r"><code>print(paste(&quot;The number of observations in the testing set is:&quot;, nrow(test_df)))</code></pre>
+<pre><code>## [1] &quot;The number of observations in the testing set is: 15&quot;</code></pre>
+</div>
+<div id="visualizing-the-split" class="section level1">
+<h1>visualizing the split</h1>
+<pre class="r"><code>data_split &lt;- initial_split(df)
+train_df &lt;- training(data_split)
+test_df &lt;- testing(data_split)
+
+train_df %&gt;%
+  ggplot(aes(x = height, y = pace)) +
+  geom_point(aes(color = &quot;training set&quot;), 
+             # color = &quot;black&quot;
+             ) +
+  geom_smooth(method = &quot;lm&quot;,
+              aes(x = height, y = pace),
+              color = &quot;black&quot;,
+              data = train_df,
+               se = FALSE) +
+  geom_point(aes(x = height, y = pace, color = &quot;testing set&quot;),
+             # color = &quot;red&quot;,
+             data = test_df,
+             size = 3) +
+  labs(title = &quot;Training and Testing Sets&quot;,
+       subtitle = &quot;approx 75-25 percent split&quot;,
+       caption = &quot;Math 32&quot;,
+       x = &quot;height (meters)&quot;,
+       y = &quot;pace (km/hr)&quot;) +
+  scale_color_manual(name = &quot;Data Split&quot;,
+                     breaks = c(&quot;training set&quot;, &quot;testing set&quot;),
+                     values = c(&quot;training set&quot; = &quot;black&quot;,
+                                &quot;testing set&quot; = &quot;red&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
+<p>Tip: run the last code block several times (keyboard shortcut: CTRL-SHFT-ENTER) for the full effect!</p>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/tidymodels">tidymodels</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2018 &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+
