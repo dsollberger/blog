@@ -11,6 +11,346 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Supervised Learning</title>
+      <link>/post/supervised-learning/</link>
+      <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/supervised-learning/</guid>
+      <description>&lt;div id=&#34;supervised-learning&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Supervised Learning&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supervised learning&lt;/strong&gt; has the goal of making predictions with a set of &lt;em&gt;known&lt;/em&gt; labels for the response variable.&lt;/li&gt;
+&lt;li&gt;In &lt;strong&gt;unsupervised learning&lt;/strong&gt;, we try to find structure in the data of the response variable without predetermined labels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Goal: predict the personality type of each character in Animal Crossing&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-set-animal-crossing&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data set: Animal Crossing&lt;/h1&gt;
+&lt;p&gt;Source: VillagerDB, MetaCritic, and TidyTuesday&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md&#34;&gt;Animal Crossing Tidy Tuesday&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;caret&amp;quot;)
+library(&amp;quot;randomForest&amp;quot;)
+library(&amp;quot;tidymodels&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)
+
+# critic &amp;lt;- readr::read_tsv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv&amp;#39;)
+# user_reviews &amp;lt;- readr::read_tsv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv&amp;#39;)
+# items &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&amp;#39;)
+villagers &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;exploratory-data-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exploratory Data Analysis&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(villagers)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 391  11&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;str(villagers)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## tibble [391 x 11] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ row_n      : num [1:391] 2 3 4 6 7 8 9 10 11 13 ...
+##  $ id         : chr [1:391] &amp;quot;admiral&amp;quot; &amp;quot;agent-s&amp;quot; &amp;quot;agnes&amp;quot; &amp;quot;al&amp;quot; ...
+##  $ name       : chr [1:391] &amp;quot;Admiral&amp;quot; &amp;quot;Agent S&amp;quot; &amp;quot;Agnes&amp;quot; &amp;quot;Al&amp;quot; ...
+##  $ gender     : chr [1:391] &amp;quot;male&amp;quot; &amp;quot;female&amp;quot; &amp;quot;female&amp;quot; &amp;quot;male&amp;quot; ...
+##  $ species    : chr [1:391] &amp;quot;bird&amp;quot; &amp;quot;squirrel&amp;quot; &amp;quot;pig&amp;quot; &amp;quot;gorilla&amp;quot; ...
+##  $ birthday   : chr [1:391] &amp;quot;1-27&amp;quot; &amp;quot;7-2&amp;quot; &amp;quot;4-21&amp;quot; &amp;quot;10-18&amp;quot; ...
+##  $ personality: chr [1:391] &amp;quot;cranky&amp;quot; &amp;quot;peppy&amp;quot; &amp;quot;uchi&amp;quot; &amp;quot;lazy&amp;quot; ...
+##  $ song       : chr [1:391] &amp;quot;Steep Hill&amp;quot; &amp;quot;DJ K.K.&amp;quot; &amp;quot;K.K. House&amp;quot; &amp;quot;Steep Hill&amp;quot; ...
+##  $ phrase     : chr [1:391] &amp;quot;aye aye&amp;quot; &amp;quot;sidekick&amp;quot; &amp;quot;snuffle&amp;quot; &amp;quot;Ayyeeee&amp;quot; ...
+##  $ full_id    : chr [1:391] &amp;quot;villager-admiral&amp;quot; &amp;quot;villager-agent-s&amp;quot; &amp;quot;villager-agnes&amp;quot; &amp;quot;villager-al&amp;quot; ...
+##  $ url        : chr [1:391] &amp;quot;https://villagerdb.com/images/villagers/thumb/admiral.98206ee.png&amp;quot; &amp;quot;https://villagerdb.com/images/villagers/thumb/agent-s.96c789b.png&amp;quot; &amp;quot;https://villagerdb.com/images/villagers/thumb/agnes.9f51f32.png&amp;quot; &amp;quot;https://villagerdb.com/images/villagers/thumb/al.1e17090.png&amp;quot; ...
+##  - attr(*, &amp;quot;spec&amp;quot;)=
+##   .. cols(
+##   ..   row_n = col_double(),
+##   ..   id = col_character(),
+##   ..   name = col_character(),
+##   ..   gender = col_character(),
+##   ..   species = col_character(),
+##   ..   birthday = col_character(),
+##   ..   personality = col_character(),
+##   ..   song = col_character(),
+##   ..   phrase = col_character(),
+##   ..   full_id = col_character(),
+##   ..   url = col_character()
+##   .. )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#table(villagers$name)
+#length(unique(villagers$name))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(villagers$personality)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## cranky   jock   lazy normal  peppy   smug snooty   uchi 
+##     55     55     60     59     49     34     55     24&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;personality-across-gender&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Personality across Gender&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers %&amp;gt;%
+  ggplot(aes(x = personality, fill = gender)) +
+  geom_bar(stat = &amp;quot;count&amp;quot;, position = &amp;quot;dodge&amp;quot;) +
+  labs(title = &amp;quot;Getting to Know the Animal Crossing Villagers&amp;quot;,
+       subtitle = &amp;quot;and judging their personalities&amp;quot;,
+       caption = &amp;quot;Source: VillagerDB&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;personality-across-species&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Personality across Species&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers %&amp;gt;%
+  ggplot(aes(x = personality, fill = species)) +
+  geom_bar(stat = &amp;quot;count&amp;quot;, position = &amp;quot;stack&amp;quot;) +
+  labs(title = &amp;quot;Getting to Know the Animal Crossing Villagers&amp;quot;,
+       subtitle = &amp;quot;and judging their personalities&amp;quot;,
+       caption = &amp;quot;Source: VillagerDB&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;predictor-variables&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Predictor Variables&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(villagers$gender)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## female   male 
+##    187    204&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(villagers$species)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## alligator  anteater      bear      bird      bull       cat   chicken       cow 
+##         7         7        15        13         6        23         9         4 
+##       cub      deer       dog      duck     eagle  elephant      frog      goat 
+##        16        10        16        17         9        11        18         8 
+##   gorilla   hamster     hippo     horse  kangaroo     koala      lion    monkey 
+##         9         8         7        15         8         9         7         8 
+##     mouse   octopus   ostrich   penguin       pig    rabbit     rhino     sheep 
+##        15         3        10        13        15        20         6        13 
+##  squirrel     tiger      wolf 
+##        18         7        11&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;extracting-birth-month&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Extracting Birth Month&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers &amp;lt;- villagers %&amp;gt;%
+  separate(birthday, c(&amp;quot;birth_month&amp;quot;, &amp;quot;birth_day&amp;quot;), remove = FALSE)
+
+villagers$birth_month_factor &amp;lt;- factor(villagers$birth_month, 
+                                levels = 1:12)
+
+table(villagers$birth_month_factor)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  1  2  3  4  5  6  7  8  9 10 11 12 
+## 32 29 33 29 31 33 35 36 32 37 30 34&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers %&amp;gt;%
+  ggplot(aes(x = personality, fill = birth_month_factor)) +
+  geom_bar(color = &amp;quot;black&amp;quot;, stat = &amp;quot;count&amp;quot;, position = &amp;quot;stack&amp;quot;) +
+  labs(title = &amp;quot;Getting to Know the Animal Crossing Villagers&amp;quot;,
+       subtitle = &amp;quot;and judging their personalities&amp;quot;,
+       caption = &amp;quot;Source: VillagerDB&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers %&amp;gt;%
+  ggplot(aes(x = personality, fill = birth_month_factor)) +
+  geom_bar(color = &amp;quot;black&amp;quot;, stat = &amp;quot;count&amp;quot;, position = &amp;quot;fill&amp;quot;) +
+  labs(title = &amp;quot;Getting to Know the Animal Crossing Villagers&amp;quot;,
+       subtitle = &amp;quot;and judging their personalities&amp;quot;,
+       caption = &amp;quot;Source: VillagerDB&amp;quot;,
+       y = &amp;quot;proportion&amp;quot;) +
+  scale_fill_manual(name = &amp;quot;Month of Birth&amp;quot;,
+                    labels = c(&amp;quot;January&amp;quot;, &amp;quot;February&amp;quot;, &amp;quot;March&amp;quot;, &amp;quot;April&amp;quot;,
+                                 &amp;quot;May&amp;quot;, &amp;quot;June&amp;quot;, &amp;quot;July&amp;quot;, &amp;quot;August&amp;quot;,
+                                 &amp;quot;September&amp;quot;, &amp;quot;October&amp;quot;, &amp;quot;November&amp;quot;, &amp;quot;December&amp;quot;),
+                    values=sample(c(&amp;quot;#4b48c9&amp;quot;, &amp;quot;#5c90a8&amp;quot;, &amp;quot;#86d5fe&amp;quot;, &amp;quot;#c0d1ef&amp;quot;,
+                             &amp;quot;#edd1a2&amp;quot;, &amp;quot;#948572&amp;quot;, &amp;quot;#f8c79e&amp;quot;, &amp;quot;#eec688&amp;quot;,
+                             &amp;quot;#642200&amp;quot;, &amp;quot;#764936&amp;quot;, &amp;quot;#fd974d&amp;quot;, &amp;quot;#7b4a3c&amp;quot;))) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;(color palette generated at &lt;a href=&#34;http://www.cssdrive.com/imagepalette/index.php&#34;&gt;CSS Drive&lt;/a&gt;)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-formula&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;model formula&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;response variable: &lt;code&gt;personality&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;predictor variables: &lt;code&gt;gender&lt;/code&gt;, &lt;code&gt;species&lt;/code&gt;, &lt;code&gt;birth_month&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;model formula: &lt;code&gt;personality ~ gender + species + birth_month&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;predictor_variables &amp;lt;- c(&amp;quot;gender&amp;quot;, &amp;quot;species&amp;quot;, &amp;quot;birth_month&amp;quot;)
+model_formula &amp;lt;- paste(&amp;quot;personality~&amp;quot;, paste(sprintf(&amp;quot;`%s`&amp;quot;, predictor_variables), collapse=&amp;quot;+&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-split&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Split&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers_split &amp;lt;- initial_split(villagers)
+villagers_train &amp;lt;- training(villagers_split)
+villagers_test  &amp;lt;- testing(villagers_split)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;random-forests&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Random Forests&lt;/h1&gt;
+&lt;p&gt;“Random forest models are ensembles of decision trees. A large number of decision tree models are created for the ensemble based on slightly different versions of the training set. When creating the individual decision trees, the fitting process encourages them to be as diverse as possible. The collection of trees are combined into the random forest model and, when a new sample is predicted, the votes from each tree are used to calculate the final predicted value for the new sample.”
+—&lt;a href=&#34;https://www.tidymodels.org/start/resampling/&#34;&gt;tidymodels.org&lt;/a&gt;&lt;/p&gt;
+&lt;div id=&#34;define-the-forest&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Define the Forest&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;random_forest_model &amp;lt;- 
+  rand_forest(trees = 1000) %&amp;gt;% 
+  set_engine(&amp;quot;ranger&amp;quot;) %&amp;gt;% 
+  set_mode(&amp;quot;classification&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;fitting-the-forest&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Fitting the Forest&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# CAUTION: at the time of filming, this code chunk did not work (model formula parser threw an error)
+random_forest_fit &amp;lt;-
+  random_forest_model %&amp;gt;%
+  fit(personality ~ gender + species + birth_month, data = villagers_train)
+
+random_forest_fit&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizing-the-forest&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualizing the Forest&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# OLD-FASHIONED WAY with the caret package
+model_rf &amp;lt;- caret::train(personality ~ gender + species + birth_month,
+                         data = villagers_train, method = &amp;quot;rf&amp;quot;)
+model_rf&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Random Forest 
+## 
+## 294 samples
+##   3 predictor
+##   8 classes: &amp;#39;cranky&amp;#39;, &amp;#39;jock&amp;#39;, &amp;#39;lazy&amp;#39;, &amp;#39;normal&amp;#39;, &amp;#39;peppy&amp;#39;, &amp;#39;smug&amp;#39;, &amp;#39;snooty&amp;#39;, &amp;#39;uchi&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 294, 294, 294, 294, 294, 294, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa    
+##    2    0.2550533  0.1357101
+##   24    0.2889225  0.1759381
+##   46    0.2892118  0.1774835
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was mtry = 46.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model_rpart &amp;lt;- caret::train(personality ~ gender + species + birth_month,
+                         data = villagers_train, method = &amp;quot;rpart&amp;quot;)
+model_rpart&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## CART 
+## 
+## 294 samples
+##   3 predictor
+##   8 classes: &amp;#39;cranky&amp;#39;, &amp;#39;jock&amp;#39;, &amp;#39;lazy&amp;#39;, &amp;#39;normal&amp;#39;, &amp;#39;peppy&amp;#39;, &amp;#39;smug&amp;#39;, &amp;#39;snooty&amp;#39;, &amp;#39;uchi&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 294, 294, 294, 294, 294, 294, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp          Accuracy   Kappa     
+##   0.02024291  0.2975188  0.18582216
+##   0.02429150  0.2876263  0.17374970
+##   0.19028340  0.2017836  0.07541971
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.02024291.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#source:  https://shiring.github.io/machine_learning/2017/03/16/rf_plot_ggraph
+
+library(&amp;quot;ggraph&amp;quot;)
+library(&amp;quot;igraph&amp;quot;)
+
+tree_func &amp;lt;- function(final_model, 
+                      tree_num) {
+  
+  # get tree by index
+  tree &amp;lt;- randomForest::getTree(final_model, 
+                                k = tree_num, 
+                                labelVar = TRUE) %&amp;gt;%
+    tibble::rownames_to_column() %&amp;gt;%
+    # make leaf split points to NA, so the 0s won&amp;#39;t get plotted
+    mutate(`split point` = ifelse(is.na(prediction), `split point`, NA))
+  
+  # prepare data frame for graph
+  graph_frame &amp;lt;- data.frame(from = rep(tree$rowname, 2),
+                            to = c(tree$`left daughter`, tree$`right daughter`))
+  
+  # convert to graph and delete the last node that we don&amp;#39;t want to plot
+  graph &amp;lt;- graph_from_data_frame(graph_frame) %&amp;gt;%
+    delete_vertices(&amp;quot;0&amp;quot;)
+  
+  # set node labels
+  V(graph)$node_label &amp;lt;- gsub(&amp;quot;_&amp;quot;, &amp;quot; &amp;quot;, as.character(tree$`split var`))
+  V(graph)$leaf_label &amp;lt;- as.character(tree$prediction)
+  V(graph)$split &amp;lt;- as.character(round(tree$`split point`, digits = 2))
+  
+  # plot
+  plot &amp;lt;- ggraph(graph, &amp;#39;dendrogram&amp;#39;) + 
+    theme_bw() +
+    geom_edge_link() +
+    geom_node_point() +
+    geom_node_text(aes(label = node_label), na.rm = TRUE, repel = TRUE) +
+    geom_node_label(aes(label = split), vjust = 2.5, na.rm = TRUE, fill = &amp;quot;white&amp;quot;) +
+    geom_node_label(aes(label = leaf_label, fill = leaf_label), na.rm = TRUE, 
+                    repel = TRUE, colour = &amp;quot;white&amp;quot;, fontface = &amp;quot;bold&amp;quot;, show.legend = FALSE) +
+    theme(panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.background = element_blank(),
+          plot.background = element_rect(fill = &amp;quot;white&amp;quot;),
+          panel.border = element_blank(),
+          axis.line = element_blank(),
+          axis.text.x = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          plot.title = element_text(size = 18))
+  
+  print(plot)
+}
+
+tree_num &amp;lt;- which(model_rf$finalModel$forest$ndbigtree == min(model_rf$finalModel$forest$ndbigtree))
+
+tree_func(final_model = model_rf$finalModel, tree_num)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;predictions&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Predictions&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;predictions &amp;lt;- predict(model_rf, newdata = villagers_test)
+confusionMatrix(predictions, factor(villagers_test$personality))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction cranky jock lazy normal peppy smug snooty uchi
+##     cranky      5    1    0      0     0    1      0    0
+##     jock        1   10    2      0     0    2      0    0
+##     lazy        0    5   13      0     0    2      0    0
+##     normal      0    0    0     12     1    0      1    2
+##     peppy       0    0    0      2     9    0      3    0
+##     smug        0    1    0      0     0    3      0    0
+##     snooty      0    0    0      3     0    0     13    2
+##     uchi        0    0    0      0     0    0      0    3
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.701           
+##                  95% CI : (0.5996, 0.7898)
+##     No Information Rate : 0.1753          
+##     P-Value [Acc &amp;gt; NIR] : &amp;lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.6502          
+##                                           
+##  Mcnemar&amp;#39;s Test P-Value : NA              
+## 
+## Statistics by Class:
+## 
+##                      Class: cranky Class: jock Class: lazy Class: normal
+## Sensitivity                0.83333      0.5882      0.8667        0.7059
+## Specificity                0.97802      0.9375      0.9146        0.9500
+## Pos Pred Value             0.71429      0.6667      0.6500        0.7500
+## Neg Pred Value             0.98889      0.9146      0.9740        0.9383
+## Prevalence                 0.06186      0.1753      0.1546        0.1753
+## Detection Rate             0.05155      0.1031      0.1340        0.1237
+## Detection Prevalence       0.07216      0.1546      0.2062        0.1649
+## Balanced Accuracy          0.90568      0.7629      0.8907        0.8279
+##                      Class: peppy Class: smug Class: snooty Class: uchi
+## Sensitivity               0.90000     0.37500        0.7647     0.42857
+## Specificity               0.94253     0.98876        0.9375     1.00000
+## Pos Pred Value            0.64286     0.75000        0.7222     1.00000
+## Neg Pred Value            0.98795     0.94624        0.9494     0.95745
+## Prevalence                0.10309     0.08247        0.1753     0.07216
+## Detection Rate            0.09278     0.03093        0.1340     0.03093
+## Detection Prevalence      0.14433     0.04124        0.1856     0.03093
+## Balanced Accuracy         0.92126     0.68188        0.8511     0.71429&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Introduction to Machine Learning</title>
       <link>/post/introduction-to-machine-learning/</link>
       <pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate>
@@ -1711,102 +2051,6 @@ for(j in 2:N){
 &lt;p class=&#34;caption&#34;&gt;the picture&lt;/p&gt;
 &lt;/div&gt;
 &lt;p&gt;What I ended up doing to produce the picture above was using the &lt;code&gt;png()&lt;/code&gt; and &lt;code&gt;dev.off()&lt;/code&gt; functions to simply output individual pictures into my computer, and then using the &lt;a href=&#34;https://gifmaker.me/&#34;&gt;GIFmaker&lt;/a&gt; website to combine the images into an animated GIF.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Curse of Dimensionality</title>
-      <link>/post/curse-of-dimensionality/</link>
-      <pubDate>Tue, 08 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/curse-of-dimensionality/</guid>
-      <description>&lt;p&gt;Today, I hope to present a quick glimpse at the phenomenon called the “Curse of Dimensionality”. For this demonstration, I am simply calculating how much random data stays within two standard deviations (in the Euclidean norm) as we go from one dimension to higher dimensions.&lt;/p&gt;
-&lt;div id=&#34;random-data&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Random Data&lt;/h3&gt;
-&lt;p&gt;Here are 10 vectors of 100 random numbers each sampled from the standard normal distribution stored as a matrix …&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;X &amp;lt;- matrix(rnorm(1000), nrow = 100, ncol = 10)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;… and as a data frame.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df &amp;lt;- data.frame(X)
-head(df)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##           X1          X2          X3          X4         X5         X6
-## 1  0.0256453  0.28398713  0.67057945  1.09584061  0.3824753  1.4061483
-## 2 -0.6176034 -0.40257645  1.13756561 -0.25761710 -0.1488482 -0.1959629
-## 3 -0.5235474 -0.68893524 -0.70737197  0.80125649  0.4926702 -1.9662689
-## 4 -0.3737617  0.06833939 -0.02937106 -0.60665832  0.2656111  1.2102051
-## 5 -0.9429225  0.05136859  1.89588703  0.30911255 -0.2143345 -0.2801334
-## 6  0.4515558 -0.31945406 -2.42236506  0.06607036  0.3371893 -0.3928504
-##             X7         X8          X9         X10
-## 1  0.671601688 -1.9165923 -0.81464512  0.01496321
-## 2 -0.005786507  0.2001263  1.59233921  0.53711798
-## 3 -0.712297275  0.8505601 -2.58287100  1.04165643
-## 4  0.892004771 -1.0628529  0.37102924  0.19434494
-## 5 -1.365184181  0.3970239  0.08127754  2.02421067
-## 6  0.746595767 -1.1335422 -0.54150029 -0.56877836&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;one-dimension&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;One Dimension&lt;/h3&gt;
-&lt;p&gt;For normally distributed data, we expect that about 95% of data falls within two standard deviations.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x1 &amp;lt;- X[,1]
-within2sd &amp;lt;- abs(x1) &amp;lt;= 2
-df1 &amp;lt;- data.frame(x1, within2sd)
-mean(within2sd)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.96&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In this example, 96 percent of the data in the first vector is within two standard deviations of the mean.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
-df1 %&amp;gt;% 
-  ggplot(aes(x = x1, , y = 0, color = within2sd)) +
-  geom_point() + 
-  labs(title = &amp;quot;One Dimension of Normal Distribution Data&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-01-08-curse-of-dimensionality_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;two-dimensions&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Two Dimensions&lt;/h3&gt;
-&lt;p&gt;However, when we go into two or more dimensions, the colloquial “95%” expection starts to fade. To aid calculations, the &lt;code&gt;row_norms&lt;/code&gt; function in the &lt;code&gt;slam&lt;/code&gt; package uses the Euclidean norm by default. To aid visualization, we will use a helper function (found on Stack Overflow at &lt;a href=&#34;https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2&#34; class=&#34;uri&#34;&gt;https://stackoverflow.com/questions/6862742/draw-a-circle-with-ggplot2&lt;/a&gt;) to draw one circle.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(slam)
-within2sd &amp;lt;- row_norms(X[,1:2]) &amp;lt;= 2
-
-gg_circle &amp;lt;- function(r = 1, xc = 0, yc = 0, color=&amp;quot;black&amp;quot;, fill=NA, ...) {
-    x &amp;lt;- xc + r*cos(seq(0, pi, length.out=100))
-    ymax &amp;lt;- yc + r*sin(seq(0, pi, length.out=100))
-    ymin &amp;lt;- yc + r*sin(seq(0, -pi, length.out=100))
-    annotate(&amp;quot;ribbon&amp;quot;, x=x, ymin=ymin, ymax=ymax, color=color, fill=fill, ...)
-}
-
-df2 &amp;lt;- data.frame(X[,1:2], within2sd)
-df2 %&amp;gt;%
-  ggplot(aes(x = X1, y = X2, color = within2sd)) +
-  geom_point() + 
-  gg_circle(r = 2, color = &amp;quot;red&amp;quot;) +
-  coord_fixed() + 
-  labs(title = &amp;quot;Two Dimensions of Normal Distribution Data&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-01-08-curse-of-dimensionality_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(within2sd)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 0.88&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;In this example, 88 percent of the data in the first 2 vectors is within two standard deviations of the mean.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;higher-dimensions&#34; class=&#34;section level3&#34;&gt;
-&lt;h3&gt;Higher Dimensions&lt;/h3&gt;
-&lt;p&gt;Plotting scatterplots in higher dimensions is much more complicated, but we can still perform the &lt;code&gt;norm&lt;/code&gt; calculations pretty quickly.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;N &amp;lt;- 10 #total number of dimensions
-within2sd &amp;lt;- rep(0, N) #initialization
-
-# one dimension
-within2sd[1] &amp;lt;- mean(abs(x1) &amp;lt;= 2)
-
-# higher dimensions
-for(d in 2:N){
-  within2sd[d] &amp;lt;- mean(row_norms(X[,1:d]) &amp;lt;= 2)
-}
-
-# plot
-dimensions &amp;lt;- 1:N
-df &amp;lt;- data.frame(dimensions, within2sd)
-df %&amp;gt;%
-  ggplot(aes(x = dimensions, y = within2sd)) +
-  geom_bar(stat = &amp;quot;identity&amp;quot;, fill = &amp;quot;blue&amp;quot;) +
-  scale_x_continuous(&amp;quot;Dimensions&amp;quot;, breaks = 1:N)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-01-08-curse-of-dimensionality_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
 </description>
     </item>
     

@@ -1,0 +1,348 @@
+---
+title: Supervised Learning
+author: Derek Sollberger
+date: '2020-05-04'
+slug: supervised-learning
+categories:
+  - machine learning
+tags:
+  - tidymodels
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<div id="supervised-learning" class="section level1">
+<h1>Supervised Learning</h1>
+<ul>
+<li><strong>Supervised learning</strong> has the goal of making predictions with a set of <em>known</em> labels for the response variable.</li>
+<li>In <strong>unsupervised learning</strong>, we try to find structure in the data of the response variable without predetermined labels.</li>
+</ul>
+<p>Goal: predict the personality type of each character in Animal Crossing</p>
+</div>
+<div id="data-set-animal-crossing" class="section level1">
+<h1>Data set: Animal Crossing</h1>
+<p>Source: VillagerDB, MetaCritic, and TidyTuesday</p>
+<ul>
+<li><a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md">Animal Crossing Tidy Tuesday</a></li>
+</ul>
+<pre class="r"><code>library(&quot;caret&quot;)
+library(&quot;randomForest&quot;)
+library(&quot;tidymodels&quot;)
+library(&quot;tidyverse&quot;)
+
+# critic &lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv&#39;)
+# user_reviews &lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv&#39;)
+# items &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&#39;)
+villagers &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv&#39;)</code></pre>
+<div id="exploratory-data-analysis" class="section level2">
+<h2>Exploratory Data Analysis</h2>
+<pre class="r"><code>dim(villagers)</code></pre>
+<pre><code>## [1] 391  11</code></pre>
+<pre class="r"><code>str(villagers)</code></pre>
+<pre><code>## tibble [391 x 11] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ row_n      : num [1:391] 2 3 4 6 7 8 9 10 11 13 ...
+##  $ id         : chr [1:391] &quot;admiral&quot; &quot;agent-s&quot; &quot;agnes&quot; &quot;al&quot; ...
+##  $ name       : chr [1:391] &quot;Admiral&quot; &quot;Agent S&quot; &quot;Agnes&quot; &quot;Al&quot; ...
+##  $ gender     : chr [1:391] &quot;male&quot; &quot;female&quot; &quot;female&quot; &quot;male&quot; ...
+##  $ species    : chr [1:391] &quot;bird&quot; &quot;squirrel&quot; &quot;pig&quot; &quot;gorilla&quot; ...
+##  $ birthday   : chr [1:391] &quot;1-27&quot; &quot;7-2&quot; &quot;4-21&quot; &quot;10-18&quot; ...
+##  $ personality: chr [1:391] &quot;cranky&quot; &quot;peppy&quot; &quot;uchi&quot; &quot;lazy&quot; ...
+##  $ song       : chr [1:391] &quot;Steep Hill&quot; &quot;DJ K.K.&quot; &quot;K.K. House&quot; &quot;Steep Hill&quot; ...
+##  $ phrase     : chr [1:391] &quot;aye aye&quot; &quot;sidekick&quot; &quot;snuffle&quot; &quot;Ayyeeee&quot; ...
+##  $ full_id    : chr [1:391] &quot;villager-admiral&quot; &quot;villager-agent-s&quot; &quot;villager-agnes&quot; &quot;villager-al&quot; ...
+##  $ url        : chr [1:391] &quot;https://villagerdb.com/images/villagers/thumb/admiral.98206ee.png&quot; &quot;https://villagerdb.com/images/villagers/thumb/agent-s.96c789b.png&quot; &quot;https://villagerdb.com/images/villagers/thumb/agnes.9f51f32.png&quot; &quot;https://villagerdb.com/images/villagers/thumb/al.1e17090.png&quot; ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   row_n = col_double(),
+##   ..   id = col_character(),
+##   ..   name = col_character(),
+##   ..   gender = col_character(),
+##   ..   species = col_character(),
+##   ..   birthday = col_character(),
+##   ..   personality = col_character(),
+##   ..   song = col_character(),
+##   ..   phrase = col_character(),
+##   ..   full_id = col_character(),
+##   ..   url = col_character()
+##   .. )</code></pre>
+<pre class="r"><code>#table(villagers$name)
+#length(unique(villagers$name))</code></pre>
+<pre class="r"><code>table(villagers$personality)</code></pre>
+<pre><code>## 
+## cranky   jock   lazy normal  peppy   smug snooty   uchi 
+##     55     55     60     59     49     34     55     24</code></pre>
+</div>
+<div id="personality-across-gender" class="section level2">
+<h2>Personality across Gender</h2>
+<pre class="r"><code>villagers %&gt;%
+  ggplot(aes(x = personality, fill = gender)) +
+  geom_bar(stat = &quot;count&quot;, position = &quot;dodge&quot;) +
+  labs(title = &quot;Getting to Know the Animal Crossing Villagers&quot;,
+       subtitle = &quot;and judging their personalities&quot;,
+       caption = &quot;Source: VillagerDB&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="personality-across-species" class="section level2">
+<h2>Personality across Species</h2>
+<pre class="r"><code>villagers %&gt;%
+  ggplot(aes(x = personality, fill = species)) +
+  geom_bar(stat = &quot;count&quot;, position = &quot;stack&quot;) +
+  labs(title = &quot;Getting to Know the Animal Crossing Villagers&quot;,
+       subtitle = &quot;and judging their personalities&quot;,
+       caption = &quot;Source: VillagerDB&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+</div>
+<div id="predictor-variables" class="section level1">
+<h1>Predictor Variables</h1>
+<pre class="r"><code>table(villagers$gender)</code></pre>
+<pre><code>## 
+## female   male 
+##    187    204</code></pre>
+<pre class="r"><code>table(villagers$species)</code></pre>
+<pre><code>## 
+## alligator  anteater      bear      bird      bull       cat   chicken       cow 
+##         7         7        15        13         6        23         9         4 
+##       cub      deer       dog      duck     eagle  elephant      frog      goat 
+##        16        10        16        17         9        11        18         8 
+##   gorilla   hamster     hippo     horse  kangaroo     koala      lion    monkey 
+##         9         8         7        15         8         9         7         8 
+##     mouse   octopus   ostrich   penguin       pig    rabbit     rhino     sheep 
+##        15         3        10        13        15        20         6        13 
+##  squirrel     tiger      wolf 
+##        18         7        11</code></pre>
+<div id="extracting-birth-month" class="section level2">
+<h2>Extracting Birth Month</h2>
+<pre class="r"><code>villagers &lt;- villagers %&gt;%
+  separate(birthday, c(&quot;birth_month&quot;, &quot;birth_day&quot;), remove = FALSE)
+
+villagers$birth_month_factor &lt;- factor(villagers$birth_month, 
+                                levels = 1:12)
+
+table(villagers$birth_month_factor)</code></pre>
+<pre><code>## 
+##  1  2  3  4  5  6  7  8  9 10 11 12 
+## 32 29 33 29 31 33 35 36 32 37 30 34</code></pre>
+<pre class="r"><code>villagers %&gt;%
+  ggplot(aes(x = personality, fill = birth_month_factor)) +
+  geom_bar(color = &quot;black&quot;, stat = &quot;count&quot;, position = &quot;stack&quot;) +
+  labs(title = &quot;Getting to Know the Animal Crossing Villagers&quot;,
+       subtitle = &quot;and judging their personalities&quot;,
+       caption = &quot;Source: VillagerDB&quot;) +
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<pre class="r"><code>villagers %&gt;%
+  ggplot(aes(x = personality, fill = birth_month_factor)) +
+  geom_bar(color = &quot;black&quot;, stat = &quot;count&quot;, position = &quot;fill&quot;) +
+  labs(title = &quot;Getting to Know the Animal Crossing Villagers&quot;,
+       subtitle = &quot;and judging their personalities&quot;,
+       caption = &quot;Source: VillagerDB&quot;,
+       y = &quot;proportion&quot;) +
+  scale_fill_manual(name = &quot;Month of Birth&quot;,
+                    labels = c(&quot;January&quot;, &quot;February&quot;, &quot;March&quot;, &quot;April&quot;,
+                                 &quot;May&quot;, &quot;June&quot;, &quot;July&quot;, &quot;August&quot;,
+                                 &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;),
+                    values=sample(c(&quot;#4b48c9&quot;, &quot;#5c90a8&quot;, &quot;#86d5fe&quot;, &quot;#c0d1ef&quot;,
+                             &quot;#edd1a2&quot;, &quot;#948572&quot;, &quot;#f8c79e&quot;, &quot;#eec688&quot;,
+                             &quot;#642200&quot;, &quot;#764936&quot;, &quot;#fd974d&quot;, &quot;#7b4a3c&quot;))) +
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>(color palette generated at <a href="http://www.cssdrive.com/imagepalette/index.php">CSS Drive</a>)</p>
+</div>
+<div id="model-formula" class="section level2">
+<h2>model formula</h2>
+<ul>
+<li>response variable: <code>personality</code></li>
+<li>predictor variables: <code>gender</code>, <code>species</code>, <code>birth_month</code></li>
+<li>model formula: <code>personality ~ gender + species + birth_month</code></li>
+</ul>
+<pre class="r"><code>predictor_variables &lt;- c(&quot;gender&quot;, &quot;species&quot;, &quot;birth_month&quot;)
+model_formula &lt;- paste(&quot;personality~&quot;, paste(sprintf(&quot;`%s`&quot;, predictor_variables), collapse=&quot;+&quot;))</code></pre>
+</div>
+</div>
+<div id="data-split" class="section level1">
+<h1>Data Split</h1>
+<pre class="r"><code>villagers_split &lt;- initial_split(villagers)
+villagers_train &lt;- training(villagers_split)
+villagers_test  &lt;- testing(villagers_split)</code></pre>
+</div>
+<div id="random-forests" class="section level1">
+<h1>Random Forests</h1>
+<p>“Random forest models are ensembles of decision trees. A large number of decision tree models are created for the ensemble based on slightly different versions of the training set. When creating the individual decision trees, the fitting process encourages them to be as diverse as possible. The collection of trees are combined into the random forest model and, when a new sample is predicted, the votes from each tree are used to calculate the final predicted value for the new sample.”
+—<a href="https://www.tidymodels.org/start/resampling/">tidymodels.org</a></p>
+<div id="define-the-forest" class="section level2">
+<h2>Define the Forest</h2>
+<pre class="r"><code>random_forest_model &lt;- 
+  rand_forest(trees = 1000) %&gt;% 
+  set_engine(&quot;ranger&quot;) %&gt;% 
+  set_mode(&quot;classification&quot;)</code></pre>
+</div>
+<div id="fitting-the-forest" class="section level2">
+<h2>Fitting the Forest</h2>
+<pre class="r"><code># CAUTION: at the time of filming, this code chunk did not work (model formula parser threw an error)
+random_forest_fit &lt;-
+  random_forest_model %&gt;%
+  fit(personality ~ gender + species + birth_month, data = villagers_train)
+
+random_forest_fit</code></pre>
+</div>
+<div id="visualizing-the-forest" class="section level2">
+<h2>Visualizing the Forest</h2>
+<pre class="r"><code># OLD-FASHIONED WAY with the caret package
+model_rf &lt;- caret::train(personality ~ gender + species + birth_month,
+                         data = villagers_train, method = &quot;rf&quot;)
+model_rf</code></pre>
+<pre><code>## Random Forest 
+## 
+## 294 samples
+##   3 predictor
+##   8 classes: &#39;cranky&#39;, &#39;jock&#39;, &#39;lazy&#39;, &#39;normal&#39;, &#39;peppy&#39;, &#39;smug&#39;, &#39;snooty&#39;, &#39;uchi&#39; 
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 294, 294, 294, 294, 294, 294, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa    
+##    2    0.2550533  0.1357101
+##   24    0.2889225  0.1759381
+##   46    0.2892118  0.1774835
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was mtry = 46.</code></pre>
+<pre class="r"><code>model_rpart &lt;- caret::train(personality ~ gender + species + birth_month,
+                         data = villagers_train, method = &quot;rpart&quot;)
+model_rpart</code></pre>
+<pre><code>## CART 
+## 
+## 294 samples
+##   3 predictor
+##   8 classes: &#39;cranky&#39;, &#39;jock&#39;, &#39;lazy&#39;, &#39;normal&#39;, &#39;peppy&#39;, &#39;smug&#39;, &#39;snooty&#39;, &#39;uchi&#39; 
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 294, 294, 294, 294, 294, 294, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp          Accuracy   Kappa     
+##   0.02024291  0.2975188  0.18582216
+##   0.02429150  0.2876263  0.17374970
+##   0.19028340  0.2017836  0.07541971
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.02024291.</code></pre>
+<pre class="r"><code>#source:  https://shiring.github.io/machine_learning/2017/03/16/rf_plot_ggraph
+
+library(&quot;ggraph&quot;)
+library(&quot;igraph&quot;)
+
+tree_func &lt;- function(final_model, 
+                      tree_num) {
+  
+  # get tree by index
+  tree &lt;- randomForest::getTree(final_model, 
+                                k = tree_num, 
+                                labelVar = TRUE) %&gt;%
+    tibble::rownames_to_column() %&gt;%
+    # make leaf split points to NA, so the 0s won&#39;t get plotted
+    mutate(`split point` = ifelse(is.na(prediction), `split point`, NA))
+  
+  # prepare data frame for graph
+  graph_frame &lt;- data.frame(from = rep(tree$rowname, 2),
+                            to = c(tree$`left daughter`, tree$`right daughter`))
+  
+  # convert to graph and delete the last node that we don&#39;t want to plot
+  graph &lt;- graph_from_data_frame(graph_frame) %&gt;%
+    delete_vertices(&quot;0&quot;)
+  
+  # set node labels
+  V(graph)$node_label &lt;- gsub(&quot;_&quot;, &quot; &quot;, as.character(tree$`split var`))
+  V(graph)$leaf_label &lt;- as.character(tree$prediction)
+  V(graph)$split &lt;- as.character(round(tree$`split point`, digits = 2))
+  
+  # plot
+  plot &lt;- ggraph(graph, &#39;dendrogram&#39;) + 
+    theme_bw() +
+    geom_edge_link() +
+    geom_node_point() +
+    geom_node_text(aes(label = node_label), na.rm = TRUE, repel = TRUE) +
+    geom_node_label(aes(label = split), vjust = 2.5, na.rm = TRUE, fill = &quot;white&quot;) +
+    geom_node_label(aes(label = leaf_label, fill = leaf_label), na.rm = TRUE, 
+                    repel = TRUE, colour = &quot;white&quot;, fontface = &quot;bold&quot;, show.legend = FALSE) +
+    theme(panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.background = element_blank(),
+          plot.background = element_rect(fill = &quot;white&quot;),
+          panel.border = element_blank(),
+          axis.line = element_blank(),
+          axis.text.x = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          plot.title = element_text(size = 18))
+  
+  print(plot)
+}
+
+tree_num &lt;- which(model_rf$finalModel$forest$ndbigtree == min(model_rf$finalModel$forest$ndbigtree))
+
+tree_func(final_model = model_rf$finalModel, tree_num)</code></pre>
+<p><img src="/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+</div>
+</div>
+<div id="predictions" class="section level1">
+<h1>Predictions</h1>
+<pre class="r"><code>predictions &lt;- predict(model_rf, newdata = villagers_test)
+confusionMatrix(predictions, factor(villagers_test$personality))</code></pre>
+<pre><code>## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction cranky jock lazy normal peppy smug snooty uchi
+##     cranky      5    1    0      0     0    1      0    0
+##     jock        1   10    2      0     0    2      0    0
+##     lazy        0    5   13      0     0    2      0    0
+##     normal      0    0    0     12     1    0      1    2
+##     peppy       0    0    0      2     9    0      3    0
+##     smug        0    1    0      0     0    3      0    0
+##     snooty      0    0    0      3     0    0     13    2
+##     uchi        0    0    0      0     0    0      0    3
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.701           
+##                  95% CI : (0.5996, 0.7898)
+##     No Information Rate : 0.1753          
+##     P-Value [Acc &gt; NIR] : &lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.6502          
+##                                           
+##  Mcnemar&#39;s Test P-Value : NA              
+## 
+## Statistics by Class:
+## 
+##                      Class: cranky Class: jock Class: lazy Class: normal
+## Sensitivity                0.83333      0.5882      0.8667        0.7059
+## Specificity                0.97802      0.9375      0.9146        0.9500
+## Pos Pred Value             0.71429      0.6667      0.6500        0.7500
+## Neg Pred Value             0.98889      0.9146      0.9740        0.9383
+## Prevalence                 0.06186      0.1753      0.1546        0.1753
+## Detection Rate             0.05155      0.1031      0.1340        0.1237
+## Detection Prevalence       0.07216      0.1546      0.2062        0.1649
+## Balanced Accuracy          0.90568      0.7629      0.8907        0.8279
+##                      Class: peppy Class: smug Class: snooty Class: uchi
+## Sensitivity               0.90000     0.37500        0.7647     0.42857
+## Specificity               0.94253     0.98876        0.9375     1.00000
+## Pos Pred Value            0.64286     0.75000        0.7222     1.00000
+## Neg Pred Value            0.98795     0.94624        0.9494     0.95745
+## Prevalence                0.10309     0.08247        0.1753     0.07216
+## Detection Rate            0.09278     0.03093        0.1340     0.03093
+## Detection Prevalence      0.14433     0.04124        0.1856     0.03093
+## Balanced Accuracy         0.92126     0.68188        0.8511     0.71429</code></pre>
+</div>
