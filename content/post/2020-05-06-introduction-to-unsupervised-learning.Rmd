@@ -1,0 +1,262 @@
+---
+title: Introduction to Unsupervised Learning
+author: Derek Sollberger
+date: '2020-05-06'
+slug: introduction-to-unsupervised-learning
+categories:
+  - machine learning
+tags:
+  - ggplot
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+# Unsupervised Learning
+
+* **Supervised learning** has the goal of making predictions with a set of *known* labels for the response variable.
+* In **unsupervised learning**, we try to find structure in the data of the response variable without predetermined labels.
+
+Goal: organize the items available in the `Animal Crossing` video game 
+
+# Data set: Animal Crossing
+
+Source:  VillagerDB, MetaCritic, and TidyTuesday
+
+* [Animal Crossing Tidy Tuesday](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md)
+
+```{r, message = FALSE, warning = FALSE}
+library("ggrepel")
+library("tidyverse")
+
+# critic <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv')
+# user_reviews <- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv')
+items <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv')
+# villagers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv')
+```
+
+# Exploratory Data Analysis
+
+## variables
+
+```{r}
+dim(items)
+str(items)
+```
+
+```{r}
+table(items$category)
+```
+```{r}
+summary(items$buy_value)
+# table(items$buy_currency)
+summary(items$sell_value)
+summary(items$num_id)
+summary(items$recipe)
+```
+
+## numerical variables
+
+```{r}
+items %>%
+  ggplot(aes(x = buy_value, y = sell_value, color = category)) +
+  geom_point() +
+  coord_trans(x = "log10") + 
+  labs(title = "Items in Animal Crossing",
+       subtitle = "Sell Values vs Buy Values",
+       caption = "Math 32") +
+  scale_x_continuous(name = "Buy Value",
+                     breaks = c(0, 10, 100, 1000, 10000, 100000, 1000000),
+                     labels = c("0", "10", "100", "1000", "10000", "100000", "1000000")) +
+  scale_y_continuous(name = "Sell Value",
+                     breaks = c(0, 50000, 100000, 150000, 200000, 250000, 300000),
+                     labels = c("0", "50000", "100000", "150000", "200000", "250000", "300000")) +
+  theme_minimal()
+```
+
+
+# K-Means Clustering
+
+## first look
+
+```{r}
+df_numerical <- items %>%
+  select(num_id, buy_value, sell_value, recipe) %>%
+  filter(complete.cases(.))
+
+summary(df_numerical$buy_value)
+summary(df_numerical$sell_value)
+```
+
+```{r}
+clusters4 <- kmeans(df_numerical, 4)
+
+items_with_clusters <- cbind(df_numerical, clusters4$cluster)
+colnames(items_with_clusters) <- c("ID", "buy", "sell", "recipe", "cluster")
+items_with_clusters$cluster <- factor(items_with_clusters$cluster)
+```
+
+```{r}
+x_breaks <- c(0, 10, 100, 1000, 10000, 100000, 1000000)
+y_breaks <- c(0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000)
+
+items_with_clusters %>%
+  ggplot() +
+  geom_point(aes(x = buy, y = sell)) +
+  geom_point(aes(x = buy_value, y = sell_value), 
+             data = data.frame(clusters4$centers),
+             size = 5,
+             color = "blue") +
+  coord_trans(x = "log10") +
+  labs(title = "Items in Animal Crossing",
+       subtitle = "Cluster Centers",
+       caption = "Math 32") +
+  scale_x_continuous(name = "Buy Value",
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = "Sell Value",
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+```
+
+```{r}
+items_with_clusters %>%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  coord_trans(x = "log10") +
+  labs(title = "Items in Animal Crossing",
+       subtitle = "4 Clusters",
+       caption = "Math 32") +
+  scale_x_continuous(name = "Buy Value",
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = "Sell Value",
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+```
+
+
+## selecting the amount of clusters
+
+Selecting the number of clusters is rather subjective.
+
+* too few clusters: items that are "far" from each other are still grouped together
+* too many clusters: harder to describe and label groups later
+
+We start with an $d$-dimensional data set of numerical variables and prescribe a number $k$ for the number of clusters and run the `kmeans` algorithm.
+
+* Each cluster $C_{k}$ has $n_{k}$ points labeled $x_{i}$ in $d$-dimensional space
+* Each cluster has a cluster center $\mu_{k}$
+* Each cluster has a *within-sum-of-squares*
+
+$$WSS = \displaystyle\sum_{x_{i} \in C_{k}} (x_{i} - \mu_{k})^{2}$$
+Thus, our metric for the clustering will be the reported *total-within-sum-of-squares*
+
+$$TWSS = \displaystyle\sum_{j=1}^{k}\sum_{x_{i} \in C_{k}} (x_{i} - \mu_{k})^{2}$$
+For example, the total-within-sum-of-squares for the 4-cluster results above is `r clusters4$tot.withinss`.
+
+
+## scree plot
+
+It is common practice to build a *scree plot* and look for the "elbow".
+
+```{r}
+clusters1 <- kmeans(df_numerical, 1)
+clusters2 <- kmeans(df_numerical, 2)
+clusters3 <- kmeans(df_numerical, 3)
+clusters4 <- kmeans(df_numerical, 4)
+clusters5 <- kmeans(df_numerical, 5)
+clusters6 <- kmeans(df_numerical, 6)
+clusters7 <- kmeans(df_numerical, 7)
+clusters8 <- kmeans(df_numerical, 8)
+clusters9 <- kmeans(df_numerical, 9)
+
+TSS_vector <- c(clusters1$tot.withinss, clusters2$tot.withinss, clusters3$tot.withinss, 
+                clusters4$tot.withinss, clusters5$tot.withinss, clusters6$tot.withinss, 
+                clusters7$tot.withinss, clusters8$tot.withinss, clusters9$tot.withinss)
+
+k_vals <- 1:9
+df_for_scree_plot <- data.frame(k_vals, TSS_vector)
+```
+
+```{r}
+df_for_scree_plot %>%
+  ggplot(aes(x = k_vals, y = TSS_vector)) +
+  geom_point(size = 3) +
+  geom_line() +
+  labs(title = "Scree Plot",
+       subtitle = "(find the 'elbow')",
+       caption = "Math 32",
+       x = "number of clusters",
+       y = "total-within-sum-of-squares") +
+  scale_x_discrete(name = "number of clusters",
+                   breaks = paste(1:9),
+                   labels = paste(1:9),
+                   limits = 1:9) +
+  theme_minimal()
+```
+
+# Conclusion
+
+It appears that the optimal number of clusters for our data set is $k = 3$.
+
+```{r}
+items_with_clusters <- cbind(df_numerical, clusters3$cluster)
+colnames(items_with_clusters) <- c("ID", "buy", "sell", "recipe", "cluster")
+items_with_clusters$cluster <- factor(items_with_clusters$cluster)
+
+df_categorical <- items %>%
+  select(num_id, name, category) %>%
+  filter(complete.cases(.))
+colnames(df_categorical) <- c("ID", "name", "category")
+
+main_df <- df_categorical %>%
+  inner_join(items_with_clusters, by = "ID")
+```
+
+```{r}
+main_df %>%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  coord_trans(x = "log10") +
+  labs(title = "Items in Animal Crossing",
+       subtitle = "Optimal Clustering",
+       caption = "Math 32") +
+  scale_x_continuous(name = "Buy Value",
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = "Sell Value",
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+```
+
+# Appendix: label a sample of points from each cluster
+
+```{r}
+label_df <- main_df %>%
+  group_by(cluster) %>%
+  sample_n(2)
+
+main_df %>%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  geom_label_repel(aes(x = buy, y = sell, label = name), 
+                   data = label_df,
+                   nudge_x = -1000,
+                   nudge_y = 10000) +
+  coord_trans(x = "log10") +
+  labs(title = "Items in Animal Crossing",
+       subtitle = "Optimal Clustering",
+       caption = "Math 32") +
+  scale_x_continuous(name = "Buy Value",
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = "Sell Value",
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+```

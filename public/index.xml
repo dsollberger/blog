@@ -11,6 +11,654 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Introduction to Unsupervised Learning</title>
+      <link>/post/introduction-to-unsupervised-learning/</link>
+      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introduction-to-unsupervised-learning/</guid>
+      <description>&lt;div id=&#34;unsupervised-learning&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Unsupervised Learning&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supervised learning&lt;/strong&gt; has the goal of making predictions with a set of &lt;em&gt;known&lt;/em&gt; labels for the response variable.&lt;/li&gt;
+&lt;li&gt;In &lt;strong&gt;unsupervised learning&lt;/strong&gt;, we try to find structure in the data of the response variable without predetermined labels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Goal: organize the items available in the &lt;code&gt;Animal Crossing&lt;/code&gt; video game&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-set-animal-crossing&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data set: Animal Crossing&lt;/h1&gt;
+&lt;p&gt;Source: VillagerDB, MetaCritic, and TidyTuesday&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md&#34;&gt;Animal Crossing Tidy Tuesday&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;ggrepel&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)
+
+# critic &amp;lt;- readr::read_tsv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv&amp;#39;)
+# user_reviews &amp;lt;- readr::read_tsv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv&amp;#39;)
+items &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&amp;#39;)
+# villagers &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploratory-data-analysis&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Exploratory Data Analysis&lt;/h1&gt;
+&lt;div id=&#34;variables&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;variables&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(items)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 4565   16&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;str(items)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## tibble [4,565 x 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ num_id       : num [1:4565] 12 14 17 19 20 21 23 24 26 26 ...
+##  $ id           : chr [1:4565] &amp;quot;3d-glasses&amp;quot; &amp;quot;a-tee&amp;quot; &amp;quot;abstract-wall&amp;quot; &amp;quot;academy-uniform&amp;quot; ...
+##  $ name         : chr [1:4565] &amp;quot;3D Glasses&amp;quot; &amp;quot;A Tee&amp;quot; &amp;quot;Abstract Wall&amp;quot; &amp;quot;Academy Uniform&amp;quot; ...
+##  $ category     : chr [1:4565] &amp;quot;Accessories&amp;quot; &amp;quot;Tops&amp;quot; &amp;quot;Wallpaper&amp;quot; &amp;quot;Dresses&amp;quot; ...
+##  $ orderable    : logi [1:4565] NA NA TRUE NA FALSE TRUE ...
+##  $ sell_value   : num [1:4565] 122 140 390 520 2000 375 420 330 8990 8990 ...
+##  $ sell_currency: chr [1:4565] &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; ...
+##  $ buy_value    : num [1:4565] 490 560 1560 2080 NA ...
+##  $ buy_currency : chr [1:4565] &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; ...
+##  $ sources      : chr [1:4565] NA NA &amp;quot;Nook&amp;#39;s Cranny&amp;quot; NA ...
+##  $ customizable : logi [1:4565] NA NA NA NA NA FALSE ...
+##  $ recipe       : num [1:4565] NA NA NA NA NA NA NA NA NA NA ...
+##  $ recipe_id    : chr [1:4565] NA NA NA NA ...
+##  $ games_id     : chr [1:4565] &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; ...
+##  $ id_full      : chr [1:4565] &amp;quot;item-3d-glasses&amp;quot; &amp;quot;item-a-tee&amp;quot; NA &amp;quot;item-academy-uniform&amp;quot; ...
+##  $ image_url    : chr [1:4565] &amp;quot;https://villagerdb.com/images/items/full/3d-glasses.b8e1b5a.png&amp;quot; &amp;quot;https://villagerdb.com/images/items/full/a-tee.a1af443.png&amp;quot; NA &amp;quot;https://villagerdb.com/images/items/full/academy-uniform.4475eb5.png&amp;quot; ...
+##  - attr(*, &amp;quot;problems&amp;quot;)= tibble [2 x 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ row     : int [1:2] 4472 4473
+##   ..$ col     : chr [1:2] &amp;quot;customizable&amp;quot; &amp;quot;customizable&amp;quot;
+##   ..$ expected: chr [1:2] &amp;quot;1/0/T/F/TRUE/FALSE&amp;quot; &amp;quot;1/0/T/F/TRUE/FALSE&amp;quot;
+##   ..$ actual  : chr [1:2] &amp;quot;Yes&amp;quot; &amp;quot;Yes&amp;quot;
+##   ..$ file    : chr [1:2] &amp;quot;&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&amp;#39;&amp;quot; &amp;quot;&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&amp;#39;&amp;quot;
+##  - attr(*, &amp;quot;spec&amp;quot;)=
+##   .. cols(
+##   ..   num_id = col_double(),
+##   ..   id = col_character(),
+##   ..   name = col_character(),
+##   ..   category = col_character(),
+##   ..   orderable = col_logical(),
+##   ..   sell_value = col_double(),
+##   ..   sell_currency = col_character(),
+##   ..   buy_value = col_double(),
+##   ..   buy_currency = col_character(),
+##   ..   sources = col_character(),
+##   ..   customizable = col_logical(),
+##   ..   recipe = col_double(),
+##   ..   recipe_id = col_character(),
+##   ..   games_id = col_character(),
+##   ..   id_full = col_character(),
+##   ..   image_url = col_character()
+##   .. )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(items$category)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Accessories     Bottoms        Bugs     Dresses        Fish    Flooring 
+##         123         142          80         239         101         324 
+##     Flowers     Fossils       Fruit   Furniture        Hats       Music 
+##         109          76          12        1264         230          95 
+##      Photos   Seashells       Shoes       Socks       Tools        Tops 
+##         840           8          89          60          74         289 
+##   Umbrellas     Usables   Wallpaper 
+##          67          88         255&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(items$buy_value)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&amp;#39;s 
+##      40     870    1300    6960    2700 1200000    1014&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# table(items$buy_currency)
+summary(items$sell_value)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&amp;#39;s 
+##       5     240     390    2261    1000  300000      36&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(items$num_id)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      12    1722    3569    3662    5607    7443&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(items$recipe)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&amp;#39;s 
+##   1.000   2.000   3.000   4.711   6.000  90.000    3977&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;numerical-variables&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;numerical variables&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;items %&amp;gt;%
+  ggplot(aes(x = buy_value, y = sell_value, color = category)) +
+  geom_point() +
+  coord_trans(x = &amp;quot;log10&amp;quot;) + 
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Sell Values vs Buy Values&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = c(0, 10, 100, 1000, 10000, 100000, 1000000),
+                     labels = c(&amp;quot;0&amp;quot;, &amp;quot;10&amp;quot;, &amp;quot;100&amp;quot;, &amp;quot;1000&amp;quot;, &amp;quot;10000&amp;quot;, &amp;quot;100000&amp;quot;, &amp;quot;1000000&amp;quot;)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = c(0, 50000, 100000, 150000, 200000, 250000, 300000),
+                     labels = c(&amp;quot;0&amp;quot;, &amp;quot;50000&amp;quot;, &amp;quot;100000&amp;quot;, &amp;quot;150000&amp;quot;, &amp;quot;200000&amp;quot;, &amp;quot;250000&amp;quot;, &amp;quot;300000&amp;quot;)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 1035 rows containing missing values (geom_point).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;k-means-clustering&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;K-Means Clustering&lt;/h1&gt;
+&lt;div id=&#34;first-look&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;first look&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_numerical &amp;lt;- items %&amp;gt;%
+  select(num_id, buy_value, sell_value, recipe) %&amp;gt;%
+  filter(complete.cases(.))
+
+summary(df_numerical$buy_value)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     240    3780    7080   16912   16480  320000&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(df_numerical$sell_value)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      60     945    1770    4228    4120   80000&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;clusters4 &amp;lt;- kmeans(df_numerical, 4)
+
+items_with_clusters &amp;lt;- cbind(df_numerical, clusters4$cluster)
+colnames(items_with_clusters) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;buy&amp;quot;, &amp;quot;sell&amp;quot;, &amp;quot;recipe&amp;quot;, &amp;quot;cluster&amp;quot;)
+items_with_clusters$cluster &amp;lt;- factor(items_with_clusters$cluster)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x_breaks &amp;lt;- c(0, 10, 100, 1000, 10000, 100000, 1000000)
+y_breaks &amp;lt;- c(0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000)
+
+items_with_clusters %&amp;gt;%
+  ggplot() +
+  geom_point(aes(x = buy, y = sell)) +
+  geom_point(aes(x = buy_value, y = sell_value), 
+             data = data.frame(clusters4$centers),
+             size = 5,
+             color = &amp;quot;blue&amp;quot;) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Cluster Centers&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;items_with_clusters %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;4 Clusters&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;selecting-the-amount-of-clusters&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;selecting the amount of clusters&lt;/h2&gt;
+&lt;p&gt;Selecting the number of clusters is rather subjective.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;too few clusters: items that are “far” from each other are still grouped together&lt;/li&gt;
+&lt;li&gt;too many clusters: harder to describe and label groups later&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We start with an &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;-dimensional data set of numerical variables and prescribe a number &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; for the number of clusters and run the &lt;code&gt;kmeans&lt;/code&gt; algorithm.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each cluster &lt;span class=&#34;math inline&#34;&gt;\(C_{k}\)&lt;/span&gt; has &lt;span class=&#34;math inline&#34;&gt;\(n_{k}\)&lt;/span&gt; points labeled &lt;span class=&#34;math inline&#34;&gt;\(x_{i}\)&lt;/span&gt; in &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;-dimensional space&lt;/li&gt;
+&lt;li&gt;Each cluster has a cluster center &lt;span class=&#34;math inline&#34;&gt;\(\mu_{k}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Each cluster has a &lt;em&gt;within-sum-of-squares&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[WSS = \displaystyle\sum_{x_{i} \in C_{k}} (x_{i} - \mu_{k})^{2}\]&lt;/span&gt;
+Thus, our metric for the clustering will be the reported &lt;em&gt;total-within-sum-of-squares&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[TWSS = \displaystyle\sum_{j=1}^{k}\sum_{x_{i} \in C_{k}} (x_{i} - \mu_{k})^{2}\]&lt;/span&gt;
+For example, the total-within-sum-of-squares for the 4-cluster results above is 3.148635410^{10}.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;scree-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;scree plot&lt;/h2&gt;
+&lt;p&gt;It is common practice to build a &lt;em&gt;scree plot&lt;/em&gt; and look for the “elbow”.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;clusters1 &amp;lt;- kmeans(df_numerical, 1)
+clusters2 &amp;lt;- kmeans(df_numerical, 2)
+clusters3 &amp;lt;- kmeans(df_numerical, 3)
+clusters4 &amp;lt;- kmeans(df_numerical, 4)
+clusters5 &amp;lt;- kmeans(df_numerical, 5)
+clusters6 &amp;lt;- kmeans(df_numerical, 6)
+clusters7 &amp;lt;- kmeans(df_numerical, 7)
+clusters8 &amp;lt;- kmeans(df_numerical, 8)
+clusters9 &amp;lt;- kmeans(df_numerical, 9)
+
+TSS_vector &amp;lt;- c(clusters1$tot.withinss, clusters2$tot.withinss, clusters3$tot.withinss, 
+                clusters4$tot.withinss, clusters5$tot.withinss, clusters6$tot.withinss, 
+                clusters7$tot.withinss, clusters8$tot.withinss, clusters9$tot.withinss)
+
+k_vals &amp;lt;- 1:9
+df_for_scree_plot &amp;lt;- data.frame(k_vals, TSS_vector)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_for_scree_plot %&amp;gt;%
+  ggplot(aes(x = k_vals, y = TSS_vector)) +
+  geom_point(size = 3) +
+  geom_line() +
+  labs(title = &amp;quot;Scree Plot&amp;quot;,
+       subtitle = &amp;quot;(find the &amp;#39;elbow&amp;#39;)&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;,
+       x = &amp;quot;number of clusters&amp;quot;,
+       y = &amp;quot;total-within-sum-of-squares&amp;quot;) +
+  scale_x_discrete(name = &amp;quot;number of clusters&amp;quot;,
+                   breaks = paste(1:9),
+                   labels = paste(1:9),
+                   limits = 1:9) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;It appears that the optimal number of clusters for our data set is &lt;span class=&#34;math inline&#34;&gt;\(k = 3\)&lt;/span&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;items_with_clusters &amp;lt;- cbind(df_numerical, clusters3$cluster)
+colnames(items_with_clusters) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;buy&amp;quot;, &amp;quot;sell&amp;quot;, &amp;quot;recipe&amp;quot;, &amp;quot;cluster&amp;quot;)
+items_with_clusters$cluster &amp;lt;- factor(items_with_clusters$cluster)
+
+df_categorical &amp;lt;- items %&amp;gt;%
+  select(num_id, name, category) %&amp;gt;%
+  filter(complete.cases(.))
+colnames(df_categorical) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;name&amp;quot;, &amp;quot;category&amp;quot;)
+
+main_df &amp;lt;- df_categorical %&amp;gt;%
+  inner_join(items_with_clusters, by = &amp;quot;ID&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;main_df %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Optimal Clustering&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;appendix-label-a-sample-of-points-from-each-cluster&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Appendix: label a sample of points from each cluster&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;label_df &amp;lt;- main_df %&amp;gt;%
+  group_by(cluster) %&amp;gt;%
+  sample_n(2)
+
+main_df %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  geom_label_repel(aes(x = buy, y = sell, label = name), 
+                   data = label_df,
+                   nudge_x = -1000,
+                   nudge_y = 10000) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Optimal Clustering&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to Unsupervised Learning</title>
+      <link>/post/introduction-to-unsupervised-learning/</link>
+      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introduction-to-unsupervised-learning/</guid>
+      <description>
+
+&lt;h1 id=&#34;unsupervised-learning&#34;&gt;Unsupervised Learning&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supervised learning&lt;/strong&gt; has the goal of making predictions with a set of &lt;em&gt;known&lt;/em&gt; labels for the response variable.&lt;/li&gt;
+&lt;li&gt;In &lt;strong&gt;unsupervised learning&lt;/strong&gt;, we try to find structure in the data of the response variable without predetermined labels.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Goal: organize the items available in the &lt;code&gt;Animal Crossing&lt;/code&gt; video game&lt;/p&gt;
+
+&lt;h1 id=&#34;data-set-animal-crossing&#34;&gt;Data set: Animal Crossing&lt;/h1&gt;
+
+&lt;p&gt;Source:  VillagerDB, MetaCritic, and TidyTuesday&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md&#34; target=&#34;_blank&#34;&gt;Animal Crossing Tidy Tuesday&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;ggrepel&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)
+
+# critic &amp;lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv&#39;)
+# user_reviews &amp;lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv&#39;)
+items &amp;lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&#39;)
+# villagers &amp;lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h1 id=&#34;exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/h1&gt;
+
+&lt;h2 id=&#34;variables&#34;&gt;variables&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;dim(items)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## [1] 4565   16
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;str(items)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## tibble [4,565 x 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ num_id       : num [1:4565] 12 14 17 19 20 21 23 24 26 26 ...
+##  $ id           : chr [1:4565] &amp;quot;3d-glasses&amp;quot; &amp;quot;a-tee&amp;quot; &amp;quot;abstract-wall&amp;quot; &amp;quot;academy-uniform&amp;quot; ...
+##  $ name         : chr [1:4565] &amp;quot;3D Glasses&amp;quot; &amp;quot;A Tee&amp;quot; &amp;quot;Abstract Wall&amp;quot; &amp;quot;Academy Uniform&amp;quot; ...
+##  $ category     : chr [1:4565] &amp;quot;Accessories&amp;quot; &amp;quot;Tops&amp;quot; &amp;quot;Wallpaper&amp;quot; &amp;quot;Dresses&amp;quot; ...
+##  $ orderable    : logi [1:4565] NA NA TRUE NA FALSE TRUE ...
+##  $ sell_value   : num [1:4565] 122 140 390 520 2000 375 420 330 8990 8990 ...
+##  $ sell_currency: chr [1:4565] &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; ...
+##  $ buy_value    : num [1:4565] 490 560 1560 2080 NA ...
+##  $ buy_currency : chr [1:4565] &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; ...
+##  $ sources      : chr [1:4565] NA NA &amp;quot;Nook&#39;s Cranny&amp;quot; NA ...
+##  $ customizable : logi [1:4565] NA NA NA NA NA FALSE ...
+##  $ recipe       : num [1:4565] NA NA NA NA NA NA NA NA NA NA ...
+##  $ recipe_id    : chr [1:4565] NA NA NA NA ...
+##  $ games_id     : chr [1:4565] &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; ...
+##  $ id_full      : chr [1:4565] &amp;quot;item-3d-glasses&amp;quot; &amp;quot;item-a-tee&amp;quot; NA &amp;quot;item-academy-uniform&amp;quot; ...
+##  $ image_url    : chr [1:4565] &amp;quot;https://villagerdb.com/images/items/full/3d-glasses.b8e1b5a.png&amp;quot; &amp;quot;https://villagerdb.com/images/items/full/a-tee.a1af443.png&amp;quot; NA &amp;quot;https://villagerdb.com/images/items/full/academy-uniform.4475eb5.png&amp;quot; ...
+##  - attr(*, &amp;quot;problems&amp;quot;)= tibble [2 x 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ row     : int [1:2] 4472 4473
+##   ..$ col     : chr [1:2] &amp;quot;customizable&amp;quot; &amp;quot;customizable&amp;quot;
+##   ..$ expected: chr [1:2] &amp;quot;1/0/T/F/TRUE/FALSE&amp;quot; &amp;quot;1/0/T/F/TRUE/FALSE&amp;quot;
+##   ..$ actual  : chr [1:2] &amp;quot;Yes&amp;quot; &amp;quot;Yes&amp;quot;
+##   ..$ file    : chr [1:2] &amp;quot;&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&#39;&amp;quot; &amp;quot;&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&#39;&amp;quot;
+##  - attr(*, &amp;quot;spec&amp;quot;)=
+##   .. cols(
+##   ..   num_id = col_double(),
+##   ..   id = col_character(),
+##   ..   name = col_character(),
+##   ..   category = col_character(),
+##   ..   orderable = col_logical(),
+##   ..   sell_value = col_double(),
+##   ..   sell_currency = col_character(),
+##   ..   buy_value = col_double(),
+##   ..   buy_currency = col_character(),
+##   ..   sources = col_character(),
+##   ..   customizable = col_logical(),
+##   ..   recipe = col_double(),
+##   ..   recipe_id = col_character(),
+##   ..   games_id = col_character(),
+##   ..   id_full = col_character(),
+##   ..   image_url = col_character()
+##   .. )
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(items$category)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## 
+## Accessories     Bottoms        Bugs     Dresses        Fish    Flooring 
+##         123         142          80         239         101         324 
+##     Flowers     Fossils       Fruit   Furniture        Hats       Music 
+##         109          76          12        1264         230          95 
+##      Photos   Seashells       Shoes       Socks       Tools        Tops 
+##         840           8          89          60          74         289 
+##   Umbrellas     Usables   Wallpaper 
+##          67          88         255
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(items$buy_value)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##      40     870    1300    6960    2700 1200000    1014
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# table(items$buy_currency)
+summary(items$sell_value)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##       5     240     390    2261    1000  300000      36
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(items$num_id)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      12    1722    3569    3662    5607    7443
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(items$recipe)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   1.000   2.000   3.000   4.711   6.000  90.000    3977
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;numerical-variables&#34;&gt;numerical variables&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;items %&amp;gt;%
+  ggplot(aes(x = buy_value, y = sell_value, color = category)) +
+  geom_point() +
+  coord_trans(x = &amp;quot;log10&amp;quot;) + 
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Sell Values vs Buy Values&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = c(0, 10, 100, 1000, 10000, 100000, 1000000),
+                     labels = c(&amp;quot;0&amp;quot;, &amp;quot;10&amp;quot;, &amp;quot;100&amp;quot;, &amp;quot;1000&amp;quot;, &amp;quot;10000&amp;quot;, &amp;quot;100000&amp;quot;, &amp;quot;1000000&amp;quot;)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = c(0, 50000, 100000, 150000, 200000, 250000, 300000),
+                     labels = c(&amp;quot;0&amp;quot;, &amp;quot;50000&amp;quot;, &amp;quot;100000&amp;quot;, &amp;quot;150000&amp;quot;, &amp;quot;200000&amp;quot;, &amp;quot;250000&amp;quot;, &amp;quot;300000&amp;quot;)) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 1035 rows containing missing values (geom_point).
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;k-means-clustering&#34;&gt;K-Means Clustering&lt;/h1&gt;
+
+&lt;h2 id=&#34;first-look&#34;&gt;first look&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;df_numerical &amp;lt;- items %&amp;gt;%
+  select(num_id, buy_value, sell_value, recipe) %&amp;gt;%
+  filter(complete.cases(.))
+
+summary(df_numerical$buy_value)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     240    3780    7080   16912   16480  320000
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(df_numerical$sell_value)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      60     945    1770    4228    4120   80000
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;clusters4 &amp;lt;- kmeans(df_numerical, 4)
+
+items_with_clusters &amp;lt;- cbind(df_numerical, clusters4$cluster)
+colnames(items_with_clusters) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;buy&amp;quot;, &amp;quot;sell&amp;quot;, &amp;quot;recipe&amp;quot;, &amp;quot;cluster&amp;quot;)
+items_with_clusters$cluster &amp;lt;- factor(items_with_clusters$cluster)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x_breaks &amp;lt;- c(0, 10, 100, 1000, 10000, 100000, 1000000)
+y_breaks &amp;lt;- c(0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000)
+
+items_with_clusters %&amp;gt;%
+  ggplot() +
+  geom_point(aes(x = buy, y = sell)) +
+  geom_point(aes(x = buy_value, y = sell_value), 
+             data = data.frame(clusters4$centers),
+             size = 5,
+             color = &amp;quot;blue&amp;quot;) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Cluster Centers&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;items_with_clusters %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;4 Clusters&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&#34;selecting-the-amount-of-clusters&#34;&gt;selecting the amount of clusters&lt;/h2&gt;
+
+&lt;p&gt;Selecting the number of clusters is rather subjective.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;too few clusters: items that are &amp;ldquo;far&amp;rdquo; from each other are still grouped together&lt;/li&gt;
+&lt;li&gt;too many clusters: harder to describe and label groups later&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We start with an $d$-dimensional data set of numerical variables and prescribe a number $k$ for the number of clusters and run the &lt;code&gt;kmeans&lt;/code&gt; algorithm.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Each cluster $C&lt;em&gt;{k}$ has $n&lt;/em&gt;{k}$ points labeled $x_{i}$ in $d$-dimensional space&lt;/li&gt;
+&lt;li&gt;Each cluster has a cluster center $\mu_{k}$&lt;/li&gt;
+&lt;li&gt;Each cluster has a &lt;em&gt;within-sum-of-squares&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;$$WSS = \displaystyle\sum&lt;em&gt;{x&lt;/em&gt;{i} \in C&lt;em&gt;{k}} (x&lt;/em&gt;{i} - \mu_{k})^{2}$$
+Thus, our metric for the clustering will be the reported &lt;em&gt;total-within-sum-of-squares&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;$$TWSS = \displaystyle\sum&lt;em&gt;{j=1}^{k}\sum&lt;/em&gt;{x&lt;em&gt;{i} \in C&lt;/em&gt;{k}} (x&lt;em&gt;{i} - \mu&lt;/em&gt;{k})^{2}$$
+For example, the total-within-sum-of-squares for the 4-cluster results above is 3.1486354\times 10^{10}.&lt;/p&gt;
+
+&lt;h2 id=&#34;scree-plot&#34;&gt;scree plot&lt;/h2&gt;
+
+&lt;p&gt;It is common practice to build a &lt;em&gt;scree plot&lt;/em&gt; and look for the &amp;ldquo;elbow&amp;rdquo;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;clusters1 &amp;lt;- kmeans(df_numerical, 1)
+clusters2 &amp;lt;- kmeans(df_numerical, 2)
+clusters3 &amp;lt;- kmeans(df_numerical, 3)
+clusters4 &amp;lt;- kmeans(df_numerical, 4)
+clusters5 &amp;lt;- kmeans(df_numerical, 5)
+clusters6 &amp;lt;- kmeans(df_numerical, 6)
+clusters7 &amp;lt;- kmeans(df_numerical, 7)
+clusters8 &amp;lt;- kmeans(df_numerical, 8)
+clusters9 &amp;lt;- kmeans(df_numerical, 9)
+
+TSS_vector &amp;lt;- c(clusters1$tot.withinss, clusters2$tot.withinss, clusters3$tot.withinss, 
+                clusters4$tot.withinss, clusters5$tot.withinss, clusters6$tot.withinss, 
+                clusters7$tot.withinss, clusters8$tot.withinss, clusters9$tot.withinss)
+
+k_vals &amp;lt;- 1:9
+df_for_scree_plot &amp;lt;- data.frame(k_vals, TSS_vector)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;df_for_scree_plot %&amp;gt;%
+  ggplot(aes(x = k_vals, y = TSS_vector)) +
+  geom_point(size = 3) +
+  geom_line() +
+  labs(title = &amp;quot;Scree Plot&amp;quot;,
+       subtitle = &amp;quot;(find the &#39;elbow&#39;)&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;,
+       x = &amp;quot;number of clusters&amp;quot;,
+       y = &amp;quot;total-within-sum-of-squares&amp;quot;) +
+  scale_x_discrete(name = &amp;quot;number of clusters&amp;quot;,
+                   breaks = paste(1:9),
+                   labels = paste(1:9),
+                   limits = 1:9) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;It appears that the optimal number of clusters for our data set is $k = 3$.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;items_with_clusters &amp;lt;- cbind(df_numerical, clusters3$cluster)
+colnames(items_with_clusters) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;buy&amp;quot;, &amp;quot;sell&amp;quot;, &amp;quot;recipe&amp;quot;, &amp;quot;cluster&amp;quot;)
+items_with_clusters$cluster &amp;lt;- factor(items_with_clusters$cluster)
+
+df_categorical &amp;lt;- items %&amp;gt;%
+  select(num_id, name, category) %&amp;gt;%
+  filter(complete.cases(.))
+colnames(df_categorical) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;name&amp;quot;, &amp;quot;category&amp;quot;)
+
+main_df &amp;lt;- df_categorical %&amp;gt;%
+  inner_join(items_with_clusters, by = &amp;quot;ID&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;main_df %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Optimal Clustering&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&#34;appendix-label-a-sample-of-points-from-each-cluster&#34;&gt;Appendix: label a sample of points from each cluster&lt;/h1&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;label_df &amp;lt;- main_df %&amp;gt;%
+  group_by(cluster) %&amp;gt;%
+  sample_n(2)
+
+main_df %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  geom_label_repel(aes(x = buy, y = sell, label = name), 
+                   data = label_df,
+                   nudge_x = -1000,
+                   nudge_y = 10000) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Optimal Clustering&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Supervised Learning</title>
       <link>/post/supervised-learning/</link>
       <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
@@ -1761,296 +2409,6 @@ t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &amp;quot;two.sided&
   transition_states(month, transition_length = 1, state_length = 1)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Introduction to R Workshop</title>
-      <link>/post/introduction-to-r-workshop/</link>
-      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/introduction-to-r-workshop/</guid>
-      <description>
-
-&lt;h1 id=&#34;packages&#34;&gt;Packages&lt;/h1&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;workshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;)
-install.packages(workshop_packages)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;gganimate&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;ggplot2&amp;quot;)
-library(&amp;quot;mosaic&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## Loading required package: dplyr
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &#39;dplyr&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## Loading required package: lattice
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## Loading required package: ggformula
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## Loading required package: ggstance
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &#39;ggstance&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:ggplot2&#39;:
-## 
-##     geom_errorbarh, GeomErrorbarh
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## 
-## New to ggformula?  Try the tutorials: 
-##  learnr::run_tutorial(&amp;quot;introduction&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
-##  learnr::run_tutorial(&amp;quot;refining&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## Loading required package: mosaicData
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## Loading required package: Matrix
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## 
-## The &#39;mosaic&#39; package masks several functions from core packages in order to add 
-## additional features.  The original behavior of these functions should not be affected by this.
-## 
-## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &#39;mosaic&#39;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## The following object is masked from &#39;package:Matrix&#39;:
-## 
-##     mean
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     count, do, tally
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     stat
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     binom.test, cor, cor.test, cov, fivenum, IQR, median,
-##     prop.test, quantile, sd, t.test, var
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:base&#39;:
-## 
-##     max, mean, min, prod, range, sample, sum
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;data&#34;&gt;Data&lt;/h1&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;head(Weather)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 25
-## # Groups:   city, year [1]
-##   city  date        year month   day high_temp avg_temp low_temp high_dewpt
-##   &amp;lt;chr&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
-## 1 Auck~ 2016-01-01  2016     1     1        68       65       62         64
-## 2 Auck~ 2016-01-02  2016     1     2        68       66       64         64
-## 3 Auck~ 2016-01-03  2016     1     3        77       72       66         70
-## 4 Auck~ 2016-01-04  2016     1     4        73       66       60         66
-## 5 Auck~ 2016-01-05  2016     1     5        69       62       55         55
-## 6 Auck~ 2016-01-06  2016     1     6        69       63       57         54
-## # ... with 16 more variables: avg_dewpt &amp;lt;dbl&amp;gt;, low_dewpt &amp;lt;dbl&amp;gt;,
-## #   high_humidity &amp;lt;dbl&amp;gt;, avg_humidity &amp;lt;dbl&amp;gt;, low_humidity &amp;lt;dbl&amp;gt;,
-## #   high_hg &amp;lt;dbl&amp;gt;, avg_hg &amp;lt;dbl&amp;gt;, low_hg &amp;lt;dbl&amp;gt;, high_vis &amp;lt;dbl&amp;gt;,
-## #   avg_vis &amp;lt;dbl&amp;gt;, low_vis &amp;lt;dbl&amp;gt;, high_wind &amp;lt;dbl&amp;gt;, avg_wind &amp;lt;dbl&amp;gt;,
-## #   low_wind &amp;lt;dbl&amp;gt;, precip &amp;lt;chr&amp;gt;, events &amp;lt;chr&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(Weather$city)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## 
-##  Auckland   Beijing   Chicago    Mumbai San Diego 
-##       731       731       731       731       731
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(Weather$year)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## 
-## 2016 2017 
-## 1830 1825
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;sample-statistics&#34;&gt;Sample Statistics&lt;/h1&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;mean(Weather$high_temp)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## [1] 71.32421
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;median(Weather$precip)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;0&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;sd(Weather$avg_wind)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## [1] 3.865026
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;plotting&#34;&gt;Plotting&lt;/h1&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;Chicago &amp;lt;- subset(Weather, city == &amp;quot;Chicago&amp;quot;)
-
-# boxplots
-ggplot(Chicago, aes(x = month, y = high_temp, group = month, fill = month)) +
-  geom_boxplot() +
-  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
-       x = &amp;quot;month&amp;quot;,
-       y = &amp;quot;high temperature&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;regression&#34;&gt;Regression&lt;/h1&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
-  geom_point() +
-  geom_smooth(method = &amp;quot;lm&amp;quot;) +
-  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
-       x = &amp;quot;high temperature&amp;quot;,
-       y = &amp;quot;low temperature&amp;quot;) +
-  theme_minimal()
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-
-&lt;h1 id=&#34;hypothesis-testing&#34;&gt;Hypothesis Testing&lt;/h1&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;SanDiego &amp;lt;- subset(Weather, city == &amp;quot;San Diego&amp;quot;)
-
-# Do Chicago and San Diego have the same high temperatures?
-t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &amp;quot;two.sided&amp;quot;)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;## 
-##  Welch Two Sample t-test
-## 
-## data:  Chicago$high_temp and SanDiego$high_temp
-## t = -14.221, df = 886.31, p-value &amp;lt; 2.2e-16
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -13.21560 -10.01012
-## sample estimates:
-## mean of x mean of y 
-##  61.00821  72.62107
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;h1 id=&#34;animation&#34;&gt;Animation&lt;/h1&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
-  geom_point() +
-  labs(title = &amp;quot;Worldwide Weather (2016-2017)&amp;quot;,
-       caption = &amp;quot;Source: Mosaic Foundation&amp;quot;,
-       subtitle = &amp;quot;(by months)&amp;quot;,
-       x = &amp;quot;high temperature&amp;quot;,
-       y = &amp;quot;low temperature&amp;quot;) +
-  theme_minimal() +
-  transition_states(month, transition_length = 1, state_length = 1)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif&#34; alt=&#34;&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>gganatogram and gganimate</title>
-      <link>/post/gganatogram-and-gganimate/</link>
-      <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/gganatogram-and-gganimate/</guid>
-      <description>&lt;p&gt;Today I wanted to see if I could create a slideshow of pictures from the &lt;code&gt;gganatogram&lt;/code&gt; package. I wanted to combine them with the &lt;code&gt;gganimate&lt;/code&gt; package, but I have not figured out how to get that to work. (In particular, the &lt;code&gt;gganatogram()&lt;/code&gt; function seems to return a different list layout than &lt;code&gt;ggplot&lt;/code&gt; objects.)&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gganatogram)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: ggpolypath&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gganimate)
-library(profvis)
-
-N &amp;lt;- 25 # number of cell samples&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;num_cell_parts &amp;lt;- nrow(cell_key$cell)
-
-# randomly select a random number of cell parts
-part_picker &amp;lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
-
-cell_num &amp;lt;- rep(1, length(part_picker))
-this_cell &amp;lt;- cell_key[[&amp;#39;cell&amp;#39;]][part_picker, ]
-cell_samples &amp;lt;- cbind(this_cell, cell_num)
-
-
-for(j in 2:N){
-  part_picker &amp;lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
-  cell_num &amp;lt;- rep(j, length(part_picker))
-  this_cell &amp;lt;- cbind( cell_key[[&amp;#39;cell&amp;#39;]][part_picker, ], cell_num)
-  cell_samples &amp;lt;- rbind(cell_samples, this_cell)
-  
-  # figure_list[j] &amp;lt;- gganatogram(data = this_cell,
-  #           outline = FALSE, fillOutline=&amp;#39;steelblue&amp;#39;, organism=&amp;quot;cell&amp;quot;, fill=&amp;quot;colour&amp;quot;) + 
-  # theme_void() + 
-  # coord_fixed()
-  
-  png(filename = paste0(j, &amp;quot;.png&amp;quot;))
-  
-  p &amp;lt;- gganatogram(data = this_cell,
-            outline = FALSE, fillOutline=&amp;#39;steelblue&amp;#39;, organism=&amp;quot;cell&amp;quot;, fill=&amp;quot;colour&amp;quot;) +
-  theme_void() +
-  coord_fixed() +
-    labs(title = &amp;quot;Sample of Cell Parts&amp;quot;,
-         subtitle = paste0(&amp;quot;sample &amp;quot;, j, &amp;quot; of &amp;quot;, N),
-         caption = &amp;quot;Bio 18, UC Merced&amp;quot;)
-  
-  plot(p)
-  
-  dev.off()
-  
-  # pause(0.5)
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/cell_samples.gif&#34; alt=&#34;the picture&#34; /&gt;
-&lt;p class=&#34;caption&#34;&gt;the picture&lt;/p&gt;
-&lt;/div&gt;
-&lt;p&gt;What I ended up doing to produce the picture above was using the &lt;code&gt;png()&lt;/code&gt; and &lt;code&gt;dev.off()&lt;/code&gt; functions to simply output individual pictures into my computer, and then using the &lt;a href=&#34;https://gifmaker.me/&#34;&gt;GIFmaker&lt;/a&gt; website to combine the images into an animated GIF.&lt;/p&gt;
 </description>
     </item>
     

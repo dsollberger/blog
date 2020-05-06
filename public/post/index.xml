@@ -13,6 +13,28 @@
     
     
     <item>
+      <title>Introduction to Unsupervised Learning</title>
+      <link>/post/introduction-to-unsupervised-learning/</link>
+      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introduction-to-unsupervised-learning/</guid>
+      <description>Unsupervised LearningSupervised learning has the goal of making predictions with a set of known labels for the response variable.In unsupervised learning, we try to find structure in the data of the response variable without predetermined labels.Goal: organize the items available in the Animal Crossing video game
+Data set: Animal CrossingSource: VillagerDB, MetaCritic, and TidyTuesday
+Animal Crossing Tidy Tuesdaylibrary(&amp;quot;ggrepel&amp;quot;)library(&amp;quot;tidyverse&amp;quot;)# critic &amp;lt;- readr::read_tsv(&amp;#39;https://raw.</description>
+    </item>
+    
+    <item>
+      <title>Introduction to Unsupervised Learning</title>
+      <link>/post/introduction-to-unsupervised-learning/</link>
+      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/introduction-to-unsupervised-learning/</guid>
+      <description>Unsupervised Learning  Supervised learning has the goal of making predictions with a set of known labels for the response variable. In unsupervised learning, we try to find structure in the data of the response variable without predetermined labels.  Goal: organize the items available in the Animal Crossing video game
+Data set: Animal Crossing Source: VillagerDB, MetaCritic, and TidyTuesday
+ Animal Crossing Tidy Tuesday  library(&amp;quot;ggrepel&amp;quot;) library(&amp;quot;tidyverse&amp;quot;) # critic &amp;lt;- readr::read_tsv(&#39;https://raw.</description>
+    </item>
+    
+    <item>
       <title>Supervised Learning</title>
       <link>/post/supervised-learning/</link>
       <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
