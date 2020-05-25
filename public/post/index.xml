@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Vote by Mail data</title>
+      <link>/post/vote-by-mail-data/</link>
+      <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/vote-by-mail-data/</guid>
+      <description>library(&amp;quot;dplyr&amp;quot;)library(&amp;quot;ggplot2&amp;quot;)DataToday I am going to try to make a choropleth (map + data) of the percentage of registered voters that sent in ballots for the 2018 elections in the USA. I gathered the data from and by the following sites:
+Few States Are Prepared To Switch To Voting By Mail. That Could Make For A Messy Election — FiveThirtyEight artcle from April 27, 2020How to Create a Comma Separated List from an Excel Column — from University of Pennsylvaniastates &amp;lt;- tolower( sort(c(state.</description>
+    </item>
+    
+    <item>
       <title>Analysis of NYT Sample of Covid-19 Obituaries</title>
       <link>/post/analysis-of-nyt-sample-of-covid-19-obituaries/</link>
       <pubDate>Sun, 24 May 2020 00:00:00 +0000</pubDate>

@@ -1,0 +1,59 @@
+---
+title: Vote by Mail data
+author: Derek Sollberger
+date: '2020-05-25'
+slug: vote-by-mail-data
+categories:
+  - gis
+tags:
+  - choropleth
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<pre class="r"><code>library(&quot;dplyr&quot;)
+library(&quot;ggplot2&quot;)</code></pre>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>Today I am going to try to make a choropleth (map + data) of the percentage of registered voters that sent in ballots for the 2018 elections in the USA. I gathered the data from and by the following sites:</p>
+<ul>
+<li><a href="https://fivethirtyeight.com/features/few-states-are-prepared-to-switch-to-voting-by-mail-that-could-make-for-a-messy-election/">Few States Are Prepared To Switch To Voting By Mail. That Could Make For A Messy Election</a> — FiveThirtyEight artcle from April 27, 2020</li>
+<li><a href="http://knowledgelink.upenn.edu/admin/guides/HowToCommaList-101612.pdf">How to Create a Comma Separated List from an Excel Column</a> — from University of Pennsylvania</li>
+</ul>
+<pre class="r"><code>states &lt;- tolower( sort(c(state.name, &quot;District of Columbia&quot;)))
+voted2018 &lt;- c(2,5,62,1,54,88,4,3,2,25,4,38,9,6,17,16,10,1,2,18,4,2,15,21,3,6,63,15,6,5,10,36,3,2,NA,13,4,104,3,4,2,15,1,4,89,6,2,92,1,5,22)
+vote_data &lt;- data.frame(states, voted2018)</code></pre>
+<p>The 538 article’s table caption included the following notes:</p>
+<ul>
+<li>“It’s not possible to calculate these numbers for North Dakota, as it doesn’t have voter registration. However, it does have a relatively high rate of mail voting — 23 percent of its votes were cast by mail in 2016, and 29 percent in 2018. Republicans control both the governorship and state legislature in North Dakota.”</li>
+<li>“When asked how Oregon mailed ballots to 104 percent of voters in 2018, state election officials responded that the EAC number was “off” but did not provide further details."</li>
+<li>Sources: Ballotpedia, U.S. Election Assistance Commission</li>
+</ul>
+<hr />
+</div>
+<div id="choropleth" class="section level1">
+<h1>Choropleth</h1>
+<p>Adapted from <a href="https://www.r-bloggers.com/choropleth-map-in-ggplot2/">Choropleth Map in ggplot2</a> by ‘data technik’</p>
+<pre class="r"><code>states_map &lt;- map_data(&quot;state&quot;)
+fact_join &lt;- left_join(states_map, vote_data, by = c(&quot;region&quot; = &quot;states&quot;))
+fact_join %&gt;%
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = voted2018), color = &quot;black&quot;) +
+  scale_fill_viridis_c(option = &quot;C&quot;) +
+  labs(title = &quot;A View of Voting by Mail&quot;,
+       subtitle = &quot;Percentage of registered voters that sent in ballots in 2018&quot;,
+       caption = &quot;Alaska: 2%, Hawaii: 38%, North Dakota: NA \n Data Source: FiveThirtyEight&quot;,
+       fill = &quot;% voted by mail&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.background = element_rect(fill = &quot;white&quot;))</code></pre>
+<p><img src="/post/2020-05-25-vote-by-mail-data_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>

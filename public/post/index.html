@@ -208,6 +208,71 @@
   
   
   <h3 class="article-title" itemprop="headline">
+    <a href="/post/vote-by-mail-data/" itemprop="url">Vote by Mail data</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-05-25 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      May 25, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/gis">gis</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    library(&quot;dplyr&quot;)library(&quot;ggplot2&quot;)DataToday I am going to try to make a choropleth (map + data) of the percentage of registered voters that sent in ballots for the 2018 elections in the USA. I gathered the data from and by the following sites:
+Few States Are Prepared To Switch To Voting By Mail. That Could Make For A Messy Election — FiveThirtyEight artcle from April 27, 2020How to Create a Comma Separated List from an Excel Column — from University of Pennsylvaniastates &lt;- tolower( sort(c(state.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/vote-by-mail-data/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
     <a href="/post/analysis-of-nyt-sample-of-covid-19-obituaries/" itemprop="url">Analysis of NYT Sample of Covid-19 Obituaries</a>
   </h3>
   
@@ -785,73 +850,6 @@ library(&quot;dplyr&quot;)library(&quot;ggplot2&quot;)InstallationTo install 
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/duolingo-leagues/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/hikes-i-ve-completed/" itemprop="url">Hikes I&#39;ve Completed</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-01-11 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jan 11, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/hiking">hiking</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    Here I will plot some of the hikes I have done as elevation (from sea level) versus distance. I was inspired by this Reddit post
-Today’s code was great practice with
-geom_segmentgeom_label_repeland using xlim and ylim to expand the plot.
-library(ggrepel)library(tidyverse)library(readxl)df_info &lt;- read_excel(&quot;hikes.xlsx&quot;, sheet = &quot;info&quot;)df_info %&gt;% print()## # A tibble: 9 x 6## Region trail distance trailhead elevation peak## &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;## 1 Tahoe Mt Tallac 5.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/hikes-i-ve-completed/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>
