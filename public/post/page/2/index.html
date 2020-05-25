@@ -70,7 +70,7 @@
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2019-04-06T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2020-01-09T00:00:00&#43;00:00">
   
 
   
@@ -200,6 +200,72 @@
   
 
   
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
+    <a href="/post/gender-of-frasier-characters/" itemprop="url">Gender of Frasier Characters</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-01-09 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jan 9, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/tidyverse">tidyverse</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    “I am not a man…”
+For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show Fraiser.
+The gender package#install.packages(&quot;gender&quot;) #works fine## user needs to download database too#install_genderdata_package() #did not work (&quot;error reading from connection&quot;)## as suggested by the bug report at https://github.com/ropensci/drat/issues/6#install.packages(&quot;devtools&quot;)#library(devtools)#devtools::install_github(&quot;ropensci/genderdata&quot;)Trial Runlibrary(gender)library(ggpubr)library(tidyverse)gender(&quot;frasier&quot;, method = &quot;ssa&quot;, years = c(1940, 1990))## # A tibble: 1 x 6## name proportion_male proportion_female gender year_min year_max## &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;## 1 frasier 1 0 male 1940 1990Cast of CharactersNow I will try to run the gender function over a list of names (criteria: characters that appeared in at least 6 episodes).
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/gender-of-frasier-characters/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
   
     
     
@@ -786,72 +852,6 @@ DataThe data I have assembled is based on IRDS reports from my own University o
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/graduation-rates/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/my-first-gganimate-plot/" itemprop="url">My First gganimate Plot</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2019-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jan 8, 2019
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/stochastic-processes">stochastic processes</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    Today I finally read a tutorial on gganimate, and here I will build my first example. My hope is to eventually simulate traversal on a directed graph.
-library(tidyverse)library(gganimate)Create Node DataFor this example, I will have 3 nodes (located at 3 vertices of a triangle), 100 dots distributed among the nodes, and a new placement over 21 states in time.
-N &lt;- 100 # number of dotsT &lt;- 20 # number of iterationsnode_names &lt;- c(&quot;Node 1&quot;, &quot;Node 2&quot;, &quot;Node 3&quot;)iter &lt;- rep(0, N)node &lt;- rep(&quot;Node 1&quot;, N)x &lt;- 10 + rnorm(N, 0, 2)y &lt;- 20 + rnorm(N, 0, 2)states &lt;- data.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/my-first-gganimate-plot/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>

@@ -17,9 +17,9 @@
       
     
   
-  <meta name="description" content="Unsupervised Learning  Supervised learning has the goal of making predictions with a set of known labels for the response variable. In unsupervised learning, we try to find structure in the data of the response variable without predetermined labels.  Goal: organize the items available in the Animal Crossing video game
-Data set: Animal Crossing Source: VillagerDB, MetaCritic, and TidyTuesday
- Animal Crossing Tidy Tuesday  library(&quot;ggrepel&quot;) library(&quot;tidyverse&quot;) # critic &lt;- readr::read_tsv(&#39;https://raw.">
+  <meta name="description" content="Unsupervised LearningSupervised learning has the goal of making predictions with a set of known labels for the response variable.In unsupervised learning, we try to find structure in the data of the response variable without predetermined labels.Goal: organize the items available in the Animal Crossing video game
+Data set: Animal CrossingSource: VillagerDB, MetaCritic, and TidyTuesday
+Animal Crossing Tidy Tuesdaylibrary(&quot;ggrepel&quot;)library(&quot;tidyverse&quot;)# critic &lt;- readr::read_tsv(&#39;https://raw.">
 
   
   <link rel="alternate" hreflang="en-us" href="/post/introduction-to-unsupervised-learning/">
@@ -80,9 +80,9 @@ Data set: Animal Crossing Source: VillagerDB, MetaCritic, and TidyTuesday
   <meta property="og:site_name" content="The Median Data Scientist">
   <meta property="og:url" content="/post/introduction-to-unsupervised-learning/">
   <meta property="og:title" content="Introduction to Unsupervised Learning | The Median Data Scientist">
-  <meta property="og:description" content="Unsupervised Learning  Supervised learning has the goal of making predictions with a set of known labels for the response variable. In unsupervised learning, we try to find structure in the data of the response variable without predetermined labels.  Goal: organize the items available in the Animal Crossing video game
-Data set: Animal Crossing Source: VillagerDB, MetaCritic, and TidyTuesday
- Animal Crossing Tidy Tuesday  library(&quot;ggrepel&quot;) library(&quot;tidyverse&quot;) # critic &lt;- readr::read_tsv(&#39;https://raw.">
+  <meta property="og:description" content="Unsupervised LearningSupervised learning has the goal of making predictions with a set of known labels for the response variable.In unsupervised learning, we try to find structure in the data of the response variable without predetermined labels.Goal: organize the items available in the Animal Crossing video game
+Data set: Animal CrossingSource: VillagerDB, MetaCritic, and TidyTuesday
+Animal Crossing Tidy Tuesdaylibrary(&quot;ggrepel&quot;)library(&quot;tidyverse&quot;)# critic &lt;- readr::read_tsv(&#39;https://raw.">
   <meta property="og:locale" content="en-us">
   
   <meta property="article:published_time" content="2020-05-06T00:00:00&#43;00:00">
@@ -302,47 +302,35 @@ Data set: Animal Crossing Source: VillagerDB, MetaCritic, and TidyTuesday
 
 
       <div class="article-style" itemprop="articleBody">
-        
-
-<h1 id="unsupervised-learning">Unsupervised Learning</h1>
-
+        <div id="unsupervised-learning" class="section level1">
+<h1>Unsupervised Learning</h1>
 <ul>
 <li><strong>Supervised learning</strong> has the goal of making predictions with a set of <em>known</em> labels for the response variable.</li>
 <li>In <strong>unsupervised learning</strong>, we try to find structure in the data of the response variable without predetermined labels.</li>
 </ul>
-
 <p>Goal: organize the items available in the <code>Animal Crossing</code> video game</p>
-
-<h1 id="data-set-animal-crossing">Data set: Animal Crossing</h1>
-
-<p>Source:  VillagerDB, MetaCritic, and TidyTuesday</p>
-
+</div>
+<div id="data-set-animal-crossing" class="section level1">
+<h1>Data set: Animal Crossing</h1>
+<p>Source: VillagerDB, MetaCritic, and TidyTuesday</p>
 <ul>
-<li><a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md" target="_blank">Animal Crossing Tidy Tuesday</a></li>
+<li><a href="https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md">Animal Crossing Tidy Tuesday</a></li>
 </ul>
-
-<pre><code class="language-r">library(&quot;ggrepel&quot;)
+<pre class="r"><code>library(&quot;ggrepel&quot;)
 library(&quot;tidyverse&quot;)
 
-# critic &lt;- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv')
-# user_reviews &lt;- readr::read_tsv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv')
-items &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv')
-# villagers &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv')
-</code></pre>
-
-<h1 id="exploratory-data-analysis">Exploratory Data Analysis</h1>
-
-<h2 id="variables">variables</h2>
-
-<pre><code class="language-r">dim(items)
-</code></pre>
-
-<pre><code>## [1] 4565   16
-</code></pre>
-
-<pre><code class="language-r">str(items)
-</code></pre>
-
+# critic &lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv&#39;)
+# user_reviews &lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv&#39;)
+items &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&#39;)
+# villagers &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv&#39;)</code></pre>
+</div>
+<div id="exploratory-data-analysis" class="section level1">
+<h1>Exploratory Data Analysis</h1>
+<div id="variables" class="section level2">
+<h2>variables</h2>
+<pre class="r"><code>dim(items)</code></pre>
+<pre><code>## [1] 4565   16</code></pre>
+<pre class="r"><code>str(items)</code></pre>
 <pre><code>## tibble [4,565 x 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
 ##  $ num_id       : num [1:4565] 12 14 17 19 20 21 23 24 26 26 ...
 ##  $ id           : chr [1:4565] &quot;3d-glasses&quot; &quot;a-tee&quot; &quot;abstract-wall&quot; &quot;academy-uniform&quot; ...
@@ -353,7 +341,7 @@ items &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/t
 ##  $ sell_currency: chr [1:4565] &quot;bells&quot; &quot;bells&quot; &quot;bells&quot; &quot;bells&quot; ...
 ##  $ buy_value    : num [1:4565] 490 560 1560 2080 NA ...
 ##  $ buy_currency : chr [1:4565] &quot;bells&quot; &quot;bells&quot; &quot;bells&quot; &quot;bells&quot; ...
-##  $ sources      : chr [1:4565] NA NA &quot;Nook's Cranny&quot; NA ...
+##  $ sources      : chr [1:4565] NA NA &quot;Nook&#39;s Cranny&quot; NA ...
 ##  $ customizable : logi [1:4565] NA NA NA NA NA FALSE ...
 ##  $ recipe       : num [1:4565] NA NA NA NA NA NA NA NA NA NA ...
 ##  $ recipe_id    : chr [1:4565] NA NA NA NA ...
@@ -365,7 +353,7 @@ items &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/t
 ##   ..$ col     : chr [1:2] &quot;customizable&quot; &quot;customizable&quot;
 ##   ..$ expected: chr [1:2] &quot;1/0/T/F/TRUE/FALSE&quot; &quot;1/0/T/F/TRUE/FALSE&quot;
 ##   ..$ actual  : chr [1:2] &quot;Yes&quot; &quot;Yes&quot;
-##   ..$ file    : chr [1:2] &quot;'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv'&quot; &quot;'https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv'&quot;
+##   ..$ file    : chr [1:2] &quot;&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&#39;&quot; &quot;&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&#39;&quot;
 ##  - attr(*, &quot;spec&quot;)=
 ##   .. cols(
 ##   ..   num_id = col_double(),
@@ -384,12 +372,8 @@ items &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/t
 ##   ..   games_id = col_character(),
 ##   ..   id_full = col_character(),
 ##   ..   image_url = col_character()
-##   .. )
-</code></pre>
-
-<pre><code class="language-r">table(items$category)
-</code></pre>
-
+##   .. )</code></pre>
+<pre class="r"><code>table(items$category)</code></pre>
 <pre><code>## 
 ## Accessories     Bottoms        Bugs     Dresses        Fish    Flooring 
 ##         123         142          80         239         101         324 
@@ -398,41 +382,24 @@ items &lt;- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/t
 ##      Photos   Seashells       Shoes       Socks       Tools        Tops 
 ##         840           8          89          60          74         289 
 ##   Umbrellas     Usables   Wallpaper 
-##          67          88         255
-</code></pre>
-
-<pre><code class="language-r">summary(items$buy_value)
-</code></pre>
-
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##      40     870    1300    6960    2700 1200000    1014
-</code></pre>
-
-<pre><code class="language-r"># table(items$buy_currency)
-summary(items$sell_value)
-</code></pre>
-
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##       5     240     390    2261    1000  300000      36
-</code></pre>
-
-<pre><code class="language-r">summary(items$num_id)
-</code></pre>
-
+##          67          88         255</code></pre>
+<pre class="r"><code>summary(items$buy_value)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##      40     870    1300    6960    2700 1200000    1014</code></pre>
+<pre class="r"><code># table(items$buy_currency)
+summary(items$sell_value)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##       5     240     390    2261    1000  300000      36</code></pre>
+<pre class="r"><code>summary(items$num_id)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##      12    1722    3569    3662    5607    7443
-</code></pre>
-
-<pre><code class="language-r">summary(items$recipe)
-</code></pre>
-
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-##   1.000   2.000   3.000   4.711   6.000  90.000    3977
-</code></pre>
-
-<h2 id="numerical-variables">numerical variables</h2>
-
-<pre><code class="language-r">items %&gt;%
+##      12    1722    3569    3662    5607    7443</code></pre>
+<pre class="r"><code>summary(items$recipe)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   1.000   2.000   3.000   4.711   6.000  90.000    3977</code></pre>
+</div>
+<div id="numerical-variables" class="section level2">
+<h2>numerical variables</h2>
+<pre class="r"><code>items %&gt;%
   ggplot(aes(x = buy_value, y = sell_value, color = category)) +
   geom_point() +
   coord_trans(x = &quot;log10&quot;) + 
@@ -445,44 +412,31 @@ summary(items$sell_value)
   scale_y_continuous(name = &quot;Sell Value&quot;,
                      breaks = c(0, 50000, 100000, 150000, 200000, 250000, 300000),
                      labels = c(&quot;0&quot;, &quot;50000&quot;, &quot;100000&quot;, &quot;150000&quot;, &quot;200000&quot;, &quot;250000&quot;, &quot;300000&quot;)) +
-  theme_minimal()
-</code></pre>
-
-<pre><code>## Warning: Removed 1035 rows containing missing values (geom_point).
-</code></pre>
-
-<p><img src="2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-
-<h1 id="k-means-clustering">K-Means Clustering</h1>
-
-<h2 id="first-look">first look</h2>
-
-<pre><code class="language-r">df_numerical &lt;- items %&gt;%
+  theme_minimal()</code></pre>
+<pre><code>## Warning: Removed 1035 rows containing missing values (geom_point).</code></pre>
+<p><img src="/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+</div>
+<div id="k-means-clustering" class="section level1">
+<h1>K-Means Clustering</h1>
+<div id="first-look" class="section level2">
+<h2>first look</h2>
+<pre class="r"><code>df_numerical &lt;- items %&gt;%
   select(num_id, buy_value, sell_value, recipe) %&gt;%
   filter(complete.cases(.))
 
-summary(df_numerical$buy_value)
-</code></pre>
-
+summary(df_numerical$buy_value)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##     240    3780    7080   16912   16480  320000
-</code></pre>
-
-<pre><code class="language-r">summary(df_numerical$sell_value)
-</code></pre>
-
+##     240    3780    7080   16912   16480  320000</code></pre>
+<pre class="r"><code>summary(df_numerical$sell_value)</code></pre>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##      60     945    1770    4228    4120   80000
-</code></pre>
-
-<pre><code class="language-r">clusters4 &lt;- kmeans(df_numerical, 4)
+##      60     945    1770    4228    4120   80000</code></pre>
+<pre class="r"><code>clusters4 &lt;- kmeans(df_numerical, 4)
 
 items_with_clusters &lt;- cbind(df_numerical, clusters4$cluster)
 colnames(items_with_clusters) &lt;- c(&quot;ID&quot;, &quot;buy&quot;, &quot;sell&quot;, &quot;recipe&quot;, &quot;cluster&quot;)
-items_with_clusters$cluster &lt;- factor(items_with_clusters$cluster)
-</code></pre>
-
-<pre><code class="language-r">x_breaks &lt;- c(0, 10, 100, 1000, 10000, 100000, 1000000)
+items_with_clusters$cluster &lt;- factor(items_with_clusters$cluster)</code></pre>
+<pre class="r"><code>x_breaks &lt;- c(0, 10, 100, 1000, 10000, 100000, 1000000)
 y_breaks &lt;- c(0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000)
 
 items_with_clusters %&gt;%
@@ -502,12 +456,9 @@ items_with_clusters %&gt;%
   scale_y_continuous(name = &quot;Sell Value&quot;,
                      breaks = y_breaks,
                      labels = paste(y_breaks)) +
-  theme_minimal()
-</code></pre>
-
-<p><img src="2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
-
-<pre><code class="language-r">items_with_clusters %&gt;%
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>items_with_clusters %&gt;%
   ggplot(group = cluster) +
   geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
   coord_trans(x = &quot;log10&quot;) +
@@ -520,39 +471,31 @@ items_with_clusters %&gt;%
   scale_y_continuous(name = &quot;Sell Value&quot;,
                      breaks = y_breaks,
                      labels = paste(y_breaks)) +
-  theme_minimal()
-</code></pre>
-
-<p><img src="2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-
-<h2 id="selecting-the-amount-of-clusters">selecting the amount of clusters</h2>
-
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="selecting-the-amount-of-clusters" class="section level2">
+<h2>selecting the amount of clusters</h2>
 <p>Selecting the number of clusters is rather subjective.</p>
-
 <ul>
-<li>too few clusters: items that are &ldquo;far&rdquo; from each other are still grouped together</li>
+<li>too few clusters: items that are “far” from each other are still grouped together</li>
 <li>too many clusters: harder to describe and label groups later</li>
 </ul>
-
-<p>We start with an $d$-dimensional data set of numerical variables and prescribe a number $k$ for the number of clusters and run the <code>kmeans</code> algorithm.</p>
-
+<p>We start with an <span class="math inline">\(d\)</span>-dimensional data set of numerical variables and prescribe a number <span class="math inline">\(k\)</span> for the number of clusters and run the <code>kmeans</code> algorithm.</p>
 <ul>
-<li>Each cluster $C<em>{k}$ has $n</em>{k}$ points labeled $x_{i}$ in $d$-dimensional space</li>
-<li>Each cluster has a cluster center $\mu_{k}$</li>
+<li>Each cluster <span class="math inline">\(C_{k}\)</span> has <span class="math inline">\(n_{k}\)</span> points labeled <span class="math inline">\(x_{i}\)</span> in <span class="math inline">\(d\)</span>-dimensional space</li>
+<li>Each cluster has a cluster center <span class="math inline">\(\mu_{k}\)</span></li>
 <li>Each cluster has a <em>within-sum-of-squares</em></li>
 </ul>
-
-<p>$$WSS = \displaystyle\sum<em>{x</em>{i} \in C<em>{k}} (x</em>{i} - \mu_{k})^{2}$$
+<p><span class="math display">\[WSS = \displaystyle\sum_{x_{i} \in C_{k}} (x_{i} - \mu_{k})^{2}\]</span>
 Thus, our metric for the clustering will be the reported <em>total-within-sum-of-squares</em></p>
-
-<p>$$TWSS = \displaystyle\sum<em>{j=1}^{k}\sum</em>{x<em>{i} \in C</em>{k}} (x<em>{i} - \mu</em>{k})^{2}$$
-For example, the total-within-sum-of-squares for the 4-cluster results above is 3.1486354\times 10^{10}.</p>
-
-<h2 id="scree-plot">scree plot</h2>
-
-<p>It is common practice to build a <em>scree plot</em> and look for the &ldquo;elbow&rdquo;.</p>
-
-<pre><code class="language-r">clusters1 &lt;- kmeans(df_numerical, 1)
+<p><span class="math display">\[TWSS = \displaystyle\sum_{j=1}^{k}\sum_{x_{i} \in C_{k}} (x_{i} - \mu_{k})^{2}\]</span>
+For example, the total-within-sum-of-squares for the 4-cluster results above is 3.148635410^{10}.</p>
+</div>
+<div id="scree-plot" class="section level2">
+<h2>scree plot</h2>
+<p>It is common practice to build a <em>scree plot</em> and look for the “elbow”.</p>
+<pre class="r"><code>clusters1 &lt;- kmeans(df_numerical, 1)
 clusters2 &lt;- kmeans(df_numerical, 2)
 clusters3 &lt;- kmeans(df_numerical, 3)
 clusters4 &lt;- kmeans(df_numerical, 4)
@@ -567,15 +510,13 @@ TSS_vector &lt;- c(clusters1$tot.withinss, clusters2$tot.withinss, clusters3$tot
                 clusters7$tot.withinss, clusters8$tot.withinss, clusters9$tot.withinss)
 
 k_vals &lt;- 1:9
-df_for_scree_plot &lt;- data.frame(k_vals, TSS_vector)
-</code></pre>
-
-<pre><code class="language-r">df_for_scree_plot %&gt;%
+df_for_scree_plot &lt;- data.frame(k_vals, TSS_vector)</code></pre>
+<pre class="r"><code>df_for_scree_plot %&gt;%
   ggplot(aes(x = k_vals, y = TSS_vector)) +
   geom_point(size = 3) +
   geom_line() +
   labs(title = &quot;Scree Plot&quot;,
-       subtitle = &quot;(find the 'elbow')&quot;,
+       subtitle = &quot;(find the &#39;elbow&#39;)&quot;,
        caption = &quot;Math 32&quot;,
        x = &quot;number of clusters&quot;,
        y = &quot;total-within-sum-of-squares&quot;) +
@@ -583,16 +524,14 @@ df_for_scree_plot &lt;- data.frame(k_vals, TSS_vector)
                    breaks = paste(1:9),
                    labels = paste(1:9),
                    limits = 1:9) +
-  theme_minimal()
-</code></pre>
-
-<p><img src="2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-
-<h1 id="conclusion">Conclusion</h1>
-
-<p>It appears that the optimal number of clusters for our data set is $k = 3$.</p>
-
-<pre><code class="language-r">items_with_clusters &lt;- cbind(df_numerical, clusters3$cluster)
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>It appears that the optimal number of clusters for our data set is <span class="math inline">\(k = 3\)</span>.</p>
+<pre class="r"><code>items_with_clusters &lt;- cbind(df_numerical, clusters3$cluster)
 colnames(items_with_clusters) &lt;- c(&quot;ID&quot;, &quot;buy&quot;, &quot;sell&quot;, &quot;recipe&quot;, &quot;cluster&quot;)
 items_with_clusters$cluster &lt;- factor(items_with_clusters$cluster)
 
@@ -602,10 +541,8 @@ df_categorical &lt;- items %&gt;%
 colnames(df_categorical) &lt;- c(&quot;ID&quot;, &quot;name&quot;, &quot;category&quot;)
 
 main_df &lt;- df_categorical %&gt;%
-  inner_join(items_with_clusters, by = &quot;ID&quot;)
-</code></pre>
-
-<pre><code class="language-r">main_df %&gt;%
+  inner_join(items_with_clusters, by = &quot;ID&quot;)</code></pre>
+<pre class="r"><code>main_df %&gt;%
   ggplot(group = cluster) +
   geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
   coord_trans(x = &quot;log10&quot;) +
@@ -618,14 +555,12 @@ main_df &lt;- df_categorical %&gt;%
   scale_y_continuous(name = &quot;Sell Value&quot;,
                      breaks = y_breaks,
                      labels = paste(y_breaks)) +
-  theme_minimal()
-</code></pre>
-
-<p><img src="2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-
-<h1 id="appendix-label-a-sample-of-points-from-each-cluster">Appendix: label a sample of points from each cluster</h1>
-
-<pre><code class="language-r">label_df &lt;- main_df %&gt;%
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+<div id="appendix-label-a-sample-of-points-from-each-cluster" class="section level1">
+<h1>Appendix: label a sample of points from each cluster</h1>
+<pre class="r"><code>label_df &lt;- main_df %&gt;%
   group_by(cluster) %&gt;%
   sample_n(2)
 
@@ -646,10 +581,9 @@ main_df %&gt;%
   scale_y_continuous(name = &quot;Sell Value&quot;,
                      breaks = y_breaks,
                      labels = paste(y_breaks)) +
-  theme_minimal()
-</code></pre>
-
-<p><img src="2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+  theme_minimal()</code></pre>
+<p><img src="/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
 
       </div>
 
@@ -758,36 +692,6 @@ main_df %&gt;%
     
     
     <script src="/js/hugo-academic.js"></script>
-    
-
-    
-    
-      
-      
-      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
-      
-
-      
-
-      
-
-      <script>hljs.initHighlightingOnLoad();</script>
-    
-
-    
-    
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
-    </script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
-    
-    
-
-  </body>
-</html>
-
-/js/hugo-academic.js"></script>
     
 
     

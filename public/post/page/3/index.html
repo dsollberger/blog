@@ -70,7 +70,7 @@
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2018-10-11T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2019-01-08T00:00:00&#43;00:00">
   
 
   
@@ -200,6 +200,72 @@
   
 
   
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
+    <a href="/post/my-first-gganimate-plot/" itemprop="url">My First gganimate Plot</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2019-01-08 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jan 8, 2019
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/stochastic-processes">stochastic processes</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    Today I finally read a tutorial on gganimate, and here I will build my first example. My hope is to eventually simulate traversal on a directed graph.
+library(tidyverse)library(gganimate)Create Node DataFor this example, I will have 3 nodes (located at 3 vertices of a triangle), 100 dots distributed among the nodes, and a new placement over 21 states in time.
+N &lt;- 100 # number of dotsT &lt;- 20 # number of iterationsnode_names &lt;- c(&quot;Node 1&quot;, &quot;Node 2&quot;, &quot;Node 3&quot;)iter &lt;- rep(0, N)node &lt;- rep(&quot;Node 1&quot;, N)x &lt;- 10 + rnorm(N, 0, 2)y &lt;- 20 + rnorm(N, 0, 2)states &lt;- data.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/my-first-gganimate-plot/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
   
     
     
@@ -794,58 +860,6 @@ semester_dates &lt;- seq(as.
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/getting-started/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/widgets/" itemprop="url">Customizing the homepage with widgets</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2016-04-19 00:00:00 -0700 PDT" itemprop="datePublished dateModified">
-      Apr 19, 2016
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 min read
-  </span>
-  
-
-  
-  
-
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    <p>Enable/disable and configure widgets to customize your homepage.</p>
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/widgets/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>

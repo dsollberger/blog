@@ -11,6 +11,109 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Analysis of NYT Sample of Covid-19 Obituaries</title>
+      <link>/post/analysis-of-nyt-sample-of-covid-19-obituaries/</link>
+      <pubDate>Sun, 24 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/analysis-of-nyt-sample-of-covid-19-obituaries/</guid>
+      <description>&lt;div id=&#34;obtaining-the-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Obtaining the Data&lt;/h1&gt;
+&lt;p&gt;On May 24, 2020, the &lt;em&gt;New York Times&lt;/em&gt; published an article called “&lt;a href=&#34;https://www.nytimes.com/interactive/2020/05/24/us/us-coronavirus-deaths-100000.html&#34;&gt;An Incalcuable Loss&lt;/a&gt;”&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;quot;America is fast approaching a grim milestone in the coronavirus outbreak — each figure here represents one of the nearly 100,000 lives lost so far. But a count reveals only so much. Memories, gathered from obituaries across the country, help us to reckon with what was lost.&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What I am trying to do today is summarize the 1001 obituaries.&lt;/p&gt;
+&lt;p&gt;I started out by manually&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;going to &lt;a href=&#34;https://www.nytimes.com/interactive/2020/05/24/us/us-coronavirus-deaths-100000.html&#34;&gt;https://www.nytimes.com/interactive/2020/05/24/us/us-coronavirus-deaths-100000.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;right-clicking and selecting “View Source”&lt;/li&gt;
+&lt;li&gt;copy-and-pasting the HTML code to a text document&lt;/li&gt;
+&lt;li&gt;paring down the HTML code to focus on the obituaries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&amp;quot;g-obits&amp;quot;&amp;gt;
+    &amp;lt;div id=&amp;quot;g-obit-frame&amp;quot;&amp;gt;
+        
+            &amp;lt;div id=&amp;quot;g-0&amp;quot; class=&amp;quot;g-obit&amp;quot; data-date=&amp;quot;February 6&amp;quot;&amp;gt;
+                &amp;lt;div class=&amp;quot;g-obit-inner&amp;quot;&amp;gt;
+                    &amp;lt;b&amp;gt;Auditor in Silicon Valley.&amp;lt;/b&amp;gt;
+                    ...
+    ...             &lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;texts &amp;lt;- readLines(&amp;quot;obituaries.txt&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;word-cloud&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Word Cloud&lt;/h1&gt;
+&lt;p&gt;For one view, I wanted to make a word cloud to reveal the most commonly used words in the one-sentence obituaries. I used the &lt;code&gt;stringr&lt;/code&gt; package to extract the text in between the &lt;strong&gt;bold&lt;/strong&gt; HTML tags (as well as removing the period).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;obits &amp;lt;- str_extract_all(texts, regex(&amp;quot;(?&amp;lt;=&amp;lt;b&amp;gt;)(.*?)(?=.&amp;lt;/b&amp;gt;)&amp;quot;, multiline = TRUE))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There is &lt;code&gt;R&lt;/code&gt; code and packages for making word clouds, but I find it best to use the site &lt;a href=&#34;https://www.wordclouds.com/&#34;&gt;wordclouds.com&lt;/a&gt; since that application has many neat features. Thus, all I needed at this point is to save the results to upload to that site.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;write_lines(unlist(obits), &amp;quot;clean.txt&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;density-plot-of-ages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Density Plot of Ages&lt;/h1&gt;
+&lt;p&gt;Q: Does Covid-19 only affect older people?&lt;/p&gt;
+&lt;p&gt;For this analysis, I seek the two- or three-digit numbers in between the &lt;em&gt;italics&lt;/em&gt; HTML tags.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ages &amp;lt;- as.integer( unlist( str_extract_all(texts, regex(&amp;quot;(?&amp;lt;=,)(.[0-9]{2,3}?)(?=,)&amp;quot;, multiline = TRUE) )))
+
+summary(ages)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   22.00   67.00   80.00   76.72   89.00  108.00&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.frame(ages) %&amp;gt;%
+  ggplot(aes(x = ages)) +
+  geom_density(fill = &amp;quot;black&amp;quot;) +
+  labs(title = &amp;quot;Ages of Covid-19 Casualties&amp;quot;,
+       subtitle = &amp;quot;Sample of Obituaries from February to May 2020&amp;quot;,
+       caption = &amp;quot;Source: New York Times&amp;quot;,
+       x = &amp;quot;Age&amp;quot;,
+       y = &amp;quot;density&amp;quot;) +
+  theme(axis.text.y = element_blank())&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-24-analysis-of-nyt-sample-of-covid-19-obituaries_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;spread-by-week&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Spread by Week&lt;/h1&gt;
+&lt;p&gt;Out of curiosity, here I hope to build a boxplot of the ages, but grouped by week of the year.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dates &amp;lt;- unlist( str_extract_all(texts, regex(&amp;quot;(?&amp;lt;=date=\&amp;quot;)(.*?)(?=\&amp;quot;)&amp;quot;, multiline = TRUE) ))
+
+
+# There was one missing age value in this data, so I am going to choose to delete the last date
+# with hopes that the data still mostly lines up
+dates &amp;lt;- dates[1:1000]
+
+df &amp;lt;- data.frame(ages, dates)
+
+# separate month and day
+df &amp;lt;- df %&amp;gt;%
+  separate(dates, into = c(&amp;quot;month&amp;quot;, &amp;quot;day&amp;quot;), remove = FALSE)
+
+# Soon, I want to know the day of the year (i.e. how far into the year 2020), so here I make offsets,
+df &amp;lt;- df %&amp;gt;%
+  mutate(offset = case_when(month == &amp;quot;February&amp;quot; ~ 31,
+                            month == &amp;quot;March&amp;quot; ~ 60,
+                            month == &amp;quot;April&amp;quot; ~ 91,
+                            TRUE ~ 121))
+
+# Adding the offset and the obituary day to get the day of the year
+df$day &amp;lt;- as.integer(df$day)
+df &amp;lt;- df %&amp;gt;%
+  mutate(day_of_year = offset + day)
+
+# Finally, we divide by 7 to get the week of the year
+df &amp;lt;- df %&amp;gt;%
+  mutate(week_of_year = ceiling(day_of_year / 7))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = week_of_year, y = ages, fill = week_of_year, group = week_of_year)) +
+  geom_boxplot() +
+  labs(title = &amp;quot;US Covid-19 Deaths&amp;quot;,
+       subtitle = &amp;quot;Age Distributions by week, Sample of n = 1000 obituaries&amp;quot;,
+       caption = &amp;quot;Data Source: New York Times&amp;quot;,
+       x = &amp;quot;Week of Year (since start of 2020)&amp;quot;,
+       y = &amp;quot;Age&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-24-analysis-of-nyt-sample-of-covid-19-obituaries_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Introduction to Unsupervised Learning</title>
       <link>/post/introduction-to-unsupervised-learning/</link>
       <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
@@ -2254,160 +2357,6 @@ dot_df %&amp;gt;%
     theme_minimal() +
     transition_states(state, transition_length = 1, state_length = 1)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-4-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Introduction to R Workshop</title>
-      <link>/post/introduction-to-r-workshop/</link>
-      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/introduction-to-r-workshop/</guid>
-      <description>&lt;div id=&#34;packages&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Packages&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;workshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;)
-install.packages(workshop_packages)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;gganimate&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;ggplot2&amp;quot;)
-library(&amp;quot;mosaic&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: dplyr&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &amp;#39;dplyr&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:stats&amp;#39;:
-## 
-##     filter, lag&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:base&amp;#39;:
-## 
-##     intersect, setdiff, setequal, union&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: lattice&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: ggformula&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: ggstance&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &amp;#39;ggstance&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:ggplot2&amp;#39;:
-## 
-##     geom_errorbarh, GeomErrorbarh&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## New to ggformula?  Try the tutorials: 
-##  learnr::run_tutorial(&amp;quot;introduction&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
-##  learnr::run_tutorial(&amp;quot;refining&amp;quot;, package = &amp;quot;ggformula&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: mosaicData&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Loading required package: Matrix&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## The &amp;#39;mosaic&amp;#39; package masks several functions from core packages in order to add 
-## additional features.  The original behavior of these functions should not be affected by this.
-## 
-## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## Attaching package: &amp;#39;mosaic&amp;#39;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:Matrix&amp;#39;:
-## 
-##     mean&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:dplyr&amp;#39;:
-## 
-##     count, do, tally&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:ggplot2&amp;#39;:
-## 
-##     stat&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:stats&amp;#39;:
-## 
-##     binom.test, cor, cor.test, cov, fivenum, IQR, median,
-##     prop.test, quantile, sd, t.test, var&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:base&amp;#39;:
-## 
-##     max, mean, min, prod, range, sample, sum&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Data&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(Weather)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 25
-## # Groups:   city, year [1]
-##   city  date        year month   day high_temp avg_temp low_temp high_dewpt
-##   &amp;lt;chr&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
-## 1 Auck~ 2016-01-01  2016     1     1        68       65       62         64
-## 2 Auck~ 2016-01-02  2016     1     2        68       66       64         64
-## 3 Auck~ 2016-01-03  2016     1     3        77       72       66         70
-## 4 Auck~ 2016-01-04  2016     1     4        73       66       60         66
-## 5 Auck~ 2016-01-05  2016     1     5        69       62       55         55
-## 6 Auck~ 2016-01-06  2016     1     6        69       63       57         54
-## # ... with 16 more variables: avg_dewpt &amp;lt;dbl&amp;gt;, low_dewpt &amp;lt;dbl&amp;gt;,
-## #   high_humidity &amp;lt;dbl&amp;gt;, avg_humidity &amp;lt;dbl&amp;gt;, low_humidity &amp;lt;dbl&amp;gt;,
-## #   high_hg &amp;lt;dbl&amp;gt;, avg_hg &amp;lt;dbl&amp;gt;, low_hg &amp;lt;dbl&amp;gt;, high_vis &amp;lt;dbl&amp;gt;,
-## #   avg_vis &amp;lt;dbl&amp;gt;, low_vis &amp;lt;dbl&amp;gt;, high_wind &amp;lt;dbl&amp;gt;, avg_wind &amp;lt;dbl&amp;gt;,
-## #   low_wind &amp;lt;dbl&amp;gt;, precip &amp;lt;chr&amp;gt;, events &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(Weather$city)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-##  Auckland   Beijing   Chicago    Mumbai San Diego 
-##       731       731       731       731       731&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(Weather$year)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-## 2016 2017 
-## 1830 1825&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;sample-statistics&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Sample Statistics&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(Weather$high_temp)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 71.32421&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;median(Weather$precip)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sd(Weather$avg_wind)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## [1] 3.865026&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;plotting&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Plotting&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Chicago &amp;lt;- subset(Weather, city == &amp;quot;Chicago&amp;quot;)
-
-# boxplots
-ggplot(Chicago, aes(x = month, y = high_temp, group = month, fill = month)) +
-  geom_boxplot() +
-  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
-       x = &amp;quot;month&amp;quot;,
-       y = &amp;quot;high temperature&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;regression&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Regression&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
-  geom_point() +
-  geom_smooth(method = &amp;quot;lm&amp;quot;) +
-  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
-       x = &amp;quot;high temperature&amp;quot;,
-       y = &amp;quot;low temperature&amp;quot;) +
-  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;hypothesis-testing&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Hypothesis Testing&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;SanDiego &amp;lt;- subset(Weather, city == &amp;quot;San Diego&amp;quot;)
-
-# Do Chicago and San Diego have the same high temperatures?
-t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &amp;quot;two.sided&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## 
-##  Welch Two Sample t-test
-## 
-## data:  Chicago$high_temp and SanDiego$high_temp
-## t = -14.221, df = 886.31, p-value &amp;lt; 2.2e-16
-## alternative hypothesis: true difference in means is not equal to 0
-## 95 percent confidence interval:
-##  -13.21560 -10.01012
-## sample estimates:
-## mean of x mean of y 
-##  61.00821  72.62107&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;animation&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Animation&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
-  geom_point() +
-  labs(title = &amp;quot;Worldwide Weather (2016-2017)&amp;quot;,
-       caption = &amp;quot;Source: Mosaic Foundation&amp;quot;,
-       subtitle = &amp;quot;(by months)&amp;quot;,
-       x = &amp;quot;high temperature&amp;quot;,
-       y = &amp;quot;low temperature&amp;quot;) +
-  theme_minimal() +
-  transition_states(month, transition_length = 1, state_length = 1)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
 &lt;/div&gt;
 </description>
     </item>

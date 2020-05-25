@@ -1,0 +1,111 @@
+---
+title: Analysis of NYT Sample of Covid-19 Obituaries
+author: Derek Sollberger
+date: '2020-05-24'
+slug: analysis-of-nyt-sample-of-covid-19-obituaries
+categories:
+  - data mining
+tags:
+  - stringr
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<div id="obtaining-the-data" class="section level1">
+<h1>Obtaining the Data</h1>
+<p>On May 24, 2020, the <em>New York Times</em> published an article called “<a href="https://www.nytimes.com/interactive/2020/05/24/us/us-coronavirus-deaths-100000.html">An Incalcuable Loss</a>”</p>
+<pre><code>&quot;America is fast approaching a grim milestone in the coronavirus outbreak — each figure here represents one of the nearly 100,000 lives lost so far. But a count reveals only so much. Memories, gathered from obituaries across the country, help us to reckon with what was lost.&quot;</code></pre>
+<p>What I am trying to do today is summarize the 1001 obituaries.</p>
+<p>I started out by manually</p>
+<ul>
+<li>going to <a href="https://www.nytimes.com/interactive/2020/05/24/us/us-coronavirus-deaths-100000.html">https://www.nytimes.com/interactive/2020/05/24/us/us-coronavirus-deaths-100000.html</a></li>
+<li>right-clicking and selecting “View Source”</li>
+<li>copy-and-pasting the HTML code to a text document</li>
+<li>paring down the HTML code to focus on the obituaries.</li>
+</ul>
+<pre><code>&lt;div id=&quot;g-obits&quot;&gt;
+    &lt;div id=&quot;g-obit-frame&quot;&gt;
+        
+            &lt;div id=&quot;g-0&quot; class=&quot;g-obit&quot; data-date=&quot;February 6&quot;&gt;
+                &lt;div class=&quot;g-obit-inner&quot;&gt;
+                    &lt;b&gt;Auditor in Silicon Valley.&lt;/b&gt;
+                    ...
+    ...             </code></pre>
+<pre class="r"><code>texts &lt;- readLines(&quot;obituaries.txt&quot;)</code></pre>
+<hr />
+</div>
+<div id="word-cloud" class="section level1">
+<h1>Word Cloud</h1>
+<p>For one view, I wanted to make a word cloud to reveal the most commonly used words in the one-sentence obituaries. I used the <code>stringr</code> package to extract the text in between the <strong>bold</strong> HTML tags (as well as removing the period).</p>
+<pre class="r"><code>obits &lt;- str_extract_all(texts, regex(&quot;(?&lt;=&lt;b&gt;)(.*?)(?=.&lt;/b&gt;)&quot;, multiline = TRUE))</code></pre>
+<p>There is <code>R</code> code and packages for making word clouds, but I find it best to use the site <a href="https://www.wordclouds.com/">wordclouds.com</a> since that application has many neat features. Thus, all I needed at this point is to save the results to upload to that site.</p>
+<pre class="r"><code>write_lines(unlist(obits), &quot;clean.txt&quot;)</code></pre>
+<hr />
+</div>
+<div id="density-plot-of-ages" class="section level1">
+<h1>Density Plot of Ages</h1>
+<p>Q: Does Covid-19 only affect older people?</p>
+<p>For this analysis, I seek the two- or three-digit numbers in between the <em>italics</em> HTML tags.</p>
+<pre class="r"><code>ages &lt;- as.integer( unlist( str_extract_all(texts, regex(&quot;(?&lt;=,)(.[0-9]{2,3}?)(?=,)&quot;, multiline = TRUE) )))
+
+summary(ages)</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   22.00   67.00   80.00   76.72   89.00  108.00</code></pre>
+<pre class="r"><code>data.frame(ages) %&gt;%
+  ggplot(aes(x = ages)) +
+  geom_density(fill = &quot;black&quot;) +
+  labs(title = &quot;Ages of Covid-19 Casualties&quot;,
+       subtitle = &quot;Sample of Obituaries from February to May 2020&quot;,
+       caption = &quot;Source: New York Times&quot;,
+       x = &quot;Age&quot;,
+       y = &quot;density&quot;) +
+  theme(axis.text.y = element_blank())</code></pre>
+<p><img src="/post/2020-05-24-analysis-of-nyt-sample-of-covid-19-obituaries_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<hr />
+</div>
+<div id="spread-by-week" class="section level1">
+<h1>Spread by Week</h1>
+<p>Out of curiosity, here I hope to build a boxplot of the ages, but grouped by week of the year.</p>
+<pre class="r"><code>dates &lt;- unlist( str_extract_all(texts, regex(&quot;(?&lt;=date=\&quot;)(.*?)(?=\&quot;)&quot;, multiline = TRUE) ))
+
+
+# There was one missing age value in this data, so I am going to choose to delete the last date
+# with hopes that the data still mostly lines up
+dates &lt;- dates[1:1000]
+
+df &lt;- data.frame(ages, dates)
+
+# separate month and day
+df &lt;- df %&gt;%
+  separate(dates, into = c(&quot;month&quot;, &quot;day&quot;), remove = FALSE)
+
+# Soon, I want to know the day of the year (i.e. how far into the year 2020), so here I make offsets,
+df &lt;- df %&gt;%
+  mutate(offset = case_when(month == &quot;February&quot; ~ 31,
+                            month == &quot;March&quot; ~ 60,
+                            month == &quot;April&quot; ~ 91,
+                            TRUE ~ 121))
+
+# Adding the offset and the obituary day to get the day of the year
+df$day &lt;- as.integer(df$day)
+df &lt;- df %&gt;%
+  mutate(day_of_year = offset + day)
+
+# Finally, we divide by 7 to get the week of the year
+df &lt;- df %&gt;%
+  mutate(week_of_year = ceiling(day_of_year / 7))</code></pre>
+<pre class="r"><code>df %&gt;%
+  ggplot(aes(x = week_of_year, y = ages, fill = week_of_year, group = week_of_year)) +
+  geom_boxplot() +
+  labs(title = &quot;US Covid-19 Deaths&quot;,
+       subtitle = &quot;Age Distributions by week, Sample of n = 1000 obituaries&quot;,
+       caption = &quot;Data Source: New York Times&quot;,
+       x = &quot;Week of Year (since start of 2020)&quot;,
+       y = &quot;Age&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-05-24-analysis-of-nyt-sample-of-covid-19-obituaries_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
