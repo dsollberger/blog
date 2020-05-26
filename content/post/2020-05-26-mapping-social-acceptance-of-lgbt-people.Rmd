@@ -1,0 +1,96 @@
+---
+title: Mapping Social Acceptance of LGBT People
+author: Derek Sollberger
+date: '2020-05-26'
+slug: mapping-social-acceptance-of-lgbt-people
+categories:
+  - gis
+  - lgbt
+tags:
+  - choropleth
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+Inspired by this morning's meeting of the Bisexual Research Group, I am going to draft a quick map of LGBT acceptance in Africa.
+
+# Sources and tools
+
+* [Social Acceptance of LGBT People in 174 Countries](https://williamsinstitute.law.ucla.edu/publications/global-acceptance-index-lgbt/) publication from the UCLA School of Law Williams Institute
+* [List of African nations](https://www.worldometers.info/geography/how-many-countries-in-africa/)
+* [SimplyPDF](https://simplypdf.com/Excel) to extract table of data from a PDF document
+* [Convert Town](https://convert.town/column-to-comma-separated-list) to convert spreadsheet columns to comma-separated lists
+
+```{r, message = FALSE, warning = FALSE}
+library("tidyverse")
+```
+
+---
+
+# Data
+
+```{r}
+rank <- 1:174
+countries_text <- "Iceland,Netherlands,Norway,Canada,Spain,Belgium,Ireland,Sweden,Denmark,Nepal,Great Britain,Luxembourg,Malta,Uruguay,New Zealand,Germany,Finland,Switzerland,Puerto Rico,Australia,United States,France,Argentina,Austria,Brazil,Cape Verde,Chile,Philippines,Hong Kong,Italy,Portugal,Mexico,South Africa,Costa Rica,Cuba,Czech Republic,Colombia,Slovenia,Venezuela,Taiwan,Ecuador,Nicaragua,Bahrain,Bolivia,Israel,Suriname,Laos,Syria,Panama,El Salvador,Mauritius,Northern Cyprus,Peru,Croatia,Dominican Republic,Namibia,Honduras,Paraguay,Cyprus,Thailand,Slovakia,Greece,Mozambique,Andorra,Hungary,Japan,South Korea,Estonia,Myanmar,Poland,Bangladesh,Barbados,Cambodia,Guatemala,Singapore,Sao Tome and Principe,Trinidad and Tobago,Guyana,Bulgaria,Vietnam,India,Botswana,Grenada,Latvia,Turkey,Bahamas,Belize,Saint Kitts and Nevis,Malaysia,Serbia,Algeria,Lithuania,Jamaica,Dominica,Romania,Bhutan,Lebanon,Saint Lucia,Swaziland,Lesotho,China,Antigua and Barbuda,Angola,Yemen,Benin,Haiti,Uzbekistan,Libya,Montenegro,Tunisia,Saint Vincent and the Grenadines,Kuwait,Uganda,Jordan,Albania,Belarus,Gambia,Morocco,Kenya,Russia,Democratic Republic of the Congo,Ukraine,Qatar,Palestine,Madagascar,Tanzania,Cote d'Ivoire,Republic of the Congo,Iraq,Gabon,Kazakhstan,Sudan,Bosnia Herzegovina,Sierra Leone,Macedonia,Comoros,Saudi Arabia,Burkina Faso,Togo,Kyrgyzstan,Ghana,Mongolia,Rwanda,Kosovo,Cameroon,Nigeria,Zambia,Central African Republic,Zimbabwe,Indonesia,Djibouti,Chad,Niger,Mali,Guinea,Afghanistan,Liberia,Moldova,Georgia,Burundi,South Sudan,Mauritania,Sri Lanka,Iran,Pakistan,Malawi,Nagorno- Karabakh,Armenia,Egypt,Ethiopia,Somaliland,Senegal,Azerbaijan,Tajikistan"
+country <- str_split(countries_text,",")[[1]]
+GAI_text <- "8.9,8.6,8.2,8.2,8.1,7.9,7.9,7.9,7.9,7.8,7.7,7.7,7.6,7.6,7.5,7.4,7.4,7.4,7.4,7.3,7.2,7.1,6.9,6.8,6.8,6.8,6.7,6.6,6.5,6.4,6.4,6.3,6.2,6.1,6.1,6,5.9,5.9,5.7,5.7,5.6,5.6,5.5,5.4,5.4,5.4,5.4,5.4,5.3,5.3,5.3,5.3,5.3,5.2,5.2,5.2,5.2,5.2,5.1,5.1,5,5,5,4.9,4.9,4.9,4.9,4.9,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.7,4.7,4.6,4.6,4.5,4.5,4.5,4.4,4.4,4.4,4.3,4.2,4.2,4.2,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4,3.9,3.9,3.9,3.7,3.7,3.6,3.6,3.6,3.6,3.6,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.4,3.4,3.4,3.4,3.4,3.3,3.2,3.2,3.2,3.2,3.1,3.1,3.1,3.1,3.1,3.1,3.1,3.1,3,3,3,3,3,3,3,3,2.9,2.9,2.9,2.9,2.9,2.8,2.8,2.8,2.8,2.8,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.6,2.6,2.4,2.4,2.4,2.3,2.2,2.2,2.2,2.1,1.8,1.7,1.7,1.6"
+GAI <- as.numeric(str_split(GAI_text,",")[[1]])
+```
+
+```{r}
+GAI_data <- data.frame(rank, country, GAI)
+head(GAI_data)
+```
+
+---
+
+# Map
+
+```{r}
+countries_map <- map_data("world")
+choropleth_data <- left_join(countries_map, GAI_data, by = c("region" = "country"))
+choropleth_data %>%
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = GAI), color = "black") +
+  scale_fill_viridis_c(option = "C") +
+  labs(title = "Social Acceptance of LGBT People",
+       subtitle = "Global Acceptance Index",
+       caption = "Data Source: UCLA Williams School",
+       fill = "GAI",
+       x = "",
+       y = "") +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.background = element_rect(fill = "white"))
+```
+
+---
+
+# Africa
+
+```{r}
+African_nations_text <- "Nigeria,Ethiopia,Egypt,DR Congo,Tanzania,South Africa,Kenya,Uganda,Algeria,Sudan,Morocco,Angola,Mozambique,Ghana,Madagascar,Cameroon,Côte d'Ivoire,Niger,Burkina Faso,Mali,Malawi,Zambia,Senegal,Chad,Somalia,Zimbabwe,Guinea,Rwanda,Benin,Burundi,Tunisia,South Sudan,Togo,Sierra Leone,Libya,Congo,Liberia,Central African Republic,Mauritania,Eritrea,Namibia,Gambia,Botswana,Gabon,Lesotho,Guinea-Bissau,Equatorial Guinea,Mauritius,Eswatini,Djibouti,Comoros,Cabo Verde,Sao Tome & Principe,Seychelles"
+African_nations_list <- str_split(African_nations_text,",")[[1]]
+
+choropleth_data %>%
+  filter(region %in% African_nations_list) %>%
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = GAI), color = "black") +
+  scale_fill_viridis_c(option = "C") +
+  labs(title = "Social Acceptance of LGBT People",
+       subtitle = "Global Acceptance Index",
+       caption = "Data Source: UCLA Williams School",
+       fill = "GAI",
+       x = "",
+       y = "") +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.background = element_rect(fill = "white"))
+```
+
