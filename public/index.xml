@@ -11,6 +11,90 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Mapping Social Acceptance of LGBT People</title>
+      <link>/post/mapping-social-acceptance-of-lgbt-people/</link>
+      <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/mapping-social-acceptance-of-lgbt-people/</guid>
+      <description>&lt;p&gt;Inspired by this morning’s meeting of the Bisexual Research Group, I am going to draft a quick map of LGBT acceptance in Africa.&lt;/p&gt;
+&lt;div id=&#34;sources-and-tools&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sources and tools&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://williamsinstitute.law.ucla.edu/publications/global-acceptance-index-lgbt/&#34;&gt;Social Acceptance of LGBT People in 174 Countries&lt;/a&gt; publication from the UCLA School of Law Williams Institute&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.worldometers.info/geography/how-many-countries-in-africa/&#34;&gt;List of African nations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://simplypdf.com/Excel&#34;&gt;SimplyPDF&lt;/a&gt; to extract table of data from a PDF document&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://convert.town/column-to-comma-separated-list&#34;&gt;Convert Town&lt;/a&gt; to convert spreadsheet columns to comma-separated lists&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rank &amp;lt;- 1:174
+countries_text &amp;lt;- &amp;quot;Iceland,Netherlands,Norway,Canada,Spain,Belgium,Ireland,Sweden,Denmark,Nepal,Great Britain,Luxembourg,Malta,Uruguay,New Zealand,Germany,Finland,Switzerland,Puerto Rico,Australia,United States,France,Argentina,Austria,Brazil,Cape Verde,Chile,Philippines,Hong Kong,Italy,Portugal,Mexico,South Africa,Costa Rica,Cuba,Czech Republic,Colombia,Slovenia,Venezuela,Taiwan,Ecuador,Nicaragua,Bahrain,Bolivia,Israel,Suriname,Laos,Syria,Panama,El Salvador,Mauritius,Northern Cyprus,Peru,Croatia,Dominican Republic,Namibia,Honduras,Paraguay,Cyprus,Thailand,Slovakia,Greece,Mozambique,Andorra,Hungary,Japan,South Korea,Estonia,Myanmar,Poland,Bangladesh,Barbados,Cambodia,Guatemala,Singapore,Sao Tome and Principe,Trinidad and Tobago,Guyana,Bulgaria,Vietnam,India,Botswana,Grenada,Latvia,Turkey,Bahamas,Belize,Saint Kitts and Nevis,Malaysia,Serbia,Algeria,Lithuania,Jamaica,Dominica,Romania,Bhutan,Lebanon,Saint Lucia,Swaziland,Lesotho,China,Antigua and Barbuda,Angola,Yemen,Benin,Haiti,Uzbekistan,Libya,Montenegro,Tunisia,Saint Vincent and the Grenadines,Kuwait,Uganda,Jordan,Albania,Belarus,Gambia,Morocco,Kenya,Russia,Democratic Republic of the Congo,Ukraine,Qatar,Palestine,Madagascar,Tanzania,Cote d&amp;#39;Ivoire,Republic of the Congo,Iraq,Gabon,Kazakhstan,Sudan,Bosnia Herzegovina,Sierra Leone,Macedonia,Comoros,Saudi Arabia,Burkina Faso,Togo,Kyrgyzstan,Ghana,Mongolia,Rwanda,Kosovo,Cameroon,Nigeria,Zambia,Central African Republic,Zimbabwe,Indonesia,Djibouti,Chad,Niger,Mali,Guinea,Afghanistan,Liberia,Moldova,Georgia,Burundi,South Sudan,Mauritania,Sri Lanka,Iran,Pakistan,Malawi,Nagorno- Karabakh,Armenia,Egypt,Ethiopia,Somaliland,Senegal,Azerbaijan,Tajikistan&amp;quot;
+country &amp;lt;- str_split(countries_text,&amp;quot;,&amp;quot;)[[1]]
+GAI_text &amp;lt;- &amp;quot;8.9,8.6,8.2,8.2,8.1,7.9,7.9,7.9,7.9,7.8,7.7,7.7,7.6,7.6,7.5,7.4,7.4,7.4,7.4,7.3,7.2,7.1,6.9,6.8,6.8,6.8,6.7,6.6,6.5,6.4,6.4,6.3,6.2,6.1,6.1,6,5.9,5.9,5.7,5.7,5.6,5.6,5.5,5.4,5.4,5.4,5.4,5.4,5.3,5.3,5.3,5.3,5.3,5.2,5.2,5.2,5.2,5.2,5.1,5.1,5,5,5,4.9,4.9,4.9,4.9,4.9,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.7,4.7,4.6,4.6,4.5,4.5,4.5,4.4,4.4,4.4,4.3,4.2,4.2,4.2,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4,3.9,3.9,3.9,3.7,3.7,3.6,3.6,3.6,3.6,3.6,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.4,3.4,3.4,3.4,3.4,3.3,3.2,3.2,3.2,3.2,3.1,3.1,3.1,3.1,3.1,3.1,3.1,3.1,3,3,3,3,3,3,3,3,2.9,2.9,2.9,2.9,2.9,2.8,2.8,2.8,2.8,2.8,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.6,2.6,2.4,2.4,2.4,2.3,2.2,2.2,2.2,2.1,1.8,1.7,1.7,1.6&amp;quot;
+GAI &amp;lt;- as.numeric(str_split(GAI_text,&amp;quot;,&amp;quot;)[[1]])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;GAI_data &amp;lt;- data.frame(rank, country, GAI)
+head(GAI_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   rank     country GAI
+## 1    1     Iceland 8.9
+## 2    2 Netherlands 8.6
+## 3    3      Norway 8.2
+## 4    4      Canada 8.2
+## 5    5       Spain 8.1
+## 6    6     Belgium 7.9&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;map&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Map&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;countries_map &amp;lt;- map_data(&amp;quot;world&amp;quot;)
+choropleth_data &amp;lt;- left_join(countries_map, GAI_data, by = c(&amp;quot;region&amp;quot; = &amp;quot;country&amp;quot;))
+choropleth_data %&amp;gt;%
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = GAI), color = &amp;quot;black&amp;quot;) +
+  scale_fill_viridis_c(option = &amp;quot;C&amp;quot;) +
+  labs(title = &amp;quot;Social Acceptance of LGBT People&amp;quot;,
+       subtitle = &amp;quot;Global Acceptance Index&amp;quot;,
+       caption = &amp;quot;Data Source: UCLA Williams School&amp;quot;,
+       fill = &amp;quot;GAI&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.background = element_rect(fill = &amp;quot;white&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-26-mapping-social-acceptance-of-lgbt-people_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;africa&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Africa&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;African_nations_text &amp;lt;- &amp;quot;Nigeria,Ethiopia,Egypt,DR Congo,Tanzania,South Africa,Kenya,Uganda,Algeria,Sudan,Morocco,Angola,Mozambique,Ghana,Madagascar,Cameroon,Côte d&amp;#39;Ivoire,Niger,Burkina Faso,Mali,Malawi,Zambia,Senegal,Chad,Somalia,Zimbabwe,Guinea,Rwanda,Benin,Burundi,Tunisia,South Sudan,Togo,Sierra Leone,Libya,Congo,Liberia,Central African Republic,Mauritania,Eritrea,Namibia,Gambia,Botswana,Gabon,Lesotho,Guinea-Bissau,Equatorial Guinea,Mauritius,Eswatini,Djibouti,Comoros,Cabo Verde,Sao Tome &amp;amp; Principe,Seychelles&amp;quot;
+African_nations_list &amp;lt;- str_split(African_nations_text,&amp;quot;,&amp;quot;)[[1]]
+
+choropleth_data %&amp;gt;%
+  filter(region %in% African_nations_list) %&amp;gt;%
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = GAI), color = &amp;quot;black&amp;quot;) +
+  scale_fill_viridis_c(option = &amp;quot;C&amp;quot;) +
+  labs(title = &amp;quot;Social Acceptance of LGBT People&amp;quot;,
+       subtitle = &amp;quot;Global Acceptance Index&amp;quot;,
+       caption = &amp;quot;Data Source: UCLA Williams School&amp;quot;,
+       fill = &amp;quot;GAI&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.background = element_rect(fill = &amp;quot;white&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-26-mapping-social-acceptance-of-lgbt-people_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Vote by Mail data</title>
       <link>/post/vote-by-mail-data/</link>
       <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
@@ -2070,249 +2154,6 @@ Continuing Lecturer at UC Merced&lt;/p&gt;
 &lt;p&gt;Sincerely,
 Derek Sollberger
 Continuing Lecturer at UC Merced&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Random Walks (draft)</title>
-      <link>/post/random-walks-draft/</link>
-      <pubDate>Mon, 25 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/random-walks-draft/</guid>
-      <description>&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;gganimate&amp;quot;)
-library(&amp;quot;ggplot2&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;p-12&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;p = 1/2&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# parameters
-p &amp;lt;- 0.5
-Tmax = 60
-
-# start at the origin
-x = 0
-y = 0
-t = 0
-df &amp;lt;- data.frame(x,y,t)
-
-# random walk
-for(i in 1:Tmax){
-  t &amp;lt;- t + 1
-  if(runif(1) &amp;lt; p){
-    x &amp;lt;- x - 1
-  } else {
-    x &amp;lt;- x + 1
-  }
-  
-  # reset process if dot leaves view
-  if(abs(x) &amp;gt; 10){
-    x &amp;lt;- 0
-  }
-  
-  this_step &amp;lt;- data.frame(x,y,t)
-  df &amp;lt;- rbind(df, this_step)
-}
-
-p &amp;lt;- ggplot(df, aes(x,y)) +
-  coord_cartesian(xlim = c(-10, 10)) +
-  geom_point(color = &amp;quot;blue&amp;quot;, size = 10) +
-  labs(title = &amp;quot;Random Walk (p = 1/2)&amp;quot;,
-       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
-       caption = &amp;quot;Math 181&amp;quot;,
-       x = &amp;quot;&amp;quot;,
-       y = &amp;quot;&amp;quot;) +
-  scale_x_continuous(breaks = -10:10) +
-  scale_y_continuous(breaks = NULL) +
-  theme_minimal() +
-  transition_states(t, transition_length = 1, state_length = 1) +
-  shadow_wake(colour = &amp;quot;gray&amp;quot;, wake_length = 0.2, alpha = 0.4)
-
-animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-2-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;histogram&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;histogram&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p &amp;lt;- 1/2
-Tmax = 60
-N &amp;lt;- 100 # number of starting &amp;quot;dots&amp;quot;
-
-# start at the origin
-x &amp;lt;- rep(0,N)
-t &amp;lt;- rep(0,N)
-df &amp;lt;- data.frame(x,t)
-
-# random walk
-for(i in 1:Tmax){
-  for(j in 1:N){
-    if(runif(1) &amp;lt; p){
-      x[j] &amp;lt;- x[j] - 1
-    } else {
-      x[j] &amp;lt;- x[j] + 1
-    }
-  }
-  t &amp;lt;- rep(i,N)
-  
-  this_step &amp;lt;- data.frame(x,t)
-  df &amp;lt;- rbind(df, this_step)
-}
-
-p &amp;lt;- ggplot(df, aes(x)) +
-  coord_cartesian(xlim = c(-10, 10)) +
-  geom_bar(fill = &amp;quot;blue&amp;quot;, stat = &amp;quot;count&amp;quot;) +
-  labs(title = &amp;quot;Random Walk (p = 1/2)&amp;quot;,
-       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
-       caption = &amp;quot;Math 181&amp;quot;,
-       x = &amp;quot;&amp;quot;,
-       y = &amp;quot;&amp;quot;) +
-  scale_x_continuous(breaks = -10:10) +
-  scale_y_continuous(breaks = NULL) +
-  theme_minimal() +
-  transition_states(t, transition_length = 1, state_length = 1)
-
-animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-3-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;multiple-random-walks&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Multiple Random Walks&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pL &amp;lt;- 3/4
-pM &amp;lt;- 1/2
-pR &amp;lt;- 7/16
-Tmax = 60
-N &amp;lt;- 300 # number of starting &amp;quot;dots&amp;quot; (use a number divisible by 3)
-
-# start at the origin
-x &amp;lt;- rep(0,N)
-t &amp;lt;- rep(0,N)
-group &amp;lt;- c(rep(&amp;quot;transient left&amp;quot;, N/3),
-           rep(&amp;quot;recurrent&amp;quot;, N/3), 
-           rep(&amp;quot;transient right&amp;quot;, N/3))
-df &amp;lt;- data.frame(x,t, group)
-
-# random walk
-for(i in 1:Tmax){
-  for(j in 1:(N/3)){
-    if(runif(1) &amp;lt; pL){
-      x[j] &amp;lt;- x[j] - 1
-    } else {
-      x[j] &amp;lt;- x[j] + 1
-    }
-  }
-  for(j in (N/3+1):(2*N/3)){
-    if(runif(1) &amp;lt; pM){
-      x[j] &amp;lt;- x[j] - 1
-    } else {
-      x[j] &amp;lt;- x[j] + 1
-    }
-  }
-  for(j in (2*N/3+1):N){
-    if(runif(1) &amp;lt; pR){
-      x[j] &amp;lt;- x[j] - 1
-    } else {
-      x[j] &amp;lt;- x[j] + 1
-    }
-  }
-  
-  t &amp;lt;- rep(i,N)
-  this_step &amp;lt;- data.frame(x,t,group)
-  df &amp;lt;- rbind(df, this_step)
-}
-
-p &amp;lt;- ggplot(df, aes(x)) +
-  coord_cartesian(xlim = c(-10, 10)) +
-  geom_bar(aes(fill = group),
-           stat = &amp;quot;count&amp;quot;, position=position_dodge()) +
-  labs(title = &amp;quot;Random Walks&amp;quot;,
-       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
-       caption = &amp;quot;Math 181&amp;quot;,
-       x = &amp;quot;&amp;quot;,
-       y = &amp;quot;&amp;quot;) +
-  scale_x_continuous(breaks = -10:10) +
-  scale_y_continuous(trans=&amp;#39;log2&amp;#39;, breaks = NULL) +
-  theme_minimal() +
-  transition_states(t, transition_length = 1, state_length = 1)
-
-animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals
-
-## Warning: position_dodge requires non-overlapping x intervals&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-4-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;drunkards-walk&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Drunkard’s Walk&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# parameters
-Tmax = 60
-
-# start at the origin
-x = 0
-y = 0
-t = 0
-df &amp;lt;- data.frame(x,y,t)
-
-# random walk
-for(i in 1:Tmax){
-  t &amp;lt;- t + 1
-  rand_num &amp;lt;- runif(1)
-  if(rand_num &amp;lt; 0.25){
-    x &amp;lt;- x - 1
-  } else if(rand_num &amp;lt; 0.5){
-    y &amp;lt;- y - 1
-  } else if(rand_num &amp;lt; 0.75){
-    x &amp;lt;- x + 1
-  } else {
-    y &amp;lt;- y + 1
-  }
-  
-  # reset process if dot leaves view
-  if(abs(x) &amp;gt; 10){
-    x &amp;lt;- 0
-    y &amp;lt;- 0
-  }
-  if(abs(y) &amp;gt; 10){
-    x &amp;lt;- 0
-    y &amp;lt;- 0
-  }
-  
-  this_step &amp;lt;- data.frame(x,y,t)
-  df &amp;lt;- rbind(df, this_step)
-}
-
-p &amp;lt;- ggplot(df, aes(x,y)) +
-  coord_cartesian(xlim = c(-10, 10)) +
-  geom_point(color = &amp;quot;blue&amp;quot;, size = 10) +
-  labs(title = &amp;quot;Drunkard&amp;#39;s Walk&amp;quot;,
-       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
-       caption = &amp;quot;Math 181&amp;quot;,
-       x = &amp;quot;&amp;quot;,
-       y = &amp;quot;&amp;quot;) +
-  scale_x_continuous(breaks = -10:10) +
-  scale_y_continuous(breaks = -10:10) +
-  theme_minimal() +
-  transition_states(t, transition_length = 1, state_length = 1) +
-  shadow_wake(colour = &amp;quot;gray&amp;quot;, wake_length = 0.2, alpha = 0.4)
-
-animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-5-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
-&lt;/div&gt;
 </description>
     </item>
     
