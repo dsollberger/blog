@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Geofacet plot vingette</title>
+      <link>/post/geofacet-plot-vingette/</link>
+      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/geofacet-plot-vingette/</guid>
+      <description>Today I am going to try to make a geofacet graph using the GAI (Global Acceptability Index) data. My goal is to show trends in LGBT acceptance in Europe between the years 2003 and 2017.
+Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication from the UCLA School of Law Williams Institutegeofacet R packageList of European nationsConvert Town to convert spreadsheet columns to comma-separated listslibrary(&amp;quot;geofacet&amp;quot;)library(&amp;quot;tidyverse&amp;quot;)Dataraw_data &amp;lt;- read_csv(&amp;quot;gai.</description>
+    </item>
+    
+    <item>
       <title>Mapping Social Acceptance of LGBT People</title>
       <link>/post/mapping-social-acceptance-of-lgbt-people/</link>
       <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>

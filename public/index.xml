@@ -11,6 +11,198 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Geofacet plot vingette</title>
+      <link>/post/geofacet-plot-vingette/</link>
+      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/geofacet-plot-vingette/</guid>
+      <description>&lt;p&gt;Today I am going to try to make a &lt;code&gt;geofacet&lt;/code&gt; graph using the GAI (Global Acceptability Index) data. My goal is to show trends in LGBT acceptance in Europe between the years 2003 and 2017.&lt;/p&gt;
+&lt;div id=&#34;sources-and-tools&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sources and tools&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://williamsinstitute.law.ucla.edu/publications/global-acceptance-index-lgbt/&#34;&gt;Social Acceptance of LGBT People in 174 Countries&lt;/a&gt; publication from the UCLA School of Law Williams Institute&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://hafen.github.io/geofacet/&#34;&gt;geofacet&lt;/a&gt; &lt;code&gt;R&lt;/code&gt; package&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.downloadexcelfiles.com/wo_en/download-excel-file-list-european-countries-worldwo#.XtKec8B7mUk&#34;&gt;List of European nations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://convert.town/column-to-comma-separated-list&#34;&gt;Convert Town&lt;/a&gt; to convert spreadsheet columns to comma-separated lists&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;geofacet&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;raw_data &amp;lt;- read_csv(&amp;quot;gai.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I did some quick data wrangling in Excel before loading the file. Since the data publication emphasized ranking the countries, the data currently looks like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(raw_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 8
+##   country     gai2003 country_1   gai2008 country_2   gai2013 country_3  gai2017
+##   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;  
+## 1 Netherlands 6.8     Netherlands 7.2     Iceland     8.4     Iceland    8.9    
+## 2 Sweden      6.7     Sweden      7.1     Netherlands 7.9     Netherlan~ 8.6    
+## 3 Denmark     6.7     Iceland     7.1     Spain       7.4     Norway     8.2    
+## 4 Iceland     6.3     Uruguay     6.6     Canada      7.4     Canada     8.2    
+## 5 Switzerland 6.2     Canada      6.5     Sweden      7.4     Spain      8.1    
+## 6 Norway      6.2     Denmark     6.5     Norway      7.3     Belgium    7.9&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I wish to have more tidy data. My desired format is&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;input: year&lt;/li&gt;
+&lt;li&gt;output: GAI&lt;/li&gt;
+&lt;li&gt;group: country&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# focus on one year at a time
+df2003 &amp;lt;- raw_data %&amp;gt;% select(country, gai2003) %&amp;gt;% mutate(year = 2003)
+df2008 &amp;lt;- raw_data %&amp;gt;% select(country_1, gai2008) %&amp;gt;% mutate(year = 2008)
+df2013 &amp;lt;- raw_data %&amp;gt;% select(country_2, gai2013) %&amp;gt;% mutate(year = 2013)
+df2017 &amp;lt;- raw_data %&amp;gt;% select(country_3, gai2017) %&amp;gt;% mutate(year = 2017) 
+
+# use same column names (to prepare to row-bind)
+colnames(df2003) &amp;lt;- c(&amp;quot;country&amp;quot;, &amp;quot;gai&amp;quot;, &amp;quot;year&amp;quot;)
+colnames(df2008) &amp;lt;- c(&amp;quot;country&amp;quot;, &amp;quot;gai&amp;quot;, &amp;quot;year&amp;quot;)
+colnames(df2013) &amp;lt;- c(&amp;quot;country&amp;quot;, &amp;quot;gai&amp;quot;, &amp;quot;year&amp;quot;)
+colnames(df2017) &amp;lt;- c(&amp;quot;country&amp;quot;, &amp;quot;gai&amp;quot;, &amp;quot;year&amp;quot;)
+
+# row bind the data frames into one data frame
+all_data &amp;lt;- rbind(df2003, df2008, df2013, df2017)
+
+# convert column from character to numeric type
+all_data$gai &amp;lt;- as.numeric(all_data$gai)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: NAs introduced by coercion&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# take a look at what we have at the moment
+head(all_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 3
+##   country       gai  year
+##   &amp;lt;chr&amp;gt;       &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+## 1 Netherlands   6.8  2003
+## 2 Sweden        6.7  2003
+## 3 Denmark       6.7  2003
+## 4 Iceland       6.3  2003
+## 5 Switzerland   6.2  2003
+## 6 Norway        6.2  2003&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;map&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Map&lt;/h1&gt;
+&lt;p&gt;Before we try out the &lt;code&gt;geofacet&lt;/code&gt; tech, let us make sure that this data is amenable to &lt;code&gt;ggplot&lt;/code&gt; in the first place&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;all_data %&amp;gt;%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  labs(title = &amp;quot;Acceptance of LGBT People&amp;quot;,
+       subtitle = &amp;quot;by country&amp;quot;,
+       caption = &amp;quot;Data Source: Williams Institute at UCLA&amp;quot;,
+       x = &amp;quot;Year&amp;quot;,
+       y = &amp;quot;Global Acceptability Index&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-30-geofacet-plot-vingette_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;As you can imagine, keeping track of and labeling 176 countries is quite cumbersome.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;europe&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Europe&lt;/h1&gt;
+&lt;p&gt;Instead, today we will focus on the European nations and use the &lt;code&gt;geofacet&lt;/code&gt; package to clearly label the countries (with an implied geography map!)&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;European_nations_text &amp;lt;- &amp;quot;Russia,Germany,France,United Kingdom,Italy,Spain,Ukraine,Poland,Romania,Netherlands,Belgium,Greece,Portugal,Czech Republic,Hungary,Sweden,Belarus,Austria,Switzerland,Bulgaria,Serbia,Denmark,Finland,Slovakia,Norway,Ireland,Croatia,Bosnia and Herzegovina,Moldova,Lithuania,Albania,Macedonia,Slovenia,Latvia,Kosovo,Estonia,Montenegro,Luxembourg,Malta,Iceland,Jersey (UK),Isle of Man (UK),Andorra,Guernsey (UK),Faroe Islands (Denmark),Liechtenstein,Monaco,San Marino,Gibraltar (UK),Aland Islands (Finland),Svalbard and Jan Mayen (Norway),Vatican City&amp;quot;
+European_nations_list &amp;lt;- str_split(European_nations_text,&amp;quot;,&amp;quot;)[[1]]
+
+# an unfortunate &amp;#39;hack&amp;#39;
+all_data$country[all_data$country == &amp;quot;Great Britain&amp;quot;] &amp;lt;- &amp;quot;United Kingdom&amp;quot;
+
+# main plot
+all_data %&amp;gt;%
+  filter(country %in% European_nations_list) %&amp;gt;%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  geom_point(size = 2) +
+  facet_geo(~ country, grid = &amp;quot;eu_grid1&amp;quot;) +
+  labs(title = &amp;quot;Social Acceptance of LGBT People in Europe&amp;quot;,
+       subtitle = &amp;quot;Global Acceptance Index&amp;quot;,
+       caption = &amp;quot;Data Source: UCLA Williams Institute&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = c(2003, 2008, 2013, 2017),
+                   labels = c(&amp;quot;2003&amp;quot;, &amp;quot;2008&amp;quot;, &amp;quot;2013&amp;quot;, &amp;quot;2017&amp;quot;)) +
+  scale_y_continuous(breaks = c(0, 2, 4, 6, 8, 10),
+                   labels = c(&amp;quot;0&amp;quot;, &amp;quot;2&amp;quot;, &amp;quot;4&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;10&amp;quot;)) +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = &amp;quot;none&amp;quot;,
+        panel.background = element_rect(fill = &amp;quot;white&amp;quot;),
+        panel.border = element_rect(color = &amp;quot;black&amp;quot;, fill = NA))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-30-geofacet-plot-vingette_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;all_data %&amp;gt;%
+  filter(country %in% European_nations_list) %&amp;gt;%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  geom_point(size = 4) +
+  facet_geo(~ country, grid = &amp;quot;eu_grid1&amp;quot;) +
+  labs(title = &amp;quot;Social Acceptance of LGBT People in Europe&amp;quot;,
+       subtitle = &amp;quot;Global Acceptance Index&amp;quot;,
+       caption = &amp;quot;Data Source: UCLA Williams Institute&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = c(2003, 2008, 2013, 2017),
+                   labels = c(&amp;quot;2003&amp;quot;, &amp;quot;2008&amp;quot;, &amp;quot;2013&amp;quot;, &amp;quot;2017&amp;quot;)) +
+  scale_y_continuous(breaks = c(0, 2, 4, 6, 8, 10),
+                   labels = c(&amp;quot;0&amp;quot;, &amp;quot;2&amp;quot;, &amp;quot;4&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;10&amp;quot;)) +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = &amp;quot;none&amp;quot;,
+        panel.background = element_rect(fill = &amp;quot;white&amp;quot;),
+        panel.border = element_rect(color = &amp;quot;black&amp;quot;, fill = NA),
+        panel.grid = element_line(color = &amp;quot;gray80&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Some values in the specified facet_geo column &amp;#39;country&amp;#39; do not match
+##   the &amp;#39;name&amp;#39; column of the specified grid and will be removed: Iceland,
+##   Switzerland, Norway, Andorra, Serbia, Macedonia, Russia, Belarus,
+##   Ukraine, Montenegro, Moldova, Albania, Kosovo&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-05-30-geofacet-plot-vingette_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 4.0.0 (2020-04-24)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 18362)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] forcats_0.5.0   stringr_1.4.0   dplyr_0.8.5     purrr_0.3.4    
+##  [5] readr_1.3.1     tidyr_1.0.2     tibble_3.0.1    ggplot2_3.3.0  
+##  [9] tidyverse_1.3.0 geofacet_0.2.0 
+## 
+## loaded via a namespace (and not attached):
+##  [1] ggrepel_0.8.2       Rcpp_1.0.4.6        rnaturalearth_0.1.0
+##  [4] lubridate_1.7.8     lattice_0.20-41     png_0.1-7          
+##  [7] class_7.3-16        utf8_1.1.4          assertthat_0.2.1   
+## [10] digest_0.6.25       R6_2.4.1            cellranger_1.1.0   
+## [13] backports_1.1.6     reprex_0.3.0        evaluate_0.14      
+## [16] e1071_1.7-3         httr_1.4.1          blogdown_0.18      
+## [19] pillar_1.4.4        rlang_0.4.5         geogrid_0.1.1      
+## [22] readxl_1.3.1        rstudioapi_0.11     rmarkdown_2.1      
+## [25] labeling_0.3        munsell_0.5.0       broom_0.5.6        
+## [28] compiler_4.0.0      modelr_0.1.7        xfun_0.13          
+## [31] pkgconfig_2.0.3     imguR_1.0.3         rgeos_0.5-3        
+## [34] htmltools_0.4.0     tidyselect_1.0.0    gridExtra_2.3      
+## [37] bookdown_0.18       fansi_0.4.1         withr_2.2.0        
+## [40] crayon_1.3.4        dbplyr_1.4.3        sf_0.9-3           
+## [43] grid_4.0.0          nlme_3.1-147        jsonlite_1.6.1     
+## [46] gtable_0.3.0        lifecycle_0.2.0     DBI_1.1.0          
+## [49] magrittr_1.5        units_0.6-6         scales_1.1.0       
+## [52] KernSmooth_2.23-16  cli_2.0.2           stringi_1.4.6      
+## [55] farver_2.0.3        fs_1.4.1            sp_1.4-1           
+## [58] xml2_1.3.2          ellipsis_0.3.0      generics_0.0.2     
+## [61] vctrs_0.2.4         tools_4.0.0         glue_1.4.0         
+## [64] hms_0.5.3           jpeg_0.1-8.1        yaml_2.2.1         
+## [67] colorspace_1.4-1    rvest_0.3.5         classInt_0.4-3     
+## [70] knitr_1.28          haven_2.2.0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Mapping Social Acceptance of LGBT People</title>
       <link>/post/mapping-social-acceptance-of-lgbt-people/</link>
       <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
@@ -2119,38 +2311,6 @@ ggtexttable(main_cast_classified, rows = NULL)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;In addition to coordinating the use of the education product, I have met several wonderful DataCamp employees and instructors at conferences—all while being unaware of negligent events happening in the background. I might have even met the perpetrator too.&lt;/p&gt;
 &lt;p&gt;This news coming out of DataCamp is quite antithetical to the culture of the data science community. Just the day before in the Twitter space, we were praising the data science community on being diverse, inclusive, and very genial to programmers of all skill levels. Unfortunately, the actions made by DataCamp is a step backward and will leave a scar. We can do better.&lt;/p&gt;
 &lt;p&gt;The views here presented in this letter are my own and do not reflect the opinion or stances of my colleagues at UC Merced for the simple reason that this letter is the dissemination of the news to my peers in the DatASci graduate student organization and my coworkers at UC Merced. If we need to solidify a view of the DataCamp business and our relationship with this education partner and the values of vendors, I will welcome future conversation about these matters.&lt;/p&gt;
-&lt;p&gt;Sincerely,
-Derek Sollberger
-Continuing Lecturer at UC Merced&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Response to DataCamp&#39;s 20190404 Community Post</title>
-      <link>/post/response-to-datacamp-s-20190404-community-post/</link>
-      <pubDate>Sat, 06 Apr 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/response-to-datacamp-s-20190404-community-post/</guid>
-      <description>&lt;p&gt;&lt;em&gt;This is the letter I sent out to my data science organization about the news that came out of DataCamp this week.&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;4/6/2019&lt;/p&gt;
-
-&lt;p&gt;Dear DatASci,&lt;/p&gt;
-
-&lt;p&gt;I write to ask you for your input in developing a group response to these recent events.&lt;/p&gt;
-
-&lt;p&gt;Overnight on Thursday, April 4, DataCamp released a statement in their official blog that you can find here:  &lt;a href=&#34;https://www.datacamp.com/community/blog/note-to-our-community&#34; target=&#34;_blank&#34;&gt;https://www.datacamp.com/community/blog/note-to-our-community&lt;/a&gt;.  To summarize, in October of 2017, an executive at the company sexually harassed an employee at a company social event.  The employee reported the event a few months later, which means that the official statement finally appeared about a full year later.  Furthermore, DataCamp only released that statement after a unified complaint from over 100 instructors.&lt;/p&gt;
-
-&lt;p&gt;At this moment, I wish to personally condemn the perpetrator and the leadership at DataCamp over their actions and mismanagement of their company culture.&lt;/p&gt;
-
-&lt;p&gt;It is simple to state that I do not condone the behavior of that employee and the peers.  However, it is difficult to reconcile the event with my relationship with the DataCamp company itself.  The educational material has allowed me to increase my status at my own workplace, and I have subsequently and frequently recommended DataCamp to those who also wished to improve their technical skills.  During the Spring semester and Summer session of 2018, I led efforts to connect our DatASci club and graduate students with the online courses offered by DataCamp.&lt;/p&gt;
-
-&lt;p&gt;In addition to coordinating the use of the education product, I have met several wonderful DataCamp employees and instructors at conferences&amp;mdash;all while being unaware of negligent events happening in the background.  I might have even met the perpetrator too.&lt;/p&gt;
-
-&lt;p&gt;This news coming out of DataCamp is quite antithetical to the culture of the data science community.  Just the day before in the Twitter space, we were praising the data science community on being diverse, inclusive, and very genial to programmers of all skill levels.  Unfortunately, the actions made by DataCamp is a step backward and will leave a scar.  We can do better.&lt;/p&gt;
-
-&lt;p&gt;The views here presented in this letter are my own and do not reflect the opinion or stances of my colleagues at UC Merced for the simple reason that this letter is the dissemination of the news to my peers in the DatASci graduate student organization and my coworkers at UC Merced.  If we need to solidify a view of the DataCamp business and our relationship with this education partner and the values of vendors, I will welcome future conversation about these matters.&lt;/p&gt;
-
 &lt;p&gt;Sincerely,
 Derek Sollberger
 Continuing Lecturer at UC Merced&lt;/p&gt;

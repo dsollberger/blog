@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.44" />
+  <meta name="author" content="Derek Sollberger">
+
+  
+  
+  
+  
+    
+      
+    
+  
+  <meta name="description" content="Today I am going to try to make a geofacet graph using the GAI (Global Acceptability Index) data. My goal is to show trends in LGBT acceptance in Europe between the years 2003 and 2017.
+Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication from the UCLA School of Law Williams Institutegeofacet R packageList of European nationsConvert Town to convert spreadsheet columns to comma-separated listslibrary(&quot;geofacet&quot;)library(&quot;tidyverse&quot;)Dataraw_data &lt;- read_csv(&quot;gai.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/geofacet-plot-vingette/">
+
+  
+
+
+  
+
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/geofacet-plot-vingette/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@DerekSollberger">
+  <meta property="twitter:creator" content="@DerekSollberger">
+  
+  <meta property="og:site_name" content="The Median Data Scientist">
+  <meta property="og:url" content="/post/geofacet-plot-vingette/">
+  <meta property="og:title" content="Geofacet plot vingette | The Median Data Scientist">
+  <meta property="og:description" content="Today I am going to try to make a geofacet graph using the GAI (Global Acceptability Index) data. My goal is to show trends in LGBT acceptance in Europe between the years 2003 and 2017.
+Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication from the UCLA School of Law Williams Institutegeofacet R packageList of European nationsConvert Town to convert spreadsheet columns to comma-separated listslibrary(&quot;geofacet&quot;)library(&quot;tidyverse&quot;)Dataraw_data &lt;- read_csv(&quot;gai.">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2020-05-30T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2020-05-30T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Geofacet plot vingette | The Median Data Scientist</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">The Median Data Scientist</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#teaching">
+            
+            <span>Teaching</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Geofacet plot vingette</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-05-30 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      May 30, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/gis">gis</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Geofacet%20plot%20vingette&amp;url=%2fpost%2fgeofacet-plot-vingette%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fgeofacet-plot-vingette%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fgeofacet-plot-vingette%2f&amp;title=Geofacet%20plot%20vingette"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fgeofacet-plot-vingette%2f&amp;title=Geofacet%20plot%20vingette"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Geofacet%20plot%20vingette&amp;body=%2fpost%2fgeofacet-plot-vingette%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <p>Today I am going to try to make a <code>geofacet</code> graph using the GAI (Global Acceptability Index) data. My goal is to show trends in LGBT acceptance in Europe between the years 2003 and 2017.</p>
+<div id="sources-and-tools" class="section level1">
+<h1>Sources and tools</h1>
+<ul>
+<li><a href="https://williamsinstitute.law.ucla.edu/publications/global-acceptance-index-lgbt/">Social Acceptance of LGBT People in 174 Countries</a> publication from the UCLA School of Law Williams Institute</li>
+<li><a href="https://hafen.github.io/geofacet/">geofacet</a> <code>R</code> package</li>
+<li><a href="https://www.downloadexcelfiles.com/wo_en/download-excel-file-list-european-countries-worldwo#.XtKec8B7mUk">List of European nations</a></li>
+<li><a href="https://convert.town/column-to-comma-separated-list">Convert Town</a> to convert spreadsheet columns to comma-separated lists</li>
+</ul>
+<pre class="r"><code>library(&quot;geofacet&quot;)
+library(&quot;tidyverse&quot;)</code></pre>
+<hr />
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<pre class="r"><code>raw_data &lt;- read_csv(&quot;gai.csv&quot;)</code></pre>
+<p>I did some quick data wrangling in Excel before loading the file. Since the data publication emphasized ranking the countries, the data currently looks like this:</p>
+<pre class="r"><code>head(raw_data)</code></pre>
+<pre><code>## # A tibble: 6 x 8
+##   country     gai2003 country_1   gai2008 country_2   gai2013 country_3  gai2017
+##   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;  
+## 1 Netherlands 6.8     Netherlands 7.2     Iceland     8.4     Iceland    8.9    
+## 2 Sweden      6.7     Sweden      7.1     Netherlands 7.9     Netherlan~ 8.6    
+## 3 Denmark     6.7     Iceland     7.1     Spain       7.4     Norway     8.2    
+## 4 Iceland     6.3     Uruguay     6.6     Canada      7.4     Canada     8.2    
+## 5 Switzerland 6.2     Canada      6.5     Sweden      7.4     Spain      8.1    
+## 6 Norway      6.2     Denmark     6.5     Norway      7.3     Belgium    7.9</code></pre>
+<p>I wish to have more tidy data. My desired format is</p>
+<ul>
+<li>input: year</li>
+<li>output: GAI</li>
+<li>group: country</li>
+</ul>
+<pre class="r"><code># focus on one year at a time
+df2003 &lt;- raw_data %&gt;% select(country, gai2003) %&gt;% mutate(year = 2003)
+df2008 &lt;- raw_data %&gt;% select(country_1, gai2008) %&gt;% mutate(year = 2008)
+df2013 &lt;- raw_data %&gt;% select(country_2, gai2013) %&gt;% mutate(year = 2013)
+df2017 &lt;- raw_data %&gt;% select(country_3, gai2017) %&gt;% mutate(year = 2017) 
+
+# use same column names (to prepare to row-bind)
+colnames(df2003) &lt;- c(&quot;country&quot;, &quot;gai&quot;, &quot;year&quot;)
+colnames(df2008) &lt;- c(&quot;country&quot;, &quot;gai&quot;, &quot;year&quot;)
+colnames(df2013) &lt;- c(&quot;country&quot;, &quot;gai&quot;, &quot;year&quot;)
+colnames(df2017) &lt;- c(&quot;country&quot;, &quot;gai&quot;, &quot;year&quot;)
+
+# row bind the data frames into one data frame
+all_data &lt;- rbind(df2003, df2008, df2013, df2017)
+
+# convert column from character to numeric type
+all_data$gai &lt;- as.numeric(all_data$gai)</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre class="r"><code># take a look at what we have at the moment
+head(all_data)</code></pre>
+<pre><code>## # A tibble: 6 x 3
+##   country       gai  year
+##   &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
+## 1 Netherlands   6.8  2003
+## 2 Sweden        6.7  2003
+## 3 Denmark       6.7  2003
+## 4 Iceland       6.3  2003
+## 5 Switzerland   6.2  2003
+## 6 Norway        6.2  2003</code></pre>
+<hr />
+</div>
+<div id="map" class="section level1">
+<h1>Map</h1>
+<p>Before we try out the <code>geofacet</code> tech, let us make sure that this data is amenable to <code>ggplot</code> in the first place</p>
+<pre class="r"><code>all_data %&gt;%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  labs(title = &quot;Acceptance of LGBT People&quot;,
+       subtitle = &quot;by country&quot;,
+       caption = &quot;Data Source: Williams Institute at UCLA&quot;,
+       x = &quot;Year&quot;,
+       y = &quot;Global Acceptability Index&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-05-30-geofacet-plot-vingette_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>As you can imagine, keeping track of and labeling 176 countries is quite cumbersome.</p>
+<hr />
+</div>
+<div id="europe" class="section level1">
+<h1>Europe</h1>
+<p>Instead, today we will focus on the European nations and use the <code>geofacet</code> package to clearly label the countries (with an implied geography map!)</p>
+<pre class="r"><code>European_nations_text &lt;- &quot;Russia,Germany,France,United Kingdom,Italy,Spain,Ukraine,Poland,Romania,Netherlands,Belgium,Greece,Portugal,Czech Republic,Hungary,Sweden,Belarus,Austria,Switzerland,Bulgaria,Serbia,Denmark,Finland,Slovakia,Norway,Ireland,Croatia,Bosnia and Herzegovina,Moldova,Lithuania,Albania,Macedonia,Slovenia,Latvia,Kosovo,Estonia,Montenegro,Luxembourg,Malta,Iceland,Jersey (UK),Isle of Man (UK),Andorra,Guernsey (UK),Faroe Islands (Denmark),Liechtenstein,Monaco,San Marino,Gibraltar (UK),Aland Islands (Finland),Svalbard and Jan Mayen (Norway),Vatican City&quot;
+European_nations_list &lt;- str_split(European_nations_text,&quot;,&quot;)[[1]]
+
+# an unfortunate &#39;hack&#39;
+all_data$country[all_data$country == &quot;Great Britain&quot;] &lt;- &quot;United Kingdom&quot;
+
+# main plot
+all_data %&gt;%
+  filter(country %in% European_nations_list) %&gt;%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  geom_point(size = 2) +
+  facet_geo(~ country, grid = &quot;eu_grid1&quot;) +
+  labs(title = &quot;Social Acceptance of LGBT People in Europe&quot;,
+       subtitle = &quot;Global Acceptance Index&quot;,
+       caption = &quot;Data Source: UCLA Williams Institute&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  scale_x_continuous(breaks = c(2003, 2008, 2013, 2017),
+                   labels = c(&quot;2003&quot;, &quot;2008&quot;, &quot;2013&quot;, &quot;2017&quot;)) +
+  scale_y_continuous(breaks = c(0, 2, 4, 6, 8, 10),
+                   labels = c(&quot;0&quot;, &quot;2&quot;, &quot;4&quot;, &quot;6&quot;, &quot;8&quot;, &quot;10&quot;)) +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = &quot;none&quot;,
+        panel.background = element_rect(fill = &quot;white&quot;),
+        panel.border = element_rect(color = &quot;black&quot;, fill = NA))</code></pre>
+<p><img src="/post/2020-05-30-geofacet-plot-vingette_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>all_data %&gt;%
+  filter(country %in% European_nations_list) %&gt;%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  geom_point(size = 4) +
+  facet_geo(~ country, grid = &quot;eu_grid1&quot;) +
+  labs(title = &quot;Social Acceptance of LGBT People in Europe&quot;,
+       subtitle = &quot;Global Acceptance Index&quot;,
+       caption = &quot;Data Source: UCLA Williams Institute&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  scale_x_continuous(breaks = c(2003, 2008, 2013, 2017),
+                   labels = c(&quot;2003&quot;, &quot;2008&quot;, &quot;2013&quot;, &quot;2017&quot;)) +
+  scale_y_continuous(breaks = c(0, 2, 4, 6, 8, 10),
+                   labels = c(&quot;0&quot;, &quot;2&quot;, &quot;4&quot;, &quot;6&quot;, &quot;8&quot;, &quot;10&quot;)) +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = &quot;none&quot;,
+        panel.background = element_rect(fill = &quot;white&quot;),
+        panel.border = element_rect(color = &quot;black&quot;, fill = NA),
+        panel.grid = element_line(color = &quot;gray80&quot;))</code></pre>
+<pre><code>## Some values in the specified facet_geo column &#39;country&#39; do not match
+##   the &#39;name&#39; column of the specified grid and will be removed: Iceland,
+##   Switzerland, Norway, Andorra, Serbia, Macedonia, Russia, Belarus,
+##   Ukraine, Montenegro, Moldova, Albania, Kosovo</code></pre>
+<p><img src="/post/2020-05-30-geofacet-plot-vingette_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 4.0.0 (2020-04-24)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 18362)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] forcats_0.5.0   stringr_1.4.0   dplyr_0.8.5     purrr_0.3.4    
+##  [5] readr_1.3.1     tidyr_1.0.2     tibble_3.0.1    ggplot2_3.3.0  
+##  [9] tidyverse_1.3.0 geofacet_0.2.0 
+## 
+## loaded via a namespace (and not attached):
+##  [1] ggrepel_0.8.2       Rcpp_1.0.4.6        rnaturalearth_0.1.0
+##  [4] lubridate_1.7.8     lattice_0.20-41     png_0.1-7          
+##  [7] class_7.3-16        utf8_1.1.4          assertthat_0.2.1   
+## [10] digest_0.6.25       R6_2.4.1            cellranger_1.1.0   
+## [13] backports_1.1.6     reprex_0.3.0        evaluate_0.14      
+## [16] e1071_1.7-3         httr_1.4.1          blogdown_0.18      
+## [19] pillar_1.4.4        rlang_0.4.5         geogrid_0.1.1      
+## [22] readxl_1.3.1        rstudioapi_0.11     rmarkdown_2.1      
+## [25] labeling_0.3        munsell_0.5.0       broom_0.5.6        
+## [28] compiler_4.0.0      modelr_0.1.7        xfun_0.13          
+## [31] pkgconfig_2.0.3     imguR_1.0.3         rgeos_0.5-3        
+## [34] htmltools_0.4.0     tidyselect_1.0.0    gridExtra_2.3      
+## [37] bookdown_0.18       fansi_0.4.1         withr_2.2.0        
+## [40] crayon_1.3.4        dbplyr_1.4.3        sf_0.9-3           
+## [43] grid_4.0.0          nlme_3.1-147        jsonlite_1.6.1     
+## [46] gtable_0.3.0        lifecycle_0.2.0     DBI_1.1.0          
+## [49] magrittr_1.5        units_0.6-6         scales_1.1.0       
+## [52] KernSmooth_2.23-16  cli_2.0.2           stringi_1.4.6      
+## [55] farver_2.0.3        fs_1.4.1            sp_1.4-1           
+## [58] xml2_1.3.2          ellipsis_0.3.0      generics_0.0.2     
+## [61] vctrs_0.2.4         tools_4.0.0         glue_1.4.0         
+## [64] hms_0.5.3           jpeg_0.1-8.1        yaml_2.2.1         
+## [67] colorspace_1.4-1    rvest_0.3.5         classInt_0.4-3     
+## [70] knitr_1.28          haven_2.2.0</code></pre>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/geofacet">geofacet</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/choropleth">choropleth</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/mapping-social-acceptance-of-lgbt-people/">Mapping Social Acceptance of LGBT People</a></li>
+    
+    <li><a href="/post/vote-by-mail-data/">Vote by Mail data</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2018 &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+

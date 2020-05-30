@@ -5,6 +5,15 @@
     
     <url>
     
+      <loc>/post/geofacet-plot-vingette/</loc>
+      <lastmod>2020-05-30T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/post/mapping-social-acceptance-of-lgbt-people/</loc>
       <lastmod>2020-05-26T00:00:00+00:00</lastmod>
     </url>
@@ -479,7 +488,7 @@
     <url>
     
       <loc>/tags/choropleth/</loc>
-      <lastmod>2020-05-26T00:00:00+00:00</lastmod>
+      <lastmod>2020-05-30T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     
@@ -568,6 +577,16 @@
     
     <url>
     
+      <loc>/tags/geofacet/</loc>
+      <lastmod>2020-05-30T00:00:00+00:00</lastmod>
+      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
       <loc>/tags/gganatogram/</loc>
       <lastmod>2019-01-10T00:00:00+00:00</lastmod>
       <priority>0</priority>
@@ -609,7 +628,7 @@
     <url>
     
       <loc>/categories/gis/</loc>
-      <lastmod>2020-05-26T00:00:00+00:00</lastmod>
+      <lastmod>2020-05-30T00:00:00+00:00</lastmod>
       <priority>0</priority>
     </url>
     

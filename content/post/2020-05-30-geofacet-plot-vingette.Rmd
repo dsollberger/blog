@@ -1,0 +1,156 @@
+---
+title: Geofacet plot vingette
+author: Derek Sollberger
+date: '2020-05-30'
+slug: geofacet-plot-vingette
+categories:
+  - gis
+tags:
+  - geofacet
+  - choropleth
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+Today I am going to try to make a `geofacet` graph using the GAI (Global Acceptability Index) data.  My goal is to show trends in LGBT acceptance in Europe between the years 2003 and 2017.
+
+# Sources and tools
+
+* [Social Acceptance of LGBT People in 174 Countries](https://williamsinstitute.law.ucla.edu/publications/global-acceptance-index-lgbt/) publication from the UCLA School of Law Williams Institute
+* [geofacet](https://hafen.github.io/geofacet/) `R` package
+* [List of European nations](https://www.downloadexcelfiles.com/wo_en/download-excel-file-list-european-countries-worldwo#.XtKec8B7mUk)
+* [Convert Town](https://convert.town/column-to-comma-separated-list) to convert spreadsheet columns to comma-separated lists
+
+```{r, message = FALSE, warning = FALSE}
+library("geofacet")
+library("tidyverse")
+```
+
+---
+
+# Data
+
+```{r, message = FALSE, warning = FALSE}
+raw_data <- read_csv("gai.csv")
+```
+
+I did some quick data wrangling in Excel before loading the file.  Since the data publication emphasized ranking the countries, the data currently looks like this:
+
+```{r}
+head(raw_data)
+```
+
+I wish to have more tidy data.  My desired format is
+
+* input: year
+* output: GAI
+* group: country
+
+```{r}
+# focus on one year at a time
+df2003 <- raw_data %>% select(country, gai2003) %>% mutate(year = 2003)
+df2008 <- raw_data %>% select(country_1, gai2008) %>% mutate(year = 2008)
+df2013 <- raw_data %>% select(country_2, gai2013) %>% mutate(year = 2013)
+df2017 <- raw_data %>% select(country_3, gai2017) %>% mutate(year = 2017) 
+
+# use same column names (to prepare to row-bind)
+colnames(df2003) <- c("country", "gai", "year")
+colnames(df2008) <- c("country", "gai", "year")
+colnames(df2013) <- c("country", "gai", "year")
+colnames(df2017) <- c("country", "gai", "year")
+
+# row bind the data frames into one data frame
+all_data <- rbind(df2003, df2008, df2013, df2017)
+
+# convert column from character to numeric type
+all_data$gai <- as.numeric(all_data$gai)
+
+# take a look at what we have at the moment
+head(all_data)
+```
+
+
+---
+
+# Map
+
+Before we try out the `geofacet` tech, let us make sure that this data is amenable to `ggplot` in the first place
+
+```{r, message = FALSE, warning = FALSE}
+all_data %>%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  labs(title = "Acceptance of LGBT People",
+       subtitle = "by country",
+       caption = "Data Source: Williams Institute at UCLA",
+       x = "Year",
+       y = "Global Acceptability Index") +
+  theme(legend.position = "none")
+```
+
+As you can imagine, keeping track of and labeling 176 countries is quite cumbersome.
+
+---
+
+# Europe
+
+Instead, today we will focus on the European nations and use the `geofacet` package to clearly label the countries (with an implied geography map!)
+
+```{r, message = FALSE}
+European_nations_text <- "Russia,Germany,France,United Kingdom,Italy,Spain,Ukraine,Poland,Romania,Netherlands,Belgium,Greece,Portugal,Czech Republic,Hungary,Sweden,Belarus,Austria,Switzerland,Bulgaria,Serbia,Denmark,Finland,Slovakia,Norway,Ireland,Croatia,Bosnia and Herzegovina,Moldova,Lithuania,Albania,Macedonia,Slovenia,Latvia,Kosovo,Estonia,Montenegro,Luxembourg,Malta,Iceland,Jersey (UK),Isle of Man (UK),Andorra,Guernsey (UK),Faroe Islands (Denmark),Liechtenstein,Monaco,San Marino,Gibraltar (UK),Aland Islands (Finland),Svalbard and Jan Mayen (Norway),Vatican City"
+European_nations_list <- str_split(European_nations_text,",")[[1]]
+
+# an unfortunate 'hack'
+all_data$country[all_data$country == "Great Britain"] <- "United Kingdom"
+
+# main plot
+all_data %>%
+  filter(country %in% European_nations_list) %>%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  geom_point(size = 2) +
+  facet_geo(~ country, grid = "eu_grid1") +
+  labs(title = "Social Acceptance of LGBT People in Europe",
+       subtitle = "Global Acceptance Index",
+       caption = "Data Source: UCLA Williams Institute",
+       x = "",
+       y = "") +
+  scale_x_continuous(breaks = c(2003, 2008, 2013, 2017),
+                   labels = c("2003", "2008", "2013", "2017")) +
+  scale_y_continuous(breaks = c(0, 2, 4, 6, 8, 10),
+                   labels = c("0", "2", "4", "6", "8", "10")) +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = "none",
+        panel.background = element_rect(fill = "white"),
+        panel.border = element_rect(color = "black", fill = NA))
+```
+
+```{r}
+all_data %>%
+  filter(country %in% European_nations_list) %>%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  geom_point(size = 4) +
+  facet_geo(~ country, grid = "eu_grid1") +
+  labs(title = "Social Acceptance of LGBT People in Europe",
+       subtitle = "Global Acceptance Index",
+       caption = "Data Source: UCLA Williams Institute",
+       x = "",
+       y = "") +
+  scale_x_continuous(breaks = c(2003, 2008, 2013, 2017),
+                   labels = c("2003", "2008", "2013", "2017")) +
+  scale_y_continuous(breaks = c(0, 2, 4, 6, 8, 10),
+                   labels = c("0", "2", "4", "6", "8", "10")) +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = "none",
+        panel.background = element_rect(fill = "white"),
+        panel.border = element_rect(color = "black", fill = NA),
+        panel.grid = element_line(color = "gray80"))
+```
+
+```{r}
+sessionInfo()
+```
+
