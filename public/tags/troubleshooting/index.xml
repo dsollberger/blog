@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Troubleshooting on The Median Data Scientist</title>
+    <link>/tags/troubleshooting/</link>
+    <description>Recent content in Troubleshooting on The Median Data Scientist</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Wed, 03 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/tags/troubleshooting/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>R Installation (Summer 2020)</title>
+      <link>/post/r-installation-summer-2020/</link>
+      <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-installation-summer-2020/</guid>
+      <description>If you are planning to do the R assignments on your own computer (recommended), then here is a quick outline for obtaining the software.
+There are two separate software programs. Most people find it easier to use RStudio. than just R, but you need to install R first before installing RStudio (analogously speaking: you need an cell phone before you can use an cell phone case).If you have R and RStudio from a previous course, you still need to update to the current versions!</description>
+    </item>
+    
+  </channel>
+</rss>

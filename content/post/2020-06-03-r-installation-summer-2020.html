@@ -1,0 +1,97 @@
+---
+title: R Installation (Summer 2020)
+author: Derek Sollberger
+date: '2020-06-03'
+slug: r-installation-summer-2020
+categories:
+  - r
+tags:
+  - troubleshooting
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<p>If you are planning to do the <code>R</code> assignments on your own computer (recommended), then here is a quick outline for obtaining the software.</p>
+<ul>
+<li><em>There are two separate software programs</em>. Most people find it easier to use <code>RStudio</code>. than just <code>R</code>, but you need to install <code>R</code> first before installing <code>RStudio</code> (analogously speaking: you need an cell phone before you can use an cell phone case).</li>
+<li><em>If you have R and RStudio from a previous course, you still need to update to the current versions!</em> (version 4.0.0 of R and version 1.3.959 of RStudio)</li>
+</ul>
+<div id="downloading-r" class="section level1">
+<h1>Downloading R</h1>
+<p>Go to <a href="https://cran.r-project.org/">The Comprehensive R Archive Network</a> (CRAN)</p>
+<p>Windows:</p>
+<ul>
+<li>click “Download R for Windows”</li>
+<li>click “install R for the first time”</li>
+<li>click “Download R 4.0.0 for Windows”</li>
+<li>click “Save File”</li>
+</ul>
+<p>Mac:</p>
+<ul>
+<li>click “Download R for (Mac) OS X”</li>
+<li>click “R-4.0.0.pkg”</li>
+<li>click “Ok”</li>
+</ul>
+</div>
+<div id="installing-r" class="section level1">
+<h1>Installing R</h1>
+<ul>
+<li>Windows: double-check icon for R-4.0.0-win.exe</li>
+<li>Mac: double-click icon for R-4.0.0.pkg</li>
+</ul>
+<p>For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):</p>
+<ul>
+<li>give computer permission to install</li>
+<li>select language</li>
+<li>agree to GNU General Public License</li>
+<li>select destination location</li>
+<li>select components</li>
+<li>Startup options: select “No (accept defaults)”</li>
+<li>select Start Menu Folder</li>
+<li>select Additional Tasks</li>
+<li>(wait a minute or two for installation to take place)</li>
+<li>“Click Finish to exit Setup”</li>
+</ul>
+</div>
+<div id="downloading-rstudio" class="section level1">
+<h1>Downloading RStudio</h1>
+<p>Go to the <a href="https://rstudio.com/products/rstudio/download/#download">RStudio Desktop download page</a> (i.e. we are using the <em>free</em>, desktop version of RStudio)</p>
+<ul>
+<li>Windows: click RStudio-1.3.959.exe, click “Save File”</li>
+<li>Mac: click RStudio-1.3.959.dmg, click “Ok”</li>
+</ul>
+</div>
+<div id="installing-rstudio" class="section level1">
+<h1>Installing RStudio</h1>
+<ul>
+<li>Windows: double-check icon for RStudio-1.3.959.exe</li>
+<li>Mac: double-click icon for RStudio-1.3.959.dmg</li>
+</ul>
+<p>For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):</p>
+<ul>
+<li>give computer permission to install</li>
+<li>“Click Next to continue”</li>
+<li>Choose Install Location</li>
+<li>Choose Start Menu Folder</li>
+<li>(wait a minute or two for installation to take place)</li>
+<li>“Click Finish to close Setup”</li>
+</ul>
+</div>
+<div id="code-packages" class="section level1">
+<h1>Code Packages</h1>
+<p>For R coding, we will often need more code—called code packages. To ease our coding sessions, please run the following lines of code before class (in the lower-left <code>console</code> area of RStudio, just has to be done once this semester).</p>
+<pre class="r"><code>package_list &lt;- c(&quot;tidyverse&quot;, &quot;readxl&quot;, &quot;mosaic&quot;, &quot;titanic&quot;)
+install.packages(package_list)</code></pre>
+</div>
+<div id="file-types" class="section level1">
+<h1>File Types</h1>
+<p>Also, while we are learning how I want homework assignments to be submitted, it will be useful if you can see file types in your computer.</p>
+<ul>
+<li>instructions for <a href="http://kb.winzip.com/kb/entry/26/">Windows</a></li>
+<li>instructions for <a href="https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/">Mac OS X</a></li>
+</ul>
+</div>

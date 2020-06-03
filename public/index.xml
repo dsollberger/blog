@@ -11,6 +11,95 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>R Installation (Summer 2020)</title>
+      <link>/post/r-installation-summer-2020/</link>
+      <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/r-installation-summer-2020/</guid>
+      <description>&lt;p&gt;If you are planning to do the &lt;code&gt;R&lt;/code&gt; assignments on your own computer (recommended), then here is a quick outline for obtaining the software.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;There are two separate software programs&lt;/em&gt;. Most people find it easier to use &lt;code&gt;RStudio&lt;/code&gt;. than just &lt;code&gt;R&lt;/code&gt;, but you need to install &lt;code&gt;R&lt;/code&gt; first before installing &lt;code&gt;RStudio&lt;/code&gt; (analogously speaking: you need an cell phone before you can use an cell phone case).&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;If you have R and RStudio from a previous course, you still need to update to the current versions!&lt;/em&gt; (version 4.0.0 of R and version 1.3.959 of RStudio)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;downloading-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Downloading R&lt;/h1&gt;
+&lt;p&gt;Go to &lt;a href=&#34;https://cran.r-project.org/&#34;&gt;The Comprehensive R Archive Network&lt;/a&gt; (CRAN)&lt;/p&gt;
+&lt;p&gt;Windows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click “Download R for Windows”&lt;/li&gt;
+&lt;li&gt;click “install R for the first time”&lt;/li&gt;
+&lt;li&gt;click “Download R 4.0.0 for Windows”&lt;/li&gt;
+&lt;li&gt;click “Save File”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Mac:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click “Download R for (Mac) OS X”&lt;/li&gt;
+&lt;li&gt;click “R-4.0.0.pkg”&lt;/li&gt;
+&lt;li&gt;click “Ok”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing R&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: double-check icon for R-4.0.0-win.exe&lt;/li&gt;
+&lt;li&gt;Mac: double-click icon for R-4.0.0.pkg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;give computer permission to install&lt;/li&gt;
+&lt;li&gt;select language&lt;/li&gt;
+&lt;li&gt;agree to GNU General Public License&lt;/li&gt;
+&lt;li&gt;select destination location&lt;/li&gt;
+&lt;li&gt;select components&lt;/li&gt;
+&lt;li&gt;Startup options: select “No (accept defaults)”&lt;/li&gt;
+&lt;li&gt;select Start Menu Folder&lt;/li&gt;
+&lt;li&gt;select Additional Tasks&lt;/li&gt;
+&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
+&lt;li&gt;“Click Finish to exit Setup”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;downloading-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Downloading RStudio&lt;/h1&gt;
+&lt;p&gt;Go to the &lt;a href=&#34;https://rstudio.com/products/rstudio/download/#download&#34;&gt;RStudio Desktop download page&lt;/a&gt; (i.e. we are using the &lt;em&gt;free&lt;/em&gt;, desktop version of RStudio)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: click RStudio-1.3.959.exe, click “Save File”&lt;/li&gt;
+&lt;li&gt;Mac: click RStudio-1.3.959.dmg, click “Ok”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing RStudio&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: double-check icon for RStudio-1.3.959.exe&lt;/li&gt;
+&lt;li&gt;Mac: double-click icon for RStudio-1.3.959.dmg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;give computer permission to install&lt;/li&gt;
+&lt;li&gt;“Click Next to continue”&lt;/li&gt;
+&lt;li&gt;Choose Install Location&lt;/li&gt;
+&lt;li&gt;Choose Start Menu Folder&lt;/li&gt;
+&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
+&lt;li&gt;“Click Finish to close Setup”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;code-packages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Code Packages&lt;/h1&gt;
+&lt;p&gt;For R coding, we will often need more code—called code packages. To ease our coding sessions, please run the following lines of code before class (in the lower-left &lt;code&gt;console&lt;/code&gt; area of RStudio, just has to be done once this semester).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_list &amp;lt;- c(&amp;quot;tidyverse&amp;quot;, &amp;quot;readxl&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;titanic&amp;quot;)
+install.packages(package_list)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;file-types&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;File Types&lt;/h1&gt;
+&lt;p&gt;Also, while we are learning how I want homework assignments to be submitted, it will be useful if you can see file types in your computer.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;http://kb.winzip.com/kb/entry/26/&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/&#34;&gt;Mac OS X&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Geofacet plot vingette</title>
       <link>/post/geofacet-plot-vingette/</link>
       <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
@@ -2292,28 +2381,6 @@ main_cast_classified &amp;lt;- gender_df(main_cast,
 ggtexttable(main_cast_classified, rows = NULL)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/2020-01-09-gender-of-frasier-characters_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Response to DataCamp&#39;s 20190404 Community Post</title>
-      <link>/post/response-to-datacamp-s-20190404-community-post/</link>
-      <pubDate>Sat, 06 Apr 2019 00:00:00 +0000</pubDate>
-      
-      <guid>/post/response-to-datacamp-s-20190404-community-post/</guid>
-      <description>&lt;p&gt;&lt;em&gt;This is the letter I sent out to my data science organization about the news that came out of DataCamp this week.&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;4/6/2019&lt;/p&gt;
-&lt;p&gt;Dear DatASci,&lt;/p&gt;
-&lt;p&gt;I write to ask you for your input in developing a group response to these recent events.&lt;/p&gt;
-&lt;p&gt;Overnight on Thursday, April 4, DataCamp released a statement in their official blog that you can find here: &lt;a href=&#34;https://www.datacamp.com/community/blog/note-to-our-community&#34; class=&#34;uri&#34;&gt;https://www.datacamp.com/community/blog/note-to-our-community&lt;/a&gt;. To summarize, in October of 2017, an executive at the company sexually harassed an employee at a company social event. The employee reported the event a few months later, which means that the official statement finally appeared about a full year later. Furthermore, DataCamp only released that statement after a unified complaint from over 100 instructors.&lt;/p&gt;
-&lt;p&gt;At this moment, I wish to personally condemn the perpetrator and the leadership at DataCamp over their actions and mismanagement of their company culture.&lt;/p&gt;
-&lt;p&gt;It is simple to state that I do not condone the behavior of that employee and the peers. However, it is difficult to reconcile the event with my relationship with the DataCamp company itself. The educational material has allowed me to increase my status at my own workplace, and I have subsequently and frequently recommended DataCamp to those who also wished to improve their technical skills. During the Spring semester and Summer session of 2018, I led efforts to connect our DatASci club and graduate students with the online courses offered by DataCamp.&lt;/p&gt;
-&lt;p&gt;In addition to coordinating the use of the education product, I have met several wonderful DataCamp employees and instructors at conferences—all while being unaware of negligent events happening in the background. I might have even met the perpetrator too.&lt;/p&gt;
-&lt;p&gt;This news coming out of DataCamp is quite antithetical to the culture of the data science community. Just the day before in the Twitter space, we were praising the data science community on being diverse, inclusive, and very genial to programmers of all skill levels. Unfortunately, the actions made by DataCamp is a step backward and will leave a scar. We can do better.&lt;/p&gt;
-&lt;p&gt;The views here presented in this letter are my own and do not reflect the opinion or stances of my colleagues at UC Merced for the simple reason that this letter is the dissemination of the news to my peers in the DatASci graduate student organization and my coworkers at UC Merced. If we need to solidify a view of the DataCamp business and our relationship with this education partner and the values of vendors, I will welcome future conversation about these matters.&lt;/p&gt;
-&lt;p&gt;Sincerely,
-Derek Sollberger
-Continuing Lecturer at UC Merced&lt;/p&gt;
 </description>
     </item>
     
