@@ -208,6 +208,71 @@
   
   
   <h3 class="article-title" itemprop="headline">
+    <a href="/post/fall-plans-for-american-universities/" itemprop="url">Fall Plans for American Universities</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-06-13 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jun 13, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/data-mining">data mining</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    IntroductionToday’s coding practice is based on the following article and data source (there is literally a “Get the Data” link):
+Here’s a List of Colleges’ Plans for Reopening in the Falllibrary(&quot;geofacet&quot;)library(&quot;rvest&quot;)library(&quot;tidyverse&quot;)# load datadf_raw &lt;- read_csv(&quot;data-w8lLG.csv&quot;)colnames(df_raw)## [1] &quot;Institution&quot; &quot;Control&quot; &quot;State&quot; &quot;Category&quot;Data Wrangling# filter out Excel artifacts (trivial, empty rows)df &lt;- df_raw %&gt;%filter(Institution != &quot;#REF!&quot;)#States as factorsstates_alphabetically &lt;- sort(unique(df$State))df$State_factor &lt;- factor(df$State,levels = states_alphabetically)#extracting text from urls (rvest!
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/fall-plans-for-american-universities/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
     <a href="/post/r-installation-summer-2020/" itemprop="url">R Installation (Summer 2020)</a>
   </h3>
   
@@ -786,73 +851,6 @@ tdf_winners &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordat
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/introduction-to-machine-learning/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/introduction-to-bioconductor/" itemprop="url">Introduction to Bioconductor</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-02-12 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Feb 12, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/bioinformatics">bioinformatics</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    “Bioconductor provides tools for the analysis and comprehension of high-throughput genomic data. Bioconductor uses the R statistical programming language, and is open source and open development.”
-https://www.bioconductor.org/
-library(&quot;dplyr&quot;)library(&quot;ggplot2&quot;)InstallationTo install core packages, type the following in an R command window.
-This may take around 5 minutesWhen the option for updating packages appears, type in “a” for “all”#leave as eval = FALSE when knittingif (!
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/introduction-to-bioconductor/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>

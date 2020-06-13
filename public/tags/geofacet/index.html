@@ -79,7 +79,7 @@
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2020-05-30T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2020-06-13T00:00:00&#43;00:00">
   
 
   
@@ -209,6 +209,42 @@
   
 
   
+  
+  <div>
+    <h2><a href="/post/fall-plans-for-american-universities/">Fall Plans for American Universities</a></h2>
+    <div class="article-style">
+      
+      <p>Introduction
+Today’s coding practice is based on the following article and data source (there is literally a “Get the Data” link):</p>
+
+<p>Here’s a List of Colleges’ Plans for Reopening in the Fall</p>
+
+<p>library(&quot;geofacet&quot;)
+library(&quot;rvest&quot;)
+library(&quot;tidyverse&quot;)</p>
+
+<h1 id="load-data">load data</h1>
+
+<p>df_raw &lt;- read_csv(&quot;data-w8lLG.csv&quot;)
+colnames(df_raw)</p>
+
+<h2 id="1-quot-institution-quot-quot-control-quot-quot-state-quot-quot-category-quot">[1] &quot;Institution&quot; &quot;Control&quot; &quot;State&quot; &quot;Category&quot;</h2>
+
+<p>Data Wrangling</p>
+
+<h1 id="filter-out-excel-artifacts-trivial-empty-rows">filter out Excel artifacts (trivial, empty rows)</h1>
+
+<p>df &lt;- df_raw %&gt;%
+filter(Institution != &quot;#REF!&quot;)
+#States as factors
+states_alphabetically &lt;- sort(unique(df$State))
+df$State_factor &lt;- factor(df$State,
+levels = states_alphabetically)
+#extracting text from urls (rvest!</p>
+
+      
+    </div>
+  </div>
   
   <div>
     <h2><a href="/post/geofacet-plot-vingette/">Geofacet plot vingette</a></h2>

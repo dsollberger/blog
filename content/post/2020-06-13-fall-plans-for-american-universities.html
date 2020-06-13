@@ -1,0 +1,95 @@
+---
+title: Fall Plans for American Universities
+author: Derek Sollberger
+date: '2020-06-13'
+slug: fall-plans-for-american-universities
+categories:
+  - data mining
+tags:
+  - choropleth
+  - geofacet
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Today’s coding practice is based on the following article and data source (there is literally a “Get the Data” link):</p>
+<ul>
+<li><a href="https://www.chronicle.com/article/Here-s-a-List-of-Colleges-/248626">Here’s a List of Colleges’ Plans for Reopening in the Fall</a></li>
+</ul>
+<pre class="r"><code>library(&quot;geofacet&quot;)
+library(&quot;rvest&quot;)
+library(&quot;tidyverse&quot;)
+
+# load data
+df_raw &lt;- read_csv(&quot;data-w8lLG.csv&quot;)
+colnames(df_raw)</code></pre>
+<pre><code>## [1] &quot;Institution&quot; &quot;Control&quot;     &quot;State&quot;       &quot;Category&quot;</code></pre>
+</div>
+<div id="data-wrangling" class="section level1">
+<h1>Data Wrangling</h1>
+<pre class="r"><code># filter out Excel artifacts (trivial, empty rows)
+df &lt;- df_raw %&gt;%
+  filter(Institution != &quot;#REF!&quot;)</code></pre>
+<pre class="r"><code>#States as factors
+states_alphabetically &lt;- sort(unique(df$State))
+df$State_factor &lt;- factor(df$State,
+                          levels = states_alphabetically)</code></pre>
+<pre class="r"><code>#extracting text from urls (rvest!!)
+df$Category_simple &lt;- rep(NA, nrow(df))
+for(i in 1:nrow(df)){
+  if(str_detect(df$Category[i], pattern = &quot;&lt;a&quot;)){
+    df$Category_simple[i] &lt;- html_text(read_html(df$Category[i]))
+  }
+  else{
+    df$Category_simple[i] &lt;- df$Category[i]
+  }
+}
+
+table(df$Category_simple)</code></pre>
+<pre><code>## 
+##                                  Considering a range of scenarios 
+##                                1                               69 
+##                             Link           Planning for in-person 
+##                               11                              456 
+##              Planning for online         Proposing a hybrid model 
+##                               68                               78 
+##                Waiting to decide 
+##                               45</code></pre>
+</div>
+<div id="states-represented" class="section level1">
+<h1>States Represented</h1>
+<pre class="r"><code>df %&gt;%
+  ggplot(aes(x = fct_rev(State_factor))) + #note use of reversing the factor order
+  geom_bar(stat = &quot;count&quot;) +
+  coord_flip()</code></pre>
+<p><img src="/post/2020-06-13-fall-plans-for-american-universities_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="states-map" class="section level1">
+<h1>States Map</h1>
+<pre class="r"><code>main_plot &lt;- df %&gt;%
+  filter(Category_simple %in% 
+           c(&quot;Planning for in-person&quot;, &quot;Planning for online&quot;,
+             &quot;Proposing a hybrid model&quot;, &quot;Waiting to decide&quot;)) %&gt;%
+  ggplot(aes(x = Category_simple)) +
+  geom_bar(aes(fill = Category_simple), stat = &quot;count&quot;) +
+  labs(title = &quot;Fall Plans for American Universities&quot;,
+       subtitle = &quot;(as of June 12, 2020)&quot;,
+       caption = &quot;Data Source: Chronicle of Higher Education&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  scale_x_discrete(name = &quot;&quot;,
+                   labels = c(&quot;in-person&quot;, &quot;online&quot;, &quot;hybrid&quot;, &quot;TBA&quot;)) +
+  scale_fill_discrete(name = &quot;Fall Plans&quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  facet_geo(~State, grid = &quot;us_state_grid2&quot;, scales = &quot;free_y&quot;)
+
+main_plot +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-13-fall-plans-for-american-universities_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>

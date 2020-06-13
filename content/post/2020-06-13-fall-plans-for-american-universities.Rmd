@@ -1,0 +1,95 @@
+---
+title: Fall Plans for American Universities
+author: Derek Sollberger
+date: '2020-06-13'
+slug: fall-plans-for-american-universities
+categories:
+  - data mining
+tags:
+  - choropleth
+  - geofacet
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+# Introduction
+
+Today's coding practice is based on the following article and data source (there is literally a "Get the Data" link):
+
+* [Here’s a List of Colleges’ Plans for Reopening in the Fall](https://www.chronicle.com/article/Here-s-a-List-of-Colleges-/248626)
+
+```{r, message = FALSE, warning = FALSE}
+library("geofacet")
+library("rvest")
+library("tidyverse")
+
+# load data
+df_raw <- read_csv("data-w8lLG.csv")
+colnames(df_raw)
+```
+
+# Data Wrangling
+
+```{r}
+# filter out Excel artifacts (trivial, empty rows)
+df <- df_raw %>%
+  filter(Institution != "#REF!")
+```
+
+```{r}
+#States as factors
+states_alphabetically <- sort(unique(df$State))
+df$State_factor <- factor(df$State,
+                          levels = states_alphabetically)
+```
+
+```{r}
+#extracting text from urls (rvest!!)
+df$Category_simple <- rep(NA, nrow(df))
+for(i in 1:nrow(df)){
+  if(str_detect(df$Category[i], pattern = "<a")){
+    df$Category_simple[i] <- html_text(read_html(df$Category[i]))
+  }
+  else{
+    df$Category_simple[i] <- df$Category[i]
+  }
+}
+
+table(df$Category_simple)
+```
+
+
+# States Represented
+
+```{r}
+df %>%
+  ggplot(aes(x = fct_rev(State_factor))) + #note use of reversing the factor order
+  geom_bar(stat = "count") +
+  coord_flip()
+```
+
+# States Map
+
+```{r}
+main_plot <- df %>%
+  filter(Category_simple %in% 
+           c("Planning for in-person", "Planning for online",
+             "Proposing a hybrid model", "Waiting to decide")) %>%
+  ggplot(aes(x = Category_simple)) +
+  geom_bar(aes(fill = Category_simple), stat = "count") +
+  labs(title = "Fall Plans for American Universities",
+       subtitle = "(as of June 12, 2020)",
+       caption = "Data Source: Chronicle of Higher Education",
+       x = "",
+       y = "") +
+  scale_x_discrete(name = "",
+                   labels = c("in-person", "online", "hybrid", "TBA")) +
+  scale_fill_discrete(name = "Fall Plans") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  facet_geo(~State, grid = "us_state_grid2", scales = "free_y")
+
+main_plot +
+  theme(legend.position = "none")
+```

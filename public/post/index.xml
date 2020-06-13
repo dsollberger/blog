@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Fall Plans for American Universities</title>
+      <link>/post/fall-plans-for-american-universities/</link>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/fall-plans-for-american-universities/</guid>
+      <description>IntroductionToday’s coding practice is based on the following article and data source (there is literally a “Get the Data” link):
+Here’s a List of Colleges’ Plans for Reopening in the Falllibrary(&amp;quot;geofacet&amp;quot;)library(&amp;quot;rvest&amp;quot;)library(&amp;quot;tidyverse&amp;quot;)# load datadf_raw &amp;lt;- read_csv(&amp;quot;data-w8lLG.csv&amp;quot;)colnames(df_raw)## [1] &amp;quot;Institution&amp;quot; &amp;quot;Control&amp;quot; &amp;quot;State&amp;quot; &amp;quot;Category&amp;quot;Data Wrangling# filter out Excel artifacts (trivial, empty rows)df &amp;lt;- df_raw %&amp;gt;%filter(Institution != &amp;quot;#REF!&amp;quot;)#States as factorsstates_alphabetically &amp;lt;- sort(unique(df$State))df$State_factor &amp;lt;- factor(df$State,levels = states_alphabetically)#extracting text from urls (rvest!</description>
+    </item>
+    
+    <item>
       <title>R Installation (Summer 2020)</title>
       <link>/post/r-installation-summer-2020/</link>
       <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>

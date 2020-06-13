@@ -381,6 +381,88 @@
         
           
       
+          
+      
+
+      
+      
+        
+        
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
+    <a href="/post/fall-plans-for-american-universities/" itemprop="url">Fall Plans for American Universities</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-06-13 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jun 13, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/data-mining">data mining</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    IntroductionToday’s coding practice is based on the following article and data source (there is literally a “Get the Data” link):
+Here’s a List of Colleges’ Plans for Reopening in the Falllibrary(&quot;geofacet&quot;)library(&quot;rvest&quot;)library(&quot;tidyverse&quot;)# load datadf_raw &lt;- read_csv(&quot;data-w8lLG.csv&quot;)colnames(df_raw)## [1] &quot;Institution&quot; &quot;Control&quot; &quot;State&quot; &quot;Category&quot;Data Wrangling# filter out Excel artifacts (trivial, empty rows)df &lt;- df_raw %&gt;%filter(Institution != &quot;#REF!&quot;)#States as factorsstates_alphabetically &lt;- sort(unique(df$State))df$State_factor &lt;- factor(df$State,levels = states_alphabetically)#extracting text from urls (rvest!
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/fall-plans-for-american-universities/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+      
+
+      
+
+        
+
+        
+        
+
+        
+        
+          
+      
 
       
       
@@ -696,86 +778,6 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
       
 
       
-
-        
-
-        
-        
-
-        
-        
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/analysis-of-nyt-sample-of-covid-19-obituaries/" itemprop="url">Analysis of NYT Sample of Covid-19 Obituaries</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-05-24 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      May 24, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/data-mining">data mining</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    Obtaining the DataOn May 24, 2020, the New York Times published an article called “An Incalcuable Loss”
-&quot;America is fast approaching a grim milestone in the coronavirus outbreak — each figure here represents one of the nearly 100,000 lives lost so far. But a count reveals only so much. Memories, gathered from obituaries across the country, help us to reckon with what was lost.&quot;What I am trying to do today is summarize the 1001 obituaries.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/analysis-of-nyt-sample-of-covid-19-obituaries/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
     
 
   </div>
@@ -877,7 +879,7 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/choropleth" style="font-size:1.7597775578910853rem">choropleth</a>
+          <a href="/tags/choropleth" style="font-size:2.011104436167275rem">choropleth</a>
         
           
           
@@ -926,7 +928,7 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/geofacet" style="font-size:0.8rem">geofacet</a>
+          <a href="/tags/geofacet" style="font-size:1.4055522180836377rem">geofacet</a>
         
           
           

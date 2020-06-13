@@ -11,6 +11,92 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Fall Plans for American Universities</title>
+      <link>/post/fall-plans-for-american-universities/</link>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/fall-plans-for-american-universities/</guid>
+      <description>&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Today’s coding practice is based on the following article and data source (there is literally a “Get the Data” link):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.chronicle.com/article/Here-s-a-List-of-Colleges-/248626&#34;&gt;Here’s a List of Colleges’ Plans for Reopening in the Fall&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;geofacet&amp;quot;)
+library(&amp;quot;rvest&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)
+
+# load data
+df_raw &amp;lt;- read_csv(&amp;quot;data-w8lLG.csv&amp;quot;)
+colnames(df_raw)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Institution&amp;quot; &amp;quot;Control&amp;quot;     &amp;quot;State&amp;quot;       &amp;quot;Category&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Wrangling&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# filter out Excel artifacts (trivial, empty rows)
+df &amp;lt;- df_raw %&amp;gt;%
+  filter(Institution != &amp;quot;#REF!&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#States as factors
+states_alphabetically &amp;lt;- sort(unique(df$State))
+df$State_factor &amp;lt;- factor(df$State,
+                          levels = states_alphabetically)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#extracting text from urls (rvest!!)
+df$Category_simple &amp;lt;- rep(NA, nrow(df))
+for(i in 1:nrow(df)){
+  if(str_detect(df$Category[i], pattern = &amp;quot;&amp;lt;a&amp;quot;)){
+    df$Category_simple[i] &amp;lt;- html_text(read_html(df$Category[i]))
+  }
+  else{
+    df$Category_simple[i] &amp;lt;- df$Category[i]
+  }
+}
+
+table(df$Category_simple)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##                                  Considering a range of scenarios 
+##                                1                               69 
+##                             Link           Planning for in-person 
+##                               11                              456 
+##              Planning for online         Proposing a hybrid model 
+##                               68                               78 
+##                Waiting to decide 
+##                               45&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;states-represented&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;States Represented&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = fct_rev(State_factor))) + #note use of reversing the factor order
+  geom_bar(stat = &amp;quot;count&amp;quot;) +
+  coord_flip()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-06-13-fall-plans-for-american-universities_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;states-map&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;States Map&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;main_plot &amp;lt;- df %&amp;gt;%
+  filter(Category_simple %in% 
+           c(&amp;quot;Planning for in-person&amp;quot;, &amp;quot;Planning for online&amp;quot;,
+             &amp;quot;Proposing a hybrid model&amp;quot;, &amp;quot;Waiting to decide&amp;quot;)) %&amp;gt;%
+  ggplot(aes(x = Category_simple)) +
+  geom_bar(aes(fill = Category_simple), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Fall Plans for American Universities&amp;quot;,
+       subtitle = &amp;quot;(as of June 12, 2020)&amp;quot;,
+       caption = &amp;quot;Data Source: Chronicle of Higher Education&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_discrete(name = &amp;quot;&amp;quot;,
+                   labels = c(&amp;quot;in-person&amp;quot;, &amp;quot;online&amp;quot;, &amp;quot;hybrid&amp;quot;, &amp;quot;TBA&amp;quot;)) +
+  scale_fill_discrete(name = &amp;quot;Fall Plans&amp;quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  facet_geo(~State, grid = &amp;quot;us_state_grid2&amp;quot;, scales = &amp;quot;free_y&amp;quot;)
+
+main_plot +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-06-13-fall-plans-for-american-universities_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>R Installation (Summer 2020)</title>
       <link>/post/r-installation-summer-2020/</link>
       <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
@@ -2295,92 +2381,6 @@ df_info %&amp;gt;% print()&lt;/code&gt;&lt;/pre&gt;
   xlim(0,8) +
   ylim(0, 15000)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/2020-01-11-hikes-i-ve-completed_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Gender of Frasier Characters</title>
-      <link>/post/gender-of-frasier-characters/</link>
-      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/post/gender-of-frasier-characters/</guid>
-      <description>&lt;p&gt;“I am not a man…”&lt;/p&gt;
-&lt;p&gt;For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show &lt;em&gt;Fraiser&lt;/em&gt;.&lt;/p&gt;
-&lt;div id=&#34;the-gender-package&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;The gender package&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#install.packages(&amp;quot;gender&amp;quot;) #works fine
-
-## user needs to download database too
-#install_genderdata_package() #did not work (&amp;quot;error reading from connection&amp;quot;)
-
-## as suggested by the bug report at https://github.com/ropensci/drat/issues/6
-#install.packages(&amp;quot;devtools&amp;quot;)
-#library(devtools)
-#devtools::install_github(&amp;quot;ropensci/genderdata&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;trial-run&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Trial Run&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gender)
-library(ggpubr)
-library(tidyverse)
-
-gender(&amp;quot;frasier&amp;quot;, method = &amp;quot;ssa&amp;quot;, years = c(1940, 1990))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 6
-##   name    proportion_male proportion_female gender year_min year_max
-##   &amp;lt;chr&amp;gt;             &amp;lt;dbl&amp;gt;             &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
-## 1 frasier               1                 0 male       1940     1990&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;cast-of-characters&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Cast of Characters&lt;/h1&gt;
-&lt;p&gt;Now I will try to run the &lt;code&gt;gender&lt;/code&gt; function over a list of names (criteria: characters that appeared in at least 6 episodes).&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#making a data frame of characters (i.e. the TV show characters)
-name &amp;lt;- c(&amp;quot;frasier&amp;quot;, &amp;quot;daphne&amp;quot;, &amp;quot;niles&amp;quot;, &amp;quot;roz&amp;quot;, &amp;quot;martin&amp;quot;, 
-          &amp;quot;eddie&amp;quot;, &amp;quot;bulldog&amp;quot;, &amp;quot;kenny&amp;quot;, &amp;quot;gil&amp;quot;, &amp;quot;noel&amp;quot;, 
-          &amp;quot;gertrude&amp;quot;, &amp;quot;donny&amp;quot;, &amp;quot;lilith&amp;quot;, &amp;quot;bebe&amp;quot;, &amp;quot;mel&amp;quot;,
-          &amp;quot;ronee&amp;quot;, &amp;quot;alice&amp;quot;, &amp;quot;julia&amp;quot;, &amp;quot;frederick&amp;quot;, &amp;quot;simon&amp;quot;,
-          &amp;quot;lana&amp;quot;, &amp;quot;sherry&amp;quot;, &amp;quot;kirby&amp;quot;, &amp;quot;charlotte&amp;quot;)
-start_year &amp;lt;- 1940
-end_year &amp;lt;- 1990
-df &amp;lt;- data.frame(name, start_year, end_year, stringsAsFactors=FALSE)
-main_cast &amp;lt;- df %&amp;gt;% slice(1:5)
-
-gender_df(df, method = &amp;quot;ssa&amp;quot;, name_col = &amp;quot;name&amp;quot;, year_col = c(&amp;quot;start_year&amp;quot;, &amp;quot;end_year&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 23 x 6
-##    name      proportion_male proportion_female gender year_min year_max
-##  * &amp;lt;chr&amp;gt;               &amp;lt;dbl&amp;gt;             &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
-##  1 alice              0.0033            0.997  female     1940     1990
-##  2 bebe               0                 1      female     1940     1990
-##  3 charlotte          0.0026            0.997  female     1940     1990
-##  4 daphne             0.0004            1.00   female     1940     1990
-##  5 donny              0.996             0.0039 male       1940     1990
-##  6 eddie              0.959             0.0414 male       1940     1990
-##  7 frasier            1                 0      male       1940     1990
-##  8 frederick          0.995             0.0052 male       1940     1990
-##  9 gertrude           0.0008            0.999  female     1940     1990
-## 10 gil                1                 0      male       1940     1990
-## # ... with 13 more rows&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;sorting-the-data&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Sorting the Data&lt;/h1&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;results &amp;lt;- gender_df(df, method = &amp;quot;ssa&amp;quot;, name_col = &amp;quot;name&amp;quot;, year_col = c(&amp;quot;start_year&amp;quot;, &amp;quot;end_year&amp;quot;))
-
-results_classified &amp;lt;- results %&amp;gt;%
-  select(name, proportion_male, gender) %&amp;gt;%
-  arrange(desc(proportion_male)) 
-
-ggtexttable(results_classified, rows = NULL)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-01-09-gender-of-frasier-characters_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Note that “Mel” is a female character in the TV show. The calculations are tougher when the input is a nickname.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# just the main cast
-main_cast_classified &amp;lt;- gender_df(main_cast, 
-          method = &amp;quot;ssa&amp;quot;, name_col = &amp;quot;name&amp;quot;, 
-          year_col = c(&amp;quot;start_year&amp;quot;, &amp;quot;end_year&amp;quot;)) %&amp;gt;%
-  select(name, proportion_male, gender) %&amp;gt;%
-  arrange(desc(proportion_male))
-
-ggtexttable(main_cast_classified, rows = NULL)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-01-09-gender-of-frasier-characters_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
-&lt;/div&gt;
 </description>
     </item>
     
