@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Recent Supreme Court Cases</title>
+      <link>/post/recent-supreme-court-cases/</link>
+      <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/recent-supreme-court-cases/</guid>
+      <description>Introductionlibrary(&amp;quot;tidyverse&amp;quot;)Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the ggplot package.
+data source: SCOTUS Bloguseful tool: Convert Town’s “Column to Comma Separated Values” functionDataJust in case anyone actually uses my blog post, I will type out the data manually instead of load a separate CSV file so that anyone can copy-and-paste the code for replicability.</description>
+    </item>
+    
+    <item>
       <title>Fall Plans for American Universities</title>
       <link>/post/fall-plans-for-american-universities/</link>
       <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>

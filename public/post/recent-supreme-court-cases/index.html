@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.44" />
+  <meta name="author" content="Derek Sollberger">
+
+  
+  
+  
+  
+    
+      
+    
+  
+  <meta name="description" content="Introductionlibrary(&quot;tidyverse&quot;)Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the ggplot package.
+data source: SCOTUS Bloguseful tool: Convert Town’s “Column to Comma Separated Values” functionDataJust in case anyone actually uses my blog post, I will type out the data manually instead of load a separate CSV file so that anyone can copy-and-paste the code for replicability.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/recent-supreme-court-cases/">
+
+  
+
+
+  
+
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/recent-supreme-court-cases/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@DerekSollberger">
+  <meta property="twitter:creator" content="@DerekSollberger">
+  
+  <meta property="og:site_name" content="The Median Data Scientist">
+  <meta property="og:url" content="/post/recent-supreme-court-cases/">
+  <meta property="og:title" content="Recent Supreme Court Cases | The Median Data Scientist">
+  <meta property="og:description" content="Introductionlibrary(&quot;tidyverse&quot;)Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the ggplot package.
+data source: SCOTUS Bloguseful tool: Convert Town’s “Column to Comma Separated Values” functionDataJust in case anyone actually uses my blog post, I will type out the data manually instead of load a separate CSV file so that anyone can copy-and-paste the code for replicability.">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2020-06-18T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2020-06-18T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>Recent Supreme Court Cases | The Median Data Scientist</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">The Median Data Scientist</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#teaching">
+            
+            <span>Teaching</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">Recent Supreme Court Cases</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-06-18 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jun 18, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/politics">politics</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Recent%20Supreme%20Court%20Cases&amp;url=%2fpost%2frecent-supreme-court-cases%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2frecent-supreme-court-cases%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2frecent-supreme-court-cases%2f&amp;title=Recent%20Supreme%20Court%20Cases"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2frecent-supreme-court-cases%2f&amp;title=Recent%20Supreme%20Court%20Cases"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Recent%20Supreme%20Court%20Cases&amp;body=%2fpost%2frecent-supreme-court-cases%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<pre class="r"><code>library(&quot;tidyverse&quot;)</code></pre>
+<p>Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the <code>ggplot</code> package.</p>
+<ul>
+<li>data source: <a href="https://www.scotusblog.com/">SCOTUS Blog</a></li>
+<li>useful tool: <a href="https://convert.town/">Convert Town’s</a> “Column to Comma Separated Values” function</li>
+</ul>
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>Just in case anyone actually uses my blog post, I will type out the data manually instead of load a separate CSV file so that anyone can copy-and-paste the code for replicability.</p>
+<pre class="r"><code># building the small data frame this way simply for replicability
+case_number &lt;- 37:46
+summary &lt;- strsplit(&quot;arbitration agreements,PR Finance Board,successive habeas,retirement lawsuits,extradition to torture,prisoner lawsuits,forest land use,LGBT job termination,Andrus counsel,DACA&quot;,
+                    split = &quot;,&quot;)[[1]]
+case_name &lt;- strsplit(&quot;GE Energy Power Conversion France SAS v. Outokumpu Stainless USA LLC,Financial Oversight and Management Bd. for Puerto Rico v. Aurelius Investment LLC,Banister v. Davis,Thole v. U.S. Bank N.A.,Nasrallah v. Barr,Lomax v. Ortiz-Marquez,United States Forest Service v. Cowpasture River Preservation Assn.,Bostock v. Clayton County,Andrus v. Texas,Department of Homeland Security v. Regents of Univ. of Cal&quot;, 
+                      split = &quot;,&quot;)[[1]]
+argued &lt;- strsplit(&quot;21-Jan-20,15-Oct-19,4-Dec-19,13-Jan-20,2-Mar-20,26-Feb-20,24-Feb-20,8-Oct-19,NA,12-Nov-19&quot;, split = &quot;,&quot;)[[1]]
+decided &lt;- strsplit(&quot;1-Jun-20,1-Jun-20,1-Jun-20,1-Jun-20,1-Jun-20,8-Jun-20,15-Jun-20,15-Jun-20,15-Jun-20,18-Jun-20,&quot;, split = &quot;,&quot;)[[1]]
+
+# the votes of the Supreme Court justices
+Roberts   &lt;- strsplit(&quot;O,O,O,O,O,O,O,O,O,O&quot;, split = &quot;,&quot;)[[1]]
+Thomas    &lt;- strsplit(&quot;O,O,D,O,D,O,O,D,D,D&quot;, split = &quot;,&quot;)[[1]]
+Ginsburg  &lt;- strsplit(&quot;O,O,O,D,O,O,O,O,O,O&quot;, split = &quot;,&quot;)[[1]]
+Breyer    &lt;- strsplit(&quot;O,O,O,D,O,O,O,O,O,O&quot;, split = &quot;,&quot;)[[1]]
+Alito     &lt;- strsplit(&quot;O,O,D,O,D,O,O,D,D,D&quot;, split = &quot;,&quot;)[[1]]
+Sotomayor &lt;- strsplit(&quot;O,O,O,D,O,O,D,O,O,O&quot;, split = &quot;,&quot;)[[1]]
+Kagan     &lt;- strsplit(&quot;O,O,O,D,O,O,D,O,O,O&quot;, split = &quot;,&quot;)[[1]]
+Gorsuch   &lt;- strsplit(&quot;O,O,O,O,O,O,O,O,D,D&quot;, split = &quot;,&quot;)[[1]]
+Kavanaugh &lt;- strsplit(&quot;O,O,O,O,O,O,O,D,O,D&quot;, split = &quot;,&quot;)[[1]]
+
+raw_data &lt;- data.frame(case_number, summary, case_name, argued, decided,
+                       Roberts, Thomas, Ginsburg, Breyer, Alito,
+                       Sotomayor, Kagan, Gorsuch, Kavanaugh)
+
+dim(raw_data)</code></pre>
+<pre><code>## [1] 10 14</code></pre>
+<p>At the moment, we have a data frame with 10 observations (i.e. 10 Supreme Court cases) and 14 variables.</p>
+</div>
+<div id="tidy-data" class="section level1">
+<h1>Tidy Data</h1>
+<p>Next, I want to <code>gather</code> the justices’ votes (“opinion” or “dissent”) to make graphing easy.</p>
+<pre class="r"><code>df &lt;- raw_data %&gt;%
+  gather(key = &quot;Justice&quot;, value = &quot;vote&quot;, 
+         c(&quot;Roberts&quot;, &quot;Thomas&quot;, &quot;Ginsburg&quot;, &quot;Breyer&quot;, &quot;Alito&quot;,
+           &quot;Sotomayor&quot;, &quot;Kagan&quot;, &quot;Gorsuch&quot;, &quot;Kavanaugh&quot;))
+df$vote &lt;- factor(df$vote,
+                  levels = c(&quot;O&quot;, &quot;D&quot;))
+
+dim(df)</code></pre>
+<pre><code>## [1] 90  7</code></pre>
+<p>That is, we now have a data frame with 90 observations (10 cases times 9 justices) and 7 variables.</p>
+</div>
+<div id="graph" class="section level1">
+<h1>Graph</h1>
+<pre class="r"><code>y_labels &lt;- paste0(case_number, &quot;: &quot;, summary)
+
+df %&gt;%
+  ggplot(aes(x = Justice, y = case_number)) +
+  geom_point(aes(shape = vote, color = vote), size = 5) +
+  
+  #http://www.sthda.com/english/wiki/ggplot2-point-shapes
+  scale_shape_manual(name = &quot;Vote&quot;, 
+                     values = c(16, 4),
+                     labels = c(&quot;Court&#39;s Opinion&quot;, &quot;Dissent Statement(s)&quot;)) + 
+  scale_color_manual(name = &quot;Vote&quot;, 
+                       labels = c(&quot;Court&#39;s Opinion&quot;, &quot;Dissent Statement(s)&quot;),
+                       values=c(&quot;green&quot;, &quot;orange&quot;)) +
+  
+  labs(title = &quot;Recent Supreme Court Decisions&quot;,
+       subtitle = &quot;Justices supply the court&#39;s &#39;opinion&#39; or &#39;dissent&#39; (Data source: SCOTUS Blog)&quot;,
+       caption = &quot;&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  scale_y_continuous(breaks = 37:46,
+                     labels = y_labels) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &quot;top&quot;)</code></pre>
+<p><img src="/post/2020-06-18-recent-supreme-court-cases_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>captions &lt;- paste0( rev(paste0(case_number, &quot;: &quot;, case_name)), collapse = &quot;\n&quot;)
+rev(paste0(case_number, &quot;: &quot;, case_name))</code></pre>
+<pre><code>##  [1] &quot;46: Department of Homeland Security v. Regents of Univ. of Cal&quot;                       
+##  [2] &quot;45: Andrus v. Texas&quot;                                                                  
+##  [3] &quot;44: Bostock v. Clayton County&quot;                                                        
+##  [4] &quot;43: United States Forest Service v. Cowpasture River Preservation Assn.&quot;              
+##  [5] &quot;42: Lomax v. Ortiz-Marquez&quot;                                                           
+##  [6] &quot;41: Nasrallah v. Barr&quot;                                                                
+##  [7] &quot;40: Thole v. U.S. Bank N.A.&quot;                                                          
+##  [8] &quot;39: Banister v. Davis&quot;                                                                
+##  [9] &quot;38: Financial Oversight and Management Bd. for Puerto Rico v. Aurelius Investment LLC&quot;
+## [10] &quot;37: GE Energy Power Conversion France SAS v. Outokumpu Stainless USA LLC&quot;</code></pre>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/ggplot">ggplot</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/introduction-to-unsupervised-learning/">Introduction to Unsupervised Learning</a></li>
+    
+    <li><a href="/post/introduction-to-unsupervised-learning/">Introduction to Unsupervised Learning</a></li>
+    
+    <li><a href="/post/hikes-i-ve-completed/">Hikes I&#39;ve Completed</a></li>
+    
+    <li><a href="/post/introduction-to-r-workshop/">Introduction to R Workshop</a></li>
+    
+    <li><a href="/post/introduction-to-r-workshop/">Introduction to R Workshop</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2018 &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+

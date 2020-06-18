@@ -11,6 +11,108 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Recent Supreme Court Cases</title>
+      <link>/post/recent-supreme-court-cases/</link>
+      <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/recent-supreme-court-cases/</guid>
+      <description>&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the &lt;code&gt;ggplot&lt;/code&gt; package.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;data source: &lt;a href=&#34;https://www.scotusblog.com/&#34;&gt;SCOTUS Blog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;useful tool: &lt;a href=&#34;https://convert.town/&#34;&gt;Convert Town’s&lt;/a&gt; “Column to Comma Separated Values” function&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;p&gt;Just in case anyone actually uses my blog post, I will type out the data manually instead of load a separate CSV file so that anyone can copy-and-paste the code for replicability.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# building the small data frame this way simply for replicability
+case_number &amp;lt;- 37:46
+summary &amp;lt;- strsplit(&amp;quot;arbitration agreements,PR Finance Board,successive habeas,retirement lawsuits,extradition to torture,prisoner lawsuits,forest land use,LGBT job termination,Andrus counsel,DACA&amp;quot;,
+                    split = &amp;quot;,&amp;quot;)[[1]]
+case_name &amp;lt;- strsplit(&amp;quot;GE Energy Power Conversion France SAS v. Outokumpu Stainless USA LLC,Financial Oversight and Management Bd. for Puerto Rico v. Aurelius Investment LLC,Banister v. Davis,Thole v. U.S. Bank N.A.,Nasrallah v. Barr,Lomax v. Ortiz-Marquez,United States Forest Service v. Cowpasture River Preservation Assn.,Bostock v. Clayton County,Andrus v. Texas,Department of Homeland Security v. Regents of Univ. of Cal&amp;quot;, 
+                      split = &amp;quot;,&amp;quot;)[[1]]
+argued &amp;lt;- strsplit(&amp;quot;21-Jan-20,15-Oct-19,4-Dec-19,13-Jan-20,2-Mar-20,26-Feb-20,24-Feb-20,8-Oct-19,NA,12-Nov-19&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+decided &amp;lt;- strsplit(&amp;quot;1-Jun-20,1-Jun-20,1-Jun-20,1-Jun-20,1-Jun-20,8-Jun-20,15-Jun-20,15-Jun-20,15-Jun-20,18-Jun-20,&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+
+# the votes of the Supreme Court justices
+Roberts   &amp;lt;- strsplit(&amp;quot;O,O,O,O,O,O,O,O,O,O&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Thomas    &amp;lt;- strsplit(&amp;quot;O,O,D,O,D,O,O,D,D,D&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Ginsburg  &amp;lt;- strsplit(&amp;quot;O,O,O,D,O,O,O,O,O,O&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Breyer    &amp;lt;- strsplit(&amp;quot;O,O,O,D,O,O,O,O,O,O&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Alito     &amp;lt;- strsplit(&amp;quot;O,O,D,O,D,O,O,D,D,D&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Sotomayor &amp;lt;- strsplit(&amp;quot;O,O,O,D,O,O,D,O,O,O&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Kagan     &amp;lt;- strsplit(&amp;quot;O,O,O,D,O,O,D,O,O,O&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Gorsuch   &amp;lt;- strsplit(&amp;quot;O,O,O,O,O,O,O,O,D,D&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Kavanaugh &amp;lt;- strsplit(&amp;quot;O,O,O,O,O,O,O,D,O,D&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+
+raw_data &amp;lt;- data.frame(case_number, summary, case_name, argued, decided,
+                       Roberts, Thomas, Ginsburg, Breyer, Alito,
+                       Sotomayor, Kagan, Gorsuch, Kavanaugh)
+
+dim(raw_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 10 14&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At the moment, we have a data frame with 10 observations (i.e. 10 Supreme Court cases) and 14 variables.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidy-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Tidy Data&lt;/h1&gt;
+&lt;p&gt;Next, I want to &lt;code&gt;gather&lt;/code&gt; the justices’ votes (“opinion” or “dissent”) to make graphing easy.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df &amp;lt;- raw_data %&amp;gt;%
+  gather(key = &amp;quot;Justice&amp;quot;, value = &amp;quot;vote&amp;quot;, 
+         c(&amp;quot;Roberts&amp;quot;, &amp;quot;Thomas&amp;quot;, &amp;quot;Ginsburg&amp;quot;, &amp;quot;Breyer&amp;quot;, &amp;quot;Alito&amp;quot;,
+           &amp;quot;Sotomayor&amp;quot;, &amp;quot;Kagan&amp;quot;, &amp;quot;Gorsuch&amp;quot;, &amp;quot;Kavanaugh&amp;quot;))
+df$vote &amp;lt;- factor(df$vote,
+                  levels = c(&amp;quot;O&amp;quot;, &amp;quot;D&amp;quot;))
+
+dim(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 90  7&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That is, we now have a data frame with 90 observations (10 cases times 9 justices) and 7 variables.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;graph&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Graph&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;y_labels &amp;lt;- paste0(case_number, &amp;quot;: &amp;quot;, summary)
+
+df %&amp;gt;%
+  ggplot(aes(x = Justice, y = case_number)) +
+  geom_point(aes(shape = vote, color = vote), size = 5) +
+  
+  #http://www.sthda.com/english/wiki/ggplot2-point-shapes
+  scale_shape_manual(name = &amp;quot;Vote&amp;quot;, 
+                     values = c(16, 4),
+                     labels = c(&amp;quot;Court&amp;#39;s Opinion&amp;quot;, &amp;quot;Dissent Statement(s)&amp;quot;)) + 
+  scale_color_manual(name = &amp;quot;Vote&amp;quot;, 
+                       labels = c(&amp;quot;Court&amp;#39;s Opinion&amp;quot;, &amp;quot;Dissent Statement(s)&amp;quot;),
+                       values=c(&amp;quot;green&amp;quot;, &amp;quot;orange&amp;quot;)) +
+  
+  labs(title = &amp;quot;Recent Supreme Court Decisions&amp;quot;,
+       subtitle = &amp;quot;Justices supply the court&amp;#39;s &amp;#39;opinion&amp;#39; or &amp;#39;dissent&amp;#39; (Data source: SCOTUS Blog)&amp;quot;,
+       caption = &amp;quot;&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_y_continuous(breaks = 37:46,
+                     labels = y_labels) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &amp;quot;top&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-06-18-recent-supreme-court-cases_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;captions &amp;lt;- paste0( rev(paste0(case_number, &amp;quot;: &amp;quot;, case_name)), collapse = &amp;quot;\n&amp;quot;)
+rev(paste0(case_number, &amp;quot;: &amp;quot;, case_name))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;46: Department of Homeland Security v. Regents of Univ. of Cal&amp;quot;                       
+##  [2] &amp;quot;45: Andrus v. Texas&amp;quot;                                                                  
+##  [3] &amp;quot;44: Bostock v. Clayton County&amp;quot;                                                        
+##  [4] &amp;quot;43: United States Forest Service v. Cowpasture River Preservation Assn.&amp;quot;              
+##  [5] &amp;quot;42: Lomax v. Ortiz-Marquez&amp;quot;                                                           
+##  [6] &amp;quot;41: Nasrallah v. Barr&amp;quot;                                                                
+##  [7] &amp;quot;40: Thole v. U.S. Bank N.A.&amp;quot;                                                          
+##  [8] &amp;quot;39: Banister v. Davis&amp;quot;                                                                
+##  [9] &amp;quot;38: Financial Oversight and Management Bd. for Puerto Rico v. Aurelius Investment LLC&amp;quot;
+## [10] &amp;quot;37: GE Energy Power Conversion France SAS v. Outokumpu Stainless USA LLC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Fall Plans for American Universities</title>
       <link>/post/fall-plans-for-american-universities/</link>
       <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
@@ -2326,61 +2428,6 @@ print(answer)&lt;/code&gt;&lt;/pre&gt;
 ## Obsidian         16
 ## Diamond          17&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Hikes I&#39;ve Completed</title>
-      <link>/post/hikes-i-ve-completed/</link>
-      <pubDate>Sat, 11 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/post/hikes-i-ve-completed/</guid>
-      <description>&lt;p&gt;Here I will plot some of the hikes I have done as elevation (from sea level) versus distance. I was inspired by &lt;a href=&#34;https://www.reddit.com/r/dataisbeautiful/comments/bwm184/my_first_attempt_at_data_visualization_hikes_ive/&#34;&gt;this Reddit post&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Today’s code was great practice with&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;geom_segment&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;geom_label_repel&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;and using &lt;code&gt;xlim&lt;/code&gt; and &lt;code&gt;ylim&lt;/code&gt; to expand the plot.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggrepel)
-library(tidyverse)
-library(readxl)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_info &amp;lt;- read_excel(&amp;quot;hikes.xlsx&amp;quot;, sheet = &amp;quot;info&amp;quot;)
-df_info %&amp;gt;% print()&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;## # A tibble: 9 x 6
-##   Region    trail                distance trailhead elevation  peak
-##   &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;                   &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
-## 1 Tahoe     Mt Tallac                 5.1      6445      3290  9735
-## 2 Tahoe     Flume                     6.4      6980      1420  8400
-## 3 Tahoe     Mt Rose                   5.4      8388      2388 10776
-## 4 Tahoe     Relay Peak                4.7      8388      1515  9903
-## 5 Tahoe     Donner Peak               1.9      6175       882  7057
-## 6 Yosemite  Four-Mile                 4.7      4000      3200  7200
-## 7 Yosemite  Nevada Falls              4.4      4000      2191  6191
-## 8 Yosemite  Upper Yosemite Falls      3.6      4000      3175  7175
-## 9 Mt Diablo Waterfall                 4         374      1709  2083&lt;/code&gt;&lt;/pre&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_info %&amp;gt;%
-  mutate(start = 0) %&amp;gt;% #the first x-value for each line segment
-  ggplot() +
-  geom_segment(aes(x = start, y = trailhead, 
-                   xend = distance, yend = peak, 
-                   color = Region)) +
-  geom_label_repel(aes(x = distance, y = peak, 
-                       color = Region,
-                       label = trail),
-                   box.padding = 1,
-                   segment.color = &amp;quot;grey50&amp;quot;,
-                   segment.size = 0.5) +
-  geom_point(aes(x = distance, y = peak, color = Region), size = 5) +
-  labs(title = &amp;quot;Hikes I&amp;#39;ve Completed&amp;quot;,
-       subtitle = &amp;quot;Derek Sollberger&amp;quot;,
-       caption = &amp;quot;2010 to 2019&amp;quot;,
-       x = &amp;quot;One-Way Distance (in miles)&amp;quot;,
-       y = &amp;quot;Elevation (in feet)&amp;quot;) +
-  theme_minimal() +
-  xlim(0,8) +
-  ylim(0, 15000)&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;img src=&#34;/post/2020-01-11-hikes-i-ve-completed_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 </description>
     </item>
     

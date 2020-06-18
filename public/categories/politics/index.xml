@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Sun, 07 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jun 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/categories/politics/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Recent Supreme Court Cases</title>
+      <link>/post/recent-supreme-court-cases/</link>
+      <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/recent-supreme-court-cases/</guid>
+      <description>Introductionlibrary(&amp;quot;tidyverse&amp;quot;)Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the ggplot package.
+data source: SCOTUS Bloguseful tool: Convert Town’s “Column to Comma Separated Values” functionDataJust in case anyone actually uses my blog post, I will type out the data manually instead of load a separate CSV file so that anyone can copy-and-paste the code for replicability.</description>
+    </item>
     
     <item>
       <title>Supreme Court Confirmations (1967-present)</title>

@@ -1,0 +1,110 @@
+---
+title: Recent Supreme Court Cases
+author: Derek Sollberger
+date: '2020-06-18'
+slug: recent-supreme-court-cases
+categories:
+  - politics
+tags:
+  - ggplot
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<pre class="r"><code>library(&quot;tidyverse&quot;)</code></pre>
+<p>Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the <code>ggplot</code> package.</p>
+<ul>
+<li>data source: <a href="https://www.scotusblog.com/">SCOTUS Blog</a></li>
+<li>useful tool: <a href="https://convert.town/">Convert Town’s</a> “Column to Comma Separated Values” function</li>
+</ul>
+</div>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>Just in case anyone actually uses my blog post, I will type out the data manually instead of load a separate CSV file so that anyone can copy-and-paste the code for replicability.</p>
+<pre class="r"><code># building the small data frame this way simply for replicability
+case_number &lt;- 37:46
+summary &lt;- strsplit(&quot;arbitration agreements,PR Finance Board,successive habeas,retirement lawsuits,extradition to torture,prisoner lawsuits,forest land use,LGBT job termination,Andrus counsel,DACA&quot;,
+                    split = &quot;,&quot;)[[1]]
+case_name &lt;- strsplit(&quot;GE Energy Power Conversion France SAS v. Outokumpu Stainless USA LLC,Financial Oversight and Management Bd. for Puerto Rico v. Aurelius Investment LLC,Banister v. Davis,Thole v. U.S. Bank N.A.,Nasrallah v. Barr,Lomax v. Ortiz-Marquez,United States Forest Service v. Cowpasture River Preservation Assn.,Bostock v. Clayton County,Andrus v. Texas,Department of Homeland Security v. Regents of Univ. of Cal&quot;, 
+                      split = &quot;,&quot;)[[1]]
+argued &lt;- strsplit(&quot;21-Jan-20,15-Oct-19,4-Dec-19,13-Jan-20,2-Mar-20,26-Feb-20,24-Feb-20,8-Oct-19,NA,12-Nov-19&quot;, split = &quot;,&quot;)[[1]]
+decided &lt;- strsplit(&quot;1-Jun-20,1-Jun-20,1-Jun-20,1-Jun-20,1-Jun-20,8-Jun-20,15-Jun-20,15-Jun-20,15-Jun-20,18-Jun-20,&quot;, split = &quot;,&quot;)[[1]]
+
+# the votes of the Supreme Court justices
+Roberts   &lt;- strsplit(&quot;O,O,O,O,O,O,O,O,O,O&quot;, split = &quot;,&quot;)[[1]]
+Thomas    &lt;- strsplit(&quot;O,O,D,O,D,O,O,D,D,D&quot;, split = &quot;,&quot;)[[1]]
+Ginsburg  &lt;- strsplit(&quot;O,O,O,D,O,O,O,O,O,O&quot;, split = &quot;,&quot;)[[1]]
+Breyer    &lt;- strsplit(&quot;O,O,O,D,O,O,O,O,O,O&quot;, split = &quot;,&quot;)[[1]]
+Alito     &lt;- strsplit(&quot;O,O,D,O,D,O,O,D,D,D&quot;, split = &quot;,&quot;)[[1]]
+Sotomayor &lt;- strsplit(&quot;O,O,O,D,O,O,D,O,O,O&quot;, split = &quot;,&quot;)[[1]]
+Kagan     &lt;- strsplit(&quot;O,O,O,D,O,O,D,O,O,O&quot;, split = &quot;,&quot;)[[1]]
+Gorsuch   &lt;- strsplit(&quot;O,O,O,O,O,O,O,O,D,D&quot;, split = &quot;,&quot;)[[1]]
+Kavanaugh &lt;- strsplit(&quot;O,O,O,O,O,O,O,D,O,D&quot;, split = &quot;,&quot;)[[1]]
+
+raw_data &lt;- data.frame(case_number, summary, case_name, argued, decided,
+                       Roberts, Thomas, Ginsburg, Breyer, Alito,
+                       Sotomayor, Kagan, Gorsuch, Kavanaugh)
+
+dim(raw_data)</code></pre>
+<pre><code>## [1] 10 14</code></pre>
+<p>At the moment, we have a data frame with 10 observations (i.e. 10 Supreme Court cases) and 14 variables.</p>
+</div>
+<div id="tidy-data" class="section level1">
+<h1>Tidy Data</h1>
+<p>Next, I want to <code>gather</code> the justices’ votes (“opinion” or “dissent”) to make graphing easy.</p>
+<pre class="r"><code>df &lt;- raw_data %&gt;%
+  gather(key = &quot;Justice&quot;, value = &quot;vote&quot;, 
+         c(&quot;Roberts&quot;, &quot;Thomas&quot;, &quot;Ginsburg&quot;, &quot;Breyer&quot;, &quot;Alito&quot;,
+           &quot;Sotomayor&quot;, &quot;Kagan&quot;, &quot;Gorsuch&quot;, &quot;Kavanaugh&quot;))
+df$vote &lt;- factor(df$vote,
+                  levels = c(&quot;O&quot;, &quot;D&quot;))
+
+dim(df)</code></pre>
+<pre><code>## [1] 90  7</code></pre>
+<p>That is, we now have a data frame with 90 observations (10 cases times 9 justices) and 7 variables.</p>
+</div>
+<div id="graph" class="section level1">
+<h1>Graph</h1>
+<pre class="r"><code>y_labels &lt;- paste0(case_number, &quot;: &quot;, summary)
+
+df %&gt;%
+  ggplot(aes(x = Justice, y = case_number)) +
+  geom_point(aes(shape = vote, color = vote), size = 5) +
+  
+  #http://www.sthda.com/english/wiki/ggplot2-point-shapes
+  scale_shape_manual(name = &quot;Vote&quot;, 
+                     values = c(16, 4),
+                     labels = c(&quot;Court&#39;s Opinion&quot;, &quot;Dissent Statement(s)&quot;)) + 
+  scale_color_manual(name = &quot;Vote&quot;, 
+                       labels = c(&quot;Court&#39;s Opinion&quot;, &quot;Dissent Statement(s)&quot;),
+                       values=c(&quot;green&quot;, &quot;orange&quot;)) +
+  
+  labs(title = &quot;Recent Supreme Court Decisions&quot;,
+       subtitle = &quot;Justices supply the court&#39;s &#39;opinion&#39; or &#39;dissent&#39; (Data source: SCOTUS Blog)&quot;,
+       caption = &quot;&quot;,
+       x = &quot;&quot;,
+       y = &quot;&quot;) +
+  scale_y_continuous(breaks = 37:46,
+                     labels = y_labels) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &quot;top&quot;)</code></pre>
+<p><img src="/post/2020-06-18-recent-supreme-court-cases_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>captions &lt;- paste0( rev(paste0(case_number, &quot;: &quot;, case_name)), collapse = &quot;\n&quot;)
+rev(paste0(case_number, &quot;: &quot;, case_name))</code></pre>
+<pre><code>##  [1] &quot;46: Department of Homeland Security v. Regents of Univ. of Cal&quot;                       
+##  [2] &quot;45: Andrus v. Texas&quot;                                                                  
+##  [3] &quot;44: Bostock v. Clayton County&quot;                                                        
+##  [4] &quot;43: United States Forest Service v. Cowpasture River Preservation Assn.&quot;              
+##  [5] &quot;42: Lomax v. Ortiz-Marquez&quot;                                                           
+##  [6] &quot;41: Nasrallah v. Barr&quot;                                                                
+##  [7] &quot;40: Thole v. U.S. Bank N.A.&quot;                                                          
+##  [8] &quot;39: Banister v. Davis&quot;                                                                
+##  [9] &quot;38: Financial Oversight and Management Bd. for Puerto Rico v. Aurelius Investment LLC&quot;
+## [10] &quot;37: GE Energy Power Conversion France SAS v. Outokumpu Stainless USA LLC&quot;</code></pre>
+</div>

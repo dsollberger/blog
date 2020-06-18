@@ -1,0 +1,109 @@
+---
+title: Recent Supreme Court Cases
+author: Derek Sollberger
+date: '2020-06-18'
+slug: recent-supreme-court-cases
+categories:
+  - politics
+tags:
+  - ggplot
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+# Introduction
+
+```{r, message = FALSE, warning = FALSE}
+library("tidyverse")
+```
+
+Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the `ggplot` package.
+
+* data source: [SCOTUS Blog](https://www.scotusblog.com/)
+* useful tool: [Convert Town's](https://convert.town/) "Column to Comma Separated Values" function
+
+# Data
+
+Just in case anyone actually uses my blog post, I will type out the data manually instead of load a separate CSV file so that anyone can copy-and-paste the code for replicability.
+
+```{r}
+# building the small data frame this way simply for replicability
+case_number <- 37:46
+summary <- strsplit("arbitration agreements,PR Finance Board,successive habeas,retirement lawsuits,extradition to torture,prisoner lawsuits,forest land use,LGBT job termination,Andrus counsel,DACA",
+                    split = ",")[[1]]
+case_name <- strsplit("GE Energy Power Conversion France SAS v. Outokumpu Stainless USA LLC,Financial Oversight and Management Bd. for Puerto Rico v. Aurelius Investment LLC,Banister v. Davis,Thole v. U.S. Bank N.A.,Nasrallah v. Barr,Lomax v. Ortiz-Marquez,United States Forest Service v. Cowpasture River Preservation Assn.,Bostock v. Clayton County,Andrus v. Texas,Department of Homeland Security v. Regents of Univ. of Cal", 
+                      split = ",")[[1]]
+argued <- strsplit("21-Jan-20,15-Oct-19,4-Dec-19,13-Jan-20,2-Mar-20,26-Feb-20,24-Feb-20,8-Oct-19,NA,12-Nov-19", split = ",")[[1]]
+decided <- strsplit("1-Jun-20,1-Jun-20,1-Jun-20,1-Jun-20,1-Jun-20,8-Jun-20,15-Jun-20,15-Jun-20,15-Jun-20,18-Jun-20,", split = ",")[[1]]
+
+# the votes of the Supreme Court justices
+Roberts   <- strsplit("O,O,O,O,O,O,O,O,O,O", split = ",")[[1]]
+Thomas    <- strsplit("O,O,D,O,D,O,O,D,D,D", split = ",")[[1]]
+Ginsburg  <- strsplit("O,O,O,D,O,O,O,O,O,O", split = ",")[[1]]
+Breyer    <- strsplit("O,O,O,D,O,O,O,O,O,O", split = ",")[[1]]
+Alito     <- strsplit("O,O,D,O,D,O,O,D,D,D", split = ",")[[1]]
+Sotomayor <- strsplit("O,O,O,D,O,O,D,O,O,O", split = ",")[[1]]
+Kagan     <- strsplit("O,O,O,D,O,O,D,O,O,O", split = ",")[[1]]
+Gorsuch   <- strsplit("O,O,O,O,O,O,O,O,D,D", split = ",")[[1]]
+Kavanaugh <- strsplit("O,O,O,O,O,O,O,D,O,D", split = ",")[[1]]
+
+raw_data <- data.frame(case_number, summary, case_name, argued, decided,
+                       Roberts, Thomas, Ginsburg, Breyer, Alito,
+                       Sotomayor, Kagan, Gorsuch, Kavanaugh)
+
+dim(raw_data)
+```
+
+At the moment, we have a data frame with 10 observations (i.e. 10 Supreme Court cases) and 14 variables.
+
+# Tidy Data
+
+Next, I want to `gather` the justices' votes ("opinion" or "dissent") to make graphing easy.
+
+```{r}
+df <- raw_data %>%
+  gather(key = "Justice", value = "vote", 
+         c("Roberts", "Thomas", "Ginsburg", "Breyer", "Alito",
+           "Sotomayor", "Kagan", "Gorsuch", "Kavanaugh"))
+df$vote <- factor(df$vote,
+                  levels = c("O", "D"))
+
+dim(df)
+```
+
+That is, we now have a data frame with 90 observations (10 cases times 9 justices) and 7 variables.
+
+# Graph
+
+```{r}
+y_labels <- paste0(case_number, ": ", summary)
+
+df %>%
+  ggplot(aes(x = Justice, y = case_number)) +
+  geom_point(aes(shape = vote, color = vote), size = 5) +
+  
+  #http://www.sthda.com/english/wiki/ggplot2-point-shapes
+  scale_shape_manual(name = "Vote", 
+                     values = c(16, 4),
+                     labels = c("Court's Opinion", "Dissent Statement(s)")) + 
+  scale_color_manual(name = "Vote", 
+                       labels = c("Court's Opinion", "Dissent Statement(s)"),
+                       values=c("green", "orange")) +
+  
+  labs(title = "Recent Supreme Court Decisions",
+       subtitle = "Justices supply the court's 'opinion' or 'dissent' (Data source: SCOTUS Blog)",
+       caption = "",
+       x = "",
+       y = "") +
+  scale_y_continuous(breaks = 37:46,
+                     labels = y_labels) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = "top")
+```
+
+```{r}
+captions <- paste0( rev(paste0(case_number, ": ", case_name)), collapse = "\n")
+rev(paste0(case_number, ": ", case_name))
+```
