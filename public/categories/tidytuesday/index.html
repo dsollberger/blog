@@ -18,7 +18,7 @@
   <meta name="description" content="Continuing Lecturer of Applied Mathematics">
 
   
-  <link rel="alternate" hreflang="en-us" href="/tags/data-mining/">
+  <link rel="alternate" hreflang="en-us" href="/categories/tidytuesday/">
 
   
 
@@ -58,15 +58,15 @@
   
 
   
-  <link rel="alternate" href="/tags/data-mining/index.xml" type="application/rss+xml" title="The Median Data Scientist">
-  <link rel="feed" href="/tags/data-mining/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="alternate" href="/categories/tidytuesday/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="feed" href="/categories/tidytuesday/index.xml" type="application/rss+xml" title="The Median Data Scientist">
   
 
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" type="image/png" href="/img/icon.png">
   <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
 
-  <link rel="canonical" href="/tags/data-mining/">
+  <link rel="canonical" href="/categories/tidytuesday/">
 
   <meta property="twitter:card" content="summary_large_image">
   
@@ -74,8 +74,8 @@
   <meta property="twitter:creator" content="@DerekSollberger">
   
   <meta property="og:site_name" content="The Median Data Scientist">
-  <meta property="og:url" content="/tags/data-mining/">
-  <meta property="og:title" content="Data mining | The Median Data Scientist">
+  <meta property="og:url" content="/categories/tidytuesday/">
+  <meta property="og:title" content="TidyTuesday | The Median Data Scientist">
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
@@ -84,7 +84,7 @@
 
   
 
-  <title>Data mining | The Median Data Scientist</title>
+  <title>TidyTuesday | The Median Data Scientist</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
@@ -204,7 +204,7 @@
 
 <div class="universal-wrapper">
 
-  <h1>Data mining</h1>
+  <h1>TidyTuesday</h1>
 
   
 
@@ -235,46 +235,6 @@ dim(emperors)</p>
 
 <p>emperors %&gt;%
 filter(birth_prv !</p>
-
-      
-    </div>
-  </div>
-  
-  <div>
-    <h2><a href="/post/gender-of-frasier-characters/">Gender of Frasier Characters</a></h2>
-    <div class="article-style">
-      
-      <p>“I am not a man…”
-For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show Fraiser.
-The gender package
-#install.packages(&quot;gender&quot;) #works fine</p>
-
-<h2 id="user-needs-to-download-database-too">user needs to download database too</h2>
-
-<p>#install_genderdata_package() #did not work (&quot;error reading from connection&quot;)</p>
-
-<h2 id="as-suggested-by-the-bug-report-at-https-github-com-ropensci-drat-issues-6">as suggested by the bug report at <a href="https://github.com/ropensci/drat/issues/6" target="_blank">https://github.com/ropensci/drat/issues/6</a></h2>
-
-<p>#install.packages(&quot;devtools&quot;)
-#library(devtools)
-#devtools::install_github(&quot;ropensci/genderdata&quot;)</p>
-
-<p>Trial Run
-library(gender)
-library(ggpubr)
-library(tidyverse)
-gender(&quot;frasier&quot;, method = &quot;ssa&quot;, years = c(1940, 1990))</p>
-
-<h2 id="a-tibble-1-x-6"># A tibble: 1 x 6</h2>
-
-<h2 id="name-proportion-male-proportion-female-gender-year-min-year-max">name proportion_male proportion_female gender year_min year_max</h2>
-
-<h2 id="lt-chr-gt-lt-dbl-gt-lt-dbl-gt-lt-chr-gt-lt-dbl-gt-lt-dbl-gt">&lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt;</h2>
-
-<h2 id="1-frasier-1-0-male-1940-1990">1 frasier 1 0 male 1940 1990</h2>
-
-<p>Cast of Characters
-Now I will try to run the gender function over a list of names (criteria: characters that appeared in at least 6 episodes).</p>
 
       
     </div>

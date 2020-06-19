@@ -1,0 +1,207 @@
+---
+title: 'TidyTuesday: Roman Emperors'
+author: Derek Sollberger
+date: '2020-06-19'
+slug: tidytuesday-roman-emperors
+categories:
+  - tidyTuesday
+tags:
+  - data mining
+  - ggplot
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Today, for practice with <code>ggplot2</code>, I wish to replicate <span class="citation">@JoshuaFeldman</span>’s wonderful #TidyTuesday submission about the dataset of Roman emperors.</p>
+<pre class="r"><code>library(&quot;tidyverse&quot;)</code></pre>
+<ul>
+<li><a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-08-13">TidyTuesday’s Roman Emperor dataset</a> — posted on August 13, 2019</li>
+</ul>
+<pre class="r"><code># TidyTuesday&#39;s given line of code to load the data
+emperors &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&quot;)</code></pre>
+</div>
+<div id="exploring-the-data" class="section level1">
+<h1>Exploring the Data</h1>
+<pre class="r"><code>dim(emperors)</code></pre>
+<pre><code>## [1] 68 16</code></pre>
+<pre class="r"><code>colnames(emperors)</code></pre>
+<pre><code>##  [1] &quot;index&quot;       &quot;name&quot;        &quot;name_full&quot;   &quot;birth&quot;       &quot;death&quot;      
+##  [6] &quot;birth_cty&quot;   &quot;birth_prv&quot;   &quot;rise&quot;        &quot;reign_start&quot; &quot;reign_end&quot;  
+## [11] &quot;cause&quot;       &quot;killer&quot;      &quot;dynasty&quot;     &quot;era&quot;         &quot;notes&quot;      
+## [16] &quot;verif_who&quot;</code></pre>
+<pre class="r"><code>emperors %&gt;%
+  filter(birth_prv != &quot;Unknown&quot;) %&gt;%
+  ggplot(aes(x = birth_prv)) +
+  geom_bar(aes(fill = birth_prv), stat = &quot;count&quot;) +
+  labs(title = &quot;Birth Provinces of Roman Emperors&quot;,
+       subtitle = &quot;Years 62 BC to 347 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;birth province&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>emperors %&gt;%
+  ggplot(aes(x = fct_rev(rise))) +
+  geom_bar(aes(fill = rise), stat = &quot;count&quot;) +
+  coord_flip() +
+  labs(title = &quot;How Roman Emperors Rose to Power&quot;,
+       subtitle = &quot;Years 26 BC to 379 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>emperors %&gt;%
+  filter(cause != &quot;Unknown&quot;) %&gt;%
+  ggplot(aes(x = fct_rev(cause))) +
+  geom_bar(aes(fill = cause), stat = &quot;count&quot;) +
+  coord_flip() +
+  labs(title = &quot;Causes of Death of Roman Emperors&quot;,
+       subtitle = &quot;Years 14 AD to 395 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>emperors$dynasty_factor &lt;- factor(emperors$dynasty,
+                                  levels = unique(emperors$dynasty))
+
+emperors %&gt;%
+  ggplot(aes(x = fct_rev(dynasty_factor))) +
+  geom_bar(aes(fill = dynasty_factor), stat = &quot;count&quot;) +
+  coord_flip() +
+  labs(title = &quot;Roman Dynasties&quot;,
+       subtitle = &quot;Years 26 BC to 395 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="data-wrangling" class="section level1">
+<h1>Data Wrangling</h1>
+<pre class="r"><code>#extracting birth and death years
+emperors &lt;- emperors %&gt;%
+  separate(birth, 
+           sep = &quot;-&quot;, 
+           into = c(&quot;birth_year&quot;, &quot;birth_month&quot;, &quot;birth_day&quot;),
+           remove = FALSE) %&gt;%
+  separate(death, 
+           sep = &quot;-&quot;, 
+           into = c(&quot;death_year&quot;, &quot;death_month&quot;, &quot;death_day&quot;),
+           remove = FALSE)</code></pre>
+<pre class="r"><code># remove leading zeros and convert from character to numeric
+emperors$birth_year  &lt;- as.numeric(emperors$birth_year)
+emperors$birth_month &lt;- as.numeric(emperors$birth_month)
+emperors$birth_day   &lt;- as.numeric(emperors$birth_day)
+emperors$death_year  &lt;- as.numeric(emperors$death_year)
+emperors$death_month &lt;- as.numeric(emperors$death_month)
+emperors$death_day   &lt;- as.numeric(emperors$death_day)</code></pre>
+<pre class="r"><code># ensuring order of months for the graphs
+emperors$birth_month &lt;- factor(emperors$birth_month,
+                               levels = 1:12)
+emperors$death_month &lt;- factor(emperors$death_month,
+                               levels = 1:12)</code></pre>
+<pre class="r"><code>emperors %&gt;%
+  filter(!is.na(birth_month)) %&gt;%
+  ggplot(aes(x = birth_month)) +
+  geom_bar(aes(fill = birth_month), stat = &quot;count&quot;) +
+  labs(title = &quot;Birth Months of Roman Emperors&quot;,
+       subtitle = &quot;Years 26 BC to 347 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>emperors %&gt;%
+  filter(!is.na(death_month)) %&gt;%
+  ggplot(aes(x = death_month)) +
+  geom_bar(aes(fill = death_month), stat = &quot;count&quot;) +
+  labs(title = &quot;Death Months of Roman Emperors&quot;,
+       subtitle = &quot;Years 14 AD to 395 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code># only a few year data points were BC, so here is a quick fix for &quot;negative years&quot;
+emperors$birth_year[1:3] &lt;- -emperors$birth_year[1:3]</code></pre>
+<p>The <code>emperors</code> dataset had some missing values for <code>birth_year</code>, so here is what I am going to due to <em>impute</em> the missing values:</p>
+<ul>
+<li>calculate the lifespan of the other emperors</li>
+<li>calculate the average lifespan</li>
+<li>if <code>birth_year</code> is missing, subtract <code>death_year</code> by the average lifespan</li>
+</ul>
+<pre class="r"><code>emperors$lifespan &lt;- emperors$death_year - emperors$birth_year
+average_emperor_lifespan &lt;- round(mean(emperors$lifespan, na.rm = TRUE))
+
+for(i in 1:nrow(emperors)){
+  if(is.na(emperors$birth_year[i])){
+    emperors$birth_year[i] &lt;- emperors$death_year[i] - average_emperor_lifespan
+  }
+}</code></pre>
+<pre class="r"><code>#later, ggplot had a minor issue with 7 (i.e. greater than 6) causes of death
+emperors$cause[emperors$cause == &quot;Unknown&quot;] &lt;- &quot;Natural Causes&quot;</code></pre>
+</div>
+<div id="main-graph" class="section level1">
+<h1>Main Graph</h1>
+<p>As inspired by <span class="citation">@JoshuaFeldman</span>, the goals for today’s main graph include</p>
+<ul>
+<li>birth years by province</li>
+<li>death years by cause of death</li>
+<li>reign as a line segment</li>
+<li>segment color by dynasty</li>
+<li>also delineate the two eras</li>
+</ul>
+<pre class="r"><code>#extracting reign years
+emperors &lt;- emperors %&gt;%
+  separate(reign_start, 
+           sep = &quot;-&quot;, 
+           into = c(&quot;reign_start_year&quot;, &quot;reign_start_month&quot;, &quot;reign_start_day&quot;),
+           remove = FALSE) %&gt;%
+  separate(reign_end, 
+           sep = &quot;-&quot;, 
+           into = c(&quot;reign_end_year&quot;, &quot;reign_end_month&quot;, &quot;reign_end_day&quot;),
+           remove = FALSE)
+
+emperors$reign_start_year  &lt;- as.numeric(emperors$reign_start_year)
+emperors$reign_start_month &lt;- as.numeric(emperors$reign_start_month)
+emperors$reign_start_day   &lt;- as.numeric(emperors$reign_start_day)
+emperors$reign_end_year    &lt;- as.numeric(emperors$reign_end_year)
+emperors$reign_end_month   &lt;- as.numeric(emperors$reign_end_month)
+emperors$reign_end_day     &lt;- as.numeric(emperors$reign_end_day)
+
+# only a few year data points were BC, so here is a quick fix for &quot;negative years&quot;
+emperors$reign_start_year[1:2] &lt;- -emperors$reign_start_year[1:2]</code></pre>
+<pre class="r"><code>main_plot &lt;- emperors %&gt;%
+  ggplot() +
+  geom_segment(aes(x = reign_start_year, y = reorder(name, -reign_start_year), 
+                   xend = reign_end_year, yend = reorder(name, -reign_start_year),
+                   color = dynasty_factor, group = dynasty_factor),
+               data = emperors, size = 2) +
+  geom_point(aes(x = birth_year, y = reorder(name, -reign_start_year),
+                 group = birth_prv), 
+             color = &quot;black&quot;, size = 1) +
+  geom_point(aes(x = death_year, y = reorder(name, -reign_start_year),
+                 shape = cause, group = cause), 
+             color = &quot;black&quot;, size = 3) +
+  #geom_label(aes(x = birth_year, y = reorder(name, -reign_start_year), label = name)) +
+  scale_color_discrete(name = &quot;Dynasty&quot;) +
+  scale_shape_discrete(name = &quot;Cause of Death&quot;) +
+  labs(title = &quot;Roman Emperors&quot;,
+       subtitle = &quot;Ordered by the start of their reign (small dots are birth years)&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;year&quot;,
+       y = &quot;&quot;) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<pre class="r"><code>#plot
+main_plot</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+</div>

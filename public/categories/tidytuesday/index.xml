@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Data mining on The Median Data Scientist</title>
-    <link>/tags/data-mining/</link>
-    <description>Recent content in Data mining on The Median Data Scientist</description>
+    <title>TidyTuesday on The Median Data Scientist</title>
+    <link>/categories/tidytuesday/</link>
+    <description>Recent content in TidyTuesday on The Median Data Scientist</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
     <lastBuildDate>Fri, 19 Jun 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="/tags/data-mining/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/tidytuesday/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,17 +20,6 @@
       <guid>/post/tidytuesday-roman-emperors/</guid>
       <description>IntroductionToday, for practice with ggplot2, I wish to replicate @JoshuaFeldman’s wonderful #TidyTuesday submission about the dataset of Roman emperors.
 library(&amp;quot;tidyverse&amp;quot;)TidyTuesday’s Roman Emperor dataset — posted on August 13, 2019# TidyTuesday&amp;#39;s given line of code to load the dataemperors &amp;lt;- readr::read_csv(&amp;quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&amp;quot;)Exploring the Datadim(emperors)## [1] 68 16colnames(emperors)## [1] &amp;quot;index&amp;quot; &amp;quot;name&amp;quot; &amp;quot;name_full&amp;quot; &amp;quot;birth&amp;quot; &amp;quot;death&amp;quot; ## [6] &amp;quot;birth_cty&amp;quot; &amp;quot;birth_prv&amp;quot; &amp;quot;rise&amp;quot; &amp;quot;reign_start&amp;quot; &amp;quot;reign_end&amp;quot; ## [11] &amp;quot;cause&amp;quot; &amp;quot;killer&amp;quot; &amp;quot;dynasty&amp;quot; &amp;quot;era&amp;quot; &amp;quot;notes&amp;quot; ## [16] &amp;quot;verif_who&amp;quot;emperors %&amp;gt;%filter(birth_prv !</description>
-    </item>
-    
-    <item>
-      <title>Gender of Frasier Characters</title>
-      <link>/post/gender-of-frasier-characters/</link>
-      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/post/gender-of-frasier-characters/</guid>
-      <description>“I am not a man…”
-For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show Fraiser.
-The gender package#install.packages(&amp;quot;gender&amp;quot;) #works fine## user needs to download database too#install_genderdata_package() #did not work (&amp;quot;error reading from connection&amp;quot;)## as suggested by the bug report at https://github.com/ropensci/drat/issues/6#install.packages(&amp;quot;devtools&amp;quot;)#library(devtools)#devtools::install_github(&amp;quot;ropensci/genderdata&amp;quot;)Trial Runlibrary(gender)library(ggpubr)library(tidyverse)gender(&amp;quot;frasier&amp;quot;, method = &amp;quot;ssa&amp;quot;, years = c(1940, 1990))## # A tibble: 1 x 6## name proportion_male proportion_female gender year_min year_max## &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;## 1 frasier 1 0 male 1940 1990Cast of CharactersNow I will try to run the gender function over a list of names (criteria: characters that appeared in at least 6 episodes).</description>
     </item>
     
   </channel>

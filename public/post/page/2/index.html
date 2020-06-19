@@ -70,7 +70,7 @@
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2020-05-01T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2020-05-04T00:00:00&#43;00:00">
   
 
   
@@ -200,6 +200,72 @@
   
 
   
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
+    <a href="/post/supervised-learning/" itemprop="url">Supervised Learning</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-05-04 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      May 4, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    8 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/machine-learning">machine learning</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    Supervised LearningSupervised learning has the goal of making predictions with a set of known labels for the response variable.In unsupervised learning, we try to find structure in the data of the response variable without predetermined labels.Goal: predict the personality type of each character in Animal Crossing
+Data set: Animal CrossingSource: VillagerDB, MetaCritic, and TidyTuesday
+Animal Crossing Tidy Tuesdaylibrary(&quot;caret&quot;)library(&quot;randomForest&quot;)library(&quot;tidymodels&quot;)library(&quot;tidyverse&quot;)# critic &lt;- readr::read_tsv(&#39;https://raw.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/supervised-learning/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
   
     
     
@@ -791,70 +857,6 @@ Overnight on Thursday, April 4, DataCamp released a statement in their official 
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/response-to-datacamp-s-20190404-community-post/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/random-walks-draft/" itemprop="url">Random Walks (draft)</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2019-02-25 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Feb 25, 2019
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/stochastic-processes">stochastic processes</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    library(&quot;gganimate&quot;)library(&quot;ggplot2&quot;)p = 1/2# parametersp &lt;- 0.5Tmax = 60# start at the originx = 0y = 0t = 0df &lt;- data.frame(x,y,t)# random walkfor(i in 1:Tmax){t &lt;- t + 1if(runif(1) &lt; p){x &lt;- x - 1} else {x &lt;- x + 1}# reset process if dot leaves viewif(abs(x) &gt; 10){x &lt;- 0}this_step &lt;- data.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/random-walks-draft/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>

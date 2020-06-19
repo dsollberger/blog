@@ -11,6 +11,204 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>TidyTuesday: Roman Emperors</title>
+      <link>/post/tidytuesday-roman-emperors/</link>
+      <pubDate>Fri, 19 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/tidytuesday-roman-emperors/</guid>
+      <description>&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Today, for practice with &lt;code&gt;ggplot2&lt;/code&gt;, I wish to replicate &lt;span class=&#34;citation&#34;&gt;@JoshuaFeldman&lt;/span&gt;’s wonderful #TidyTuesday submission about the dataset of Roman emperors.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-08-13&#34;&gt;TidyTuesday’s Roman Emperor dataset&lt;/a&gt; — posted on August 13, 2019&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# TidyTuesday&amp;#39;s given line of code to load the data
+emperors &amp;lt;- readr::read_csv(&amp;quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploring-the-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Exploring the Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(emperors)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 68 16&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;colnames(emperors)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;index&amp;quot;       &amp;quot;name&amp;quot;        &amp;quot;name_full&amp;quot;   &amp;quot;birth&amp;quot;       &amp;quot;death&amp;quot;      
+##  [6] &amp;quot;birth_cty&amp;quot;   &amp;quot;birth_prv&amp;quot;   &amp;quot;rise&amp;quot;        &amp;quot;reign_start&amp;quot; &amp;quot;reign_end&amp;quot;  
+## [11] &amp;quot;cause&amp;quot;       &amp;quot;killer&amp;quot;      &amp;quot;dynasty&amp;quot;     &amp;quot;era&amp;quot;         &amp;quot;notes&amp;quot;      
+## [16] &amp;quot;verif_who&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(birth_prv != &amp;quot;Unknown&amp;quot;) %&amp;gt;%
+  ggplot(aes(x = birth_prv)) +
+  geom_bar(aes(fill = birth_prv), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Birth Provinces of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 62 BC to 347 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;birth province&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  ggplot(aes(x = fct_rev(rise))) +
+  geom_bar(aes(fill = rise), stat = &amp;quot;count&amp;quot;) +
+  coord_flip() +
+  labs(title = &amp;quot;How Roman Emperors Rose to Power&amp;quot;,
+       subtitle = &amp;quot;Years 26 BC to 379 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(cause != &amp;quot;Unknown&amp;quot;) %&amp;gt;%
+  ggplot(aes(x = fct_rev(cause))) +
+  geom_bar(aes(fill = cause), stat = &amp;quot;count&amp;quot;) +
+  coord_flip() +
+  labs(title = &amp;quot;Causes of Death of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 14 AD to 395 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors$dynasty_factor &amp;lt;- factor(emperors$dynasty,
+                                  levels = unique(emperors$dynasty))
+
+emperors %&amp;gt;%
+  ggplot(aes(x = fct_rev(dynasty_factor))) +
+  geom_bar(aes(fill = dynasty_factor), stat = &amp;quot;count&amp;quot;) +
+  coord_flip() +
+  labs(title = &amp;quot;Roman Dynasties&amp;quot;,
+       subtitle = &amp;quot;Years 26 BC to 395 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Wrangling&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#extracting birth and death years
+emperors &amp;lt;- emperors %&amp;gt;%
+  separate(birth, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;birth_year&amp;quot;, &amp;quot;birth_month&amp;quot;, &amp;quot;birth_day&amp;quot;),
+           remove = FALSE) %&amp;gt;%
+  separate(death, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;death_year&amp;quot;, &amp;quot;death_month&amp;quot;, &amp;quot;death_day&amp;quot;),
+           remove = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# remove leading zeros and convert from character to numeric
+emperors$birth_year  &amp;lt;- as.numeric(emperors$birth_year)
+emperors$birth_month &amp;lt;- as.numeric(emperors$birth_month)
+emperors$birth_day   &amp;lt;- as.numeric(emperors$birth_day)
+emperors$death_year  &amp;lt;- as.numeric(emperors$death_year)
+emperors$death_month &amp;lt;- as.numeric(emperors$death_month)
+emperors$death_day   &amp;lt;- as.numeric(emperors$death_day)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# ensuring order of months for the graphs
+emperors$birth_month &amp;lt;- factor(emperors$birth_month,
+                               levels = 1:12)
+emperors$death_month &amp;lt;- factor(emperors$death_month,
+                               levels = 1:12)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(!is.na(birth_month)) %&amp;gt;%
+  ggplot(aes(x = birth_month)) +
+  geom_bar(aes(fill = birth_month), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Birth Months of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 26 BC to 347 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(!is.na(death_month)) %&amp;gt;%
+  ggplot(aes(x = death_month)) +
+  geom_bar(aes(fill = death_month), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Death Months of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 14 AD to 395 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# only a few year data points were BC, so here is a quick fix for &amp;quot;negative years&amp;quot;
+emperors$birth_year[1:3] &amp;lt;- -emperors$birth_year[1:3]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;emperors&lt;/code&gt; dataset had some missing values for &lt;code&gt;birth_year&lt;/code&gt;, so here is what I am going to due to &lt;em&gt;impute&lt;/em&gt; the missing values:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;calculate the lifespan of the other emperors&lt;/li&gt;
+&lt;li&gt;calculate the average lifespan&lt;/li&gt;
+&lt;li&gt;if &lt;code&gt;birth_year&lt;/code&gt; is missing, subtract &lt;code&gt;death_year&lt;/code&gt; by the average lifespan&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors$lifespan &amp;lt;- emperors$death_year - emperors$birth_year
+average_emperor_lifespan &amp;lt;- round(mean(emperors$lifespan, na.rm = TRUE))
+
+for(i in 1:nrow(emperors)){
+  if(is.na(emperors$birth_year[i])){
+    emperors$birth_year[i] &amp;lt;- emperors$death_year[i] - average_emperor_lifespan
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#later, ggplot had a minor issue with 7 (i.e. greater than 6) causes of death
+emperors$cause[emperors$cause == &amp;quot;Unknown&amp;quot;] &amp;lt;- &amp;quot;Natural Causes&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;main-graph&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Main Graph&lt;/h1&gt;
+&lt;p&gt;As inspired by &lt;span class=&#34;citation&#34;&gt;@JoshuaFeldman&lt;/span&gt;, the goals for today’s main graph include&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;birth years by province&lt;/li&gt;
+&lt;li&gt;death years by cause of death&lt;/li&gt;
+&lt;li&gt;reign as a line segment&lt;/li&gt;
+&lt;li&gt;segment color by dynasty&lt;/li&gt;
+&lt;li&gt;also delineate the two eras&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#extracting reign years
+emperors &amp;lt;- emperors %&amp;gt;%
+  separate(reign_start, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;reign_start_year&amp;quot;, &amp;quot;reign_start_month&amp;quot;, &amp;quot;reign_start_day&amp;quot;),
+           remove = FALSE) %&amp;gt;%
+  separate(reign_end, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;reign_end_year&amp;quot;, &amp;quot;reign_end_month&amp;quot;, &amp;quot;reign_end_day&amp;quot;),
+           remove = FALSE)
+
+emperors$reign_start_year  &amp;lt;- as.numeric(emperors$reign_start_year)
+emperors$reign_start_month &amp;lt;- as.numeric(emperors$reign_start_month)
+emperors$reign_start_day   &amp;lt;- as.numeric(emperors$reign_start_day)
+emperors$reign_end_year    &amp;lt;- as.numeric(emperors$reign_end_year)
+emperors$reign_end_month   &amp;lt;- as.numeric(emperors$reign_end_month)
+emperors$reign_end_day     &amp;lt;- as.numeric(emperors$reign_end_day)
+
+# only a few year data points were BC, so here is a quick fix for &amp;quot;negative years&amp;quot;
+emperors$reign_start_year[1:2] &amp;lt;- -emperors$reign_start_year[1:2]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;main_plot &amp;lt;- emperors %&amp;gt;%
+  ggplot() +
+  geom_segment(aes(x = reign_start_year, y = reorder(name, -reign_start_year), 
+                   xend = reign_end_year, yend = reorder(name, -reign_start_year),
+                   color = dynasty_factor, group = dynasty_factor),
+               data = emperors, size = 2) +
+  geom_point(aes(x = birth_year, y = reorder(name, -reign_start_year),
+                 group = birth_prv), 
+             color = &amp;quot;black&amp;quot;, size = 1) +
+  geom_point(aes(x = death_year, y = reorder(name, -reign_start_year),
+                 shape = cause, group = cause), 
+             color = &amp;quot;black&amp;quot;, size = 3) +
+  #geom_label(aes(x = birth_year, y = reorder(name, -reign_start_year), label = name)) +
+  scale_color_discrete(name = &amp;quot;Dynasty&amp;quot;) +
+  scale_shape_discrete(name = &amp;quot;Cause of Death&amp;quot;) +
+  labs(title = &amp;quot;Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Ordered by the start of their reign (small dots are birth years)&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;year&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#plot
+main_plot&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Recent Supreme Court Cases</title>
       <link>/post/recent-supreme-court-cases/</link>
       <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
@@ -2328,105 +2526,6 @@ install.packages(package_list)&lt;/code&gt;&lt;/pre&gt;
 &lt;li&gt;instructions for &lt;a href=&#34;http://kb.winzip.com/kb/entry/26/&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;instructions for &lt;a href=&#34;https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/&#34;&gt;Mac OS X&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Duolingo Leagues</title>
-      <link>/post/duolingo-leagues/</link>
-      <pubDate>Mon, 13 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/post/duolingo-leagues/</guid>
-      <description>&lt;p&gt;&lt;code&gt;Duolingo&lt;/code&gt;, the language learning app, places users in groups of 50 and assigns a &lt;code&gt;league&lt;/code&gt; to each user to encourage competition. The leagues are&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Bronze, Silver, Gold, Sapphire, Ruby, Emerald, Amethyst, Pearl, Obsidian, and Diamond (in that increasing order)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div id=&#34;what-proportion-of-duolingo-users-are-in-each-league&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;What proportion of Duolingo users are in each league?&lt;/h1&gt;
-&lt;p&gt;The rules are&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;everyone starts in the Bronze League&lt;/li&gt;
-&lt;li&gt;the top 15 percent of each group gets promoted to the next league up (measured weekly)&lt;/li&gt;
-&lt;li&gt;the bottom 10 percent of each group is related downward&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;In this post, I will try out some stochastic processes calculations to answer that question.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;leagues &amp;lt;- c(&amp;quot;Bronze&amp;quot;, &amp;quot;Silver&amp;quot;, &amp;quot;Gold&amp;quot;, &amp;quot;Sapphire&amp;quot;, &amp;quot;Ruby&amp;quot;,
-             &amp;quot;Emerald&amp;quot;, &amp;quot;Amethyst&amp;quot;, &amp;quot;Pearl&amp;quot;, &amp;quot;Obsidian&amp;quot;, &amp;quot;Diamond&amp;quot;)
-
-transition_matrix &amp;lt;- matrix( rep(0, 100), 10)
-
-# trying shortcuts
-diag(transition_matrix[-10,-1]) &amp;lt;- 15 #top 15 percent of each group gets promoted
-diag(transition_matrix[-1,-10]) &amp;lt;- 10 #bottom 10 percent of each group is relegated
-diag(transition_matrix)         &amp;lt;- 75 #the rest stay where they are
-
-# fix the corners
-transition_matrix[1,1]    &amp;lt;- 85
-transition_matrix[10, 10] &amp;lt;- 85
-
-# make row-stochastic (i.e. so each row adds up to one)
-transition_matrix &amp;lt;- transition_matrix/100
-
-# R allows user to label rows and columns
-rownames(transition_matrix) &amp;lt;- leagues
-colnames(transition_matrix) &amp;lt;- leagues
-
-print(transition_matrix)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##          Bronze Silver Gold Sapphire Ruby Emerald Amethyst Pearl Obsidian
-## Bronze     0.85   0.15 0.00     0.00 0.00    0.00     0.00  0.00     0.00
-## Silver     0.10   0.75 0.15     0.00 0.00    0.00     0.00  0.00     0.00
-## Gold       0.00   0.10 0.75     0.15 0.00    0.00     0.00  0.00     0.00
-## Sapphire   0.00   0.00 0.10     0.75 0.15    0.00     0.00  0.00     0.00
-## Ruby       0.00   0.00 0.00     0.10 0.75    0.15     0.00  0.00     0.00
-## Emerald    0.00   0.00 0.00     0.00 0.10    0.75     0.15  0.00     0.00
-## Amethyst   0.00   0.00 0.00     0.00 0.00    0.10     0.75  0.15     0.00
-## Pearl      0.00   0.00 0.00     0.00 0.00    0.00     0.10  0.75     0.15
-## Obsidian   0.00   0.00 0.00     0.00 0.00    0.00     0.00  0.10     0.75
-## Diamond    0.00   0.00 0.00     0.00 0.00    0.00     0.00  0.00     0.10
-##          Diamond
-## Bronze      0.00
-## Silver      0.00
-## Gold        0.00
-## Sapphire    0.00
-## Ruby        0.00
-## Emerald     0.00
-## Amethyst    0.00
-## Pearl       0.00
-## Obsidian    0.15
-## Diamond     0.85&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Knowing some about stochastic processes, we can either implement an initial distribution and employ matrix-vector multiplication over many iterations, or we can find an eigenvector.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;findStatDist &amp;lt;- function(P){
-  # This function will compute the stationary distribution for a transition matrix
-  # Input: row-stochastic matrix P
-  # Output: row vector pi_vec
-  
-  # obtain left-eigenvector for lambda = 1
-  x &amp;lt;- eigen(t(P))$vectors[,1] 
-  
-  # normalize the eigenvector in the one-norm
-  pi_vec &amp;lt;- x / sum(x)
-  pi_vec #return this vector
-}
-
-answer &amp;lt;- as.data.frame(round(100*findStatDist(transition_matrix)))
-
-# R allows user to label rows and columns
-rownames(answer) &amp;lt;- leagues
-colnames(answer) &amp;lt;- &amp;quot;percentage&amp;quot;
-
-print(answer)&lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;##          percentage
-## Bronze            3
-## Silver            4
-## Gold              5
-## Sapphire          7
-## Ruby              9
-## Emerald          11
-## Amethyst         13
-## Pearl            15
-## Obsidian         16
-## Diamond          17&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </description>
     </item>

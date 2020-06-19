@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme" content="hugo-academic">
+  <meta name="generator" content="Hugo 0.44" />
+  <meta name="author" content="Derek Sollberger">
+
+  
+  
+  
+  
+    
+      
+    
+  
+  <meta name="description" content="IntroductionToday, for practice with ggplot2, I wish to replicate @JoshuaFeldman’s wonderful #TidyTuesday submission about the dataset of Roman emperors.
+library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted on August 13, 2019# TidyTuesday&#39;s given line of code to load the dataemperors &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&quot;)Exploring the Datadim(emperors)## [1] 68 16colnames(emperors)## [1] &quot;index&quot; &quot;name&quot; &quot;name_full&quot; &quot;birth&quot; &quot;death&quot; ## [6] &quot;birth_cty&quot; &quot;birth_prv&quot; &quot;rise&quot; &quot;reign_start&quot; &quot;reign_end&quot; ## [11] &quot;cause&quot; &quot;killer&quot; &quot;dynasty&quot; &quot;era&quot; &quot;notes&quot; ## [16] &quot;verif_who&quot;emperors %&gt;%filter(birth_prv !">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/tidytuesday-roman-emperors/">
+
+  
+
+
+  
+
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+  
+  
+  
+    
+  
+  
+    
+    
+      
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+      
+    
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
+  
+  
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
+  
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="The Median Data Scientist">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/tidytuesday-roman-emperors/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="twitter:site" content="@DerekSollberger">
+  <meta property="twitter:creator" content="@DerekSollberger">
+  
+  <meta property="og:site_name" content="The Median Data Scientist">
+  <meta property="og:url" content="/post/tidytuesday-roman-emperors/">
+  <meta property="og:title" content="TidyTuesday: Roman Emperors | The Median Data Scientist">
+  <meta property="og:description" content="IntroductionToday, for practice with ggplot2, I wish to replicate @JoshuaFeldman’s wonderful #TidyTuesday submission about the dataset of Roman emperors.
+library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted on August 13, 2019# TidyTuesday&#39;s given line of code to load the dataemperors &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&quot;)Exploring the Datadim(emperors)## [1] 68 16colnames(emperors)## [1] &quot;index&quot; &quot;name&quot; &quot;name_full&quot; &quot;birth&quot; &quot;death&quot; ## [6] &quot;birth_cty&quot; &quot;birth_prv&quot; &quot;rise&quot; &quot;reign_start&quot; &quot;reign_end&quot; ## [11] &quot;cause&quot; &quot;killer&quot; &quot;dynasty&quot; &quot;era&quot; &quot;notes&quot; ## [16] &quot;verif_who&quot;emperors %&gt;%filter(birth_prv !">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2020-06-19T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2020-06-19T00:00:00&#43;00:00">
+  
+
+  
+
+  <title>TidyTuesday: Roman Emperors | The Median Data Scientist</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
+  <div class="container">
+
+    
+    <div class="navbar-header">
+      
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+              data-target=".navbar-collapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <a class="navbar-brand" href="/">The Median Data Scientist</a>
+    </div>
+
+    
+    <div class="collapse navbar-collapse">
+
+      
+      
+      <ul class="nav navbar-nav navbar-right">
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#teaching">
+            
+            <span>Teaching</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+        
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+      
+
+      
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+  <div class="article-container">
+    <div class="article-inner">
+      <h1 itemprop="name">TidyTuesday: Roman Emperors</h1>
+
+      
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-06-19 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jun 19, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/tidytuesday">tidyTuesday</a
+    >
+    
+  </span>
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=TidyTuesday%3a%20Roman%20Emperors&amp;url=%2fpost%2ftidytuesday-roman-emperors%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2ftidytuesday-roman-emperors%2f"
+         target="_blank" rel="noopener">
+        <i class="fa fa-facebook"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2ftidytuesday-roman-emperors%2f&amp;title=TidyTuesday%3a%20Roman%20Emperors"
+         target="_blank" rel="noopener">
+        <i class="fa fa-linkedin"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2ftidytuesday-roman-emperors%2f&amp;title=TidyTuesday%3a%20Roman%20Emperors"
+         target="_blank" rel="noopener">
+        <i class="fa fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=TidyTuesday%3a%20Roman%20Emperors&amp;body=%2fpost%2ftidytuesday-roman-emperors%2f">
+        <i class="fa fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+
+      <div class="article-style" itemprop="articleBody">
+        <div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Today, for practice with <code>ggplot2</code>, I wish to replicate <span class="citation">@JoshuaFeldman</span>’s wonderful #TidyTuesday submission about the dataset of Roman emperors.</p>
+<pre class="r"><code>library(&quot;tidyverse&quot;)</code></pre>
+<ul>
+<li><a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-08-13">TidyTuesday’s Roman Emperor dataset</a> — posted on August 13, 2019</li>
+</ul>
+<pre class="r"><code># TidyTuesday&#39;s given line of code to load the data
+emperors &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&quot;)</code></pre>
+</div>
+<div id="exploring-the-data" class="section level1">
+<h1>Exploring the Data</h1>
+<pre class="r"><code>dim(emperors)</code></pre>
+<pre><code>## [1] 68 16</code></pre>
+<pre class="r"><code>colnames(emperors)</code></pre>
+<pre><code>##  [1] &quot;index&quot;       &quot;name&quot;        &quot;name_full&quot;   &quot;birth&quot;       &quot;death&quot;      
+##  [6] &quot;birth_cty&quot;   &quot;birth_prv&quot;   &quot;rise&quot;        &quot;reign_start&quot; &quot;reign_end&quot;  
+## [11] &quot;cause&quot;       &quot;killer&quot;      &quot;dynasty&quot;     &quot;era&quot;         &quot;notes&quot;      
+## [16] &quot;verif_who&quot;</code></pre>
+<pre class="r"><code>emperors %&gt;%
+  filter(birth_prv != &quot;Unknown&quot;) %&gt;%
+  ggplot(aes(x = birth_prv)) +
+  geom_bar(aes(fill = birth_prv), stat = &quot;count&quot;) +
+  labs(title = &quot;Birth Provinces of Roman Emperors&quot;,
+       subtitle = &quot;Years 62 BC to 347 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;birth province&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code>emperors %&gt;%
+  ggplot(aes(x = fct_rev(rise))) +
+  geom_bar(aes(fill = rise), stat = &quot;count&quot;) +
+  coord_flip() +
+  labs(title = &quot;How Roman Emperors Rose to Power&quot;,
+       subtitle = &quot;Years 26 BC to 379 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>emperors %&gt;%
+  filter(cause != &quot;Unknown&quot;) %&gt;%
+  ggplot(aes(x = fct_rev(cause))) +
+  geom_bar(aes(fill = cause), stat = &quot;count&quot;) +
+  coord_flip() +
+  labs(title = &quot;Causes of Death of Roman Emperors&quot;,
+       subtitle = &quot;Years 14 AD to 395 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>emperors$dynasty_factor &lt;- factor(emperors$dynasty,
+                                  levels = unique(emperors$dynasty))
+
+emperors %&gt;%
+  ggplot(aes(x = fct_rev(dynasty_factor))) +
+  geom_bar(aes(fill = dynasty_factor), stat = &quot;count&quot;) +
+  coord_flip() +
+  labs(title = &quot;Roman Dynasties&quot;,
+       subtitle = &quot;Years 26 BC to 395 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<div id="data-wrangling" class="section level1">
+<h1>Data Wrangling</h1>
+<pre class="r"><code>#extracting birth and death years
+emperors &lt;- emperors %&gt;%
+  separate(birth, 
+           sep = &quot;-&quot;, 
+           into = c(&quot;birth_year&quot;, &quot;birth_month&quot;, &quot;birth_day&quot;),
+           remove = FALSE) %&gt;%
+  separate(death, 
+           sep = &quot;-&quot;, 
+           into = c(&quot;death_year&quot;, &quot;death_month&quot;, &quot;death_day&quot;),
+           remove = FALSE)</code></pre>
+<pre class="r"><code># remove leading zeros and convert from character to numeric
+emperors$birth_year  &lt;- as.numeric(emperors$birth_year)
+emperors$birth_month &lt;- as.numeric(emperors$birth_month)
+emperors$birth_day   &lt;- as.numeric(emperors$birth_day)
+emperors$death_year  &lt;- as.numeric(emperors$death_year)
+emperors$death_month &lt;- as.numeric(emperors$death_month)
+emperors$death_day   &lt;- as.numeric(emperors$death_day)</code></pre>
+<pre class="r"><code># ensuring order of months for the graphs
+emperors$birth_month &lt;- factor(emperors$birth_month,
+                               levels = 1:12)
+emperors$death_month &lt;- factor(emperors$death_month,
+                               levels = 1:12)</code></pre>
+<pre class="r"><code>emperors %&gt;%
+  filter(!is.na(birth_month)) %&gt;%
+  ggplot(aes(x = birth_month)) +
+  geom_bar(aes(fill = birth_month), stat = &quot;count&quot;) +
+  labs(title = &quot;Birth Months of Roman Emperors&quot;,
+       subtitle = &quot;Years 26 BC to 347 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>emperors %&gt;%
+  filter(!is.na(death_month)) %&gt;%
+  ggplot(aes(x = death_month)) +
+  geom_bar(aes(fill = death_month), stat = &quot;count&quot;) +
+  labs(title = &quot;Death Months of Roman Emperors&quot;,
+       subtitle = &quot;Years 14 AD to 395 AD&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;&quot;,
+       y = &quot;number of emperors&quot;) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<pre class="r"><code># only a few year data points were BC, so here is a quick fix for &quot;negative years&quot;
+emperors$birth_year[1:3] &lt;- -emperors$birth_year[1:3]</code></pre>
+<p>The <code>emperors</code> dataset had some missing values for <code>birth_year</code>, so here is what I am going to due to <em>impute</em> the missing values:</p>
+<ul>
+<li>calculate the lifespan of the other emperors</li>
+<li>calculate the average lifespan</li>
+<li>if <code>birth_year</code> is missing, subtract <code>death_year</code> by the average lifespan</li>
+</ul>
+<pre class="r"><code>emperors$lifespan &lt;- emperors$death_year - emperors$birth_year
+average_emperor_lifespan &lt;- round(mean(emperors$lifespan, na.rm = TRUE))
+
+for(i in 1:nrow(emperors)){
+  if(is.na(emperors$birth_year[i])){
+    emperors$birth_year[i] &lt;- emperors$death_year[i] - average_emperor_lifespan
+  }
+}</code></pre>
+<pre class="r"><code>#later, ggplot had a minor issue with 7 (i.e. greater than 6) causes of death
+emperors$cause[emperors$cause == &quot;Unknown&quot;] &lt;- &quot;Natural Causes&quot;</code></pre>
+</div>
+<div id="main-graph" class="section level1">
+<h1>Main Graph</h1>
+<p>As inspired by <span class="citation">@JoshuaFeldman</span>, the goals for today’s main graph include</p>
+<ul>
+<li>birth years by province</li>
+<li>death years by cause of death</li>
+<li>reign as a line segment</li>
+<li>segment color by dynasty</li>
+<li>also delineate the two eras</li>
+</ul>
+<pre class="r"><code>#extracting reign years
+emperors &lt;- emperors %&gt;%
+  separate(reign_start, 
+           sep = &quot;-&quot;, 
+           into = c(&quot;reign_start_year&quot;, &quot;reign_start_month&quot;, &quot;reign_start_day&quot;),
+           remove = FALSE) %&gt;%
+  separate(reign_end, 
+           sep = &quot;-&quot;, 
+           into = c(&quot;reign_end_year&quot;, &quot;reign_end_month&quot;, &quot;reign_end_day&quot;),
+           remove = FALSE)
+
+emperors$reign_start_year  &lt;- as.numeric(emperors$reign_start_year)
+emperors$reign_start_month &lt;- as.numeric(emperors$reign_start_month)
+emperors$reign_start_day   &lt;- as.numeric(emperors$reign_start_day)
+emperors$reign_end_year    &lt;- as.numeric(emperors$reign_end_year)
+emperors$reign_end_month   &lt;- as.numeric(emperors$reign_end_month)
+emperors$reign_end_day     &lt;- as.numeric(emperors$reign_end_day)
+
+# only a few year data points were BC, so here is a quick fix for &quot;negative years&quot;
+emperors$reign_start_year[1:2] &lt;- -emperors$reign_start_year[1:2]</code></pre>
+<pre class="r"><code>main_plot &lt;- emperors %&gt;%
+  ggplot() +
+  geom_segment(aes(x = reign_start_year, y = reorder(name, -reign_start_year), 
+                   xend = reign_end_year, yend = reorder(name, -reign_start_year),
+                   color = dynasty_factor, group = dynasty_factor),
+               data = emperors, size = 2) +
+  geom_point(aes(x = birth_year, y = reorder(name, -reign_start_year),
+                 group = birth_prv), 
+             color = &quot;black&quot;, size = 1) +
+  geom_point(aes(x = death_year, y = reorder(name, -reign_start_year),
+                 shape = cause, group = cause), 
+             color = &quot;black&quot;, size = 3) +
+  #geom_label(aes(x = birth_year, y = reorder(name, -reign_start_year), label = name)) +
+  scale_color_discrete(name = &quot;Dynasty&quot;) +
+  scale_shape_discrete(name = &quot;Cause of Death&quot;) +
+  labs(title = &quot;Roman Emperors&quot;,
+       subtitle = &quot;Ordered by the start of their reign (small dots are birth years)&quot;,
+       caption = &quot;Data Source: TidyTuesday&quot;,
+       x = &quot;year&quot;,
+       y = &quot;&quot;) +
+  theme(legend.position = &quot;bottom&quot;)</code></pre>
+<pre class="r"><code>#plot
+main_plot</code></pre>
+<p><img src="/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+</div>
+
+      </div>
+
+      
+
+
+<div class="article-tags">
+  
+  <a class="btn btn-primary btn-outline" href="/tags/data-mining">data mining</a>
+  
+  <a class="btn btn-primary btn-outline" href="/tags/ggplot">ggplot</a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+
+</article>
+
+
+
+<div class="article-container article-widget">
+  <div class="hr-light"></div>
+  <h3>Related</h3>
+  <ul>
+    
+    <li><a href="/post/recent-supreme-court-cases/">Recent Supreme Court Cases</a></li>
+    
+    <li><a href="/post/introduction-to-unsupervised-learning/">Introduction to Unsupervised Learning</a></li>
+    
+    <li><a href="/post/introduction-to-unsupervised-learning/">Introduction to Unsupervised Learning</a></li>
+    
+    <li><a href="/post/hikes-i-ve-completed/">Hikes I&#39;ve Completed</a></li>
+    
+    <li><a href="/post/gender-of-frasier-characters/">Gender of Frasier Characters</a></li>
+    
+  </ul>
+</div>
+
+
+
+
+<div class="article-container">
+  
+
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <p class="powered-by">
+
+      &copy; 2018 &middot; 
+
+      Powered by the
+      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+      <span class="pull-right" aria-hidden="true">
+        <a href="#" id="back_to_top">
+          <span class="button_icon">
+            <i class="fa fa-chevron-up fa-2x"></i>
+          </span>
+        </a>
+      </span>
+
+    </p>
+  </div>
+</footer>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Cite</h4>
+      </div>
+      <div>
+        <pre><code class="modal-body tex"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
+          <i class="fa fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
+          <i class="fa fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+    
+    
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      
+      
+      <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+      
+
+      
+
+      
+
+      <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
+    
+    
+
+  </body>
+</html>
+

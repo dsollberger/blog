@@ -208,6 +208,71 @@
   
   
   <h3 class="article-title" itemprop="headline">
+    <a href="/post/tidytuesday-roman-emperors/" itemprop="url">TidyTuesday: Roman Emperors</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-06-19 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jun 19, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/tidytuesday">tidyTuesday</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    IntroductionToday, for practice with ggplot2, I wish to replicate @JoshuaFeldman’s wonderful #TidyTuesday submission about the dataset of Roman emperors.
+library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted on August 13, 2019# TidyTuesday&#39;s given line of code to load the dataemperors &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&quot;)Exploring the Datadim(emperors)## [1] 68 16colnames(emperors)## [1] &quot;index&quot; &quot;name&quot; &quot;name_full&quot; &quot;birth&quot; &quot;death&quot; ## [6] &quot;birth_cty&quot; &quot;birth_prv&quot; &quot;rise&quot; &quot;reign_start&quot; &quot;reign_end&quot; ## [11] &quot;cause&quot; &quot;killer&quot; &quot;dynasty&quot; &quot;era&quot; &quot;notes&quot; ## [16] &quot;verif_who&quot;emperors %&gt;%filter(birth_prv !
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/tidytuesday-roman-emperors/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
     <a href="/post/recent-supreme-court-cases/" itemprop="url">Recent Supreme Court Cases</a>
   </h3>
   
@@ -785,72 +850,6 @@ Data set: Animal Crossing Source: VillagerDB, MetaCritic, and TidyTuesday
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/introduction-to-unsupervised-learning/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/supervised-learning/" itemprop="url">Supervised Learning</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-05-04 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      May 4, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    8 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/machine-learning">machine learning</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    Supervised LearningSupervised learning has the goal of making predictions with a set of known labels for the response variable.In unsupervised learning, we try to find structure in the data of the response variable without predetermined labels.Goal: predict the personality type of each character in Animal Crossing
-Data set: Animal CrossingSource: VillagerDB, MetaCritic, and TidyTuesday
-Animal Crossing Tidy Tuesdaylibrary(&quot;caret&quot;)library(&quot;randomForest&quot;)library(&quot;tidymodels&quot;)library(&quot;tidyverse&quot;)# critic &lt;- readr::read_tsv(&#39;https://raw.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/supervised-learning/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>
