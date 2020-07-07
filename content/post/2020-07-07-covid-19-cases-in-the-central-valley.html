@@ -1,0 +1,117 @@
+---
+title: Covid-19 Cases in the Central Valley
+author: Derek Sollberger
+date: '2020-07-07'
+slug: covid-19-cases-in-the-central-valley
+categories:
+  - bioinformatics
+tags:
+  - ggplot
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>Source: <a href="https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/">USA Facts</a> — downloaded July 6, 2020</p>
+<pre class="r"><code>library(&quot;tidyverse&quot;)
+library(&quot;zoo&quot;)
+
+start_date &lt;- &quot;5/28/20&quot;
+end_date &lt;- &quot;7/5/20&quot;
+
+county_list &lt;- c(&quot;Santa Clara&quot;, &quot;Stanislaus&quot;, &quot;Calaveras&quot;,
+              &quot;San Benito&quot;, &quot;Merced&quot;, &quot;Tuolumne&quot;,
+              &quot;Fresno&quot;, &quot;Madera&quot;, &quot;Mariposa&quot;)
+lag &lt;- 7 #number of days for rolling average</code></pre>
+<pre class="r"><code>#loads files
+cases_raw &lt;- read_csv(&quot;covid_confirmed_usafacts.csv&quot;)
+populations &lt;- read_csv(&quot;covid_county_population_usafacts.csv&quot;)</code></pre>
+</div>
+<div id="data-wrangling" class="section level1">
+<h1>Data Wrangling</h1>
+<pre class="r"><code>raw_data_merged &lt;- cases_raw %&gt;%
+  full_join(populations, by = c(&quot;County Name&quot;, &quot;State&quot;))
+
+# find column positions by date
+column_names &lt;- colnames(raw_data_merged)
+start_loc &lt;- match(start_date, column_names)
+end_loc   &lt;- match(end_date, column_names)
+
+cases_filtered &lt;- cases_raw %&gt;%
+  filter(State == &quot;CA&quot;) %&gt;%
+  select(&quot;County Name&quot;, all_of(start_loc:end_loc))
+  
+
+populations_filtered &lt;- populations %&gt;%
+  filter(State == &quot;CA&quot;) %&gt;%
+  select(&quot;County Name&quot;, &quot;population&quot;)
+  
+
+df_merged &lt;- cases_filtered %&gt;%
+  full_join(populations_filtered, 
+            by = &quot;County Name&quot;)
+
+df_clean &lt;- df_merged %&gt;%
+  
+  # avoids unallocated cases and the cruise ship!
+  filter(str_detect(`County Name`, &quot;County&quot;)) %&gt;%
+  mutate(county = str_replace(`County Name`, &quot; County&quot;, &quot;&quot;)) %&gt;%
+  select(-`County Name`)
+
+tall_data &lt;- df_clean %&gt;%
+  gather(key = &quot;date&quot;, value = &quot;cases&quot;, -county, -population)</code></pre>
+</div>
+<div id="rolling-average" class="section level1">
+<h1>Rolling Average</h1>
+<pre class="r"><code># rough draft
+draft_data &lt;- tall_data %&gt;%
+  group_by(county) %&gt;%
+  mutate(new_cases = c(NA, diff(cases))) %&gt;%
+  mutate(rolling_average = rollapply(new_cases, 3, mean, fill = NA)) %&gt;%
+  filter(county == &quot;Merced&quot;)</code></pre>
+</div>
+<div id="final-product" class="section level1">
+<h1>Final Product</h1>
+<pre class="r"><code>requested_region &lt;- tall_data %&gt;%
+  filter(county %in% county_list)
+
+# factors to affect facet grid order
+requested_region$county &lt;- factor(requested_region$county,
+                                  levels = county_list)
+
+# requested_region$date &lt;- as.Date(requested_region$date)
+dates_list &lt;- unique(requested_region$date)
+dates_weekly &lt;- dates_list[seq(1, length(dates_list), 7)]
+
+requested_region %&gt;%
+  group_by(county) %&gt;%
+  mutate(new_cases = c(NA, diff(cases))) %&gt;%
+  mutate(rolling_average = rollapply(new_cases, lag, 
+                                     mean, fill = NA)) %&gt;%
+  
+  # normalized by population
+  mutate(roll_avg_per_cap = 100000*rolling_average / population) %&gt;%
+  ggplot(aes(x = date, y = roll_avg_per_cap,
+             color = county, group = county)) + 
+  geom_line() +
+  facet_wrap(. ~ county, nrow = 3) +
+  labs(title = &quot;Covid-19 in the Calfornia Central Valley&quot;,
+       subtitle = &quot;since Memorial Day, 7-day rolling average, per 100000 people&quot;,
+       caption = &quot;Source: USA Facts&quot;,
+       x = &quot;date&quot;,
+       y = &quot;new cases per capita&quot;) +
+  # scale_x_date(date_breaks = &quot;1 week&quot;) +
+  scale_x_discrete(breaks = dates_weekly) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &quot;none&quot;,
+        panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank())</code></pre>
+<p><img src="/post/2020-07-07-covid-19-cases-in-the-central-valley_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>

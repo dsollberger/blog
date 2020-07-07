@@ -79,7 +79,7 @@
   <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
   <meta property="og:locale" content="en-us">
   
-  <meta property="og:updated_time" content="2020-02-12T00:00:00&#43;00:00">
+  <meta property="og:updated_time" content="2020-07-07T00:00:00&#43;00:00">
   
 
   
@@ -209,6 +209,49 @@
   
 
   
+  
+  <div>
+    <h2><a href="/post/covid-19-cases-in-the-central-valley/">Covid-19 Cases in the Central Valley</a></h2>
+    <div class="article-style">
+      
+      <p>Data
+Source: USA Facts — downloaded July 6, 2020
+library(&quot;tidyverse&quot;)
+library(&quot;zoo&quot;)
+start_date &lt;- &quot;5/28/20&quot;
+end_date &lt;- &quot;7/5/20&quot;
+county_list &lt;- c(&quot;Santa Clara&quot;, &quot;Stanislaus&quot;, &quot;Calaveras&quot;,
+&quot;San Benito&quot;, &quot;Merced&quot;, &quot;Tuolumne&quot;,
+&quot;Fresno&quot;, &quot;Madera&quot;, &quot;Mariposa&quot;)
+lag &lt;- 7 #number of days for rolling average
+#loads files
+cases_raw &lt;- read_csv(&quot;covid_confirmed_usafacts.csv&quot;)
+populations &lt;- read_csv(&quot;covid_county_population_usafacts.csv&quot;)</p>
+
+<p>Data Wrangling
+raw_data_merged &lt;- cases_raw %&gt;%
+full_join(populations, by = c(&quot;County Name&quot;, &quot;State&quot;))</p>
+
+<h1 id="find-column-positions-by-date">find column positions by date</h1>
+
+<p>column_names &lt;- colnames(raw_data_merged)
+start_loc &lt;- match(start_date, column_names)
+end_loc &lt;- match(end_date, column_names)
+cases_filtered &lt;- cases_raw %&gt;%
+filter(State == &quot;CA&quot;) %&gt;%
+select(&quot;County Name&quot;, all_of(start_loc:end_loc))
+populations_filtered &lt;- populations %&gt;%
+filter(State == &quot;CA&quot;) %&gt;%
+select(&quot;County Name&quot;, &quot;population&quot;)
+df_merged &lt;- cases_filtered %&gt;%
+full_join(populations_filtered, by = &quot;County Name&quot;)
+df_clean &lt;- df_merged %&gt;%</p>
+
+<h1 id="avoids-unallocated-cases-and-the-cruise-ship">avoids unallocated cases and the cruise ship!</h1>
+
+      
+    </div>
+  </div>
   
   <div>
     <h2><a href="/post/introduction-to-bioconductor/">Introduction to Bioconductor</a></h2>

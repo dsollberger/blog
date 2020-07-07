@@ -381,6 +381,86 @@
         
           
       
+
+      
+      
+        
+        
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
+    <a href="/post/covid-19-cases-in-the-central-valley/" itemprop="url">Covid-19 Cases in the Central Valley</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2020-07-07 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jul 7, 2020
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    2 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/bioinformatics">bioinformatics</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    DataSource: USA Facts — downloaded July 6, 2020
+library(&quot;tidyverse&quot;)library(&quot;zoo&quot;)start_date &lt;- &quot;5/28/20&quot;end_date &lt;- &quot;7/5/20&quot;county_list &lt;- c(&quot;Santa Clara&quot;, &quot;Stanislaus&quot;, &quot;Calaveras&quot;,&quot;San Benito&quot;, &quot;Merced&quot;, &quot;Tuolumne&quot;,&quot;Fresno&quot;, &quot;Madera&quot;, &quot;Mariposa&quot;)lag &lt;- 7 #number of days for rolling average#loads filescases_raw &lt;- read_csv(&quot;covid_confirmed_usafacts.csv&quot;)populations &lt;- read_csv(&quot;covid_county_population_usafacts.csv&quot;)Data Wranglingraw_data_merged &lt;- cases_raw %&gt;%full_join(populations, by = c(&quot;County Name&quot;, &quot;State&quot;))# find column positions by datecolumn_names &lt;- colnames(raw_data_merged)start_loc &lt;- match(start_date, column_names)end_loc &lt;- match(end_date, column_names)cases_filtered &lt;- cases_raw %&gt;%filter(State == &quot;CA&quot;) %&gt;%select(&quot;County Name&quot;, all_of(start_loc:end_loc))populations_filtered &lt;- populations %&gt;%filter(State == &quot;CA&quot;) %&gt;%select(&quot;County Name&quot;, &quot;population&quot;)df_merged &lt;- cases_filtered %&gt;%full_join(populations_filtered, by = &quot;County Name&quot;)df_clean &lt;- df_merged %&gt;%# avoids unallocated cases and the cruise ship!
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/covid-19-cases-in-the-central-valley/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+      
+
+      
+
+        
+
+        
+        
+
+        
+        
+          
+      
           
       
 
@@ -695,88 +775,6 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
       
 
       
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/geofacet-plot-vingette/" itemprop="url">Geofacet plot vingette</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-05-30 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      May 30, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    5 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/gis">gis</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    Today I am going to try to make a geofacet graph using the GAI (Global Acceptability Index) data. My goal is to show trends in LGBT acceptance in Europe between the years 2003 and 2017.
-Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication from the UCLA School of Law Williams Institutegeofacet R packageList of European nationsConvert Town to convert spreadsheet columns to comma-separated listslibrary(&quot;geofacet&quot;)library(&quot;tidyverse&quot;)Dataraw_data &lt;- read_csv(&quot;gai.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/geofacet-plot-vingette/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
     
 
   </div>
@@ -850,7 +848,7 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/esl" style="font-size:1.336290290535739rem">ESL</a>
+          <a href="/tags/esl" style="font-size:1.311750992628768rem">ESL</a>
         
           
           
@@ -864,42 +862,42 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/academic" style="font-size:1.8725805810714777rem">academic</a>
+          <a href="/tags/academic" style="font-size:1.8235019852575358rem">academic</a>
         
           
           
           
           
           
-          <a href="/tags/blogdown" style="font-size:1.336290290535739rem">blogdown</a>
+          <a href="/tags/blogdown" style="font-size:1.311750992628768rem">blogdown</a>
         
           
           
           
           
           
-          <a href="/tags/choropleth" style="font-size:1.8725805810714777rem">choropleth</a>
+          <a href="/tags/choropleth" style="font-size:1.8235019852575358rem">choropleth</a>
         
           
           
           
           
           
-          <a href="/tags/culture" style="font-size:1.336290290535739rem">culture</a>
+          <a href="/tags/culture" style="font-size:1.311750992628768rem">culture</a>
         
           
           
           
           
           
-          <a href="/tags/data-mining" style="font-size:1.336290290535739rem">data mining</a>
+          <a href="/tags/data-mining" style="font-size:1.311750992628768rem">data mining</a>
         
           
           
           
           
           
-          <a href="/tags/datacamp" style="font-size:1.336290290535739rem">datacamp</a>
+          <a href="/tags/datacamp" style="font-size:1.311750992628768rem">datacamp</a>
         
           
           
@@ -920,14 +918,14 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/flexdashboard" style="font-size:1.65rem">flexdashboard</a>
+          <a href="/tags/flexdashboard" style="font-size:1.611106133023426rem">flexdashboard</a>
         
           
           
           
           
           
-          <a href="/tags/geofacet" style="font-size:1.336290290535739rem">geofacet</a>
+          <a href="/tags/geofacet" style="font-size:1.311750992628768rem">geofacet</a>
         
           
           
@@ -941,14 +939,14 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/gganimate" style="font-size:2.1862902905357386rem">gganimate</a>
+          <a href="/tags/gganimate" style="font-size:2.122857125652194rem">gganimate</a>
         
           
           
           
           
           
-          <a href="/tags/ggplot" style="font-size:2.408870871607216rem">ggplot</a>
+          <a href="/tags/ggplot" style="font-size:2.422212266046852rem">ggplot</a>
         
           
           
@@ -969,7 +967,7 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/hugo" style="font-size:1.8725805810714777rem">hugo</a>
+          <a href="/tags/hugo" style="font-size:1.8235019852575358rem">hugo</a>
         
           
           
@@ -983,7 +981,7 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/math" style="font-size:1.65rem">math</a>
+          <a href="/tags/math" style="font-size:1.611106133023426rem">math</a>
         
           
           
@@ -1011,7 +1009,7 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/regression" style="font-size:1.336290290535739rem">regression</a>
+          <a href="/tags/regression" style="font-size:1.311750992628768rem">regression</a>
         
           
           
@@ -1039,7 +1037,7 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/tidymodels" style="font-size:1.336290290535739rem">tidymodels</a>
+          <a href="/tags/tidymodels" style="font-size:1.311750992628768rem">tidymodels</a>
         
           
           
@@ -1067,7 +1065,7 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
           
           
           
-          <a href="/tags/workshop" style="font-size:1.65rem">workshop</a>
+          <a href="/tags/workshop" style="font-size:1.611106133023426rem">workshop</a>
         
           
           

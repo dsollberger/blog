@@ -1,0 +1,125 @@
+---
+title: Covid-19 Cases in the Central Valley
+author: Derek Sollberger
+date: '2020-07-07'
+slug: covid-19-cases-in-the-central-valley
+categories:
+  - bioinformatics
+tags:
+  - ggplot
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+# Data
+
+Source: [USA Facts](https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/) --- downloaded July 6, 2020
+
+```{r, message = FALSE, warning = FALSE}
+library("tidyverse")
+library("zoo")
+
+start_date <- "5/28/20"
+end_date <- "7/5/20"
+
+county_list <- c("Santa Clara", "Stanislaus", "Calaveras",
+              "San Benito", "Merced", "Tuolumne",
+              "Fresno", "Madera", "Mariposa")
+lag <- 7 #number of days for rolling average
+```
+
+```{r, message = FALSE, warning = FALSE}
+#loads files
+cases_raw <- read_csv("covid_confirmed_usafacts.csv")
+populations <- read_csv("covid_county_population_usafacts.csv")
+```
+
+# Data Wrangling
+
+```{r}
+raw_data_merged <- cases_raw %>%
+  full_join(populations, by = c("County Name", "State"))
+
+# find column positions by date
+column_names <- colnames(raw_data_merged)
+start_loc <- match(start_date, column_names)
+end_loc   <- match(end_date, column_names)
+
+cases_filtered <- cases_raw %>%
+  filter(State == "CA") %>%
+  select("County Name", all_of(start_loc:end_loc))
+  
+
+populations_filtered <- populations %>%
+  filter(State == "CA") %>%
+  select("County Name", "population")
+  
+
+df_merged <- cases_filtered %>%
+  full_join(populations_filtered, 
+            by = "County Name")
+
+df_clean <- df_merged %>%
+  
+  # avoids unallocated cases and the cruise ship!
+  filter(str_detect(`County Name`, "County")) %>%
+  mutate(county = str_replace(`County Name`, " County", "")) %>%
+  select(-`County Name`)
+
+tall_data <- df_clean %>%
+  gather(key = "date", value = "cases", -county, -population)
+```
+
+# Rolling Average
+
+```{r}
+# rough draft
+draft_data <- tall_data %>%
+  group_by(county) %>%
+  mutate(new_cases = c(NA, diff(cases))) %>%
+  mutate(rolling_average = rollapply(new_cases, 3, mean, fill = NA)) %>%
+  filter(county == "Merced")
+```
+
+# Final Product
+
+```{r, message = FALSE, warning = FALSE}
+requested_region <- tall_data %>%
+  filter(county %in% county_list)
+
+# factors to affect facet grid order
+requested_region$county <- factor(requested_region$county,
+                                  levels = county_list)
+
+# requested_region$date <- as.Date(requested_region$date)
+dates_list <- unique(requested_region$date)
+dates_weekly <- dates_list[seq(1, length(dates_list), 7)]
+
+requested_region %>%
+  group_by(county) %>%
+  mutate(new_cases = c(NA, diff(cases))) %>%
+  mutate(rolling_average = rollapply(new_cases, lag, 
+                                     mean, fill = NA)) %>%
+  
+  # normalized by population
+  mutate(roll_avg_per_cap = 100000*rolling_average / population) %>%
+  ggplot(aes(x = date, y = roll_avg_per_cap,
+             color = county, group = county)) + 
+  geom_line() +
+  facet_wrap(. ~ county, nrow = 3) +
+  labs(title = "Covid-19 in the Calfornia Central Valley",
+       subtitle = "since Memorial Day, 7-day rolling average, per 100000 people",
+       caption = "Source: USA Facts",
+       x = "date",
+       y = "new cases per capita") +
+  # scale_x_date(date_breaks = "1 week") +
+  scale_x_discrete(breaks = dates_weekly) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = "none",
+        panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank())
+```

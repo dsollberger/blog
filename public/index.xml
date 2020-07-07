@@ -11,6 +11,115 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Covid-19 Cases in the Central Valley</title>
+      <link>/post/covid-19-cases-in-the-central-valley/</link>
+      <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/covid-19-cases-in-the-central-valley/</guid>
+      <description>&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;p&gt;Source: &lt;a href=&#34;https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/&#34;&gt;USA Facts&lt;/a&gt; — downloaded July 6, 2020&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)
+library(&amp;quot;zoo&amp;quot;)
+
+start_date &amp;lt;- &amp;quot;5/28/20&amp;quot;
+end_date &amp;lt;- &amp;quot;7/5/20&amp;quot;
+
+county_list &amp;lt;- c(&amp;quot;Santa Clara&amp;quot;, &amp;quot;Stanislaus&amp;quot;, &amp;quot;Calaveras&amp;quot;,
+              &amp;quot;San Benito&amp;quot;, &amp;quot;Merced&amp;quot;, &amp;quot;Tuolumne&amp;quot;,
+              &amp;quot;Fresno&amp;quot;, &amp;quot;Madera&amp;quot;, &amp;quot;Mariposa&amp;quot;)
+lag &amp;lt;- 7 #number of days for rolling average&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#loads files
+cases_raw &amp;lt;- read_csv(&amp;quot;covid_confirmed_usafacts.csv&amp;quot;)
+populations &amp;lt;- read_csv(&amp;quot;covid_county_population_usafacts.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Wrangling&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;raw_data_merged &amp;lt;- cases_raw %&amp;gt;%
+  full_join(populations, by = c(&amp;quot;County Name&amp;quot;, &amp;quot;State&amp;quot;))
+
+# find column positions by date
+column_names &amp;lt;- colnames(raw_data_merged)
+start_loc &amp;lt;- match(start_date, column_names)
+end_loc   &amp;lt;- match(end_date, column_names)
+
+cases_filtered &amp;lt;- cases_raw %&amp;gt;%
+  filter(State == &amp;quot;CA&amp;quot;) %&amp;gt;%
+  select(&amp;quot;County Name&amp;quot;, all_of(start_loc:end_loc))
+  
+
+populations_filtered &amp;lt;- populations %&amp;gt;%
+  filter(State == &amp;quot;CA&amp;quot;) %&amp;gt;%
+  select(&amp;quot;County Name&amp;quot;, &amp;quot;population&amp;quot;)
+  
+
+df_merged &amp;lt;- cases_filtered %&amp;gt;%
+  full_join(populations_filtered, 
+            by = &amp;quot;County Name&amp;quot;)
+
+df_clean &amp;lt;- df_merged %&amp;gt;%
+  
+  # avoids unallocated cases and the cruise ship!
+  filter(str_detect(`County Name`, &amp;quot;County&amp;quot;)) %&amp;gt;%
+  mutate(county = str_replace(`County Name`, &amp;quot; County&amp;quot;, &amp;quot;&amp;quot;)) %&amp;gt;%
+  select(-`County Name`)
+
+tall_data &amp;lt;- df_clean %&amp;gt;%
+  gather(key = &amp;quot;date&amp;quot;, value = &amp;quot;cases&amp;quot;, -county, -population)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rolling-average&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Rolling Average&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# rough draft
+draft_data &amp;lt;- tall_data %&amp;gt;%
+  group_by(county) %&amp;gt;%
+  mutate(new_cases = c(NA, diff(cases))) %&amp;gt;%
+  mutate(rolling_average = rollapply(new_cases, 3, mean, fill = NA)) %&amp;gt;%
+  filter(county == &amp;quot;Merced&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;final-product&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Final Product&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;requested_region &amp;lt;- tall_data %&amp;gt;%
+  filter(county %in% county_list)
+
+# factors to affect facet grid order
+requested_region$county &amp;lt;- factor(requested_region$county,
+                                  levels = county_list)
+
+# requested_region$date &amp;lt;- as.Date(requested_region$date)
+dates_list &amp;lt;- unique(requested_region$date)
+dates_weekly &amp;lt;- dates_list[seq(1, length(dates_list), 7)]
+
+requested_region %&amp;gt;%
+  group_by(county) %&amp;gt;%
+  mutate(new_cases = c(NA, diff(cases))) %&amp;gt;%
+  mutate(rolling_average = rollapply(new_cases, lag, 
+                                     mean, fill = NA)) %&amp;gt;%
+  
+  # normalized by population
+  mutate(roll_avg_per_cap = 100000*rolling_average / population) %&amp;gt;%
+  ggplot(aes(x = date, y = roll_avg_per_cap,
+             color = county, group = county)) + 
+  geom_line() +
+  facet_wrap(. ~ county, nrow = 3) +
+  labs(title = &amp;quot;Covid-19 in the Calfornia Central Valley&amp;quot;,
+       subtitle = &amp;quot;since Memorial Day, 7-day rolling average, per 100000 people&amp;quot;,
+       caption = &amp;quot;Source: USA Facts&amp;quot;,
+       x = &amp;quot;date&amp;quot;,
+       y = &amp;quot;new cases per capita&amp;quot;) +
+  # scale_x_date(date_breaks = &amp;quot;1 week&amp;quot;) +
+  scale_x_discrete(breaks = dates_weekly) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &amp;quot;none&amp;quot;,
+        panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank())&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2020-07-07-covid-19-cases-in-the-central-valley_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
       <title>TidyTuesday: Roman Emperors</title>
       <link>/post/tidytuesday-roman-emperors/</link>
       <pubDate>Fri, 19 Jun 2020 00:00:00 +0000</pubDate>
@@ -2437,95 +2546,6 @@ library(&amp;quot;ggplot2&amp;quot;)  #modern data visualization
 &lt;li&gt;instructions for &lt;a href=&#34;https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/&#34;&gt;Mac OS X&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Also, the HTML file will probably have a similar icon as your web browser (Chrome, Firefox, etc.)&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>R Installation</title>
-      <link>/post/r-installation-for-students/</link>
-      <pubDate>Sun, 19 Jan 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/post/r-installation-for-students/</guid>
-      <description>&lt;p&gt;If you are planning to do the &lt;code&gt;R&lt;/code&gt; assignments on your own computer (recommended), then here is a quick outline for obtaining the software.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;em&gt;There are two separate software programs&lt;/em&gt;. Most people find it easier to use &lt;code&gt;RStudio&lt;/code&gt;. than just &lt;code&gt;R&lt;/code&gt;, but you need to install &lt;code&gt;R&lt;/code&gt; first before installing &lt;code&gt;RStudio&lt;/code&gt; (analogously speaking: you need an cell phone before you can use an cell phone case).&lt;/li&gt;
-&lt;li&gt;&lt;em&gt;If you have R and RStudio from a previous course, you still need to update to the current versions!&lt;/em&gt; (version 3.6.2 of R and version 1.2.5033 of RStudio)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div id=&#34;downloading-r&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Downloading R&lt;/h1&gt;
-&lt;p&gt;Go to &lt;a href=&#34;https://cran.r-project.org/&#34;&gt;The Comprehensive R Archive Network&lt;/a&gt; (CRAN)&lt;/p&gt;
-&lt;p&gt;Windows:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;click “Download R for Windows”&lt;/li&gt;
-&lt;li&gt;click “install R for the first time”&lt;/li&gt;
-&lt;li&gt;click “Download R 3.6.2 for Windows”&lt;/li&gt;
-&lt;li&gt;click “Save File”&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Mac:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;click “Download R for (Mac) OS X”&lt;/li&gt;
-&lt;li&gt;click “R-3.6.2.pkg”&lt;/li&gt;
-&lt;li&gt;click “Ok”&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;installing-r&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Installing R&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Windows: double-check icon for R-3.6.2-win.exe&lt;/li&gt;
-&lt;li&gt;Mac: double-click icon for R-3.6.2.pkg&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;give computer permission to install&lt;/li&gt;
-&lt;li&gt;select language&lt;/li&gt;
-&lt;li&gt;agree to GNU General Public License&lt;/li&gt;
-&lt;li&gt;select destination location&lt;/li&gt;
-&lt;li&gt;select components&lt;/li&gt;
-&lt;li&gt;Startup options: select “No (accept defaults)”&lt;/li&gt;
-&lt;li&gt;select Start Menu Folder&lt;/li&gt;
-&lt;li&gt;select Additional Tasks&lt;/li&gt;
-&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
-&lt;li&gt;“Click Finish to exit Setup”&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;downloading-rstudio&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Downloading RStudio&lt;/h1&gt;
-&lt;p&gt;Go to the &lt;a href=&#34;https://rstudio.com/products/rstudio/download/#download&#34;&gt;RStudio Desktop download page&lt;/a&gt; (i.e. we are using the &lt;em&gt;free&lt;/em&gt;, desktop version of RStudio)&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Windows: click RStudio-1.2.5033.exe, click “Save File”&lt;/li&gt;
-&lt;li&gt;Mac: click RStudio-1.2.5033.dmg, click “Ok”&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;installing-rstudio&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Installing RStudio&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;Windows: double-check icon for RStudio-1.2.5033.exe&lt;/li&gt;
-&lt;li&gt;Mac: double-click icon for RStudio-1.2.5033.dmg&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;give computer permission to install&lt;/li&gt;
-&lt;li&gt;“Click Next to continue”&lt;/li&gt;
-&lt;li&gt;Choose Install Location&lt;/li&gt;
-&lt;li&gt;Choose Start Menu Folder&lt;/li&gt;
-&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
-&lt;li&gt;“Click Finish to close Setup”&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&#34;code-packages&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Code Packages&lt;/h1&gt;
-&lt;p&gt;For R coding, we will often need more code—called code packages. To ease our coding sessions, please run the following lines of code before class (in the lower-left &lt;code&gt;console&lt;/code&gt; area of RStudio, just has to be done once this semester).&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_list &amp;lt;- c(&amp;quot;tidyverse&amp;quot;, &amp;quot;readxl&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;titanic&amp;quot;)
-install.packages(package_list)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;div id=&#34;file-types&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;File Types&lt;/h1&gt;
-&lt;p&gt;Also, while we are learning how I want homework assignments to be submitted, it will be useful if you can see file types in your computer.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;instructions for &lt;a href=&#34;http://kb.winzip.com/kb/entry/26/&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;instructions for &lt;a href=&#34;https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/&#34;&gt;Mac OS X&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 &lt;/div&gt;
 </description>
     </item>

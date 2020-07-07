@@ -7,10 +7,20 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
-    <lastBuildDate>Fri, 19 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 07 Jul 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="/tags/ggplot/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Covid-19 Cases in the Central Valley</title>
+      <link>/post/covid-19-cases-in-the-central-valley/</link>
+      <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/covid-19-cases-in-the-central-valley/</guid>
+      <description>DataSource: USA Facts — downloaded July 6, 2020
+library(&amp;quot;tidyverse&amp;quot;)library(&amp;quot;zoo&amp;quot;)start_date &amp;lt;- &amp;quot;5/28/20&amp;quot;end_date &amp;lt;- &amp;quot;7/5/20&amp;quot;county_list &amp;lt;- c(&amp;quot;Santa Clara&amp;quot;, &amp;quot;Stanislaus&amp;quot;, &amp;quot;Calaveras&amp;quot;,&amp;quot;San Benito&amp;quot;, &amp;quot;Merced&amp;quot;, &amp;quot;Tuolumne&amp;quot;,&amp;quot;Fresno&amp;quot;, &amp;quot;Madera&amp;quot;, &amp;quot;Mariposa&amp;quot;)lag &amp;lt;- 7 #number of days for rolling average#loads filescases_raw &amp;lt;- read_csv(&amp;quot;covid_confirmed_usafacts.csv&amp;quot;)populations &amp;lt;- read_csv(&amp;quot;covid_county_population_usafacts.csv&amp;quot;)Data Wranglingraw_data_merged &amp;lt;- cases_raw %&amp;gt;%full_join(populations, by = c(&amp;quot;County Name&amp;quot;, &amp;quot;State&amp;quot;))# find column positions by datecolumn_names &amp;lt;- colnames(raw_data_merged)start_loc &amp;lt;- match(start_date, column_names)end_loc &amp;lt;- match(end_date, column_names)cases_filtered &amp;lt;- cases_raw %&amp;gt;%filter(State == &amp;quot;CA&amp;quot;) %&amp;gt;%select(&amp;quot;County Name&amp;quot;, all_of(start_loc:end_loc))populations_filtered &amp;lt;- populations %&amp;gt;%filter(State == &amp;quot;CA&amp;quot;) %&amp;gt;%select(&amp;quot;County Name&amp;quot;, &amp;quot;population&amp;quot;)df_merged &amp;lt;- cases_filtered %&amp;gt;%full_join(populations_filtered, by = &amp;quot;County Name&amp;quot;)df_clean &amp;lt;- df_merged %&amp;gt;%# avoids unallocated cases and the cruise ship!</description>
+    </item>
     
     <item>
       <title>TidyTuesday: Roman Emperors</title>
