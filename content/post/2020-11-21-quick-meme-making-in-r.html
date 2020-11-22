@@ -16,6 +16,13 @@ header:
 
 
 <p>Source: <a href="https://blog.ephorie.de/create-bart-simpson-blackboard-memes-with-r">Create Bart Simpson Blackboard Memes with R</a></p>
+<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE)
+
+library(&quot;meme&quot;)</code></pre>
+<pre><code>## Warning: package &#39;meme&#39; was built under R version 4.0.3</code></pre>
+<pre class="r"><code>if (.Platform$OS.type == &quot;windows&quot;) {
+  windowsFonts(Comic = windowsFont(&quot;Comic Sans MS&quot;))
+}</code></pre>
 <pre class="r"><code>bart &lt;- &quot;bart_simpson_chalkboard-5157.gif&quot; # source: http://free-extras.com/images/bart_simpson_chalkboard-5157.htm
 text &lt;- paste(rep(&quot;I will not procrastinate \n in grant writing \n by making memes in R instead&quot;, 2), collapse = &quot;\n&quot;)</code></pre>
 <pre class="r"><code>meme(bart, text, size = 2, font = &quot;Comic&quot;)</code></pre>

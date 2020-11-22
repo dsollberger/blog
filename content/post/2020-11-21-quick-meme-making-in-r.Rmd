@@ -15,7 +15,7 @@ header:
 
 Source:  [Create Bart Simpson Blackboard Memes with R](https://blog.ephorie.de/create-bart-simpson-blackboard-memes-with-r)
 
-```{r setup, include=FALSE}
+```{r setup}
 knitr::opts_chunk$set(echo = TRUE)
 
 library("meme")

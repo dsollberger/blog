@@ -19,7 +19,7 @@
       
       <guid>/post/quick-meme-making-in-r/</guid>
       <description>Source: Create Bart Simpson Blackboard Memes with R
-bart &amp;lt;- &amp;quot;bart_simpson_chalkboard-5157.gif&amp;quot; # source: http://free-extras.com/images/bart_simpson_chalkboard-5157.htmtext &amp;lt;- paste(rep(&amp;quot;I will not procrastinate \n in grant writing \n by making memes in R instead&amp;quot;, 2), collapse = &amp;quot;\n&amp;quot;)meme(bart, text, size = 2, font = &amp;quot;Comic&amp;quot;)</description>
+knitr::opts_chunk$set(echo = TRUE)library(&amp;quot;meme&amp;quot;)## Warning: package &amp;#39;meme&amp;#39; was built under R version 4.0.3if (.Platform$OS.type == &amp;quot;windows&amp;quot;) {windowsFonts(Comic = windowsFont(&amp;quot;Comic Sans MS&amp;quot;))}bart &amp;lt;- &amp;quot;bart_simpson_chalkboard-5157.gif&amp;quot; # source: http://free-extras.com/images/bart_simpson_chalkboard-5157.htmtext &amp;lt;- paste(rep(&amp;quot;I will not procrastinate \n in grant writing \n by making memes in R instead&amp;quot;, 2), collapse = &amp;quot;\n&amp;quot;)meme(bart, text, size = 2, font = &amp;quot;Comic&amp;quot;)</description>
     </item>
     
     <item>
