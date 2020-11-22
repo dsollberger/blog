@@ -1,0 +1,34 @@
+---
+title: Quick meme making in R
+author: Derek Sollberger
+date: '2020-11-21'
+slug: quick-meme-making-in-r
+categories:
+  - recreation
+tags:
+  - packages
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+Source:  [Create Bart Simpson Blackboard Memes with R](https://blog.ephorie.de/create-bart-simpson-blackboard-memes-with-r)
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library("meme")
+if (.Platform$OS.type == "windows") {
+  windowsFonts(Comic = windowsFont("Comic Sans MS"))
+}
+```
+
+```{r}
+bart <- "bart_simpson_chalkboard-5157.gif" # source: http://free-extras.com/images/bart_simpson_chalkboard-5157.htm
+text <- paste(rep("I will not procrastinate \n in grant writing \n by making memes in R instead", 2), collapse = "\n")
+```
+
+```{r}
+meme(bart, text, size = 2, font = "Comic")
+```

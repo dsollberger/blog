@@ -13,6 +13,16 @@
     
     
     <item>
+      <title>Quick meme making in R</title>
+      <link>/post/quick-meme-making-in-r/</link>
+      <pubDate>Sat, 21 Nov 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/post/quick-meme-making-in-r/</guid>
+      <description>Source: Create Bart Simpson Blackboard Memes with R
+bart &amp;lt;- &amp;quot;bart_simpson_chalkboard-5157.gif&amp;quot; # source: http://free-extras.com/images/bart_simpson_chalkboard-5157.htmtext &amp;lt;- paste(rep(&amp;quot;I will not procrastinate \n in grant writing \n by making memes in R instead&amp;quot;, 2), collapse = &amp;quot;\n&amp;quot;)meme(bart, text, size = 2, font = &amp;quot;Comic&amp;quot;)</description>
+    </item>
+    
+    <item>
       <title>Covid-19 Cases in the Central Valley</title>
       <link>/post/covid-19-cases-in-the-central-valley/</link>
       <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
