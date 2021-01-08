@@ -11,6 +11,37 @@
     <atom:link href="/" rel="self" type="application/rss+xml" />
     
     <item>
+      <title>Payrolls of the Cleveland Baseball Team</title>
+      <link>/post/payrolls-of-the-cleveland-baseball-team/</link>
+      <pubDate>Thu, 07 Jan 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/post/payrolls-of-the-cleveland-baseball-team/</guid>
+      <description>&lt;p&gt;Today I made a quick graph of the player payrolls for the Cleveland baseball team to compare their projected payroll after today’s trade with the Mets (Lindor, Carrasco, etc.) to past seasons.&lt;/p&gt;
+&lt;p&gt;Sources:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(past) &lt;a href=&#34;http://www.stevetheump.com/Payrolls.htm&#34; class=&#34;uri&#34;&gt;http://www.stevetheump.com/Payrolls.htm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;(2021 projection) &lt;a href=&#34;https://twitter.com/ZackMeisel/status/1347246681520295936&#34; class=&#34;uri&#34;&gt;https://twitter.com/ZackMeisel/status/1347246681520295936&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://teamcolorcodes.com/cleveland-indians-color-codes/&#34; class=&#34;uri&#34;&gt;https://teamcolorcodes.com/cleveland-indians-color-codes/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;years &amp;lt;- 2014:2021
+payrolls &amp;lt;- c(82.5, 86.1, 86.3, 124.3, 134.4, 88.7, 37.6, 35)
+df &amp;lt;- data.frame(years, payrolls)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = years, y = payrolls, label = payrolls)) +
+  geom_bar(stat = &amp;quot;identity&amp;quot;, fill = &amp;quot;#E31937&amp;quot;, color = &amp;quot;#0C2340&amp;quot;) +
+  geom_label() +
+  labs(title = &amp;quot;Opening Day Payrolls of the Cleveland Baseball Team&amp;quot;,
+       subtitle = &amp;quot;2016: World Series appearance\n2020: pandemic-shortened season\n2021: projected&amp;quot;,
+       caption = &amp;quot;Sources:  http://www.stevetheump.com/Payrolls.htm \n https://twitter.com/ZackMeisel/status/1347246681520295936&amp;quot;,
+       x = &amp;quot;season&amp;quot;, y = &amp;quot;payroll (in millions of dollars)&amp;quot;) +
+  scale_x_continuous(breaks = 2014:2021, 
+                     labels = c(&amp;quot;2014&amp;quot;, &amp;quot;2015&amp;quot;, &amp;quot;2016&amp;quot;, &amp;quot;2017&amp;quot;, &amp;quot;2018&amp;quot;, &amp;quot;2019&amp;quot;, &amp;quot;2020&amp;quot;, &amp;quot;2021&amp;quot;)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/post/2021-01-07-payrolls-of-the-cleveland-baseball-team_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Quick meme making in R</title>
       <link>/post/quick-meme-making-in-r/</link>
       <pubDate>Sat, 21 Nov 2020 00:00:00 +0000</pubDate>
@@ -2335,149 +2366,6 @@ train_df %&amp;gt;%
   theme_minimal()&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-21-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;p&gt;Tip: run the last code block several times (keyboard shortcut: CTRL-SHFT-ENTER) for the full effect!&lt;/p&gt;
-&lt;/div&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Introduction to Bioconductor</title>
-      <link>/post/introduction-to-bioconductor/</link>
-      <pubDate>Wed, 12 Feb 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/post/introduction-to-bioconductor/</guid>
-      <description>&lt;p&gt;“&lt;a href=&#34;https://www.bioconductor.org/&#34;&gt;Bioconductor&lt;/a&gt; provides tools for the analysis and comprehension of high-throughput genomic data. Bioconductor uses the R statistical programming language, and is open source and open development.”&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.bioconductor.org/&#34;&gt;https://www.bioconductor.org/&lt;/a&gt;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;dplyr&amp;quot;)
-library(&amp;quot;ggplot2&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;installation&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Installation&lt;/h1&gt;
-&lt;p&gt;To install core packages, type the following in an R command window.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;This may take around 5 minutes&lt;/li&gt;
-&lt;li&gt;When the option for updating packages appears, type in “a” for “all”&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#leave as eval = FALSE when knitting
-
-if (!requireNamespace(&amp;quot;BiocManager&amp;quot;, quietly = TRUE))
-    install.packages(&amp;quot;BiocManager&amp;quot;)
-BiocManager::install()&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;installing-bioconductor-packages&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Installing Bioconductor packages&lt;/h2&gt;
-&lt;p&gt;There are about 20000 packages in the &lt;em&gt;Bioconductor&lt;/em&gt; universe. For now, let us install a couple of the more popular packages with the following code. To install a &lt;code&gt;BioConductor&lt;/code&gt; package, simply type in the name of the package in quotes inside of &lt;code&gt;BiocManager::install()&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;This may take around 5 minutes&lt;/li&gt;
-&lt;li&gt;Hereafter, when the option for updating packages appears, type in “n” for “no”&lt;/li&gt;
-&lt;/ul&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#leave as eval = FALSE when knitting
-
-BiocManager::install(&amp;quot;GenomicFeatures&amp;quot;)
-BiocManager::install(&amp;quot;Biostrings&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;exploring-genomicfeatures&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Exploring GenomicFeatures&lt;/h1&gt;
-&lt;p&gt;The following instructions were extracted from the vignette for Genomic Features&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;browseVignettes(package = &#34;GenomicFeatures&#34;)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Load the &lt;code&gt;GenomicFeatures&lt;/code&gt; package. It is suggested that you load the packages with the following code.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
-
-suppressPackageStartupMessages(library(&amp;#39;GenomicFeatures&amp;#39;))&lt;/code&gt;&lt;/pre&gt;
-&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;“The &lt;code&gt;GenomicFeatures&lt;/code&gt; package retrieves and manages transcript-related features fromthe UCSC Genome Bioinformatics and BioMart data resources. The package isuseful for ChIP-chip, ChIP-seq, and RNA-seq analyses.”&lt;/p&gt;
-&lt;/div&gt;
-&lt;div id=&#34;txdb-objects&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;TxDb Objects&lt;/h2&gt;
-&lt;p&gt;&#34;The &lt;code&gt;GenomicFeatures&lt;/code&gt; package uses TxDb objects to store transcript metadata. This class maps the 5’ and 3’ untranslated regions (UTRs), protein coding sequences(CDSs) and exons for a set of mRNA transcripts to their associated genome. TxDb objects have numerous accessors functions to allow such features to be retrieved individually or grouped together in a way that reflects the underlying biology.&lt;/p&gt;
-&lt;p&gt;All TxDb objects are backed by a SQLite database that manages genomic locations and the relationships between pre-processed mRNA transcripts, exons, protein coding sequences, and their related gene identifiers.&#34;&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
-
-samplefile &amp;lt;- system.file(&amp;quot;extdata&amp;quot;,
-                          &amp;quot;hg19_knownGene_sample.sqlite&amp;quot;,
-                          package=&amp;quot;GenomicFeatures&amp;quot;)
-txdb &amp;lt;- loadDb(samplefile)
-txdb&lt;/code&gt;&lt;/pre&gt;
-&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Write a couple of sentences about what you observe in the output (the description of the txdb sample file)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;div id=&#34;loading-and-viewing-a-sequence&#34; class=&#34;section level2&#34;&gt;
-&lt;h2&gt;Loading and Viewing a Sequence&lt;/h2&gt;
-&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Install the following packages (i.e. figure out how from some code earlier in this tutorial)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;BSgenome.Hsapiens.UCSC.hg19&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;TxDb.Hsapiens.UCSC.hg19.knownGene&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Run the following code and then write a couple of sentences about what you observe in the output.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
-
-library(BSgenome.Hsapiens.UCSC.hg19)
-library(TxDb.Hsapiens.UCSC.hg19.knownGene)
-
-tx_seqs1 &amp;lt;- extractTranscriptSeqs(Hsapiens,
-                                  TxDb.Hsapiens.UCSC.hg19.knownGene,
-                                  use.names=TRUE)
-suppressWarnings(translate(tx_seqs1))&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div id=&#34;exploring-biostrings&#34; class=&#34;section level1&#34;&gt;
-&lt;h1&gt;Exploring Biostrings&lt;/h1&gt;
-&lt;p&gt;The following instructions were extracted from the vignette for &lt;code&gt;Biostrings&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;browseVignettes(package = &#34;Biostrings&#34;)&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ol start=&#34;4&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;Install the following packages (i.e. figure out how from some code earlier in this tutorial)&lt;/li&gt;
-&lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;hgu95av2probe&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;hgu95av2cdf&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Load the &lt;code&gt;Biostrings&lt;/code&gt; package. It is suggested that you load the packages with the following code.&lt;/p&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
-
-suppressPackageStartupMessages(library(&amp;#39;Biostrings&amp;#39;))
-suppressPackageStartupMessages(library(&amp;#39;hgu95av2probe&amp;#39;))
-suppressPackageStartupMessages(library(&amp;#39;hgu95av2cdf&amp;#39;))&lt;/code&gt;&lt;/pre&gt;
-&lt;ol start=&#34;5&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;The following code will load an example of a “Large DNAStringSet” and perform a couple of simple data analyses. Run the code and write a couple of sentences about the results.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
-
-this_DNAString_set &amp;lt;- DNAStringSet(hgu95av2probe)
-this_DNAString_set_bc &amp;lt;- alphabetFrequency(this_DNAString_set, baseOnly = TRUE)
-nrow(this_DNAString_set_bc)
-head(this_DNAString_set_bc)
-alphabetFrequency(this_DNAString_set_bc, baseOnly=TRUE, collapse=TRUE)&lt;/code&gt;&lt;/pre&gt;
-&lt;ol start=&#34;6&#34; style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;The following code will perform a calculation called the &lt;code&gt;GC content&lt;/code&gt; of a DNA sequence and graph the resulting amounts as a histogram. Run the code and write a couple of sentences about the results.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
-
-this_DNAString_df &amp;lt;- data.frame(this_DNAString_set_bc)
-
-# alas &amp;quot;T&amp;quot; is treated as &amp;quot;TRUE&amp;quot; in R, so let&amp;#39;s use the full names of the nucleotides
-colnames(this_DNAString_df) &amp;lt;- c(&amp;quot;Adenine&amp;quot;, &amp;quot;Cytosine&amp;quot;, &amp;quot;Guanine&amp;quot;, &amp;quot;Thymine&amp;quot;, &amp;quot;other&amp;quot;)
-
-this_DNAString_df %&amp;gt;%
-  select(c(&amp;quot;Adenine&amp;quot;, &amp;quot;Cytosine&amp;quot;, &amp;quot;Guanine&amp;quot;, &amp;quot;Thymine&amp;quot;)) %&amp;gt;%
-  mutate(GC_content = 100*(Cytosine + Guanine) / 
-           (Adenine + Cytosine + Guanine + Thymine)) %&amp;gt;%
-  ggplot(aes(x = GC_content, fill = ..x..)) +
-  geom_histogram(binwidth = 5) + 
-  labs(title = &amp;quot;Affymetrix Human Genome U95 Set annotation data&amp;quot;,
-       subtitle = &amp;quot;GC Content of hgu95av2probe&amp;quot;,
-       caption = &amp;quot;Source: Bioconductor&amp;quot;,
-       x = &amp;quot;GC content (percentage)&amp;quot;) +
-  scale_fill_gradient(low = &amp;quot;yellow&amp;quot;, high= &amp;quot;blue&amp;quot;) +
-  theme_minimal() +
-  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 </description>
     </item>

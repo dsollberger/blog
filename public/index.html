@@ -391,6 +391,87 @@
   
   
   <h3 class="article-title" itemprop="headline">
+    <a href="/post/payrolls-of-the-cleveland-baseball-team/" itemprop="url">Payrolls of the Cleveland Baseball Team</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2021-01-07 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jan 7, 2021
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/sports-analytics">sports analytics</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    Today I made a quick graph of the player payrolls for the Cleveland baseball team to compare their projected payroll after today’s trade with the Mets (Lindor, Carrasco, etc.) to past seasons.
+Sources:
+(past) http://www.stevetheump.com/Payrolls.htm(2021 projection) https://twitter.com/ZackMeisel/status/1347246681520295936https://teamcolorcodes.com/cleveland-indians-color-codes/years &lt;- 2014:2021payrolls &lt;- c(82.5, 86.1, 86.3, 124.3, 134.4, 88.7, 37.6, 35)df &lt;- data.frame(years, payrolls)df %&gt;%ggplot(aes(x = years, y = payrolls, label = payrolls)) +geom_bar(stat = &quot;identity&quot;, fill = &quot;#E31937&quot;, color = &quot;#0C2340&quot;) +geom_label() +labs(title = &quot;Opening Day Payrolls of the Cleveland Baseball Team&quot;,subtitle = &quot;2016: World Series appearance\n2020: pandemic-shortened season\n2021: projected&quot;,caption = &quot;Sources: http://www.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/payrolls-of-the-cleveland-baseball-team/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+      
+
+      
+
+        
+
+        
+        
+
+        
+        
+          
+      
+
+      
+      
+        
+        
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
     <a href="/post/quick-meme-making-in-r/" itemprop="url">Quick meme making in R</a>
   </h3>
   
@@ -704,88 +785,6 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
       
 
       
-
-        
-
-        
-        
-
-        
-        
-          
-      
-          
-      
-
-      
-      
-        
-        
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/fall-plans-for-american-universities/" itemprop="url">Fall Plans for American Universities</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-06-13 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jun 13, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/data-mining">data mining</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    IntroductionToday’s coding practice is based on the following article and data source (there is literally a “Get the Data” link):
-Here’s a List of Colleges’ Plans for Reopening in the Falllibrary(&quot;geofacet&quot;)library(&quot;rvest&quot;)library(&quot;tidyverse&quot;)# load datadf_raw &lt;- read_csv(&quot;data-w8lLG.csv&quot;)colnames(df_raw)## [1] &quot;Institution&quot; &quot;Control&quot; &quot;State&quot; &quot;Category&quot;Data Wrangling# filter out Excel artifacts (trivial, empty rows)df &lt;- df_raw %&gt;%filter(Institution != &quot;#REF!&quot;)#States as factorsstates_alphabetically &lt;- sort(unique(df$State))df$State_factor &lt;- factor(df$State,levels = states_alphabetically)#extracting text from urls (rvest!
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/fall-plans-for-american-universities/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-      
-
-      
     
 
   </div>
@@ -859,7 +858,7 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
           
           
           
-          <a href="/tags/esl" style="font-size:1.311750992628768rem">ESL</a>
+          <a href="/tags/esl" style="font-size:1.2914102047404095rem">ESL</a>
         
           
           
@@ -873,42 +872,42 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
           
           
           
-          <a href="/tags/academic" style="font-size:1.8235019852575358rem">academic</a>
+          <a href="/tags/academic" style="font-size:1.7828204094808187rem">academic</a>
         
           
           
           
           
           
-          <a href="/tags/blogdown" style="font-size:1.311750992628768rem">blogdown</a>
+          <a href="/tags/blogdown" style="font-size:1.2914102047404095rem">blogdown</a>
         
           
           
           
           
           
-          <a href="/tags/choropleth" style="font-size:1.8235019852575358rem">choropleth</a>
+          <a href="/tags/choropleth" style="font-size:1.7828204094808187rem">choropleth</a>
         
           
           
           
           
           
-          <a href="/tags/culture" style="font-size:1.311750992628768rem">culture</a>
+          <a href="/tags/culture" style="font-size:1.2914102047404095rem">culture</a>
         
           
           
           
           
           
-          <a href="/tags/data-mining" style="font-size:1.311750992628768rem">data mining</a>
+          <a href="/tags/data-mining" style="font-size:1.2914102047404095rem">data mining</a>
         
           
           
           
           
           
-          <a href="/tags/datacamp" style="font-size:1.311750992628768rem">datacamp</a>
+          <a href="/tags/datacamp" style="font-size:1.2914102047404095rem">datacamp</a>
         
           
           
@@ -929,14 +928,14 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
           
           
           
-          <a href="/tags/flexdashboard" style="font-size:1.611106133023426rem">flexdashboard</a>
+          <a href="/tags/flexdashboard" style="font-size:1.5788667469852544rem">flexdashboard</a>
         
           
           
           
           
           
-          <a href="/tags/geofacet" style="font-size:1.311750992628768rem">geofacet</a>
+          <a href="/tags/geofacet" style="font-size:1.2914102047404095rem">geofacet</a>
         
           
           
@@ -950,14 +949,14 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
           
           
           
-          <a href="/tags/gganimate" style="font-size:2.122857125652194rem">gganimate</a>
+          <a href="/tags/gganimate" style="font-size:2.070276951725664rem">gganimate</a>
         
           
           
           
           
           
-          <a href="/tags/ggplot" style="font-size:2.422212266046852rem">ggplot</a>
+          <a href="/tags/ggplot" style="font-size:2.432429365241517rem">ggplot</a>
         
           
           
@@ -978,7 +977,7 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
           
           
           
-          <a href="/tags/hugo" style="font-size:1.8235019852575358rem">hugo</a>
+          <a href="/tags/hugo" style="font-size:1.7828204094808187rem">hugo</a>
         
           
           
@@ -992,7 +991,7 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
           
           
           
-          <a href="/tags/math" style="font-size:1.611106133023426rem">math</a>
+          <a href="/tags/math" style="font-size:1.5788667469852544rem">math</a>
         
           
           
@@ -1027,7 +1026,7 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
           
           
           
-          <a href="/tags/regression" style="font-size:1.311750992628768rem">regression</a>
+          <a href="/tags/regression" style="font-size:1.2914102047404095rem">regression</a>
         
           
           
@@ -1055,7 +1054,7 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
           
           
           
-          <a href="/tags/tidymodels" style="font-size:1.311750992628768rem">tidymodels</a>
+          <a href="/tags/tidymodels" style="font-size:1.2914102047404095rem">tidymodels</a>
         
           
           
@@ -1083,7 +1082,7 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
           
           
           
-          <a href="/tags/workshop" style="font-size:1.611106133023426rem">workshop</a>
+          <a href="/tags/workshop" style="font-size:1.5788667469852544rem">workshop</a>
         
           
           

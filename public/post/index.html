@@ -208,6 +208,72 @@
   
   
   <h3 class="article-title" itemprop="headline">
+    <a href="/post/payrolls-of-the-cleveland-baseball-team/" itemprop="url">Payrolls of the Cleveland Baseball Team</a>
+  </h3>
+  
+
+<div class="article-metadata">
+
+  <span class="article-date">
+    
+    <time datetime="2021-01-07 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
+      Jan 7, 2021
+    </time>
+  </span>
+  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Derek Sollberger">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 min read
+  </span>
+  
+
+  
+  
+
+  
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fa fa-folder"></i>
+    
+    <a href="/categories/sports-analytics">sports analytics</a
+    >
+    
+  </span>
+  
+  
+
+  
+
+</div>
+
+  <div class="article-style" itemprop="articleBody">
+    
+    Today I made a quick graph of the player payrolls for the Cleveland baseball team to compare their projected payroll after today’s trade with the Mets (Lindor, Carrasco, etc.) to past seasons.
+Sources:
+(past) http://www.stevetheump.com/Payrolls.htm(2021 projection) https://twitter.com/ZackMeisel/status/1347246681520295936https://teamcolorcodes.com/cleveland-indians-color-codes/years &lt;- 2014:2021payrolls &lt;- c(82.5, 86.1, 86.3, 124.3, 134.4, 88.7, 37.6, 35)df &lt;- data.frame(years, payrolls)df %&gt;%ggplot(aes(x = years, y = payrolls, label = payrolls)) +geom_bar(stat = &quot;identity&quot;, fill = &quot;#E31937&quot;, color = &quot;#0C2340&quot;) +geom_label() +labs(title = &quot;Opening Day Payrolls of the Cleveland Baseball Team&quot;,subtitle = &quot;2016: World Series appearance\n2020: pandemic-shortened season\n2021: projected&quot;,caption = &quot;Sources: http://www.
+    
+  </div>
+  <p class="read-more" itemprop="mainEntityOfPage">
+    <a href="/post/payrolls-of-the-cleveland-baseball-team/" class="btn btn-primary btn-outline">
+      CONTINUE READING
+    </a>
+  </p>
+</div>
+
+  
+    
+    
+
+<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+  
+  
+  <h3 class="article-title" itemprop="headline">
     <a href="/post/quick-meme-making-in-r/" itemprop="url">Quick meme making in R</a>
   </h3>
   
@@ -794,71 +860,6 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
   </div>
   <p class="read-more" itemprop="mainEntityOfPage">
     <a href="/post/vote-by-mail-data/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/analysis-of-nyt-sample-of-covid-19-obituaries/" itemprop="url">Analysis of NYT Sample of Covid-19 Obituaries</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-05-24 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      May 24, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    3 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/data-mining">data mining</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    Obtaining the DataOn May 24, 2020, the New York Times published an article called “An Incalcuable Loss”
-&quot;America is fast approaching a grim milestone in the coronavirus outbreak — each figure here represents one of the nearly 100,000 lives lost so far. But a count reveals only so much. Memories, gathered from obituaries across the country, help us to reckon with what was lost.&quot;What I am trying to do today is summarize the 1001 obituaries.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/analysis-of-nyt-sample-of-covid-19-obituaries/" class="btn btn-primary btn-outline">
       CONTINUE READING
     </a>
   </p>

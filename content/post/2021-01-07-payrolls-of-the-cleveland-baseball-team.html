@@ -1,0 +1,39 @@
+---
+title: Payrolls of the Cleveland Baseball Team
+author: Derek Sollberger
+date: '2021-01-07'
+slug: payrolls-of-the-cleveland-baseball-team
+categories:
+  - sports analytics
+tags:
+  - ggplot
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+
+
+<p>Today I made a quick graph of the player payrolls for the Cleveland baseball team to compare their projected payroll after today’s trade with the Mets (Lindor, Carrasco, etc.) to past seasons.</p>
+<p>Sources:</p>
+<ul>
+<li>(past) <a href="http://www.stevetheump.com/Payrolls.htm" class="uri">http://www.stevetheump.com/Payrolls.htm</a></li>
+<li>(2021 projection) <a href="https://twitter.com/ZackMeisel/status/1347246681520295936" class="uri">https://twitter.com/ZackMeisel/status/1347246681520295936</a></li>
+<li><a href="https://teamcolorcodes.com/cleveland-indians-color-codes/" class="uri">https://teamcolorcodes.com/cleveland-indians-color-codes/</a></li>
+</ul>
+<pre class="r"><code>years &lt;- 2014:2021
+payrolls &lt;- c(82.5, 86.1, 86.3, 124.3, 134.4, 88.7, 37.6, 35)
+df &lt;- data.frame(years, payrolls)</code></pre>
+<pre class="r"><code>df %&gt;%
+  ggplot(aes(x = years, y = payrolls, label = payrolls)) +
+  geom_bar(stat = &quot;identity&quot;, fill = &quot;#E31937&quot;, color = &quot;#0C2340&quot;) +
+  geom_label() +
+  labs(title = &quot;Opening Day Payrolls of the Cleveland Baseball Team&quot;,
+       subtitle = &quot;2016: World Series appearance\n2020: pandemic-shortened season\n2021: projected&quot;,
+       caption = &quot;Sources:  http://www.stevetheump.com/Payrolls.htm \n https://twitter.com/ZackMeisel/status/1347246681520295936&quot;,
+       x = &quot;season&quot;, y = &quot;payroll (in millions of dollars)&quot;) +
+  scale_x_continuous(breaks = 2014:2021, 
+                     labels = c(&quot;2014&quot;, &quot;2015&quot;, &quot;2016&quot;, &quot;2017&quot;, &quot;2018&quot;, &quot;2019&quot;, &quot;2020&quot;, &quot;2021&quot;)) +
+  theme_minimal()</code></pre>
+<p><img src="/post/2021-01-07-payrolls-of-the-cleveland-baseball-team_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
