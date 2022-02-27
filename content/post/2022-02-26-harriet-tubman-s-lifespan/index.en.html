@@ -1,0 +1,44 @@
+---
+title: Harriet Tubman's Lifespan
+author: Derek Sollberger
+date: '2022-02-26'
+slug: []
+
+header:
+  caption: ''
+  image: ''
+  preview: yes
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<p>On Twitter, <span class="citation">@Cmastication</span> said that “Just read this and it made my head hurt. Fact checked it an it’s correct: “when Harriet Tubman was born, Thomas Jefferson was alive, and when Harriet Tubman died, Ronald Reagan was alive.”“, so I felt like making a quick visualization. We will line up some implied rectangles using <code>geom_jitter</code>.</p>
+<pre class="r"><code>library(&quot;tidyverse&quot;)
+N &lt;- 1000
+
+df &lt;- data.frame(
+  year = c(runif(N, 1743, 1826),
+              runif(N, 1822, 1913),
+              runif(N, 1911, 2004)),
+  person = c(rep(&quot;Jefferson&quot;, N), rep(&quot;Tubman&quot;, N), rep(&quot;Reagan&quot;, N)))
+
+df$person &lt;- factor(df$person,
+                    levels = c(&quot;Reagan&quot;, &quot;Tubman&quot;, &quot;Jefferson&quot;))</code></pre>
+<pre class="r"><code>df |&gt;
+  ggplot() +
+  geom_jitter(aes(x = year, y = person, color = person)) +
+  labs(title = &quot;Harriet Tubman&#39;s Life&quot;,
+       subtitle = &quot;among other historical figures&quot;,
+       x = &quot;Year&quot;,
+       y = &quot;&quot;) +
+  theme(legend.position = &quot;none&quot;,
+        legend.title = element_blank(),
+        panel.background = element_blank(),
+        panel.grid = element_line(color = &quot;gray50&quot;),
+        panel.grid.major.x = element_blank(),
+        plot.subtitle = element_text(color = &quot;black&quot;, 
+                                     hjust = 0.5, size = 15),
+        plot.title = element_text(color = &quot;black&quot;, 
+                                  hjust = 0.5, size = 20))</code></pre>
+<p><img src="{{< blogdown/postref >}}index.en_files/figure-html/viz-1.png" width="672" /></p>
