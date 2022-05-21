@@ -1,0 +1,833 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gganimate | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/gganimate/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/gganimate/index.xml" rel="self" type="application/rss+xml" />
+    <description>gganimate</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 25 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>gganimate</title>
+      <link>https://dsollberger.netlify.com/tag/gganimate/</link>
+    </image>
+    
+    <item>
+      <title>Random Walks (draft)</title>
+      <link>https://dsollberger.netlify.com/post/random-walks-draft/</link>
+      <pubDate>Mon, 25 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/random-walks-draft/</guid>
+      <description>
+
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;gganimate&amp;quot;)
+library(&amp;quot;ggplot2&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;p-12&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;p = 1/2&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# parameters
+p &amp;lt;- 0.5
+Tmax = 60
+
+# start at the origin
+x = 0
+y = 0
+t = 0
+df &amp;lt;- data.frame(x,y,t)
+
+# random walk
+for(i in 1:Tmax){
+  t &amp;lt;- t + 1
+  if(runif(1) &amp;lt; p){
+    x &amp;lt;- x - 1
+  } else {
+    x &amp;lt;- x + 1
+  }
+  
+  # reset process if dot leaves view
+  if(abs(x) &amp;gt; 10){
+    x &amp;lt;- 0
+  }
+  
+  this_step &amp;lt;- data.frame(x,y,t)
+  df &amp;lt;- rbind(df, this_step)
+}
+
+p &amp;lt;- ggplot(df, aes(x,y)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_point(color = &amp;quot;blue&amp;quot;, size = 10) +
+  labs(title = &amp;quot;Random Walk (p = 1/2)&amp;quot;,
+       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
+       caption = &amp;quot;Math 181&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(breaks = NULL) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1) +
+  shadow_wake(colour = &amp;quot;gray&amp;quot;, wake_length = 0.2, alpha = 0.4)
+
+animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-2-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;histogram&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;histogram&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;p &amp;lt;- 1/2
+Tmax = 60
+N &amp;lt;- 100 # number of starting &amp;quot;dots&amp;quot;
+
+# start at the origin
+x &amp;lt;- rep(0,N)
+t &amp;lt;- rep(0,N)
+df &amp;lt;- data.frame(x,t)
+
+# random walk
+for(i in 1:Tmax){
+  for(j in 1:N){
+    if(runif(1) &amp;lt; p){
+      x[j] &amp;lt;- x[j] - 1
+    } else {
+      x[j] &amp;lt;- x[j] + 1
+    }
+  }
+  t &amp;lt;- rep(i,N)
+  
+  this_step &amp;lt;- data.frame(x,t)
+  df &amp;lt;- rbind(df, this_step)
+}
+
+p &amp;lt;- ggplot(df, aes(x)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_bar(fill = &amp;quot;blue&amp;quot;, stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Random Walk (p = 1/2)&amp;quot;,
+       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
+       caption = &amp;quot;Math 181&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(breaks = NULL) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1)
+
+animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-3-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;multiple-random-walks&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Multiple Random Walks&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;pL &amp;lt;- 3/4
+pM &amp;lt;- 1/2
+pR &amp;lt;- 7/16
+Tmax = 60
+N &amp;lt;- 300 # number of starting &amp;quot;dots&amp;quot; (use a number divisible by 3)
+
+# start at the origin
+x &amp;lt;- rep(0,N)
+t &amp;lt;- rep(0,N)
+group &amp;lt;- c(rep(&amp;quot;transient left&amp;quot;, N/3),
+           rep(&amp;quot;recurrent&amp;quot;, N/3), 
+           rep(&amp;quot;transient right&amp;quot;, N/3))
+df &amp;lt;- data.frame(x,t, group)
+
+# random walk
+for(i in 1:Tmax){
+  for(j in 1:(N/3)){
+    if(runif(1) &amp;lt; pL){
+      x[j] &amp;lt;- x[j] - 1
+    } else {
+      x[j] &amp;lt;- x[j] + 1
+    }
+  }
+  for(j in (N/3+1):(2*N/3)){
+    if(runif(1) &amp;lt; pM){
+      x[j] &amp;lt;- x[j] - 1
+    } else {
+      x[j] &amp;lt;- x[j] + 1
+    }
+  }
+  for(j in (2*N/3+1):N){
+    if(runif(1) &amp;lt; pR){
+      x[j] &amp;lt;- x[j] - 1
+    } else {
+      x[j] &amp;lt;- x[j] + 1
+    }
+  }
+  
+  t &amp;lt;- rep(i,N)
+  this_step &amp;lt;- data.frame(x,t,group)
+  df &amp;lt;- rbind(df, this_step)
+}
+
+p &amp;lt;- ggplot(df, aes(x)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_bar(aes(fill = group),
+           stat = &amp;quot;count&amp;quot;, position=position_dodge()) +
+  labs(title = &amp;quot;Random Walks&amp;quot;,
+       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
+       caption = &amp;quot;Math 181&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(trans=&amp;#39;log2&amp;#39;, breaks = NULL) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1)
+
+animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals
+
+## Warning: position_dodge requires non-overlapping x intervals&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-4-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;drunkards-walk&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Drunkard’s Walk&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# parameters
+Tmax = 60
+
+# start at the origin
+x = 0
+y = 0
+t = 0
+df &amp;lt;- data.frame(x,y,t)
+
+# random walk
+for(i in 1:Tmax){
+  t &amp;lt;- t + 1
+  rand_num &amp;lt;- runif(1)
+  if(rand_num &amp;lt; 0.25){
+    x &amp;lt;- x - 1
+  } else if(rand_num &amp;lt; 0.5){
+    y &amp;lt;- y - 1
+  } else if(rand_num &amp;lt; 0.75){
+    x &amp;lt;- x + 1
+  } else {
+    y &amp;lt;- y + 1
+  }
+  
+  # reset process if dot leaves view
+  if(abs(x) &amp;gt; 10){
+    x &amp;lt;- 0
+    y &amp;lt;- 0
+  }
+  if(abs(y) &amp;gt; 10){
+    x &amp;lt;- 0
+    y &amp;lt;- 0
+  }
+  
+  this_step &amp;lt;- data.frame(x,y,t)
+  df &amp;lt;- rbind(df, this_step)
+}
+
+p &amp;lt;- ggplot(df, aes(x,y)) +
+  coord_cartesian(xlim = c(-10, 10)) +
+  geom_point(color = &amp;quot;blue&amp;quot;, size = 10) +
+  labs(title = &amp;quot;Drunkard&amp;#39;s Walk&amp;quot;,
+       subtitle = &amp;quot;t = {closest_state}&amp;quot;,
+       caption = &amp;quot;Math 181&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = -10:10) +
+  scale_y_continuous(breaks = -10:10) +
+  theme_minimal() +
+  transition_states(t, transition_length = 1, state_length = 1) +
+  shadow_wake(colour = &amp;quot;gray&amp;quot;, wake_length = 0.2, alpha = 0.4)
+
+animate(p, fps = 2)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-25-random-walks-draft_files/figure-html/unnamed-chunk-5-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Valentine&#39;s Day 2019</title>
+      <link>https://dsollberger.netlify.com/post/valentine-s-day-2019/</link>
+      <pubDate>Thu, 14 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/valentine-s-day-2019/</guid>
+      <description>
+
+
+&lt;p&gt;In this short project, I hope to draw a heart through an animation of appearing dots.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;gganimate&amp;quot;)
+library(&amp;quot;ggforce&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;draw-a-heart&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Draw a Heart&lt;/h1&gt;
+&lt;p&gt;Here I will place two circles centered at &lt;span class=&#34;math inline&#34;&gt;\((\pm 1, 1)\)&lt;/span&gt; with the same radius &lt;span class=&#34;math inline&#34;&gt;\(r = \sqrt{2}\)&lt;/span&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;circles &amp;lt;- data.frame(
+  x0 = c(-1,1),
+  y0 = rep(1,2),
+  r = rep(1, 2)
+)
+
+right_pt &amp;lt;- (sqrt(2) + 1) / sqrt(2)
+left_pt &amp;lt;-  -1*right_pt
+f &amp;lt;- function(x){abs(x) - sqrt(2)}
+
+ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) +
+  coord_fixed() +
+  geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.aes = FALSE) +
+  stat_function(fun = f, geom = &amp;quot;line&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;generate-some-dots&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Generate Some Dots&lt;/h1&gt;
+&lt;p&gt;Now let’s see if I can get some red dots into a heart shape and green dots outside of the heart.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# initialization
+N &amp;lt;- 10000
+x &amp;lt;- runif(N, -2, 2)
+y &amp;lt;- runif(N, -sqrt(2), 2)
+colors = c(&amp;quot;white&amp;quot;, &amp;quot;red&amp;quot;, rep(&amp;quot;green&amp;quot;, N-2)) #factor levels set early
+state = rep(1, N)
+
+# separate colors
+for (i in 4:N){
+  if (y[i] &amp;lt; 1){
+    if (y[i] &amp;gt; (abs(x[i]) - sqrt(2))){colors[i] = &amp;quot;red&amp;quot;}
+  } else {
+    if(sqrt((x[i] - 1)^2 + (y[i] - 1)^2) &amp;lt; 1 | 
+       sqrt((x[i] + 1)^2 + (y[i] - 1)^2) &amp;lt; 1){colors[i] = &amp;quot;red&amp;quot;}
+  }
+}
+
+dot_df &amp;lt;- data.frame(x,y, colors, state)
+dot_df %&amp;gt;%
+  ggplot(aes(x = x, y = y)) +
+    coord_fixed() +
+    geom_point(color = colors) +
+    theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;animation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Animation&lt;/h1&gt;
+&lt;p&gt;My initial plan was to have the dots appear one at a time to gradually make the heart, but the data storage was prohibitive. This back up plan was to literally make a new set of dots for each animation frame—and color the dots again!—and it comes with a neat “heartbeat” effect. The render time for the animated GIF was about 2 minutes on my computer.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;max_iter &amp;lt;- 14 #number of animation frames
+
+for(j in 1:max_iter){
+  x &amp;lt;- runif(N, -2, 2)
+  y &amp;lt;- runif(N, -sqrt(2), 2)
+  colors = c(&amp;quot;white&amp;quot;, &amp;quot;red&amp;quot;, rep(&amp;quot;green&amp;quot;, N-2)) #factor levels set early
+  
+  for (i in 4:N){
+    if (y[i] &amp;lt; 1){
+      if (y[i] &amp;gt; (abs(x[i]) - sqrt(2))){colors[i] = &amp;quot;red&amp;quot;}
+    } else {
+      if(sqrt((x[i] - 1)^2 + (y[i] - 1)^2) &amp;lt; 1 | 
+         sqrt((x[i] + 1)^2 + (y[i] - 1)^2) &amp;lt; 1){colors[i] = &amp;quot;red&amp;quot;}
+    }
+  }
+
+  state &amp;lt;- rep(j, N)
+  this_df &amp;lt;- data.frame(x, y, colors, state)
+  #colnames(this_df) &amp;lt;- c(&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;, &amp;quot;colors&amp;quot;, &amp;quot;state&amp;quot;)
+  dot_df &amp;lt;- rbind(dot_df, this_df)
+}
+
+dot_df %&amp;gt;%
+  ggplot(aes(x = x, y = y)) +
+    coord_fixed() +
+    geom_point(color = dot_df$colors) +
+    labs(title = &amp;quot;Valentine&amp;#39;s Day 2019&amp;quot;,
+         subtitle = &amp;quot;Frame: {closest_state}&amp;quot;,
+         caption = &amp;quot;Made by Derek Sollberger with the #gganimate package&amp;quot;) +
+    theme_minimal() +
+    transition_states(state, transition_length = 1, state_length = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-4-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to R Workshop</title>
+      <link>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</guid>
+      <description>
+
+
+&lt;div id=&#34;packages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Packages&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;workshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;)
+install.packages(workshop_packages)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;gganimate&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;ggplot2&amp;quot;)
+library(&amp;quot;mosaic&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: dplyr&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;dplyr&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:stats&amp;#39;:
+## 
+##     filter, lag&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:base&amp;#39;:
+## 
+##     intersect, setdiff, setequal, union&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: lattice&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggformula&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggstance&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;ggstance&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:ggplot2&amp;#39;:
+## 
+##     geom_errorbarh, GeomErrorbarh&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## New to ggformula?  Try the tutorials: 
+##  learnr::run_tutorial(&amp;quot;introduction&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
+##  learnr::run_tutorial(&amp;quot;refining&amp;quot;, package = &amp;quot;ggformula&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: mosaicData&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: Matrix&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## The &amp;#39;mosaic&amp;#39; package masks several functions from core packages in order to add 
+## additional features.  The original behavior of these functions should not be affected by this.
+## 
+## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;mosaic&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:Matrix&amp;#39;:
+## 
+##     mean&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:dplyr&amp;#39;:
+## 
+##     count, do, tally&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:ggplot2&amp;#39;:
+## 
+##     stat&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:stats&amp;#39;:
+## 
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median,
+##     prop.test, quantile, sd, t.test, var&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:base&amp;#39;:
+## 
+##     max, mean, min, prod, range, sample, sum&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(Weather)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 25
+## # Groups:   city, year [1]
+##   city  date        year month   day high_temp avg_temp low_temp high_dewpt
+##   &amp;lt;chr&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1 Auck~ 2016-01-01  2016     1     1        68       65       62         64
+## 2 Auck~ 2016-01-02  2016     1     2        68       66       64         64
+## 3 Auck~ 2016-01-03  2016     1     3        77       72       66         70
+## 4 Auck~ 2016-01-04  2016     1     4        73       66       60         66
+## 5 Auck~ 2016-01-05  2016     1     5        69       62       55         55
+## 6 Auck~ 2016-01-06  2016     1     6        69       63       57         54
+## # ... with 16 more variables: avg_dewpt &amp;lt;dbl&amp;gt;, low_dewpt &amp;lt;dbl&amp;gt;,
+## #   high_humidity &amp;lt;dbl&amp;gt;, avg_humidity &amp;lt;dbl&amp;gt;, low_humidity &amp;lt;dbl&amp;gt;,
+## #   high_hg &amp;lt;dbl&amp;gt;, avg_hg &amp;lt;dbl&amp;gt;, low_hg &amp;lt;dbl&amp;gt;, high_vis &amp;lt;dbl&amp;gt;,
+## #   avg_vis &amp;lt;dbl&amp;gt;, low_vis &amp;lt;dbl&amp;gt;, high_wind &amp;lt;dbl&amp;gt;, avg_wind &amp;lt;dbl&amp;gt;,
+## #   low_wind &amp;lt;dbl&amp;gt;, precip &amp;lt;chr&amp;gt;, events &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(Weather$city)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Auckland   Beijing   Chicago    Mumbai San Diego 
+##       731       731       731       731       731&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(Weather$year)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## 2016 2017 
+## 1830 1825&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sample-statistics&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sample Statistics&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(Weather$high_temp)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 71.32421&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;median(Weather$precip)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sd(Weather$avg_wind)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3.865026&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plotting&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Plotting&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Chicago &amp;lt;- subset(Weather, city == &amp;quot;Chicago&amp;quot;)
+
+# boxplots
+ggplot(Chicago, aes(x = month, y = high_temp, group = month, fill = month)) +
+  geom_boxplot() +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;month&amp;quot;,
+       y = &amp;quot;high temperature&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;regression&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Regression&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
+  geom_point() +
+  geom_smooth(method = &amp;quot;lm&amp;quot;) +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;hypothesis-testing&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Hypothesis Testing&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;SanDiego &amp;lt;- subset(Weather, city == &amp;quot;San Diego&amp;quot;)
+
+# Do Chicago and San Diego have the same high temperatures?
+t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &amp;quot;two.sided&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Welch Two Sample t-test
+## 
+## data:  Chicago$high_temp and SanDiego$high_temp
+## t = -14.221, df = 886.31, p-value &amp;lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -13.21560 -10.01012
+## sample estimates:
+## mean of x mean of y 
+##  61.00821  72.62107&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;animation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Animation&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
+  geom_point() +
+  labs(title = &amp;quot;Worldwide Weather (2016-2017)&amp;quot;,
+       caption = &amp;quot;Source: Mosaic Foundation&amp;quot;,
+       subtitle = &amp;quot;(by months)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal() +
+  transition_states(month, transition_length = 1, state_length = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to R Workshop</title>
+      <link>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</guid>
+      <description>&lt;h1 id=&#34;packages&#34;&gt;Packages&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;workshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;)
+install.packages(workshop_packages)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;gganimate&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;ggplot2&amp;quot;)
+library(&amp;quot;mosaic&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: dplyr
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &#39;dplyr&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: lattice
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggformula
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggstance
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &#39;ggstance&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     geom_errorbarh, GeomErrorbarh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## New to ggformula?  Try the tutorials: 
+## 	learnr::run_tutorial(&amp;quot;introduction&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
+## 	learnr::run_tutorial(&amp;quot;refining&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: mosaicData
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: Matrix
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## The &#39;mosaic&#39; package masks several functions from core packages in order to add 
+## additional features.  The original behavior of these functions should not be affected by this.
+## 
+## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &#39;mosaic&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &#39;package:Matrix&#39;:
+## 
+##     mean
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     count, do, tally
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     stat
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median,
+##     prop.test, quantile, sd, t.test, var
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:base&#39;:
+## 
+##     max, mean, min, prod, range, sample, sum
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;data&#34;&gt;Data&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;head(Weather)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 25
+## # Groups:   city, year [1]
+##   city  date        year month   day high_temp avg_temp low_temp high_dewpt
+##   &amp;lt;chr&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1 Auck~ 2016-01-01  2016     1     1        68       65       62         64
+## 2 Auck~ 2016-01-02  2016     1     2        68       66       64         64
+## 3 Auck~ 2016-01-03  2016     1     3        77       72       66         70
+## 4 Auck~ 2016-01-04  2016     1     4        73       66       60         66
+## 5 Auck~ 2016-01-05  2016     1     5        69       62       55         55
+## 6 Auck~ 2016-01-06  2016     1     6        69       63       57         54
+## # ... with 16 more variables: avg_dewpt &amp;lt;dbl&amp;gt;, low_dewpt &amp;lt;dbl&amp;gt;,
+## #   high_humidity &amp;lt;dbl&amp;gt;, avg_humidity &amp;lt;dbl&amp;gt;, low_humidity &amp;lt;dbl&amp;gt;,
+## #   high_hg &amp;lt;dbl&amp;gt;, avg_hg &amp;lt;dbl&amp;gt;, low_hg &amp;lt;dbl&amp;gt;, high_vis &amp;lt;dbl&amp;gt;,
+## #   avg_vis &amp;lt;dbl&amp;gt;, low_vis &amp;lt;dbl&amp;gt;, high_wind &amp;lt;dbl&amp;gt;, avg_wind &amp;lt;dbl&amp;gt;,
+## #   low_wind &amp;lt;dbl&amp;gt;, precip &amp;lt;chr&amp;gt;, events &amp;lt;chr&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(Weather$city)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Auckland   Beijing   Chicago    Mumbai San Diego 
+##       731       731       731       731       731
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(Weather$year)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## 2016 2017 
+## 1830 1825
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;sample-statistics&#34;&gt;Sample Statistics&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;mean(Weather$high_temp)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 71.32421
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;median(Weather$precip)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;0&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;sd(Weather$avg_wind)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3.865026
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;plotting&#34;&gt;Plotting&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;Chicago &amp;lt;- subset(Weather, city == &amp;quot;Chicago&amp;quot;)
+
+# boxplots
+ggplot(Chicago, aes(x = month, y = high_temp, group = month, fill = month)) +
+  geom_boxplot() +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;month&amp;quot;,
+       y = &amp;quot;high temperature&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;h1 id=&#34;regression&#34;&gt;Regression&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
+  geom_point() +
+  geom_smooth(method = &amp;quot;lm&amp;quot;) +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;h1 id=&#34;hypothesis-testing&#34;&gt;Hypothesis Testing&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;SanDiego &amp;lt;- subset(Weather, city == &amp;quot;San Diego&amp;quot;)
+
+# Do Chicago and San Diego have the same high temperatures?
+t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &amp;quot;two.sided&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## 	Welch Two Sample t-test
+## 
+## data:  Chicago$high_temp and SanDiego$high_temp
+## t = -14.221, df = 886.31, p-value &amp;lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -13.21560 -10.01012
+## sample estimates:
+## mean of x mean of y 
+##  61.00821  72.62107
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;animation&#34;&gt;Animation&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
+  geom_point() +
+  labs(title = &amp;quot;Worldwide Weather (2016-2017)&amp;quot;,
+       caption = &amp;quot;Source: Mosaic Foundation&amp;quot;,
+       subtitle = &amp;quot;(by months)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal() +
+  transition_states(month, transition_length = 1, state_length = 1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;!-- --&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>gganatogram and gganimate</title>
+      <link>https://dsollberger.netlify.com/post/gganatogram-and-gganimate/</link>
+      <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/gganatogram-and-gganimate/</guid>
+      <description>
+
+
+&lt;p&gt;Today I wanted to see if I could create a slideshow of pictures from the &lt;code&gt;gganatogram&lt;/code&gt; package. I wanted to combine them with the &lt;code&gt;gganimate&lt;/code&gt; package, but I have not figured out how to get that to work. (In particular, the &lt;code&gt;gganatogram()&lt;/code&gt; function seems to return a different list layout than &lt;code&gt;ggplot&lt;/code&gt; objects.)&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gganatogram)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggpolypath&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gganimate)
+library(profvis)
+
+N &amp;lt;- 25 # number of cell samples&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;num_cell_parts &amp;lt;- nrow(cell_key$cell)
+
+# randomly select a random number of cell parts
+part_picker &amp;lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+
+cell_num &amp;lt;- rep(1, length(part_picker))
+this_cell &amp;lt;- cell_key[[&amp;#39;cell&amp;#39;]][part_picker, ]
+cell_samples &amp;lt;- cbind(this_cell, cell_num)
+
+
+for(j in 2:N){
+  part_picker &amp;lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+  cell_num &amp;lt;- rep(j, length(part_picker))
+  this_cell &amp;lt;- cbind( cell_key[[&amp;#39;cell&amp;#39;]][part_picker, ], cell_num)
+  cell_samples &amp;lt;- rbind(cell_samples, this_cell)
+  
+  # figure_list[j] &amp;lt;- gganatogram(data = this_cell,
+  #           outline = FALSE, fillOutline=&amp;#39;steelblue&amp;#39;, organism=&amp;quot;cell&amp;quot;, fill=&amp;quot;colour&amp;quot;) + 
+  # theme_void() + 
+  # coord_fixed()
+  
+  png(filename = paste0(j, &amp;quot;.png&amp;quot;))
+  
+  p &amp;lt;- gganatogram(data = this_cell,
+            outline = FALSE, fillOutline=&amp;#39;steelblue&amp;#39;, organism=&amp;quot;cell&amp;quot;, fill=&amp;quot;colour&amp;quot;) +
+  theme_void() +
+  coord_fixed() +
+    labs(title = &amp;quot;Sample of Cell Parts&amp;quot;,
+         subtitle = paste0(&amp;quot;sample &amp;quot;, j, &amp;quot; of &amp;quot;, N),
+         caption = &amp;quot;Bio 18, UC Merced&amp;quot;)
+  
+  plot(p)
+  
+  dev.off()
+  
+  # pause(0.5)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://dsollberger.netlify.com/img/cell_samples.gif&#34; alt=&#34;the picture&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;the picture&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;What I ended up doing to produce the picture above was using the &lt;code&gt;png()&lt;/code&gt; and &lt;code&gt;dev.off()&lt;/code&gt; functions to simply output individual pictures into my computer, and then using the &lt;a href=&#34;https://gifmaker.me/&#34;&gt;GIFmaker&lt;/a&gt; website to combine the images into an animated GIF.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>My First gganimate Plot</title>
+      <link>https://dsollberger.netlify.com/post/my-first-gganimate-plot/</link>
+      <pubDate>Tue, 08 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/my-first-gganimate-plot/</guid>
+      <description>
+
+
+&lt;p&gt;Today I finally read a &lt;a href=&#34;https://gganimate.com/articles/gganimate.html&#34;&gt;tutorial&lt;/a&gt; on &lt;code&gt;gganimate&lt;/code&gt;, and here I will build my first example. My hope is to eventually simulate traversal on a directed graph.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(tidyverse)
+library(gganimate)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;create-node-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Create Node Data&lt;/h1&gt;
+&lt;p&gt;For this example, I will have 3 nodes (located at 3 vertices of a triangle), 100 dots distributed among the nodes, and a new placement over 21 states in time.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;N &amp;lt;- 100 # number of dots
+T &amp;lt;- 20 # number of iterations
+
+node_names &amp;lt;- c(&amp;quot;Node 1&amp;quot;, &amp;quot;Node 2&amp;quot;, &amp;quot;Node 3&amp;quot;)
+iter &amp;lt;- rep(0, N)
+node &amp;lt;- rep(&amp;quot;Node 1&amp;quot;, N)
+x &amp;lt;- 10 + rnorm(N, 0, 2)
+y &amp;lt;- 20 + rnorm(N, 0, 2)
+states &amp;lt;- data.frame(iter, node, x, y)
+
+for(t in 1:T){
+  iter &amp;lt;- rep(t, N)
+  node &amp;lt;- sample(node_names, N, replace = TRUE)
+  x &amp;lt;- case_when(
+    node == &amp;quot;Node 1&amp;quot; ~ 10 + rnorm(N, 0, 2),
+    node == &amp;quot;Node 2&amp;quot; ~ 20 + rnorm(N, 0, 2),
+    TRUE             ~ 30 + rnorm(N, 0, 2)
+  )
+  y &amp;lt;- case_when(
+    node == &amp;quot;Node 1&amp;quot; ~ 20 + rnorm(N, 0, 2),
+    node == &amp;quot;Node 2&amp;quot; ~ 30 + rnorm(N, 0, 2),
+    TRUE             ~ 10 + rnorm(N, 0, 2)
+  )
+  this_state &amp;lt;- data.frame(iter, node, x, y)
+  
+  states &amp;lt;- rbind(states, this_state)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plot-network&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Plot Network&lt;/h1&gt;
+&lt;p&gt;Having made a new set of data at each state, the main tool is to use &lt;code&gt;transition_states&lt;/code&gt; over the iterations.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;states %&amp;gt;% 
+  ggplot(aes(x = x, y = y)) +
+  geom_point(aes(color = node), alpha = 0.33) +
+  labs(title = &amp;quot;Draft of Network Animation&amp;quot;,
+       subtitle = &amp;quot;Iteration: {closest_state} of 20&amp;quot;,
+       caption = &amp;quot;Simulation of random placement&amp;quot;) +
+  theme_minimal() +
+  transition_states(iter, transition_length = 1, state_length = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-01-08-my-first-gganimate-plot_files/figure-html/unnamed-chunk-3-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

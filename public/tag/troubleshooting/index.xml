@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>troubleshooting | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/troubleshooting/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/troubleshooting/index.xml" rel="self" type="application/rss+xml" />
+    <description>troubleshooting</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 03 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>troubleshooting</title>
+      <link>https://dsollberger.netlify.com/tag/troubleshooting/</link>
+    </image>
+    
+    <item>
+      <title>R Installation (Summer 2020)</title>
+      <link>https://dsollberger.netlify.com/post/r-installation-summer-2020/</link>
+      <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/r-installation-summer-2020/</guid>
+      <description>
+
+
+&lt;p&gt;If you are planning to do the &lt;code&gt;R&lt;/code&gt; assignments on your own computer (recommended), then here is a quick outline for obtaining the software.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;There are two separate software programs&lt;/em&gt;. Most people find it easier to use &lt;code&gt;RStudio&lt;/code&gt;. than just &lt;code&gt;R&lt;/code&gt;, but you need to install &lt;code&gt;R&lt;/code&gt; first before installing &lt;code&gt;RStudio&lt;/code&gt; (analogously speaking: you need an cell phone before you can use an cell phone case).&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;If you have R and RStudio from a previous course, you still need to update to the current versions!&lt;/em&gt; (version 4.0.0 of R and version 1.3.959 of RStudio)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;downloading-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Downloading R&lt;/h1&gt;
+&lt;p&gt;Go to &lt;a href=&#34;https://cran.r-project.org/&#34;&gt;The Comprehensive R Archive Network&lt;/a&gt; (CRAN)&lt;/p&gt;
+&lt;p&gt;Windows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click “Download R for Windows”&lt;/li&gt;
+&lt;li&gt;click “install R for the first time”&lt;/li&gt;
+&lt;li&gt;click “Download R 4.0.0 for Windows”&lt;/li&gt;
+&lt;li&gt;click “Save File”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Mac:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click “Download R for (Mac) OS X”&lt;/li&gt;
+&lt;li&gt;click “R-4.0.0.pkg”&lt;/li&gt;
+&lt;li&gt;click “Ok”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing R&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: double-check icon for R-4.0.0-win.exe&lt;/li&gt;
+&lt;li&gt;Mac: double-click icon for R-4.0.0.pkg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;give computer permission to install&lt;/li&gt;
+&lt;li&gt;select language&lt;/li&gt;
+&lt;li&gt;agree to GNU General Public License&lt;/li&gt;
+&lt;li&gt;select destination location&lt;/li&gt;
+&lt;li&gt;select components&lt;/li&gt;
+&lt;li&gt;Startup options: select “No (accept defaults)”&lt;/li&gt;
+&lt;li&gt;select Start Menu Folder&lt;/li&gt;
+&lt;li&gt;select Additional Tasks&lt;/li&gt;
+&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
+&lt;li&gt;“Click Finish to exit Setup”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;downloading-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Downloading RStudio&lt;/h1&gt;
+&lt;p&gt;Go to the &lt;a href=&#34;https://rstudio.com/products/rstudio/download/#download&#34;&gt;RStudio Desktop download page&lt;/a&gt; (i.e. we are using the &lt;em&gt;free&lt;/em&gt;, desktop version of RStudio)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: click RStudio-1.3.959.exe, click “Save File”&lt;/li&gt;
+&lt;li&gt;Mac: click RStudio-1.3.959.dmg, click “Ok”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing RStudio&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: double-check icon for RStudio-1.3.959.exe&lt;/li&gt;
+&lt;li&gt;Mac: double-click icon for RStudio-1.3.959.dmg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;give computer permission to install&lt;/li&gt;
+&lt;li&gt;“Click Next to continue”&lt;/li&gt;
+&lt;li&gt;Choose Install Location&lt;/li&gt;
+&lt;li&gt;Choose Start Menu Folder&lt;/li&gt;
+&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
+&lt;li&gt;“Click Finish to close Setup”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;code-packages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Code Packages&lt;/h1&gt;
+&lt;p&gt;For R coding, we will often need more code—called code packages. To ease our coding sessions, please run the following lines of code before class (in the lower-left &lt;code&gt;console&lt;/code&gt; area of RStudio, just has to be done once this semester).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_list &amp;lt;- c(&amp;quot;tidyverse&amp;quot;, &amp;quot;readxl&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;titanic&amp;quot;)
+install.packages(package_list)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;file-types&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;File Types&lt;/h1&gt;
+&lt;p&gt;Also, while we are learning how I want homework assignments to be submitted, it will be useful if you can see file types in your computer.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;http://kb.winzip.com/kb/entry/26/&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/&#34;&gt;Mac OS X&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,228 +1,836 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<!DOCTYPE html><html lang="en-us" >
+
+
 <head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="theme" content="hugo-academic">
-  <meta name="generator" content="Hugo 0.44" />
-  <meta name="author" content="Derek Sollberger">
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   
   
   
-  
-  <meta name="description" content="Continuing Lecturer of Applied Mathematics">
-
-  
-  <link rel="alternate" hreflang="en-us" href="/post/">
-
-  
-
-
+    <meta name="generator" content="Wowchemy 5.4.0 for Hugo" />
   
 
   
   
-  <meta name="theme-color" content="#3f51b5">
+
+
+
+
+
+
+
+
+
   
+
+
+
+
+  
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+
   
   
   
     
-  
-  
-  
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha512-6MXa8B6uaO18Hid6blRMetEIoPqHf7Ux1tnyIQdpt9qI5OACx7C+O3IVTr98vwGnlcg0LOLa02i9Y1HpVhlfiw==" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.1/css/academicons.min.css" integrity="sha512-NThgw3XKQ1absAahW6to7Ey42uycrVvfNfyjqcFNgCmOCQ5AR4AO0SiXrN+8ZtYeappp56lk1WtvjVmEa+VR6A==" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha512-SfTiTlX6kk+qitfevl/7LibUOeJWlt9rbyDn92a1DqWOw9vWG2MFoays0sgObmWazO5BQPiFucnnEAjpAB+/Sw==" crossorigin="anonymous">
-  
-  
-  
-  
-  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700%7cRoboto:400,400italic,700%7cRoboto&#43;Mono">
-  
-  <link rel="stylesheet" href="/styles.css">
-  
-
-  
-
-  
-  <link rel="alternate" href="/post/index.xml" type="application/rss+xml" title="The Median Data Scientist">
-  <link rel="feed" href="/post/index.xml" type="application/rss+xml" title="The Median Data Scientist">
-  
-
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="icon" type="image/png" href="/img/icon.png">
-  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
-
-  <link rel="canonical" href="/post/">
-
-  <meta property="twitter:card" content="summary_large_image">
-  
-  <meta property="twitter:site" content="@DerekSollberger">
-  <meta property="twitter:creator" content="@DerekSollberger">
-  
-  <meta property="og:site_name" content="The Median Data Scientist">
-  <meta property="og:url" content="/post/">
-  <meta property="og:title" content="Posts | The Median Data Scientist">
-  <meta property="og:description" content="Continuing Lecturer of Applied Mathematics">
-  <meta property="og:locale" content="en-us">
-  
-  <meta property="og:updated_time" content="2017-01-01T00:00:00-08:00">
-  
-
-  
-
-  <title>Posts | The Median Data Scientist</title>
-
-</head>
-<body id="top" data-spy="scroll" data-target="#toc" data-offset="71" >
-
-<nav class="navbar navbar-default navbar-fixed-top" id="navbar-main">
-  <div class="container">
-
-    
-    <div class="navbar-header">
       
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-              data-target=".navbar-collapse" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+      <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono&family=Roboto:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Alice Bighetti (吳恩達)" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Professor of Artificial Intelligence" />
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://dsollberger.netlify.com/post/" />
+
+  
+  
+  
+    <meta name="theme-color" content="#1565c0" />
+  
+
+  
+  
+
+  
+
+  <link rel="stylesheet" href="/css/vendor-bundle.min.f1ecf783c14edc00c9320c205831ad8e.css" media="print" onload="this.media='all'">
+
+  
+  
+  
+    
+    
+
+    
+    
+    
+    
+      
+      
+    
+    
+    
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/styles/github.min.css" crossorigin="anonymous" title="hl-light" media="print" onload="this.media='all'">
+          <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" media="print" onload="this.media='all'" disabled>
+        
+      
+    
+
+    
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.css" integrity="" crossorigin="anonymous" media="print" onload="this.media='all'">
+    
+
+    
+
+    
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+        
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+      
+      
+
+      
+      
+
+      
+    
+  
+
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/wowchemy.512574799414e7d36471486881070b0f.css" />
+
+  
+
+
+
+  
+
+  
+
+  
+
+
+
+
+  
+  
+  
+
+  
+    <link rel="alternate" href="/post/index.xml" type="application/rss+xml" title="Derek Sollberger&#39;s Blog" />
+  
+
+  
+    <link rel="manifest" href="/manifest.webmanifest" />
+  
+
+  <link rel="icon" type="image/png" href="/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_32x32_fill_lanczos_center_3.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_180x180_fill_lanczos_center_3.png" />
+
+  <link rel="canonical" href="https://dsollberger.netlify.com/post/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+
+  
+  
+    
+    
+  
+  <meta property="twitter:card" content="summary" />
+  
+  <meta property="og:site_name" content="Derek Sollberger&#39;s Blog" />
+  <meta property="og:url" content="https://dsollberger.netlify.com/post/" />
+  <meta property="og:title" content="Posts | Derek Sollberger&#39;s Blog" />
+  <meta property="og:description" content="Professor of Artificial Intelligence" /><meta property="og:image" content="https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png" />
+    <meta property="twitter:image" content="https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png" /><meta property="og:locale" content="en-us" />
+  
+    
+      <meta property="og:updated_time" content="2022-02-26T00:00:00&#43;00:00" />
+    
+  
+
+  
+
+
+
+  
+
+  
+
+
+
+
+
+  <title>Posts | Derek Sollberger&#39;s Blog</title>
+</head>
+
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" class="page-wrapper   " data-wc-page-id="6370009740e1eb2ee0b7974f10ecc91f" >
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <script src="/js/wowchemy-init.min.8f76bdc9e086322ed5147724ebba3d06.js"></script>
+
+  
+
+
+<aside class="search-modal" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#" aria-label="Close"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search" class="form-control"
+        aria-label="Search...">
+        
+      </div>
+
+      
+      
+
+      
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+
+  <div class="page-header">
+    
+
+
+
+
+
+
+
+
+
+
+
+
+<header class="header--fixed">
+  <nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+    <div class="container-xl">
+
+      
+      <div class="d-none d-lg-inline-flex">
+        <a class="navbar-brand" href="/">Derek Sollberger&#39;s Blog</a>
+      </div>
+      
+
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false" aria-label="Toggle navigation">
+      <span><i class="fas fa-bars"></i></span>
       </button>
       
-      <a class="navbar-brand" href="/">The Median Data Scientist</a>
-    </div>
-
-    
-    <div class="collapse navbar-collapse">
 
       
-      
-      <ul class="nav navbar-nav navbar-right">
-        
-
-        
-        
-        
-        
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#about">
-            
-            <span>Home</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-        
-        
-        
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#posts">
-            
-            <span>Posts</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-        
-        
-        
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#teaching">
-            
-            <span>Teaching</span>
-            
-          </a>
-        </li>
-
-        
-        
-
-        
-        
-        
-        
-        
-          
-        
-
-        <li class="nav-item">
-          <a href="/#contact">
-            
-            <span>Contact</span>
-            
-          </a>
-        </li>
-
-        
-        
+      <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
+        <a class="navbar-brand" href="/">Derek Sollberger&#39;s Blog</a>
+      </div>
       
 
       
+      
+      <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+        
+        <ul class="navbar-nav d-md-inline-flex">
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#about"><span>Demo</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#posts"><span>Posts</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#projects"><span>Projects</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#talks"><span>Talks</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#featured"><span>Publications</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/courses/"><span>Courses</span></a>
+          </li>
+
+          
+          
+
+          
+
+          
+          
+          
+            
+          
+
+          
+
+          
+          
+          
+          
+
+          
+            
+              
+              
+            
+            
+              
+              
+              
+                
+              
+              
+            
+          
+
+          <li class="nav-item">
+            <a class="nav-link " href="/#contact"><span>Contact</span></a>
+          </li>
+
+          
+          
+
+        
+
+          
+        </ul>
+      </div>
+
+      <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+
+        
+        
+          
+            
+            <li class="nav-item d-none d-lg-inline-flex">
+              <a class="nav-link" href="https://twitter.com/GeorgeCushen" data-toggle="tooltip" data-placement="bottom" title="Follow me on Twitter" target="_blank" rel="noopener" aria-label="Follow me on Twitter">
+                <i class="fab fa-twitter" aria-hidden="true"></i>
+              </a>
+            </li>
+          
+        
+
+        
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+        
+        <li class="nav-item dropdown theme-dropdown">
+          <a href="#" class="nav-link" data-toggle="dropdown" aria-haspopup="true" aria-label="Display preferences">
+            <i class="fas fa-moon" aria-hidden="true"></i>
+          </a>
+          <div class="dropdown-menu">
+            <a href="#" class="dropdown-item js-set-theme-light">
+              <span>Light</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-dark">
+              <span>Dark</span>
+            </a>
+            <a href="#" class="dropdown-item js-set-theme-auto">
+              <span>Automatic</span>
+            </a>
+          </div>
+        </li>
+        
+
+        
+        
+
       </ul>
 
     </div>
+  </nav>
+</header>
+
+
   </div>
-</nav>
+
+  <div class="page-body">
+    
 
 
 
 
 
-<div class="universal-wrapper">
 
+
+
+
+
+
+
+  
+
+  
+  
+  
+    
+  
+<div class="universal-wrapper pt-3">
   <h1>Posts</h1>
 
   
 
   
+</div>
+
+
+
+<div class="universal-wrapper">
+
   
-    
+
+  
+  
     
 
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
+
+
+
+
+
+
+
+
+
+
+
+
   
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/payrolls-of-the-cleveland-baseball-team/" itemprop="url">Payrolls of the Cleveland Baseball Team</a>
-  </h3>
-  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/post/2022-02-26-harriet-tubman-s-lifespan/" >Harriet Tubman&#39;s Lifespan</a>
+    </div>
+
+    
+    <a href="/post/2022-02-26-harriet-tubman-s-lifespan/"  class="summary-link">
+      <div class="article-style">
+        On Twitter, @Cmastication said that “Just read this and it made my head hurt. Fact checked it an it’s correct: “when Harriet Tubman was born, Thomas Jefferson was alive, and when Harriet Tubman died, Ronald Reagan was alive.
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
 
 <div class="article-metadata">
 
+  
+  
+
+  
   <span class="article-date">
     
-    <time datetime="2021-01-07 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jan 7, 2021
-    </time>
+    
+      
+    
+    Feb 26, 2022
   </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
+  
+
+  
 
   
   <span class="middot-divider"></span>
@@ -233,62 +841,85 @@
 
   
   
-
   
   
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/sports-analytics">sports analytics</a
-    >
-    
-  </span>
   
   
 
+  
   
 
 </div>
 
-  <div class="article-style" itemprop="articleBody">
+      
+    </div>
+
     
-    Today I made a quick graph of the player payrolls for the Cleveland baseball team to compare their projected payroll after today’s trade with the Mets (Lindor, Carrasco, etc.) to past seasons.
-Sources:
-(past) http://www.stevetheump.com/Payrolls.htm(2021 projection) https://twitter.com/ZackMeisel/status/1347246681520295936https://teamcolorcodes.com/cleveland-indians-color-codes/years &lt;- 2014:2021payrolls &lt;- c(82.5, 86.1, 86.3, 124.3, 134.4, 88.7, 37.6, 35)df &lt;- data.frame(years, payrolls)df %&gt;%ggplot(aes(x = years, y = payrolls, label = payrolls)) +geom_bar(stat = &quot;identity&quot;, fill = &quot;#E31937&quot;, color = &quot;#0C2340&quot;) +geom_label() +labs(title = &quot;Opening Day Payrolls of the Cleveland Baseball Team&quot;,subtitle = &quot;2016: World Series appearance\n2020: pandemic-shortened season\n2021: projected&quot;,caption = &quot;Sources: http://www.
+
+  </div>
+  <div class="ml-3">
+    
     
   </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/payrolls-of-the-cleveland-baseball-team/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
 </div>
 
   
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/post/payrolls-of-the-cleveland-baseball-team/" >Payrolls of the Cleveland Baseball Team</a>
+    </div>
+
+    
+    <a href="/post/payrolls-of-the-cleveland-baseball-team/"  class="summary-link">
+      <div class="article-style">
+        Today I made a quick graph of the player payrolls for the Cleveland baseball team to compare their projected payroll after today’s trade with the Mets (Lindor, Carrasco, etc.) to past seasons.
+      </div>
+    </a>
     
 
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/quick-meme-making-in-r/" itemprop="url">Quick meme making in R</a>
-  </h3>
-  
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
 
 <div class="article-metadata">
 
+  
+  
+
+  
   <span class="article-date">
     
-    <time datetime="2020-11-21 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Nov 21, 2020
-    </time>
+    
+      
+    
+    Jan 7, 2021
   </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
+  
+
+  
 
   
   <span class="middot-divider"></span>
@@ -299,202 +930,100 @@ Sources:
 
   
   
-
   
+  
+  
+  
+
   
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/recreation">recreation</a
-    >
-    
-  </span>
-  
-  
-
+    <i class="fas fa-folder mr-1"></i><a href="/category/sports-analytics/">sports analytics</a></span>
   
 
 </div>
 
-  <div class="article-style" itemprop="articleBody">
+      
+    </div>
+
     
-    <p>Source: <a href="https://blog.ephorie.de/create-bart-simpson-blackboard-memes-with-r">Create Bart Simpson Blackboard Memes with R</a></p>
-<pre class="r"><code>knitr::opts_chunk$set(echo = TRUE)
 
-library(&quot;meme&quot;)</code></pre>
-<pre><code>## Warning: package &#39;meme&#39; was built under R version 4.0.3</code></pre>
-<pre class="r"><code>if (.Platform$OS.type == &quot;windows&quot;) {
-  windowsFonts(Comic = windowsFont(&quot;Comic Sans MS&quot;))
-}</code></pre>
-<pre class="r"><code>bart &lt;- &quot;bart_simpson_chalkboard-5157.gif&quot; # source: http://free-extras.com/images/bart_simpson_chalkboard-5157.htm
-text &lt;- paste(rep(&quot;I will not procrastinate \n in grant writing \n by making memes in R instead&quot;, 2), collapse = &quot;\n&quot;)</code></pre>
-<pre class="r"><code>meme(bart, text, size = 2, font = &quot;Comic&quot;)</code></pre>
-<p><img src="/post/2020-11-21-quick-meme-making-in-r_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
-
+  </div>
+  <div class="ml-3">
+    
     
   </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/quick-meme-making-in-r/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
 </div>
 
   
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/post/getting-started/" >Welcome to Wowchemy, the website builder for Hugo</a>
+    </div>
+
+    
+    <a href="/post/getting-started/"  class="summary-link">
+      <div class="article-style">
+        Welcome 👋 We know that first impressions are important, so we&rsquo;ve populated your new site with some initial content to help you get familiar with everything in no time.
+      </div>
+    </a>
     
 
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/covid-19-cases-in-the-central-valley/" itemprop="url">Covid-19 Cases in the Central Valley</a>
-  </h3>
-  
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
 
 <div class="article-metadata">
 
-  <span class="article-date">
+  
+  
+  
+  
+  <div>
     
-    <time datetime="2020-07-07 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jul 7, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
 
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/bioinformatics">bioinformatics</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    DataSource: USA Facts — downloaded July 6, 2020
-library(&quot;tidyverse&quot;)library(&quot;zoo&quot;)start_date &lt;- &quot;5/28/20&quot;end_date &lt;- &quot;7/5/20&quot;county_list &lt;- c(&quot;Santa Clara&quot;, &quot;Stanislaus&quot;, &quot;Calaveras&quot;,&quot;San Benito&quot;, &quot;Merced&quot;, &quot;Tuolumne&quot;,&quot;Fresno&quot;, &quot;Madera&quot;, &quot;Mariposa&quot;)lag &lt;- 7 #number of days for rolling average#loads filescases_raw &lt;- read_csv(&quot;covid_confirmed_usafacts.csv&quot;)populations &lt;- read_csv(&quot;covid_county_population_usafacts.csv&quot;)Data Wranglingraw_data_merged &lt;- cases_raw %&gt;%full_join(populations, by = c(&quot;County Name&quot;, &quot;State&quot;))# find column positions by datecolumn_names &lt;- colnames(raw_data_merged)start_loc &lt;- match(start_date, column_names)end_loc &lt;- match(end_date, column_names)cases_filtered &lt;- cases_raw %&gt;%filter(State == &quot;CA&quot;) %&gt;%select(&quot;County Name&quot;, all_of(start_loc:end_loc))populations_filtered &lt;- populations %&gt;%filter(State == &quot;CA&quot;) %&gt;%select(&quot;County Name&quot;, &quot;population&quot;)df_merged &lt;- cases_filtered %&gt;%full_join(populations_filtered, by = &quot;County Name&quot;)df_clean &lt;- df_merged %&gt;%# avoids unallocated cases and the cruise ship!
-    
+  <span class="author-highlighted">
+      <a href="/author/alice-bighetti-%E5%90%B3%E6%81%A9%E9%81%94/">Alice Bighetti (吳恩達)</a></span>, <span >
+      <a href="/author/%E5%90%B3%E6%81%A9%E9%81%94/">吳恩達</a></span>
   </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/covid-19-cases-in-the-central-valley/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
   
   
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/tidytuesday-roman-emperors/" itemprop="url">TidyTuesday: Roman Emperors</a>
-  </h3>
+
   
-
-<div class="article-metadata">
-
   <span class="article-date">
     
-    <time datetime="2020-06-19 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jun 19, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    4 min read
+    
+      
+    
+    Dec 13, 2020
   </span>
   
 
   
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/tidytuesday">tidyTuesday</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    IntroductionToday, for practice with ggplot2, I wish to replicate @JoshuaFeldman’s wonderful #TidyTuesday submission about the dataset of Roman emperors.
-library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted on August 13, 2019# TidyTuesday&#39;s given line of code to load the dataemperors &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&quot;)Exploring the Datadim(emperors)## [1] 68 16colnames(emperors)## [1] &quot;index&quot; &quot;name&quot; &quot;name_full&quot; &quot;birth&quot; &quot;death&quot; ## [6] &quot;birth_cty&quot; &quot;birth_prv&quot; &quot;rise&quot; &quot;reign_start&quot; &quot;reign_end&quot; ## [11] &quot;cause&quot; &quot;killer&quot; &quot;dynasty&quot; &quot;era&quot; &quot;notes&quot; ## [16] &quot;verif_who&quot;emperors %&gt;%filter(birth_prv !
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/tidytuesday-roman-emperors/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/recent-supreme-court-cases/" itemprop="url">Recent Supreme Court Cases</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-06-18 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jun 18, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
 
   
   <span class="middot-divider"></span>
@@ -505,61 +1034,283 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
 
   
   
-
   
+  
+  
+  
+
   
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/politics">politics</a
-    >
-    
-  </span>
-  
-  
-
+    <i class="fas fa-folder mr-1"></i><a href="/category/demo/">Demo</a>, <a href="/category/%E6%95%99%E7%A8%8B/">教程</a></span>
   
 
 </div>
 
-  <div class="article-style" itemprop="articleBody">
+      
+    </div>
+
     
-    Introductionlibrary(&quot;tidyverse&quot;)Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the ggplot package.
-data source: SCOTUS Bloguseful tool: Convert Town’s “Column to Comma Separated Values” functionDataJust in case anyone actually uses my blog post, I will type out the data manually instead of load a separate CSV file so that anyone can copy-and-paste the code for replicability.
+
+  </div>
+  <div class="ml-3">
+    
+    
+    
+    <a href="/post/getting-started/" >
+      <img src="/post/getting-started/featured_hub9ee31969f44a6711206a2baf9f065b4_241861_150x0_resize_q75_h2_lanczos.webp" height="84" width="150"
+           alt="Welcome to Wowchemy, the website builder for Hugo" loading="lazy">
+    </a>
     
   </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/recent-supreme-court-cases/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
 </div>
 
   
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/post/2020-12-01-r-rmarkdown/" >Hello R Markdown</a>
+    </div>
+
+    
+    <a href="/post/2020-12-01-r-rmarkdown/"  class="summary-link">
+      <div class="article-style">
+        R MarkdownThis is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see http://rmarkdown.
+      </div>
+    </a>
     
 
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/fall-plans-for-american-universities/" itemprop="url">Fall Plans for American Universities</a>
-  </h3>
-  
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
 
 <div class="article-metadata">
 
+  
+  
+
+  
   <span class="article-date">
     
-    <time datetime="2020-06-13 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jun 13, 2020
-    </time>
+    
+      
+    
+    Dec 1, 2020
   </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 min read
   </span>
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/r/">R</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/post/quick-meme-making-in-r/" >Quick meme making in R</a>
+    </div>
+
+    
+    <a href="/post/quick-meme-making-in-r/"  class="summary-link">
+      <div class="article-style">
+        Source: Create Bart Simpson Blackboard Memes with R
+knitr::opts_chunk$set(echo = TRUE)library(&quot;meme&quot;)## Warning: package &#39;meme&#39; was built under R version 4.0.3if (.Platform$OS.type == &quot;windows&quot;) {windowsFonts(Comic = windowsFont(&quot;Comic Sans MS&quot;))}bart &lt;- &quot;bart_simpson_chalkboard-5157.
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Nov 21, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    1 min read
+  </span>
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/recreation/">recreation</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/post/covid-19-cases-in-the-central-valley/" >Covid-19 Cases in the Central Valley</a>
+    </div>
+
+    
+    <a href="/post/covid-19-cases-in-the-central-valley/"  class="summary-link">
+      <div class="article-style">
+        DataSource: USA Facts — downloaded July 6, 2020
+library(&quot;tidyverse&quot;)library(&quot;zoo&quot;)start_date &lt;- &quot;5/28/20&quot;end_date &lt;- &quot;7/5/20&quot;county_list &lt;- c(&quot;Santa Clara&quot;, &quot;Stanislaus&quot;, &quot;Calaveras&quot;,&quot;San Benito&quot;, &quot;Merced&quot;, &quot;Tuolumne&quot;,&quot;Fresno&quot;, &quot;Madera&quot;, &quot;Mariposa&quot;)lag &lt;- 7 #number of days for rolling average#loads filescases_raw &lt;- read_csv(&quot;covid_confirmed_usafacts.
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jul 7, 2020
+  </span>
+  
+
+  
 
   
   <span class="middot-divider"></span>
@@ -570,61 +1321,277 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
 
   
   
-
   
+  
+  
+  
+
   
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/data-mining">data mining</a
-    >
-    
-  </span>
-  
-  
-
+    <i class="fas fa-folder mr-1"></i><a href="/category/bioinformatics/">bioinformatics</a></span>
   
 
 </div>
 
-  <div class="article-style" itemprop="articleBody">
+      
+    </div>
+
     
-    IntroductionToday’s coding practice is based on the following article and data source (there is literally a “Get the Data” link):
-Here’s a List of Colleges’ Plans for Reopening in the Falllibrary(&quot;geofacet&quot;)library(&quot;rvest&quot;)library(&quot;tidyverse&quot;)# load datadf_raw &lt;- read_csv(&quot;data-w8lLG.csv&quot;)colnames(df_raw)## [1] &quot;Institution&quot; &quot;Control&quot; &quot;State&quot; &quot;Category&quot;Data Wrangling# filter out Excel artifacts (trivial, empty rows)df &lt;- df_raw %&gt;%filter(Institution != &quot;#REF!&quot;)#States as factorsstates_alphabetically &lt;- sort(unique(df$State))df$State_factor &lt;- factor(df$State,levels = states_alphabetically)#extracting text from urls (rvest!
+
+  </div>
+  <div class="ml-3">
+    
     
   </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/fall-plans-for-american-universities/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
 </div>
 
   
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/post/tidytuesday-roman-emperors/" >TidyTuesday: Roman Emperors</a>
+    </div>
+
+    
+    <a href="/post/tidytuesday-roman-emperors/"  class="summary-link">
+      <div class="article-style">
+        IntroductionToday, for practice with ggplot2, I wish to replicate @JoshuaFeldman’s wonderful #TidyTuesday submission about the dataset of Roman emperors.
+library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted on August 13, 2019# TidyTuesday&#39;s given line of code to load the dataemperors &lt;- readr::read_csv(&quot;https://raw.
+      </div>
+    </a>
     
 
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/r-installation-summer-2020/" itemprop="url">R Installation (Summer 2020)</a>
-  </h3>
-  
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
 
 <div class="article-metadata">
 
+  
+  
+
+  
   <span class="article-date">
     
-    <time datetime="2020-06-03 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      Jun 3, 2020
-    </time>
+    
+      
+    
+    Jun 19, 2020
   </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    4 min read
   </span>
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/tidytuesday/">tidyTuesday</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/post/recent-supreme-court-cases/" >Recent Supreme Court Cases</a>
+    </div>
+
+    
+    <a href="/post/recent-supreme-court-cases/"  class="summary-link">
+      <div class="article-style">
+        Introductionlibrary(&quot;tidyverse&quot;)Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the ggplot package.
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jun 18, 2020
+  </span>
+  
+
+  
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    3 min read
+  </span>
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <span class="article-categories">
+    <i class="fas fa-folder mr-1"></i><a href="/category/politics/">politics</a></span>
+  
+
+</div>
+
+      
+    </div>
+
+    
+
+  </div>
+  <div class="ml-3">
+    
+    
+  </div>
+</div>
+
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/post/fall-plans-for-american-universities/" >Fall Plans for American Universities</a>
+    </div>
+
+    
+    <a href="/post/fall-plans-for-american-universities/"  class="summary-link">
+      <div class="article-style">
+        IntroductionToday’s coding practice is based on the following article and data source (there is literally a “Get the Data” link):
+Here’s a List of Colleges’ Plans for Reopening in the Falllibrary(&quot;geofacet&quot;)library(&quot;rvest&quot;)library(&quot;tidyverse&quot;)# load datadf_raw &lt;- read_csv(&quot;data-w8lLG.
+      </div>
+    </a>
+    
+
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jun 13, 2020
+  </span>
+  
+
+  
 
   
   <span class="middot-divider"></span>
@@ -635,126 +1602,90 @@ library(&quot;tidyverse&quot;)TidyTuesday’s Roman Emperor dataset — posted
 
   
   
-
   
+  
+  
+  
+
   
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/r">r</a
-    >
-    
-  </span>
-  
-  
-
+    <i class="fas fa-folder mr-1"></i><a href="/category/data-mining/">data mining</a></span>
   
 
 </div>
 
-  <div class="article-style" itemprop="articleBody">
+      
+    </div>
+
     
-    If you are planning to do the R assignments on your own computer (recommended), then here is a quick outline for obtaining the software.
-There are two separate software programs. Most people find it easier to use RStudio. than just R, but you need to install R first before installing RStudio (analogously speaking: you need an cell phone before you can use an cell phone case).If you have R and RStudio from a previous course, you still need to update to the current versions!
+
+  </div>
+  <div class="ml-3">
+    
     
   </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/r-installation-summer-2020/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
 </div>
 
   
     
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<div class="media stream-item view-compact">
+  <div class="media-body">
+
+    <div class="section-subheading article-title mb-0 mt-0">
+      <a href="/post/r-installation-summer-2020/" >R Installation (Summer 2020)</a>
+    </div>
+
+    
+    <a href="/post/r-installation-summer-2020/"  class="summary-link">
+      <div class="article-style">
+        If you are planning to do the R assignments on your own computer (recommended), then here is a quick outline for obtaining the software.
+There are two separate software programs.
+      </div>
+    </a>
     
 
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/geofacet-plot-vingette/" itemprop="url">Geofacet plot vingette</a>
-  </h3>
-  
+    <div class="stream-meta article-metadata">
+
+      
+
+      
+        
+
 
 <div class="article-metadata">
 
+  
+  
+
+  
   <span class="article-date">
     
-    <time datetime="2020-05-30 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      May 30, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    5 min read
+    
+      
+    
+    Jun 3, 2020
   </span>
   
 
   
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/gis">gis</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    Today I am going to try to make a geofacet graph using the GAI (Global Acceptability Index) data. My goal is to show trends in LGBT acceptance in Europe between the years 2003 and 2017.
-Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication from the UCLA School of Law Williams Institutegeofacet R packageList of European nationsConvert Town to convert spreadsheet columns to comma-separated listslibrary(&quot;geofacet&quot;)library(&quot;tidyverse&quot;)Dataraw_data &lt;- read_csv(&quot;gai.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/geofacet-plot-vingette/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/mapping-social-acceptance-of-lgbt-people/" itemprop="url">Mapping Social Acceptance of LGBT People</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-05-26 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      May 26, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
 
   
   <span class="middot-divider"></span>
@@ -765,114 +1696,40 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
 
   
   
-
   
+  
+  
+  
+
   
   
   <span class="middot-divider"></span>
   <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/gis">gis</a
-    >, 
-    
-    <a href="/categories/lgbt">lgbt</a
-    >
-    
-  </span>
-  
-  
-
+    <i class="fas fa-folder mr-1"></i><a href="/category/r/">R</a></span>
   
 
 </div>
 
-  <div class="article-style" itemprop="articleBody">
+      
+    </div>
+
     
-    Inspired by this morning’s meeting of the Bisexual Research Group, I am going to draft a quick map of LGBT acceptance in Africa.
-Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication from the UCLA School of Law Williams InstituteList of African nationsSimplyPDF to extract table of data from a PDF documentConvert Town to convert spreadsheet columns to comma-separated listslibrary(&quot;tidyverse&quot;)Datarank &lt;- 1:174countries_text &lt;- &quot;Iceland,Netherlands,Norway,Canada,Spain,Belgium,Ireland,Sweden,Denmark,Nepal,Great Britain,Luxembourg,Malta,Uruguay,New Zealand,Germany,Finland,Switzerland,Puerto Rico,Australia,United States,France,Argentina,Austria,Brazil,Cape Verde,Chile,Philippines,Hong Kong,Italy,Portugal,Mexico,South Africa,Costa Rica,Cuba,Czech Republic,Colombia,Slovenia,Venezuela,Taiwan,Ecuador,Nicaragua,Bahrain,Bolivia,Israel,Suriname,Laos,Syria,Panama,El Salvador,Mauritius,Northern Cyprus,Peru,Croatia,Dominican Republic,Namibia,Honduras,Paraguay,Cyprus,Thailand,Slovakia,Greece,Mozambique,Andorra,Hungary,Japan,South Korea,Estonia,Myanmar,Poland,Bangladesh,Barbados,Cambodia,Guatemala,Singapore,Sao Tome and Principe,Trinidad and Tobago,Guyana,Bulgaria,Vietnam,India,Botswana,Grenada,Latvia,Turkey,Bahamas,Belize,Saint Kitts and Nevis,Malaysia,Serbia,Algeria,Lithuania,Jamaica,Dominica,Romania,Bhutan,Lebanon,Saint Lucia,Swaziland,Lesotho,China,Antigua and Barbuda,Angola,Yemen,Benin,Haiti,Uzbekistan,Libya,Montenegro,Tunisia,Saint Vincent and the Grenadines,Kuwait,Uganda,Jordan,Albania,Belarus,Gambia,Morocco,Kenya,Russia,Democratic Republic of the Congo,Ukraine,Qatar,Palestine,Madagascar,Tanzania,Cote d&#39;Ivoire,Republic of the Congo,Iraq,Gabon,Kazakhstan,Sudan,Bosnia Herzegovina,Sierra Leone,Macedonia,Comoros,Saudi Arabia,Burkina Faso,Togo,Kyrgyzstan,Ghana,Mongolia,Rwanda,Kosovo,Cameroon,Nigeria,Zambia,Central African Republic,Zimbabwe,Indonesia,Djibouti,Chad,Niger,Mali,Guinea,Afghanistan,Liberia,Moldova,Georgia,Burundi,South Sudan,Mauritania,Sri Lanka,Iran,Pakistan,Malawi,Nagorno- Karabakh,Armenia,Egypt,Ethiopia,Somaliland,Senegal,Azerbaijan,Tajikistan&quot;country &lt;- str_split(countries_text,&quot;,&quot;)[[1]]GAI_text &lt;- &quot;8.
+
+  </div>
+  <div class="ml-3">
+    
     
   </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/mapping-social-acceptance-of-lgbt-people/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
-</div>
-
-  
-    
-    
-
-<div class="article-list-item" itemscope itemprop="blogPost" itemtype="http://schema.org/BlogPosting">
-  
-  
-  <h3 class="article-title" itemprop="headline">
-    <a href="/post/vote-by-mail-data/" itemprop="url">Vote by Mail data</a>
-  </h3>
-  
-
-<div class="article-metadata">
-
-  <span class="article-date">
-    
-    <time datetime="2020-05-25 00:00:00 &#43;0000 UTC" itemprop="datePublished dateModified">
-      May 25, 2020
-    </time>
-  </span>
-  <span itemscope itemprop="author publisher" itemtype="http://schema.org/Person">
-    <meta itemprop="name" content="Derek Sollberger">
-  </span>
-
-  
-  <span class="middot-divider"></span>
-  <span class="article-reading-time">
-    2 min read
-  </span>
-  
-
-  
-  
-
-  
-  
-  
-  <span class="middot-divider"></span>
-  <span class="article-categories">
-    <i class="fa fa-folder"></i>
-    
-    <a href="/categories/gis">gis</a
-    >
-    
-  </span>
-  
-  
-
-  
-
-</div>
-
-  <div class="article-style" itemprop="articleBody">
-    
-    library(&quot;dplyr&quot;)library(&quot;ggplot2&quot;)DataToday I am going to try to make a choropleth (map + data) of the percentage of registered voters that sent in ballots for the 2018 elections in the USA. I gathered the data from and by the following sites:
-Few States Are Prepared To Switch To Voting By Mail. That Could Make For A Messy Election — FiveThirtyEight artcle from April 27, 2020How to Create a Comma Separated List from an Excel Column — from University of Pennsylvaniastates &lt;- tolower( sort(c(state.
-    
-  </div>
-  <p class="read-more" itemprop="mainEntityOfPage">
-    <a href="/post/vote-by-mail-data/" class="btn btn-primary btn-outline">
-      CONTINUE READING
-    </a>
-  </p>
 </div>
 
   
 
   
-<nav>
-  <ul class="pager">
+<nav class="mt-1">
+  <ul class="pagination justify-content-center">
     
     
-    <li><a href="/post/page/2/">&gt;</a></li>
+    <li class="page-item"><a class="page-link" href="/post/page/2/">&raquo;</a></li>
     
   </ul>
 </nav>
@@ -880,45 +1737,70 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
 
 
 </div>
-<footer class="site-footer">
-  <div class="container">
-    <p class="powered-by">
-
-      &copy; 2018 &middot; 
-
-      Powered by the
-      <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
-      <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
-
-      <span class="pull-right" aria-hidden="true">
-        <a href="#" id="back_to_top">
-          <span class="button_icon">
-            <i class="fa fa-chevron-up fa-2x"></i>
-          </span>
-        </a>
-      </span>
-
-    </p>
   </div>
+
+  <div class="page-footer">
+    
+    
+    <div class="container">
+      <footer class="site-footer">
+
+  
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://wowchemy.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Wowchemy</a> — the free, <a href="https://github.com/wowchemy/wowchemy-hugo-themes" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
 </footer>
 
+    </div>
+    
+  </div>
 
+  
 <div id="modal" class="modal fade" role="dialog">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close btn-large" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Cite</h4>
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <div>
-        <pre><code class="modal-body tex"></code></pre>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
       </div>
       <div class="modal-footer">
-        <a class="btn btn-primary btn-outline js-copy-cite" href="#" target="_blank">
-          <i class="fa fa-copy"></i> Copy
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
         </a>
-        <a class="btn btn-primary btn-outline js-download-cite" href="#" target="_blank">
-          <i class="fa fa-download"></i> Download
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
         </a>
         <div id="modal-error"></div>
       </div>
@@ -926,36 +1808,117 @@ Sources and toolsSocial Acceptance of LGBT People in 174 Countries publication
   </div>
 </div>
 
+      
+
+    
+    <script src="/js/vendor-bundle.min.b73dfaac3b6499dc997741748a7c3fe2.js"></script>
+
+    
+    
+    
+      
+      
+        <script src="https://cdn.jsdelivr.net/gh/desandro/imagesloaded@v4.1.4/imagesloaded.pkgd.min.js" integrity="sha512-S5PZ9GxJZO16tT9r3WJp/Safn31eu8uWrzglMahDT4dsmgqWonRY9grk3j+3tfuPr9WJNsfooOR7Gi7HL5W2jw==" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/gh/metafizzy/isotope@v3.0.6/dist/isotope.pkgd.min.js" integrity="sha512-Zq2BOxyhvnRFXu0+WE6ojpZLOU2jdnqbrM1hmVdGzyeCa1DgM3X5Q4A/Is9xA1IkbUeDd7755dNNI/PzSf2Pew==" crossorigin="anonymous"></script>
+      
+
+      
+      
+
+      
+
+      
+        
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/highlight.min.js" integrity="sha512-Ypjm0o7jOxAd4hpdoppSEN0TQOC19UtPAqD+4s5AlXmUvbmmS/YMxYqAqarQYyxTnB6/rqip9qcxlNB/3U9Wdg==" crossorigin="anonymous"></script>
+        
+        
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/languages/r.min.js" crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/languages/python.min.js" crossorigin="anonymous"></script>
+        
+        <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.2.1/build/languages/latex.min.js" crossorigin="anonymous"></script>
+        
+      
+
+    
+
+    
+    
+    
+      <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.min.js" integrity="" crossorigin="anonymous"></script>
     
 
     
     
 
     
-
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" integrity="sha512-3P8rXCuGJdNZOnUx/03c1jOTnMn3rP63nBip5gOP2qmUh5YAdVAvFZ1E+QLZZbC1rtMrQb+mah3AfYW11RUrWA==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha512-iztkobsvnjKfAtTNdHkGVjAYTrrtlC7mGp/54c40wowO7LhURYl3gVzzcEqGl/qKXQltJ2HwMrdLcNUdo+N/RQ==" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
     
     
-    <script src="/js/hugo-academic.js"></script>
-    
-
-    
-    
-
-    
-    
-    <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({ tex2jax: { inlineMath: [['$','$'], ['\\(','\\)']] } });
-    </script>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML" integrity="sha512-tOav5w1OjvsSJzePRtt2uQPFwBoHt1VZcUq8l8nm5284LEKE9FSJBQryzMBzHxY5P0zRdNqEcpLIRVYFNgu1jw==" crossorigin="anonymous"></script>
-    
+      
+      <script id="search-hit-fuse-template" type="text/x-template">
+        <div class="search-hit" id="summary-{{key}}">
+          <div class="search-hit-content">
+            <div class="search-hit-name">
+              <a href="{{relpermalink}}">{{title}}</a>
+              <div class="article-metadata search-hit-type">{{type}}</div>
+              <p class="search-hit-description">{{snippet}}</p>
+            </div>
+          </div>
+        </div>
+      </script>
+      
+        <script src="https://cdn.jsdelivr.net/gh/krisk/Fuse@v3.2.1/dist/fuse.min.js" integrity="sha512-o38bmzBGX+hD3JHWUFCDA09btWaqrNmoJ3RXLlrysA7PP01Kgs4UlE4MhelE1v5dJR3+cxlR4qQlotsW7jKsnw==" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/gh/julmot/mark.js@8.11.1/dist/jquery.mark.min.js" integrity="sha512-mhbv5DqBMgrWL+32MmsDOt/OAvqr/cHimk6B8y/bx/xS88MVkYGPiVv2ixKVrkywF2qHplNRUvFsAHUdxZ3Krg==" crossorigin="anonymous"></script>
+      
     
 
-  </body>
+    
+    
+
+    
+    
+    
+    
+
+    
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    
+
+    
+    
+    
+    <script id="page-data" type="application/json">{"use_headroom":true}</script>
+
+    
+    
+      <script src="/js/wowchemy-headroom.1cb9e2fc8399acee94eab837265b73bf.js" type="module"></script>
+    
+    
+    
+    
+    
+    
+    
+      
+      
+    
+    
+    <script src="/en/js/wowchemy.min.247fd8f54253895301106e3006f53f38.js"></script>
+
+    
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+
+
+
+</body>
 </html>
-

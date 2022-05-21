@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gganatogram | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/gganatogram/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/gganatogram/index.xml" rel="self" type="application/rss+xml" />
+    <description>gganatogram</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 10 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>gganatogram</title>
+      <link>https://dsollberger.netlify.com/tag/gganatogram/</link>
+    </image>
+    
+    <item>
+      <title>gganatogram and gganimate</title>
+      <link>https://dsollberger.netlify.com/post/gganatogram-and-gganimate/</link>
+      <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/gganatogram-and-gganimate/</guid>
+      <description>
+
+
+&lt;p&gt;Today I wanted to see if I could create a slideshow of pictures from the &lt;code&gt;gganatogram&lt;/code&gt; package. I wanted to combine them with the &lt;code&gt;gganimate&lt;/code&gt; package, but I have not figured out how to get that to work. (In particular, the &lt;code&gt;gganatogram()&lt;/code&gt; function seems to return a different list layout than &lt;code&gt;ggplot&lt;/code&gt; objects.)&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gganatogram)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggpolypath&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gganimate)
+library(profvis)
+
+N &amp;lt;- 25 # number of cell samples&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;num_cell_parts &amp;lt;- nrow(cell_key$cell)
+
+# randomly select a random number of cell parts
+part_picker &amp;lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+
+cell_num &amp;lt;- rep(1, length(part_picker))
+this_cell &amp;lt;- cell_key[[&amp;#39;cell&amp;#39;]][part_picker, ]
+cell_samples &amp;lt;- cbind(this_cell, cell_num)
+
+
+for(j in 2:N){
+  part_picker &amp;lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+  cell_num &amp;lt;- rep(j, length(part_picker))
+  this_cell &amp;lt;- cbind( cell_key[[&amp;#39;cell&amp;#39;]][part_picker, ], cell_num)
+  cell_samples &amp;lt;- rbind(cell_samples, this_cell)
+  
+  # figure_list[j] &amp;lt;- gganatogram(data = this_cell,
+  #           outline = FALSE, fillOutline=&amp;#39;steelblue&amp;#39;, organism=&amp;quot;cell&amp;quot;, fill=&amp;quot;colour&amp;quot;) + 
+  # theme_void() + 
+  # coord_fixed()
+  
+  png(filename = paste0(j, &amp;quot;.png&amp;quot;))
+  
+  p &amp;lt;- gganatogram(data = this_cell,
+            outline = FALSE, fillOutline=&amp;#39;steelblue&amp;#39;, organism=&amp;quot;cell&amp;quot;, fill=&amp;quot;colour&amp;quot;) +
+  theme_void() +
+  coord_fixed() +
+    labs(title = &amp;quot;Sample of Cell Parts&amp;quot;,
+         subtitle = paste0(&amp;quot;sample &amp;quot;, j, &amp;quot; of &amp;quot;, N),
+         caption = &amp;quot;Bio 18, UC Merced&amp;quot;)
+  
+  plot(p)
+  
+  dev.off()
+  
+  # pause(0.5)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://dsollberger.netlify.com/img/cell_samples.gif&#34; alt=&#34;the picture&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;the picture&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;What I ended up doing to produce the picture above was using the &lt;code&gt;png()&lt;/code&gt; and &lt;code&gt;dev.off()&lt;/code&gt; functions to simply output individual pictures into my computer, and then using the &lt;a href=&#34;https://gifmaker.me/&#34;&gt;GIFmaker&lt;/a&gt; website to combine the images into an animated GIF.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

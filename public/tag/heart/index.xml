@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>heart | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/heart/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/heart/index.xml" rel="self" type="application/rss+xml" />
+    <description>heart</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 14 Feb 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>heart</title>
+      <link>https://dsollberger.netlify.com/tag/heart/</link>
+    </image>
+    
+    <item>
+      <title>Valentine&#39;s Day 2019</title>
+      <link>https://dsollberger.netlify.com/post/valentine-s-day-2019/</link>
+      <pubDate>Thu, 14 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/valentine-s-day-2019/</guid>
+      <description>
+
+
+&lt;p&gt;In this short project, I hope to draw a heart through an animation of appearing dots.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;gganimate&amp;quot;)
+library(&amp;quot;ggforce&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;draw-a-heart&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Draw a Heart&lt;/h1&gt;
+&lt;p&gt;Here I will place two circles centered at &lt;span class=&#34;math inline&#34;&gt;\((\pm 1, 1)\)&lt;/span&gt; with the same radius &lt;span class=&#34;math inline&#34;&gt;\(r = \sqrt{2}\)&lt;/span&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;circles &amp;lt;- data.frame(
+  x0 = c(-1,1),
+  y0 = rep(1,2),
+  r = rep(1, 2)
+)
+
+right_pt &amp;lt;- (sqrt(2) + 1) / sqrt(2)
+left_pt &amp;lt;-  -1*right_pt
+f &amp;lt;- function(x){abs(x) - sqrt(2)}
+
+ggplot(data.frame(x = c(left_pt, right_pt)), aes(x)) +
+  coord_fixed() +
+  geom_circle(aes(x0 = x0, y0 = y0, r = r), data = circles, inherit.aes = FALSE) +
+  stat_function(fun = f, geom = &amp;quot;line&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;generate-some-dots&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Generate Some Dots&lt;/h1&gt;
+&lt;p&gt;Now let’s see if I can get some red dots into a heart shape and green dots outside of the heart.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# initialization
+N &amp;lt;- 10000
+x &amp;lt;- runif(N, -2, 2)
+y &amp;lt;- runif(N, -sqrt(2), 2)
+colors = c(&amp;quot;white&amp;quot;, &amp;quot;red&amp;quot;, rep(&amp;quot;green&amp;quot;, N-2)) #factor levels set early
+state = rep(1, N)
+
+# separate colors
+for (i in 4:N){
+  if (y[i] &amp;lt; 1){
+    if (y[i] &amp;gt; (abs(x[i]) - sqrt(2))){colors[i] = &amp;quot;red&amp;quot;}
+  } else {
+    if(sqrt((x[i] - 1)^2 + (y[i] - 1)^2) &amp;lt; 1 | 
+       sqrt((x[i] + 1)^2 + (y[i] - 1)^2) &amp;lt; 1){colors[i] = &amp;quot;red&amp;quot;}
+  }
+}
+
+dot_df &amp;lt;- data.frame(x,y, colors, state)
+dot_df %&amp;gt;%
+  ggplot(aes(x = x, y = y)) +
+    coord_fixed() +
+    geom_point(color = colors) +
+    theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;animation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Animation&lt;/h1&gt;
+&lt;p&gt;My initial plan was to have the dots appear one at a time to gradually make the heart, but the data storage was prohibitive. This back up plan was to literally make a new set of dots for each animation frame—and color the dots again!—and it comes with a neat “heartbeat” effect. The render time for the animated GIF was about 2 minutes on my computer.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;max_iter &amp;lt;- 14 #number of animation frames
+
+for(j in 1:max_iter){
+  x &amp;lt;- runif(N, -2, 2)
+  y &amp;lt;- runif(N, -sqrt(2), 2)
+  colors = c(&amp;quot;white&amp;quot;, &amp;quot;red&amp;quot;, rep(&amp;quot;green&amp;quot;, N-2)) #factor levels set early
+  
+  for (i in 4:N){
+    if (y[i] &amp;lt; 1){
+      if (y[i] &amp;gt; (abs(x[i]) - sqrt(2))){colors[i] = &amp;quot;red&amp;quot;}
+    } else {
+      if(sqrt((x[i] - 1)^2 + (y[i] - 1)^2) &amp;lt; 1 | 
+         sqrt((x[i] + 1)^2 + (y[i] - 1)^2) &amp;lt; 1){colors[i] = &amp;quot;red&amp;quot;}
+    }
+  }
+
+  state &amp;lt;- rep(j, N)
+  this_df &amp;lt;- data.frame(x, y, colors, state)
+  #colnames(this_df) &amp;lt;- c(&amp;quot;x&amp;quot;, &amp;quot;y&amp;quot;, &amp;quot;colors&amp;quot;, &amp;quot;state&amp;quot;)
+  dot_df &amp;lt;- rbind(dot_df, this_df)
+}
+
+dot_df %&amp;gt;%
+  ggplot(aes(x = x, y = y)) +
+    coord_fixed() +
+    geom_point(color = dot_df$colors) +
+    labs(title = &amp;quot;Valentine&amp;#39;s Day 2019&amp;quot;,
+         subtitle = &amp;quot;Frame: {closest_state}&amp;quot;,
+         caption = &amp;quot;Made by Derek Sollberger with the #gganimate package&amp;quot;) +
+    theme_minimal() +
+    transition_states(state, transition_length = 1, state_length = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-14-valentine-s-day-2019_files/figure-html/unnamed-chunk-4-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

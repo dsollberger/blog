@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sports analytics | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/category/sports-analytics/</link>
+      <atom:link href="https://dsollberger.netlify.com/category/sports-analytics/index.xml" rel="self" type="application/rss+xml" />
+    <description>sports analytics</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 07 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>sports analytics</title>
+      <link>https://dsollberger.netlify.com/category/sports-analytics/</link>
+    </image>
+    
+    <item>
+      <title>Payrolls of the Cleveland Baseball Team</title>
+      <link>https://dsollberger.netlify.com/post/payrolls-of-the-cleveland-baseball-team/</link>
+      <pubDate>Thu, 07 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/payrolls-of-the-cleveland-baseball-team/</guid>
+      <description>
+
+
+&lt;p&gt;Today I made a quick graph of the player payrolls for the Cleveland baseball team to compare their projected payroll after today’s trade with the Mets (Lindor, Carrasco, etc.) to past seasons.&lt;/p&gt;
+&lt;p&gt;Sources:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(past) &lt;a href=&#34;http://www.stevetheump.com/Payrolls.htm&#34; class=&#34;uri&#34;&gt;http://www.stevetheump.com/Payrolls.htm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;(2021 projection) &lt;a href=&#34;https://twitter.com/ZackMeisel/status/1347246681520295936&#34; class=&#34;uri&#34;&gt;https://twitter.com/ZackMeisel/status/1347246681520295936&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://teamcolorcodes.com/cleveland-indians-color-codes/&#34; class=&#34;uri&#34;&gt;https://teamcolorcodes.com/cleveland-indians-color-codes/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;years &amp;lt;- 2014:2021
+payrolls &amp;lt;- c(82.5, 86.1, 86.3, 124.3, 134.4, 88.7, 37.6, 35)
+df &amp;lt;- data.frame(years, payrolls)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = years, y = payrolls, label = payrolls)) +
+  geom_bar(stat = &amp;quot;identity&amp;quot;, fill = &amp;quot;#E31937&amp;quot;, color = &amp;quot;#0C2340&amp;quot;) +
+  geom_label() +
+  labs(title = &amp;quot;Opening Day Payrolls of the Cleveland Baseball Team&amp;quot;,
+       subtitle = &amp;quot;2016: World Series appearance\n2020: pandemic-shortened season\n2021: projected&amp;quot;,
+       caption = &amp;quot;Sources:  http://www.stevetheump.com/Payrolls.htm \n https://twitter.com/ZackMeisel/status/1347246681520295936&amp;quot;,
+       x = &amp;quot;season&amp;quot;, y = &amp;quot;payroll (in millions of dollars)&amp;quot;) +
+  scale_x_continuous(breaks = 2014:2021, 
+                     labels = c(&amp;quot;2014&amp;quot;, &amp;quot;2015&amp;quot;, &amp;quot;2016&amp;quot;, &amp;quot;2017&amp;quot;, &amp;quot;2018&amp;quot;, &amp;quot;2019&amp;quot;, &amp;quot;2020&amp;quot;, &amp;quot;2021&amp;quot;)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2021-01-07-payrolls-of-the-cleveland-baseball-team_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

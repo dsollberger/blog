@@ -1,11 +1,100 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
     
     
     <url>
     
-      <loc>/post/payrolls-of-the-cleveland-baseball-team/</loc>
+      <loc>https://dsollberger.netlify.com/courses/example/python/</loc>
+      <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/courses/example/visualization/</loc>
+      <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/courses/example/stats/</loc>
+      <lastmod>2021-01-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/</loc>
+      <lastmod>2030-06-01T13:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/talk/example-talk/</loc>
+      <lastmod>2030-06-01T13:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/event/</loc>
+      <lastmod>2030-06-01T13:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/2022-02-26-harriet-tubman-s-lifespan/</loc>
+      <lastmod>2022-02-26T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/</loc>
+      <lastmod>2022-02-26T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/courses/</loc>
+      <lastmod>2021-01-24T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/courses/example/</loc>
+      <lastmod>2021-01-24T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/categories/</loc>
       <lastmod>2021-01-07T00:00:00+00:00</lastmod>
     </url>
     
@@ -14,7 +103,151 @@
     
     <url>
     
-      <loc>/post/quick-meme-making-in-r/</loc>
+      <loc>https://dsollberger.netlify.com/tag/ggplot/</loc>
+      <lastmod>2021-01-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/payrolls-of-the-cleveland-baseball-team/</loc>
+      <lastmod>2021-01-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/sports-analytics/</loc>
+      <lastmod>2021-01-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tags/</loc>
+      <lastmod>2021-01-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/author/alice-bighetti-%E5%90%B3%E6%81%A9%E9%81%94/</loc>
+      <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/authors/</loc>
+      <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/demo/</loc>
+      <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/getting-started/</loc>
+      <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/author/%E5%90%B3%E6%81%A9%E9%81%94/</loc>
+      <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/%E5%BC%80%E6%BA%90/</loc>
+      <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/%E6%95%99%E7%A8%8B/</loc>
+      <lastmod>2020-12-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/2020-12-01-r-rmarkdown/</loc>
+      <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/plot/</loc>
+      <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/r/</loc>
+      <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/r-markdown/</loc>
+      <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/regression/</loc>
+      <lastmod>2020-12-01T21:13:14-05:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/packages/</loc>
       <lastmod>2020-11-21T00:00:00+00:00</lastmod>
     </url>
     
@@ -23,7 +256,25 @@
     
     <url>
     
-      <loc>/post/covid-19-cases-in-the-central-valley/</loc>
+      <loc>https://dsollberger.netlify.com/post/quick-meme-making-in-r/</loc>
+      <lastmod>2020-11-21T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/recreation/</loc>
+      <lastmod>2020-11-21T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/bioinformatics/</loc>
       <lastmod>2020-07-07T00:00:00+00:00</lastmod>
     </url>
     
@@ -32,7 +283,16 @@
     
     <url>
     
-      <loc>/post/tidytuesday-roman-emperors/</loc>
+      <loc>https://dsollberger.netlify.com/post/covid-19-cases-in-the-central-valley/</loc>
+      <lastmod>2020-07-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/data-mining/</loc>
       <lastmod>2020-06-19T00:00:00+00:00</lastmod>
     </url>
     
@@ -41,7 +301,25 @@
     
     <url>
     
-      <loc>/post/recent-supreme-court-cases/</loc>
+      <loc>https://dsollberger.netlify.com/category/tidytuesday/</loc>
+      <lastmod>2020-06-19T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/tidytuesday-roman-emperors/</loc>
+      <lastmod>2020-06-19T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/politics/</loc>
       <lastmod>2020-06-18T00:00:00+00:00</lastmod>
     </url>
     
@@ -50,7 +328,16 @@
     
     <url>
     
-      <loc>/post/fall-plans-for-american-universities/</loc>
+      <loc>https://dsollberger.netlify.com/post/recent-supreme-court-cases/</loc>
+      <lastmod>2020-06-18T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/choropleth/</loc>
       <lastmod>2020-06-13T00:00:00+00:00</lastmod>
     </url>
     
@@ -59,7 +346,34 @@
     
     <url>
     
-      <loc>/post/r-installation-summer-2020/</loc>
+      <loc>https://dsollberger.netlify.com/category/data-mining/</loc>
+      <lastmod>2020-06-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/fall-plans-for-american-universities/</loc>
+      <lastmod>2020-06-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/geofacet/</loc>
+      <lastmod>2020-06-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/r-installation-summer-2020/</loc>
       <lastmod>2020-06-03T00:00:00+00:00</lastmod>
     </url>
     
@@ -68,7 +382,16 @@
     
     <url>
     
-      <loc>/post/geofacet-plot-vingette/</loc>
+      <loc>https://dsollberger.netlify.com/tag/troubleshooting/</loc>
+      <lastmod>2020-06-03T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/geofacet-plot-vingette/</loc>
       <lastmod>2020-05-30T00:00:00+00:00</lastmod>
     </url>
     
@@ -77,7 +400,16 @@
     
     <url>
     
-      <loc>/post/mapping-social-acceptance-of-lgbt-people/</loc>
+      <loc>https://dsollberger.netlify.com/category/gis/</loc>
+      <lastmod>2020-05-30T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/lgbt/</loc>
       <lastmod>2020-05-26T00:00:00+00:00</lastmod>
     </url>
     
@@ -86,7 +418,16 @@
     
     <url>
     
-      <loc>/post/vote-by-mail-data/</loc>
+      <loc>https://dsollberger.netlify.com/post/mapping-social-acceptance-of-lgbt-people/</loc>
+      <lastmod>2020-05-26T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/vote-by-mail-data/</loc>
       <lastmod>2020-05-25T00:00:00+00:00</lastmod>
     </url>
     
@@ -95,7 +436,7 @@
     
     <url>
     
-      <loc>/post/analysis-of-nyt-sample-of-covid-19-obituaries/</loc>
+      <loc>https://dsollberger.netlify.com/post/analysis-of-nyt-sample-of-covid-19-obituaries/</loc>
       <lastmod>2020-05-24T00:00:00+00:00</lastmod>
     </url>
     
@@ -104,7 +445,16 @@
     
     <url>
     
-      <loc>/post/introduction-to-unsupervised-learning/</loc>
+      <loc>https://dsollberger.netlify.com/tag/stringr/</loc>
+      <lastmod>2020-05-24T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/introduction-to-unsupervised-learning/</loc>
       <lastmod>2020-05-06T00:00:00+00:00</lastmod>
     </url>
     
@@ -113,7 +463,7 @@
     
     <url>
     
-      <loc>/post/introduction-to-unsupervised-learning/</loc>
+      <loc>https://dsollberger.netlify.com/post/introduction-to-unsupervised-learning/</loc>
       <lastmod>2020-05-06T00:00:00+00:00</lastmod>
     </url>
     
@@ -122,7 +472,16 @@
     
     <url>
     
-      <loc>/post/supervised-learning/</loc>
+      <loc>https://dsollberger.netlify.com/category/machine-learning/</loc>
+      <lastmod>2020-05-06T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/supervised-learning/</loc>
       <lastmod>2020-05-04T00:00:00+00:00</lastmod>
     </url>
     
@@ -131,7 +490,16 @@
     
     <url>
     
-      <loc>/post/introduction-to-machine-learning/</loc>
+      <loc>https://dsollberger.netlify.com/tag/tidymodels/</loc>
+      <lastmod>2020-05-04T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/introduction-to-machine-learning/</loc>
       <lastmod>2020-05-01T00:00:00+00:00</lastmod>
     </url>
     
@@ -140,7 +508,7 @@
     
     <url>
     
-      <loc>/post/introduction-to-bioconductor/</loc>
+      <loc>https://dsollberger.netlify.com/post/introduction-to-bioconductor/</loc>
       <lastmod>2020-02-12T00:00:00+00:00</lastmod>
     </url>
     
@@ -149,7 +517,7 @@
     
     <url>
     
-      <loc>/post/r-troubleshooting-for-students/</loc>
+      <loc>https://dsollberger.netlify.com/tag/r/</loc>
       <lastmod>2020-01-29T00:00:00+00:00</lastmod>
     </url>
     
@@ -158,7 +526,43 @@
     
     <url>
     
-      <loc>/post/r-installation-for-students/</loc>
+      <loc>https://dsollberger.netlify.com/tag/rstudio/</loc>
+      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/tidyverse/</loc>
+      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/troubleshooting/</loc>
+      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/r-troubleshooting-for-students/</loc>
+      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/r-installation-for-students/</loc>
       <lastmod>2020-01-19T00:00:00+00:00</lastmod>
     </url>
     
@@ -167,7 +571,25 @@
     
     <url>
     
-      <loc>/post/duolingo-leagues/</loc>
+      <loc>https://dsollberger.netlify.com/category/teaching/</loc>
+      <lastmod>2020-01-19T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/workshop/</loc>
+      <lastmod>2020-01-19T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/duolingo-leagues/</loc>
       <lastmod>2020-01-13T00:00:00+00:00</lastmod>
     </url>
     
@@ -176,7 +598,25 @@
     
     <url>
     
-      <loc>/post/hikes-i-ve-completed/</loc>
+      <loc>https://dsollberger.netlify.com/tag/math/</loc>
+      <lastmod>2020-01-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/stochastic-processes/</loc>
+      <lastmod>2020-01-13T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/hikes-i-ve-completed/</loc>
       <lastmod>2020-01-11T00:00:00+00:00</lastmod>
     </url>
     
@@ -185,544 +625,8 @@
     
     <url>
     
-      <loc>/post/gender-of-frasier-characters/</loc>
-      <lastmod>2020-01-09T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/response-to-datacamp-s-20190404-community-post/</loc>
-      <lastmod>2019-04-06T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/response-to-datacamp-s-20190404-community-post/</loc>
-      <lastmod>2019-04-06T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/random-walks-draft/</loc>
-      <lastmod>2019-02-25T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/valentine-s-day-2019/</loc>
-      <lastmod>2019-02-14T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/introduction-to-r-workshop/</loc>
-      <lastmod>2019-02-05T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/introduction-to-r-workshop/</loc>
-      <lastmod>2019-02-05T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/gganatogram-and-gganimate/</loc>
-      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/curse-of-dimensionality/</loc>
-      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/graduation-rates/</loc>
-      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/my-first-gganimate-plot/</loc>
-      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/sample-talk-fall-2018/</loc>
-      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/supreme-court-confirmations-1967-present/</loc>
-      <lastmod>2018-10-07T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/degree-one-polynomials/</loc>
-      <lastmod>2018-09-30T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/trying-out-flexdashboard/</loc>
-      <lastmod>2018-08-20T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/trying-out-flexdashboard/</loc>
-      <lastmod>2018-08-20T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/semester-schedule-planner/</loc>
-      <lastmod>2018-08-01T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/let-s-see-if-i-can-make-posts-mostly-through-rstudio/</loc>
-      <lastmod>2018-07-21T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/trying-out-github-pages-with-blogdown/</loc>
-      <lastmod>2018-01-11T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/talk/example-talk/</loc>
-      <lastmod>2017-01-01T00:00:00-08:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/</loc>
-      <lastmod>2017-01-01T00:00:00-08:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/academic/</loc>
-      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/publication/</loc>
-      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/talk/</loc>
-      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/project/deep-learning/</loc>
-      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/project/example-external-project/</loc>
-      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/getting-started/</loc>
-      <lastmod>2017-09-03T00:00:00-07:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/widgets/</loc>
-      <lastmod>2016-04-19T00:00:00-07:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/managing-content/</loc>
-      <lastmod>2016-04-18T00:00:00-07:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/writing-markdown-latex/</loc>
-      <lastmod>2016-04-17T00:00:00-07:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/faq/</loc>
-      <lastmod>2016-04-10T00:00:00-07:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/publication/person-re-identification/</loc>
-      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/2015-07-23-r-rmarkdown/</loc>
-      <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/post/migrate-from-jekyll/</loc>
-      <lastmod>2014-03-10T00:00:00-07:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/publication/clothing-search/</loc>
-      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/publication_types/1/</loc>
-      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/publication_types/2/</loc>
-      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/bioinformatics/</loc>
-      <lastmod>2020-07-07T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/blogdown/</loc>
-      <lastmod>2018-07-21T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/</loc>
-      <lastmod>2020-07-07T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/choropleth/</loc>
-      <lastmod>2020-06-13T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/culture/</loc>
-      <lastmod>2019-04-06T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/data-mining/</loc>
-      <lastmod>2020-06-19T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/data-mining/</loc>
-      <lastmod>2020-06-13T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/datacamp/</loc>
-      <lastmod>2019-04-06T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/deep-learning/</loc>
-      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/demo/</loc>
-      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/esl/</loc>
-      <lastmod>2019-02-05T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/flexdashboard/</loc>
-      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/geofacet/</loc>
-      <lastmod>2020-06-13T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/gganatogram/</loc>
-      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/gganimate/</loc>
-      <lastmod>2019-02-25T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/gganimate/</loc>
-      <lastmod>2019-02-14T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/ggplot/</loc>
-      <lastmod>2021-01-07T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/gis/</loc>
-      <lastmod>2020-05-30T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/github/</loc>
-      <lastmod>2018-01-11T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/heart/</loc>
-      <lastmod>2019-02-14T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/hiking/</loc>
+      <loc>https://dsollberger.netlify.com/category/hiking/</loc>
       <lastmod>2020-01-11T00:00:00+00:00</lastmod>
-      <priority>0</priority>
     </url>
     
   
@@ -730,339 +634,8 @@
     
     <url>
     
-      <loc>/tags/hugo/</loc>
-      <lastmod>2017-09-03T00:00:00-07:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/jekyll/</loc>
-      <lastmod>2014-03-10T00:00:00-07:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/lgbt/</loc>
-      <lastmod>2020-05-26T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/linear-algebra/</loc>
-      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/machine-learning/</loc>
-      <lastmod>2020-05-06T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/math/</loc>
-      <lastmod>2020-01-13T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/math/</loc>
-      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/packages/</loc>
-      <lastmod>2020-11-21T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/plot/</loc>
-      <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/plotly/</loc>
-      <lastmod>2018-10-07T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/politics/</loc>
-      <lastmod>2020-06-18T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/project/</loc>
-      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/publication_types/</loc>
-      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/r/</loc>
-      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/r/</loc>
-      <lastmod>2019-02-05T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/r/</loc>
-      <lastmod>2019-02-05T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/r-markdown/</loc>
-      <lastmod>2015-07-23T21:13:14-05:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/recreation/</loc>
-      <lastmod>2020-11-21T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/regression/</loc>
-      <lastmod>2018-09-30T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/reporting/</loc>
-      <lastmod>2018-08-20T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/rstudio/</loc>
-      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/science-communication/</loc>
-      <lastmod>2018-07-21T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/sports-analytics/</loc>
-      <lastmod>2021-01-07T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/stochastic-processes/</loc>
-      <lastmod>2020-01-13T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/stringr/</loc>
-      <lastmod>2020-05-24T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/</loc>
-      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/teaching/</loc>
-      <lastmod>2018-08-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/teaching/</loc>
-      <lastmod>2020-01-19T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/tech-culture/</loc>
-      <lastmod>2019-04-06T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/</loc>
-      <lastmod>2016-04-20T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/tidytuesday/</loc>
-      <lastmod>2020-06-19T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/tidymodels/</loc>
-      <lastmod>2020-05-04T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/tidyverse/</loc>
-      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/tidyverse/</loc>
+      <loc>https://dsollberger.netlify.com/post/gender-of-frasier-characters/</loc>
       <lastmod>2020-01-09T00:00:00+00:00</lastmod>
-      <priority>0</priority>
     </url>
     
   
@@ -1070,9 +643,350 @@
     
     <url>
     
-      <loc>/tags/timeseries/</loc>
+      <loc>https://dsollberger.netlify.com/category/tidyverse/</loc>
+      <lastmod>2020-01-09T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/writing-technical-content/</loc>
+      <lastmod>2019-07-12T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/publication-type/3/</loc>
+      <lastmod>2019-04-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/publication/preprint/</loc>
+      <lastmod>2019-04-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/publication_types/</loc>
+      <lastmod>2019-04-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/publication/</loc>
+      <lastmod>2019-04-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/source-themes/</loc>
+      <lastmod>2019-04-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/culture/</loc>
+      <lastmod>2019-04-06T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/datacamp/</loc>
+      <lastmod>2019-04-06T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/response-to-datacamp-s-20190404-community-post/</loc>
+      <lastmod>2019-04-06T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/response-to-datacamp-s-20190404-community-post/</loc>
+      <lastmod>2019-04-06T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/tech-culture/</loc>
+      <lastmod>2019-04-06T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/gganimate/</loc>
+      <lastmod>2019-02-25T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/random-walks-draft/</loc>
+      <lastmod>2019-02-25T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/gganimate/</loc>
+      <lastmod>2019-02-14T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/heart/</loc>
+      <lastmod>2019-02-14T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/valentine-s-day-2019/</loc>
+      <lastmod>2019-02-14T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/jupyter/</loc>
+      <lastmod>2019-09-05T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/esl/</loc>
+      <lastmod>2019-02-05T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</loc>
+      <lastmod>2019-02-05T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</loc>
+      <lastmod>2019-02-05T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/slides/</loc>
+      <lastmod>2019-02-05T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/slides/example/</loc>
+      <lastmod>2019-02-05T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/gganatogram/</loc>
+      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/gganatogram-and-gganimate/</loc>
+      <lastmod>2019-01-10T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/curse-of-dimensionality/</loc>
+      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/graduation-rates/</loc>
+      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/linear-algebra/</loc>
+      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/my-first-gganimate-plot/</loc>
+      <lastmod>2019-01-08T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/flexdashboard/</loc>
+      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/math/</loc>
+      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/sample-talk-fall-2018/</loc>
+      <lastmod>2018-10-11T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/plotly/</loc>
+      <lastmod>2018-10-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/supreme-court-confirmations-1967-present/</loc>
+      <lastmod>2018-10-07T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/degree-one-polynomials/</loc>
+      <lastmod>2018-09-30T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/reporting/</loc>
+      <lastmod>2018-08-20T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/trying-out-flexdashboard/</loc>
+      <lastmod>2018-08-20T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/trying-out-flexdashboard/</loc>
+      <lastmod>2018-08-20T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/semester-schedule-planner/</loc>
       <lastmod>2018-08-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
     </url>
     
   
@@ -1080,39 +994,330 @@
     
     <url>
     
-      <loc>/tags/troubleshooting/</loc>
-      <lastmod>2020-06-03T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/categories/troubleshooting/</loc>
-      <lastmod>2020-01-29T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/workshop/</loc>
-      <lastmod>2020-01-19T00:00:00+00:00</lastmod>
-      <priority>0</priority>
-    </url>
-    
-  
-    
-    
-    <url>
-    
-      <loc>/tags/xts/</loc>
+      <loc>https://dsollberger.netlify.com/tag/teaching/</loc>
       <lastmod>2018-08-01T00:00:00+00:00</lastmod>
-      <priority>0</priority>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/timeseries/</loc>
+      <lastmod>2018-08-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/xts/</loc>
+      <lastmod>2018-08-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/blogdown/</loc>
+      <lastmod>2018-07-21T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/let-s-see-if-i-can-make-posts-mostly-through-rstudio/</loc>
+      <lastmod>2018-07-21T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/category/science-communication/</loc>
+      <lastmod>2018-07-21T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/github/</loc>
+      <lastmod>2018-01-11T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/trying-out-github-pages-with-blogdown/</loc>
+      <lastmod>2018-01-11T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/content-tagged-as-academic/</loc>
+      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/talk/example-talk/</loc>
+      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/talk/</loc>
+      <lastmod>2017-01-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/project/deep-learning/</loc>
+      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/deep-learning/</loc>
+      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/demo/</loc>
+      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/project/example-external-project/</loc>
+      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/project/external-project/</loc>
+      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/project/internal-project/</loc>
+      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/project/</loc>
+      <lastmod>2016-04-27T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/widgets/</loc>
+      <lastmod>2016-04-19T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/hugo/</loc>
+      <lastmod>2016-04-19T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/managing-content/</loc>
+      <lastmod>2016-04-18T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/writing-markdown-latex/</loc>
+      <lastmod>2016-04-17T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/faq/</loc>
+      <lastmod>2016-04-10T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/publication-type/2/</loc>
+      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/publication/person-re-identification/</loc>
+      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/publication/journal-article/</loc>
+      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/author/ga-cushen/</loc>
+      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/author/robert-ford/</loc>
+      <lastmod>2015-09-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/2015-07-23-r-rmarkdown/</loc>
+      <lastmod>2015-07-23T21:13:14-05:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/tag/jekyll/</loc>
+      <lastmod>2014-03-10T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/post/migrate-from-jekyll/</loc>
+      <lastmod>2014-03-10T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/publication-type/1/</loc>
+      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/publication/conference-paper/</loc>
+      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/publication/clothing-search/</loc>
+      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/author/ms-nixon/</loc>
+      <lastmod>2013-07-01T00:00:00+00:00</lastmod>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/admin/</loc>
+    </url>
+    
+  
+    
+    
+    <url>
+    
+      <loc>https://dsollberger.netlify.com/author/%E5%90%B3%E6%81%A9%E9%81%94/</loc>
     </url>
     
   

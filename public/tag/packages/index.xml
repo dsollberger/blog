@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>packages | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/packages/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/packages/index.xml" rel="self" type="application/rss+xml" />
+    <description>packages</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 21 Nov 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>packages</title>
+      <link>https://dsollberger.netlify.com/tag/packages/</link>
+    </image>
+    
+    <item>
+      <title>Quick meme making in R</title>
+      <link>https://dsollberger.netlify.com/post/quick-meme-making-in-r/</link>
+      <pubDate>Sat, 21 Nov 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/quick-meme-making-in-r/</guid>
+      <description>
+
+
+&lt;p&gt;Source: &lt;a href=&#34;https://blog.ephorie.de/create-bart-simpson-blackboard-memes-with-r&#34;&gt;Create Bart Simpson Blackboard Memes with R&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;knitr::opts_chunk$set(echo = TRUE)
+
+library(&amp;quot;meme&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: package &amp;#39;meme&amp;#39; was built under R version 4.0.3&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;if (.Platform$OS.type == &amp;quot;windows&amp;quot;) {
+  windowsFonts(Comic = windowsFont(&amp;quot;Comic Sans MS&amp;quot;))
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;bart &amp;lt;- &amp;quot;bart_simpson_chalkboard-5157.gif&amp;quot; # source: http://free-extras.com/images/bart_simpson_chalkboard-5157.htm
+text &amp;lt;- paste(rep(&amp;quot;I will not procrastinate \n in grant writing \n by making memes in R instead&amp;quot;, 2), collapse = &amp;quot;\n&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;meme(bart, text, size = 2, font = &amp;quot;Comic&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-11-21-quick-meme-making-in-r_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

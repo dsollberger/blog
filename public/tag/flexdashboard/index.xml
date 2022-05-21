@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>flexdashboard | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/flexdashboard/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/flexdashboard/index.xml" rel="self" type="application/rss+xml" />
+    <description>flexdashboard</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 11 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>flexdashboard</title>
+      <link>https://dsollberger.netlify.com/tag/flexdashboard/</link>
+    </image>
+    
+    <item>
+      <title>SAMPLe talk (Fall 2018)</title>
+      <link>https://dsollberger.netlify.com/post/sample-talk-fall-2018/</link>
+      <pubDate>Thu, 11 Oct 2018 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/sample-talk-fall-2018/</guid>
+      <description>
+
+
+&lt;div id=&#34;ggplot2&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;ggplot2&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://rpubs.com/dsollberger/activelearning&#34; class=&#34;uri&#34;&gt;http://rpubs.com/dsollberger/activelearning&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plotly&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Plotly&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://rpubs.com/dsollberger/scc&#34; class=&#34;uri&#34;&gt;http://rpubs.com/dsollberger/scc&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;shiny-dashboard&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Shiny Dashboard&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dsollberger.shinyapps.io/SHW3/&#34; class=&#34;uri&#34;&gt;https://dsollberger.shinyapps.io/SHW3/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;flex-dashboard&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Flex Dashboard&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dsollberger.shinyapps.io/shw7/&#34; class=&#34;uri&#34;&gt;https://dsollberger.shinyapps.io/shw7/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;shiny-and-htmlwidgets&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Shiny and htmlwidgets&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dsollberger.shinyapps.io/SAMPLe/&#34; class=&#34;uri&#34;&gt;https://dsollberger.shinyapps.io/SAMPLe/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Trying Out FlexDashboard</title>
+      <link>https://dsollberger.netlify.com/post/trying-out-flexdashboard/</link>
+      <pubDate>Mon, 20 Aug 2018 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/trying-out-flexdashboard/</guid>
+      <description>
+
+
+&lt;p&gt;Thanks to Dr. Elaine McVey’s course at DataCamp, I feel that I can convert my Data Science course’s lab assignments and slides to &lt;code&gt;flexdashboard&lt;/code&gt;. Today, I converted the first lab assignment. The hope is that the students can clearly see the instructions that I am trying to convey rather than facing a wall of text.&lt;/p&gt;
+&lt;p&gt;To convert my lab, which was previously in an R Markdown document for HTML output, I had to&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;explicitly used &lt;code&gt;echo = TRUE&lt;/code&gt; in each code block that should be presented to the student&lt;/li&gt;
+&lt;li&gt;used the &lt;code&gt;\huge&lt;/code&gt; LaTeX font size modifier on math-mode elements&lt;/li&gt;
+&lt;li&gt;changed the YAML heading to call for &lt;code&gt;output:   flexdashboard::flex_dashboard: orientation: columns&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;From there, I also started to arrange the “paragraphs” into separate columns for a nice arrangement.&lt;/p&gt;
+&lt;p&gt;&lt;img src = &#34;for%20Twitter.jpg&#34;&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Trying Out FlexDashboard</title>
+      <link>https://dsollberger.netlify.com/post/trying-out-flexdashboard/</link>
+      <pubDate>Mon, 20 Aug 2018 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/trying-out-flexdashboard/</guid>
+      <description>&lt;p&gt;Thanks to Dr. Elaine McVey&amp;rsquo;s course at DataCamp, I feel that I can convert my Data Science course&amp;rsquo;s lab assignments and slides to &lt;code&gt;flexdashboard&lt;/code&gt;.  Today, I converted the first lab assignment.  The hope is that the students can clearly see the instructions that I am trying to convey rather than facing a wall of text.&lt;/p&gt;
+&lt;p&gt;To convert my lab, which was previously in an R Markdown document for HTML output, I had to&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;explicitly used &lt;code&gt;echo = TRUE&lt;/code&gt; in each code block that should be presented to the student&lt;/li&gt;
+&lt;li&gt;used the &lt;code&gt;\huge&lt;/code&gt; LaTeX font size modifier on math-mode elements&lt;/li&gt;
+&lt;li&gt;changed the YAML heading to call for &lt;code&gt;output: flexdashboard::flex_dashboard: orientation: columns&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;From there, I also started to arrange the &amp;ldquo;paragraphs&amp;rdquo; into separate columns for a nice arrangement.&lt;/p&gt;
+&lt;img src = &#34;for Twitter.jpg&#34;&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

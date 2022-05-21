@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>choropleth | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/choropleth/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/choropleth/index.xml" rel="self" type="application/rss+xml" />
+    <description>choropleth</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 13 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>choropleth</title>
+      <link>https://dsollberger.netlify.com/tag/choropleth/</link>
+    </image>
+    
+    <item>
+      <title>Fall Plans for American Universities</title>
+      <link>https://dsollberger.netlify.com/post/fall-plans-for-american-universities/</link>
+      <pubDate>Sat, 13 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/fall-plans-for-american-universities/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Today’s coding practice is based on the following article and data source (there is literally a “Get the Data” link):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.chronicle.com/article/Here-s-a-List-of-Colleges-/248626&#34;&gt;Here’s a List of Colleges’ Plans for Reopening in the Fall&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;geofacet&amp;quot;)
+library(&amp;quot;rvest&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)
+
+# load data
+df_raw &amp;lt;- read_csv(&amp;quot;data-w8lLG.csv&amp;quot;)
+colnames(df_raw)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;Institution&amp;quot; &amp;quot;Control&amp;quot;     &amp;quot;State&amp;quot;       &amp;quot;Category&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Wrangling&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# filter out Excel artifacts (trivial, empty rows)
+df &amp;lt;- df_raw %&amp;gt;%
+  filter(Institution != &amp;quot;#REF!&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#States as factors
+states_alphabetically &amp;lt;- sort(unique(df$State))
+df$State_factor &amp;lt;- factor(df$State,
+                          levels = states_alphabetically)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#extracting text from urls (rvest!!)
+df$Category_simple &amp;lt;- rep(NA, nrow(df))
+for(i in 1:nrow(df)){
+  if(str_detect(df$Category[i], pattern = &amp;quot;&amp;lt;a&amp;quot;)){
+    df$Category_simple[i] &amp;lt;- html_text(read_html(df$Category[i]))
+  }
+  else{
+    df$Category_simple[i] &amp;lt;- df$Category[i]
+  }
+}
+
+table(df$Category_simple)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##                                  Considering a range of scenarios 
+##                                1                               69 
+##                             Link           Planning for in-person 
+##                               11                              456 
+##              Planning for online         Proposing a hybrid model 
+##                               68                               78 
+##                Waiting to decide 
+##                               45&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;states-represented&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;States Represented&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = fct_rev(State_factor))) + #note use of reversing the factor order
+  geom_bar(stat = &amp;quot;count&amp;quot;) +
+  coord_flip()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-13-fall-plans-for-american-universities_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;states-map&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;States Map&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;main_plot &amp;lt;- df %&amp;gt;%
+  filter(Category_simple %in% 
+           c(&amp;quot;Planning for in-person&amp;quot;, &amp;quot;Planning for online&amp;quot;,
+             &amp;quot;Proposing a hybrid model&amp;quot;, &amp;quot;Waiting to decide&amp;quot;)) %&amp;gt;%
+  ggplot(aes(x = Category_simple)) +
+  geom_bar(aes(fill = Category_simple), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Fall Plans for American Universities&amp;quot;,
+       subtitle = &amp;quot;(as of June 12, 2020)&amp;quot;,
+       caption = &amp;quot;Data Source: Chronicle of Higher Education&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_discrete(name = &amp;quot;&amp;quot;,
+                   labels = c(&amp;quot;in-person&amp;quot;, &amp;quot;online&amp;quot;, &amp;quot;hybrid&amp;quot;, &amp;quot;TBA&amp;quot;)) +
+  scale_fill_discrete(name = &amp;quot;Fall Plans&amp;quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
+  facet_geo(~State, grid = &amp;quot;us_state_grid2&amp;quot;, scales = &amp;quot;free_y&amp;quot;)
+
+main_plot +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-13-fall-plans-for-american-universities_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Geofacet plot vingette</title>
+      <link>https://dsollberger.netlify.com/post/geofacet-plot-vingette/</link>
+      <pubDate>Sat, 30 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/geofacet-plot-vingette/</guid>
+      <description>
+
+
+&lt;p&gt;Today I am going to try to make a &lt;code&gt;geofacet&lt;/code&gt; graph using the GAI (Global Acceptability Index) data. My goal is to show trends in LGBT acceptance in Europe between the years 2003 and 2017.&lt;/p&gt;
+&lt;div id=&#34;sources-and-tools&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sources and tools&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://williamsinstitute.law.ucla.edu/publications/global-acceptance-index-lgbt/&#34;&gt;Social Acceptance of LGBT People in 174 Countries&lt;/a&gt; publication from the UCLA School of Law Williams Institute&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://hafen.github.io/geofacet/&#34;&gt;geofacet&lt;/a&gt; &lt;code&gt;R&lt;/code&gt; package&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.downloadexcelfiles.com/wo_en/download-excel-file-list-european-countries-worldwo#.XtKec8B7mUk&#34;&gt;List of European nations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://convert.town/column-to-comma-separated-list&#34;&gt;Convert Town&lt;/a&gt; to convert spreadsheet columns to comma-separated lists&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;geofacet&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;raw_data &amp;lt;- read_csv(&amp;quot;gai.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I did some quick data wrangling in Excel before loading the file. Since the data publication emphasized ranking the countries, the data currently looks like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(raw_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 8
+##   country     gai2003 country_1   gai2008 country_2   gai2013 country_3  gai2017
+##   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;       &amp;lt;chr&amp;gt;   &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;  
+## 1 Netherlands 6.8     Netherlands 7.2     Iceland     8.4     Iceland    8.9    
+## 2 Sweden      6.7     Sweden      7.1     Netherlands 7.9     Netherlan~ 8.6    
+## 3 Denmark     6.7     Iceland     7.1     Spain       7.4     Norway     8.2    
+## 4 Iceland     6.3     Uruguay     6.6     Canada      7.4     Canada     8.2    
+## 5 Switzerland 6.2     Canada      6.5     Sweden      7.4     Spain      8.1    
+## 6 Norway      6.2     Denmark     6.5     Norway      7.3     Belgium    7.9&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I wish to have more tidy data. My desired format is&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;input: year&lt;/li&gt;
+&lt;li&gt;output: GAI&lt;/li&gt;
+&lt;li&gt;group: country&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# focus on one year at a time
+df2003 &amp;lt;- raw_data %&amp;gt;% select(country, gai2003) %&amp;gt;% mutate(year = 2003)
+df2008 &amp;lt;- raw_data %&amp;gt;% select(country_1, gai2008) %&amp;gt;% mutate(year = 2008)
+df2013 &amp;lt;- raw_data %&amp;gt;% select(country_2, gai2013) %&amp;gt;% mutate(year = 2013)
+df2017 &amp;lt;- raw_data %&amp;gt;% select(country_3, gai2017) %&amp;gt;% mutate(year = 2017) 
+
+# use same column names (to prepare to row-bind)
+colnames(df2003) &amp;lt;- c(&amp;quot;country&amp;quot;, &amp;quot;gai&amp;quot;, &amp;quot;year&amp;quot;)
+colnames(df2008) &amp;lt;- c(&amp;quot;country&amp;quot;, &amp;quot;gai&amp;quot;, &amp;quot;year&amp;quot;)
+colnames(df2013) &amp;lt;- c(&amp;quot;country&amp;quot;, &amp;quot;gai&amp;quot;, &amp;quot;year&amp;quot;)
+colnames(df2017) &amp;lt;- c(&amp;quot;country&amp;quot;, &amp;quot;gai&amp;quot;, &amp;quot;year&amp;quot;)
+
+# row bind the data frames into one data frame
+all_data &amp;lt;- rbind(df2003, df2008, df2013, df2017)
+
+# convert column from character to numeric type
+all_data$gai &amp;lt;- as.numeric(all_data$gai)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: NAs introduced by coercion&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# take a look at what we have at the moment
+head(all_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 3
+##   country       gai  year
+##   &amp;lt;chr&amp;gt;       &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+## 1 Netherlands   6.8  2003
+## 2 Sweden        6.7  2003
+## 3 Denmark       6.7  2003
+## 4 Iceland       6.3  2003
+## 5 Switzerland   6.2  2003
+## 6 Norway        6.2  2003&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;map&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Map&lt;/h1&gt;
+&lt;p&gt;Before we try out the &lt;code&gt;geofacet&lt;/code&gt; tech, let us make sure that this data is amenable to &lt;code&gt;ggplot&lt;/code&gt; in the first place&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;all_data %&amp;gt;%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  labs(title = &amp;quot;Acceptance of LGBT People&amp;quot;,
+       subtitle = &amp;quot;by country&amp;quot;,
+       caption = &amp;quot;Data Source: Williams Institute at UCLA&amp;quot;,
+       x = &amp;quot;Year&amp;quot;,
+       y = &amp;quot;Global Acceptability Index&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-30-geofacet-plot-vingette_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;As you can imagine, keeping track of and labeling 176 countries is quite cumbersome.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;europe&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Europe&lt;/h1&gt;
+&lt;p&gt;Instead, today we will focus on the European nations and use the &lt;code&gt;geofacet&lt;/code&gt; package to clearly label the countries (with an implied geography map!)&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;European_nations_text &amp;lt;- &amp;quot;Russia,Germany,France,United Kingdom,Italy,Spain,Ukraine,Poland,Romania,Netherlands,Belgium,Greece,Portugal,Czech Republic,Hungary,Sweden,Belarus,Austria,Switzerland,Bulgaria,Serbia,Denmark,Finland,Slovakia,Norway,Ireland,Croatia,Bosnia and Herzegovina,Moldova,Lithuania,Albania,Macedonia,Slovenia,Latvia,Kosovo,Estonia,Montenegro,Luxembourg,Malta,Iceland,Jersey (UK),Isle of Man (UK),Andorra,Guernsey (UK),Faroe Islands (Denmark),Liechtenstein,Monaco,San Marino,Gibraltar (UK),Aland Islands (Finland),Svalbard and Jan Mayen (Norway),Vatican City&amp;quot;
+European_nations_list &amp;lt;- str_split(European_nations_text,&amp;quot;,&amp;quot;)[[1]]
+
+# an unfortunate &amp;#39;hack&amp;#39;
+all_data$country[all_data$country == &amp;quot;Great Britain&amp;quot;] &amp;lt;- &amp;quot;United Kingdom&amp;quot;
+
+# main plot
+all_data %&amp;gt;%
+  filter(country %in% European_nations_list) %&amp;gt;%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  geom_point(size = 2) +
+  facet_geo(~ country, grid = &amp;quot;eu_grid1&amp;quot;) +
+  labs(title = &amp;quot;Social Acceptance of LGBT People in Europe&amp;quot;,
+       subtitle = &amp;quot;Global Acceptance Index&amp;quot;,
+       caption = &amp;quot;Data Source: UCLA Williams Institute&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = c(2003, 2008, 2013, 2017),
+                   labels = c(&amp;quot;2003&amp;quot;, &amp;quot;2008&amp;quot;, &amp;quot;2013&amp;quot;, &amp;quot;2017&amp;quot;)) +
+  scale_y_continuous(breaks = c(0, 2, 4, 6, 8, 10),
+                   labels = c(&amp;quot;0&amp;quot;, &amp;quot;2&amp;quot;, &amp;quot;4&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;10&amp;quot;)) +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = &amp;quot;none&amp;quot;,
+        panel.background = element_rect(fill = &amp;quot;white&amp;quot;),
+        panel.border = element_rect(color = &amp;quot;black&amp;quot;, fill = NA))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-30-geofacet-plot-vingette_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;all_data %&amp;gt;%
+  filter(country %in% European_nations_list) %&amp;gt;%
+  ggplot(aes(x = year, y = gai, color = country, group = country)) +
+  geom_line() +
+  geom_point(size = 4) +
+  facet_geo(~ country, grid = &amp;quot;eu_grid1&amp;quot;) +
+  labs(title = &amp;quot;Social Acceptance of LGBT People in Europe&amp;quot;,
+       subtitle = &amp;quot;Global Acceptance Index&amp;quot;,
+       caption = &amp;quot;Data Source: UCLA Williams Institute&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_x_continuous(breaks = c(2003, 2008, 2013, 2017),
+                   labels = c(&amp;quot;2003&amp;quot;, &amp;quot;2008&amp;quot;, &amp;quot;2013&amp;quot;, &amp;quot;2017&amp;quot;)) +
+  scale_y_continuous(breaks = c(0, 2, 4, 6, 8, 10),
+                   labels = c(&amp;quot;0&amp;quot;, &amp;quot;2&amp;quot;, &amp;quot;4&amp;quot;, &amp;quot;6&amp;quot;, &amp;quot;8&amp;quot;, &amp;quot;10&amp;quot;)) +
+  theme(axis.text.x = element_text(angle = 90),
+        legend.position = &amp;quot;none&amp;quot;,
+        panel.background = element_rect(fill = &amp;quot;white&amp;quot;),
+        panel.border = element_rect(color = &amp;quot;black&amp;quot;, fill = NA),
+        panel.grid = element_line(color = &amp;quot;gray80&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Some values in the specified facet_geo column &amp;#39;country&amp;#39; do not match
+##   the &amp;#39;name&amp;#39; column of the specified grid and will be removed: Iceland,
+##   Switzerland, Norway, Andorra, Serbia, Macedonia, Russia, Belarus,
+##   Ukraine, Montenegro, Moldova, Albania, Kosovo&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-30-geofacet-plot-vingette_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sessionInfo()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## R version 4.0.0 (2020-04-24)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 10 x64 (build 18362)
+## 
+## Matrix products: default
+## 
+## locale:
+## [1] LC_COLLATE=English_United States.1252 
+## [2] LC_CTYPE=English_United States.1252   
+## [3] LC_MONETARY=English_United States.1252
+## [4] LC_NUMERIC=C                          
+## [5] LC_TIME=English_United States.1252    
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] forcats_0.5.0   stringr_1.4.0   dplyr_0.8.5     purrr_0.3.4    
+##  [5] readr_1.3.1     tidyr_1.0.2     tibble_3.0.1    ggplot2_3.3.0  
+##  [9] tidyverse_1.3.0 geofacet_0.2.0 
+## 
+## loaded via a namespace (and not attached):
+##  [1] ggrepel_0.8.2       Rcpp_1.0.4.6        rnaturalearth_0.1.0
+##  [4] lubridate_1.7.8     lattice_0.20-41     png_0.1-7          
+##  [7] class_7.3-16        utf8_1.1.4          assertthat_0.2.1   
+## [10] digest_0.6.25       R6_2.4.1            cellranger_1.1.0   
+## [13] backports_1.1.6     reprex_0.3.0        evaluate_0.14      
+## [16] e1071_1.7-3         httr_1.4.1          blogdown_0.18      
+## [19] pillar_1.4.4        rlang_0.4.5         geogrid_0.1.1      
+## [22] readxl_1.3.1        rstudioapi_0.11     rmarkdown_2.1      
+## [25] labeling_0.3        munsell_0.5.0       broom_0.5.6        
+## [28] compiler_4.0.0      modelr_0.1.7        xfun_0.13          
+## [31] pkgconfig_2.0.3     imguR_1.0.3         rgeos_0.5-3        
+## [34] htmltools_0.4.0     tidyselect_1.0.0    gridExtra_2.3      
+## [37] bookdown_0.18       fansi_0.4.1         withr_2.2.0        
+## [40] crayon_1.3.4        dbplyr_1.4.3        sf_0.9-3           
+## [43] grid_4.0.0          nlme_3.1-147        jsonlite_1.6.1     
+## [46] gtable_0.3.0        lifecycle_0.2.0     DBI_1.1.0          
+## [49] magrittr_1.5        units_0.6-6         scales_1.1.0       
+## [52] KernSmooth_2.23-16  cli_2.0.2           stringi_1.4.6      
+## [55] farver_2.0.3        fs_1.4.1            sp_1.4-1           
+## [58] xml2_1.3.2          ellipsis_0.3.0      generics_0.0.2     
+## [61] vctrs_0.2.4         tools_4.0.0         glue_1.4.0         
+## [64] hms_0.5.3           jpeg_0.1-8.1        yaml_2.2.1         
+## [67] colorspace_1.4-1    rvest_0.3.5         classInt_0.4-3     
+## [70] knitr_1.28          haven_2.2.0&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Mapping Social Acceptance of LGBT People</title>
+      <link>https://dsollberger.netlify.com/post/mapping-social-acceptance-of-lgbt-people/</link>
+      <pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/mapping-social-acceptance-of-lgbt-people/</guid>
+      <description>
+
+
+&lt;p&gt;Inspired by this morning’s meeting of the Bisexual Research Group, I am going to draft a quick map of LGBT acceptance in Africa.&lt;/p&gt;
+&lt;div id=&#34;sources-and-tools&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sources and tools&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://williamsinstitute.law.ucla.edu/publications/global-acceptance-index-lgbt/&#34;&gt;Social Acceptance of LGBT People in 174 Countries&lt;/a&gt; publication from the UCLA School of Law Williams Institute&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://www.worldometers.info/geography/how-many-countries-in-africa/&#34;&gt;List of African nations&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://simplypdf.com/Excel&#34;&gt;SimplyPDF&lt;/a&gt; to extract table of data from a PDF document&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://convert.town/column-to-comma-separated-list&#34;&gt;Convert Town&lt;/a&gt; to convert spreadsheet columns to comma-separated lists&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;rank &amp;lt;- 1:174
+countries_text &amp;lt;- &amp;quot;Iceland,Netherlands,Norway,Canada,Spain,Belgium,Ireland,Sweden,Denmark,Nepal,Great Britain,Luxembourg,Malta,Uruguay,New Zealand,Germany,Finland,Switzerland,Puerto Rico,Australia,United States,France,Argentina,Austria,Brazil,Cape Verde,Chile,Philippines,Hong Kong,Italy,Portugal,Mexico,South Africa,Costa Rica,Cuba,Czech Republic,Colombia,Slovenia,Venezuela,Taiwan,Ecuador,Nicaragua,Bahrain,Bolivia,Israel,Suriname,Laos,Syria,Panama,El Salvador,Mauritius,Northern Cyprus,Peru,Croatia,Dominican Republic,Namibia,Honduras,Paraguay,Cyprus,Thailand,Slovakia,Greece,Mozambique,Andorra,Hungary,Japan,South Korea,Estonia,Myanmar,Poland,Bangladesh,Barbados,Cambodia,Guatemala,Singapore,Sao Tome and Principe,Trinidad and Tobago,Guyana,Bulgaria,Vietnam,India,Botswana,Grenada,Latvia,Turkey,Bahamas,Belize,Saint Kitts and Nevis,Malaysia,Serbia,Algeria,Lithuania,Jamaica,Dominica,Romania,Bhutan,Lebanon,Saint Lucia,Swaziland,Lesotho,China,Antigua and Barbuda,Angola,Yemen,Benin,Haiti,Uzbekistan,Libya,Montenegro,Tunisia,Saint Vincent and the Grenadines,Kuwait,Uganda,Jordan,Albania,Belarus,Gambia,Morocco,Kenya,Russia,Democratic Republic of the Congo,Ukraine,Qatar,Palestine,Madagascar,Tanzania,Cote d&amp;#39;Ivoire,Republic of the Congo,Iraq,Gabon,Kazakhstan,Sudan,Bosnia Herzegovina,Sierra Leone,Macedonia,Comoros,Saudi Arabia,Burkina Faso,Togo,Kyrgyzstan,Ghana,Mongolia,Rwanda,Kosovo,Cameroon,Nigeria,Zambia,Central African Republic,Zimbabwe,Indonesia,Djibouti,Chad,Niger,Mali,Guinea,Afghanistan,Liberia,Moldova,Georgia,Burundi,South Sudan,Mauritania,Sri Lanka,Iran,Pakistan,Malawi,Nagorno- Karabakh,Armenia,Egypt,Ethiopia,Somaliland,Senegal,Azerbaijan,Tajikistan&amp;quot;
+country &amp;lt;- str_split(countries_text,&amp;quot;,&amp;quot;)[[1]]
+GAI_text &amp;lt;- &amp;quot;8.9,8.6,8.2,8.2,8.1,7.9,7.9,7.9,7.9,7.8,7.7,7.7,7.6,7.6,7.5,7.4,7.4,7.4,7.4,7.3,7.2,7.1,6.9,6.8,6.8,6.8,6.7,6.6,6.5,6.4,6.4,6.3,6.2,6.1,6.1,6,5.9,5.9,5.7,5.7,5.6,5.6,5.5,5.4,5.4,5.4,5.4,5.4,5.3,5.3,5.3,5.3,5.3,5.2,5.2,5.2,5.2,5.2,5.1,5.1,5,5,5,4.9,4.9,4.9,4.9,4.9,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.8,4.7,4.7,4.6,4.6,4.5,4.5,4.5,4.4,4.4,4.4,4.3,4.2,4.2,4.2,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4.1,4,3.9,3.9,3.9,3.7,3.7,3.6,3.6,3.6,3.6,3.6,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.4,3.4,3.4,3.4,3.4,3.3,3.2,3.2,3.2,3.2,3.1,3.1,3.1,3.1,3.1,3.1,3.1,3.1,3,3,3,3,3,3,3,3,2.9,2.9,2.9,2.9,2.9,2.8,2.8,2.8,2.8,2.8,2.8,2.7,2.7,2.7,2.7,2.7,2.7,2.7,2.6,2.6,2.4,2.4,2.4,2.3,2.2,2.2,2.2,2.1,1.8,1.7,1.7,1.6&amp;quot;
+GAI &amp;lt;- as.numeric(str_split(GAI_text,&amp;quot;,&amp;quot;)[[1]])&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;GAI_data &amp;lt;- data.frame(rank, country, GAI)
+head(GAI_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##   rank     country GAI
+## 1    1     Iceland 8.9
+## 2    2 Netherlands 8.6
+## 3    3      Norway 8.2
+## 4    4      Canada 8.2
+## 5    5       Spain 8.1
+## 6    6     Belgium 7.9&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;map&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Map&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;countries_map &amp;lt;- map_data(&amp;quot;world&amp;quot;)
+choropleth_data &amp;lt;- left_join(countries_map, GAI_data, by = c(&amp;quot;region&amp;quot; = &amp;quot;country&amp;quot;))
+choropleth_data %&amp;gt;%
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = GAI), color = &amp;quot;black&amp;quot;) +
+  scale_fill_viridis_c(option = &amp;quot;C&amp;quot;) +
+  labs(title = &amp;quot;Social Acceptance of LGBT People&amp;quot;,
+       subtitle = &amp;quot;Global Acceptance Index&amp;quot;,
+       caption = &amp;quot;Data Source: UCLA Williams School&amp;quot;,
+       fill = &amp;quot;GAI&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.background = element_rect(fill = &amp;quot;white&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-26-mapping-social-acceptance-of-lgbt-people_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;africa&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Africa&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;African_nations_text &amp;lt;- &amp;quot;Nigeria,Ethiopia,Egypt,DR Congo,Tanzania,South Africa,Kenya,Uganda,Algeria,Sudan,Morocco,Angola,Mozambique,Ghana,Madagascar,Cameroon,Côte d&amp;#39;Ivoire,Niger,Burkina Faso,Mali,Malawi,Zambia,Senegal,Chad,Somalia,Zimbabwe,Guinea,Rwanda,Benin,Burundi,Tunisia,South Sudan,Togo,Sierra Leone,Libya,Congo,Liberia,Central African Republic,Mauritania,Eritrea,Namibia,Gambia,Botswana,Gabon,Lesotho,Guinea-Bissau,Equatorial Guinea,Mauritius,Eswatini,Djibouti,Comoros,Cabo Verde,Sao Tome &amp;amp; Principe,Seychelles&amp;quot;
+African_nations_list &amp;lt;- str_split(African_nations_text,&amp;quot;,&amp;quot;)[[1]]
+
+choropleth_data %&amp;gt;%
+  filter(region %in% African_nations_list) %&amp;gt;%
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = GAI), color = &amp;quot;black&amp;quot;) +
+  scale_fill_viridis_c(option = &amp;quot;C&amp;quot;) +
+  labs(title = &amp;quot;Social Acceptance of LGBT People&amp;quot;,
+       subtitle = &amp;quot;Global Acceptance Index&amp;quot;,
+       caption = &amp;quot;Data Source: UCLA Williams School&amp;quot;,
+       fill = &amp;quot;GAI&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.background = element_rect(fill = &amp;quot;white&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-26-mapping-social-acceptance-of-lgbt-people_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Vote by Mail data</title>
+      <link>https://dsollberger.netlify.com/post/vote-by-mail-data/</link>
+      <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/vote-by-mail-data/</guid>
+      <description>
+
+
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;dplyr&amp;quot;)
+library(&amp;quot;ggplot2&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;p&gt;Today I am going to try to make a choropleth (map + data) of the percentage of registered voters that sent in ballots for the 2018 elections in the USA. I gathered the data from and by the following sites:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://fivethirtyeight.com/features/few-states-are-prepared-to-switch-to-voting-by-mail-that-could-make-for-a-messy-election/&#34;&gt;Few States Are Prepared To Switch To Voting By Mail. That Could Make For A Messy Election&lt;/a&gt; — FiveThirtyEight artcle from April 27, 2020&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://knowledgelink.upenn.edu/admin/guides/HowToCommaList-101612.pdf&#34;&gt;How to Create a Comma Separated List from an Excel Column&lt;/a&gt; — from University of Pennsylvania&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;states &amp;lt;- tolower( sort(c(state.name, &amp;quot;District of Columbia&amp;quot;)))
+voted2018 &amp;lt;- c(2,5,62,1,54,88,4,3,2,25,4,38,9,6,17,16,10,1,2,18,4,2,15,21,3,6,63,15,6,5,10,36,3,2,NA,13,4,104,3,4,2,15,1,4,89,6,2,92,1,5,22)
+vote_data &amp;lt;- data.frame(states, voted2018)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The 538 article’s table caption included the following notes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;“It’s not possible to calculate these numbers for North Dakota, as it doesn’t have voter registration. However, it does have a relatively high rate of mail voting — 23 percent of its votes were cast by mail in 2016, and 29 percent in 2018. Republicans control both the governorship and state legislature in North Dakota.”&lt;/li&gt;
+&lt;li&gt;“When asked how Oregon mailed ballots to 104 percent of voters in 2018, state election officials responded that the EAC number was “off” but did not provide further details.&#34;&lt;/li&gt;
+&lt;li&gt;Sources: Ballotpedia, U.S. Election Assistance Commission&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;choropleth&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Choropleth&lt;/h1&gt;
+&lt;p&gt;Adapted from &lt;a href=&#34;https://www.r-bloggers.com/choropleth-map-in-ggplot2/&#34;&gt;Choropleth Map in ggplot2&lt;/a&gt; by ‘data technik’&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;states_map &amp;lt;- map_data(&amp;quot;state&amp;quot;)
+fact_join &amp;lt;- left_join(states_map, vote_data, by = c(&amp;quot;region&amp;quot; = &amp;quot;states&amp;quot;))
+fact_join %&amp;gt;%
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = voted2018), color = &amp;quot;black&amp;quot;) +
+  scale_fill_viridis_c(option = &amp;quot;C&amp;quot;) +
+  labs(title = &amp;quot;A View of Voting by Mail&amp;quot;,
+       subtitle = &amp;quot;Percentage of registered voters that sent in ballots in 2018&amp;quot;,
+       caption = &amp;quot;Alaska: 2%, Hawaii: 38%, North Dakota: NA \n Data Source: FiveThirtyEight&amp;quot;,
+       fill = &amp;quot;% voted by mail&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.background = element_rect(fill = &amp;quot;white&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-25-vote-by-mail-data_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

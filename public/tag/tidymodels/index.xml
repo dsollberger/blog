@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tidymodels | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/tidymodels/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/tidymodels/index.xml" rel="self" type="application/rss+xml" />
+    <description>tidymodels</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Mon, 04 May 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>tidymodels</title>
+      <link>https://dsollberger.netlify.com/tag/tidymodels/</link>
+    </image>
+    
+    <item>
+      <title>Supervised Learning</title>
+      <link>https://dsollberger.netlify.com/post/supervised-learning/</link>
+      <pubDate>Mon, 04 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/supervised-learning/</guid>
+      <description>
+
+
+&lt;div id=&#34;supervised-learning&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Supervised Learning&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supervised learning&lt;/strong&gt; has the goal of making predictions with a set of &lt;em&gt;known&lt;/em&gt; labels for the response variable.&lt;/li&gt;
+&lt;li&gt;In &lt;strong&gt;unsupervised learning&lt;/strong&gt;, we try to find structure in the data of the response variable without predetermined labels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Goal: predict the personality type of each character in Animal Crossing&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-set-animal-crossing&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data set: Animal Crossing&lt;/h1&gt;
+&lt;p&gt;Source: VillagerDB, MetaCritic, and TidyTuesday&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md&#34;&gt;Animal Crossing Tidy Tuesday&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;caret&amp;quot;)
+library(&amp;quot;randomForest&amp;quot;)
+library(&amp;quot;tidymodels&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)
+
+# critic &amp;lt;- readr::read_tsv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv&amp;#39;)
+# user_reviews &amp;lt;- readr::read_tsv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv&amp;#39;)
+# items &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&amp;#39;)
+villagers &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;exploratory-data-analysis&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exploratory Data Analysis&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(villagers)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 391  11&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;str(villagers)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## tibble [391 x 11] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ row_n      : num [1:391] 2 3 4 6 7 8 9 10 11 13 ...
+##  $ id         : chr [1:391] &amp;quot;admiral&amp;quot; &amp;quot;agent-s&amp;quot; &amp;quot;agnes&amp;quot; &amp;quot;al&amp;quot; ...
+##  $ name       : chr [1:391] &amp;quot;Admiral&amp;quot; &amp;quot;Agent S&amp;quot; &amp;quot;Agnes&amp;quot; &amp;quot;Al&amp;quot; ...
+##  $ gender     : chr [1:391] &amp;quot;male&amp;quot; &amp;quot;female&amp;quot; &amp;quot;female&amp;quot; &amp;quot;male&amp;quot; ...
+##  $ species    : chr [1:391] &amp;quot;bird&amp;quot; &amp;quot;squirrel&amp;quot; &amp;quot;pig&amp;quot; &amp;quot;gorilla&amp;quot; ...
+##  $ birthday   : chr [1:391] &amp;quot;1-27&amp;quot; &amp;quot;7-2&amp;quot; &amp;quot;4-21&amp;quot; &amp;quot;10-18&amp;quot; ...
+##  $ personality: chr [1:391] &amp;quot;cranky&amp;quot; &amp;quot;peppy&amp;quot; &amp;quot;uchi&amp;quot; &amp;quot;lazy&amp;quot; ...
+##  $ song       : chr [1:391] &amp;quot;Steep Hill&amp;quot; &amp;quot;DJ K.K.&amp;quot; &amp;quot;K.K. House&amp;quot; &amp;quot;Steep Hill&amp;quot; ...
+##  $ phrase     : chr [1:391] &amp;quot;aye aye&amp;quot; &amp;quot;sidekick&amp;quot; &amp;quot;snuffle&amp;quot; &amp;quot;Ayyeeee&amp;quot; ...
+##  $ full_id    : chr [1:391] &amp;quot;villager-admiral&amp;quot; &amp;quot;villager-agent-s&amp;quot; &amp;quot;villager-agnes&amp;quot; &amp;quot;villager-al&amp;quot; ...
+##  $ url        : chr [1:391] &amp;quot;https://villagerdb.com/images/villagers/thumb/admiral.98206ee.png&amp;quot; &amp;quot;https://villagerdb.com/images/villagers/thumb/agent-s.96c789b.png&amp;quot; &amp;quot;https://villagerdb.com/images/villagers/thumb/agnes.9f51f32.png&amp;quot; &amp;quot;https://villagerdb.com/images/villagers/thumb/al.1e17090.png&amp;quot; ...
+##  - attr(*, &amp;quot;spec&amp;quot;)=
+##   .. cols(
+##   ..   row_n = col_double(),
+##   ..   id = col_character(),
+##   ..   name = col_character(),
+##   ..   gender = col_character(),
+##   ..   species = col_character(),
+##   ..   birthday = col_character(),
+##   ..   personality = col_character(),
+##   ..   song = col_character(),
+##   ..   phrase = col_character(),
+##   ..   full_id = col_character(),
+##   ..   url = col_character()
+##   .. )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#table(villagers$name)
+#length(unique(villagers$name))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(villagers$personality)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## cranky   jock   lazy normal  peppy   smug snooty   uchi 
+##     55     55     60     59     49     34     55     24&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;personality-across-gender&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Personality across Gender&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers %&amp;gt;%
+  ggplot(aes(x = personality, fill = gender)) +
+  geom_bar(stat = &amp;quot;count&amp;quot;, position = &amp;quot;dodge&amp;quot;) +
+  labs(title = &amp;quot;Getting to Know the Animal Crossing Villagers&amp;quot;,
+       subtitle = &amp;quot;and judging their personalities&amp;quot;,
+       caption = &amp;quot;Source: VillagerDB&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;personality-across-species&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Personality across Species&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers %&amp;gt;%
+  ggplot(aes(x = personality, fill = species)) +
+  geom_bar(stat = &amp;quot;count&amp;quot;, position = &amp;quot;stack&amp;quot;) +
+  labs(title = &amp;quot;Getting to Know the Animal Crossing Villagers&amp;quot;,
+       subtitle = &amp;quot;and judging their personalities&amp;quot;,
+       caption = &amp;quot;Source: VillagerDB&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;predictor-variables&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Predictor Variables&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(villagers$gender)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## female   male 
+##    187    204&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(villagers$species)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## alligator  anteater      bear      bird      bull       cat   chicken       cow 
+##         7         7        15        13         6        23         9         4 
+##       cub      deer       dog      duck     eagle  elephant      frog      goat 
+##        16        10        16        17         9        11        18         8 
+##   gorilla   hamster     hippo     horse  kangaroo     koala      lion    monkey 
+##         9         8         7        15         8         9         7         8 
+##     mouse   octopus   ostrich   penguin       pig    rabbit     rhino     sheep 
+##        15         3        10        13        15        20         6        13 
+##  squirrel     tiger      wolf 
+##        18         7        11&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;extracting-birth-month&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Extracting Birth Month&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers &amp;lt;- villagers %&amp;gt;%
+  separate(birthday, c(&amp;quot;birth_month&amp;quot;, &amp;quot;birth_day&amp;quot;), remove = FALSE)
+
+villagers$birth_month_factor &amp;lt;- factor(villagers$birth_month, 
+                                levels = 1:12)
+
+table(villagers$birth_month_factor)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  1  2  3  4  5  6  7  8  9 10 11 12 
+## 32 29 33 29 31 33 35 36 32 37 30 34&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers %&amp;gt;%
+  ggplot(aes(x = personality, fill = birth_month_factor)) +
+  geom_bar(color = &amp;quot;black&amp;quot;, stat = &amp;quot;count&amp;quot;, position = &amp;quot;stack&amp;quot;) +
+  labs(title = &amp;quot;Getting to Know the Animal Crossing Villagers&amp;quot;,
+       subtitle = &amp;quot;and judging their personalities&amp;quot;,
+       caption = &amp;quot;Source: VillagerDB&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-10-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers %&amp;gt;%
+  ggplot(aes(x = personality, fill = birth_month_factor)) +
+  geom_bar(color = &amp;quot;black&amp;quot;, stat = &amp;quot;count&amp;quot;, position = &amp;quot;fill&amp;quot;) +
+  labs(title = &amp;quot;Getting to Know the Animal Crossing Villagers&amp;quot;,
+       subtitle = &amp;quot;and judging their personalities&amp;quot;,
+       caption = &amp;quot;Source: VillagerDB&amp;quot;,
+       y = &amp;quot;proportion&amp;quot;) +
+  scale_fill_manual(name = &amp;quot;Month of Birth&amp;quot;,
+                    labels = c(&amp;quot;January&amp;quot;, &amp;quot;February&amp;quot;, &amp;quot;March&amp;quot;, &amp;quot;April&amp;quot;,
+                                 &amp;quot;May&amp;quot;, &amp;quot;June&amp;quot;, &amp;quot;July&amp;quot;, &amp;quot;August&amp;quot;,
+                                 &amp;quot;September&amp;quot;, &amp;quot;October&amp;quot;, &amp;quot;November&amp;quot;, &amp;quot;December&amp;quot;),
+                    values=sample(c(&amp;quot;#4b48c9&amp;quot;, &amp;quot;#5c90a8&amp;quot;, &amp;quot;#86d5fe&amp;quot;, &amp;quot;#c0d1ef&amp;quot;,
+                             &amp;quot;#edd1a2&amp;quot;, &amp;quot;#948572&amp;quot;, &amp;quot;#f8c79e&amp;quot;, &amp;quot;#eec688&amp;quot;,
+                             &amp;quot;#642200&amp;quot;, &amp;quot;#764936&amp;quot;, &amp;quot;#fd974d&amp;quot;, &amp;quot;#7b4a3c&amp;quot;))) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;(color palette generated at &lt;a href=&#34;http://www.cssdrive.com/imagepalette/index.php&#34;&gt;CSS Drive&lt;/a&gt;)&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;model-formula&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;model formula&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;response variable: &lt;code&gt;personality&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;predictor variables: &lt;code&gt;gender&lt;/code&gt;, &lt;code&gt;species&lt;/code&gt;, &lt;code&gt;birth_month&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;model formula: &lt;code&gt;personality ~ gender + species + birth_month&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;predictor_variables &amp;lt;- c(&amp;quot;gender&amp;quot;, &amp;quot;species&amp;quot;, &amp;quot;birth_month&amp;quot;)
+model_formula &amp;lt;- paste(&amp;quot;personality~&amp;quot;, paste(sprintf(&amp;quot;`%s`&amp;quot;, predictor_variables), collapse=&amp;quot;+&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-split&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Split&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;villagers_split &amp;lt;- initial_split(villagers)
+villagers_train &amp;lt;- training(villagers_split)
+villagers_test  &amp;lt;- testing(villagers_split)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;random-forests&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Random Forests&lt;/h1&gt;
+&lt;p&gt;“Random forest models are ensembles of decision trees. A large number of decision tree models are created for the ensemble based on slightly different versions of the training set. When creating the individual decision trees, the fitting process encourages them to be as diverse as possible. The collection of trees are combined into the random forest model and, when a new sample is predicted, the votes from each tree are used to calculate the final predicted value for the new sample.”
+—&lt;a href=&#34;https://www.tidymodels.org/start/resampling/&#34;&gt;tidymodels.org&lt;/a&gt;&lt;/p&gt;
+&lt;div id=&#34;define-the-forest&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Define the Forest&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;random_forest_model &amp;lt;- 
+  rand_forest(trees = 1000) %&amp;gt;% 
+  set_engine(&amp;quot;ranger&amp;quot;) %&amp;gt;% 
+  set_mode(&amp;quot;classification&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;fitting-the-forest&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Fitting the Forest&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# CAUTION: at the time of filming, this code chunk did not work (model formula parser threw an error)
+random_forest_fit &amp;lt;-
+  random_forest_model %&amp;gt;%
+  fit(personality ~ gender + species + birth_month, data = villagers_train)
+
+random_forest_fit&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizing-the-forest&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Visualizing the Forest&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# OLD-FASHIONED WAY with the caret package
+model_rf &amp;lt;- caret::train(personality ~ gender + species + birth_month,
+                         data = villagers_train, method = &amp;quot;rf&amp;quot;)
+model_rf&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Random Forest 
+## 
+## 294 samples
+##   3 predictor
+##   8 classes: &amp;#39;cranky&amp;#39;, &amp;#39;jock&amp;#39;, &amp;#39;lazy&amp;#39;, &amp;#39;normal&amp;#39;, &amp;#39;peppy&amp;#39;, &amp;#39;smug&amp;#39;, &amp;#39;snooty&amp;#39;, &amp;#39;uchi&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 294, 294, 294, 294, 294, 294, ... 
+## Resampling results across tuning parameters:
+## 
+##   mtry  Accuracy   Kappa    
+##    2    0.2550533  0.1357101
+##   24    0.2889225  0.1759381
+##   46    0.2892118  0.1774835
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was mtry = 46.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;model_rpart &amp;lt;- caret::train(personality ~ gender + species + birth_month,
+                         data = villagers_train, method = &amp;quot;rpart&amp;quot;)
+model_rpart&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## CART 
+## 
+## 294 samples
+##   3 predictor
+##   8 classes: &amp;#39;cranky&amp;#39;, &amp;#39;jock&amp;#39;, &amp;#39;lazy&amp;#39;, &amp;#39;normal&amp;#39;, &amp;#39;peppy&amp;#39;, &amp;#39;smug&amp;#39;, &amp;#39;snooty&amp;#39;, &amp;#39;uchi&amp;#39; 
+## 
+## No pre-processing
+## Resampling: Bootstrapped (25 reps) 
+## Summary of sample sizes: 294, 294, 294, 294, 294, 294, ... 
+## Resampling results across tuning parameters:
+## 
+##   cp          Accuracy   Kappa     
+##   0.02024291  0.2975188  0.18582216
+##   0.02429150  0.2876263  0.17374970
+##   0.19028340  0.2017836  0.07541971
+## 
+## Accuracy was used to select the optimal model using the largest value.
+## The final value used for the model was cp = 0.02024291.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#source:  https://shiring.github.io/machine_learning/2017/03/16/rf_plot_ggraph
+
+library(&amp;quot;ggraph&amp;quot;)
+library(&amp;quot;igraph&amp;quot;)
+
+tree_func &amp;lt;- function(final_model, 
+                      tree_num) {
+  
+  # get tree by index
+  tree &amp;lt;- randomForest::getTree(final_model, 
+                                k = tree_num, 
+                                labelVar = TRUE) %&amp;gt;%
+    tibble::rownames_to_column() %&amp;gt;%
+    # make leaf split points to NA, so the 0s won&amp;#39;t get plotted
+    mutate(`split point` = ifelse(is.na(prediction), `split point`, NA))
+  
+  # prepare data frame for graph
+  graph_frame &amp;lt;- data.frame(from = rep(tree$rowname, 2),
+                            to = c(tree$`left daughter`, tree$`right daughter`))
+  
+  # convert to graph and delete the last node that we don&amp;#39;t want to plot
+  graph &amp;lt;- graph_from_data_frame(graph_frame) %&amp;gt;%
+    delete_vertices(&amp;quot;0&amp;quot;)
+  
+  # set node labels
+  V(graph)$node_label &amp;lt;- gsub(&amp;quot;_&amp;quot;, &amp;quot; &amp;quot;, as.character(tree$`split var`))
+  V(graph)$leaf_label &amp;lt;- as.character(tree$prediction)
+  V(graph)$split &amp;lt;- as.character(round(tree$`split point`, digits = 2))
+  
+  # plot
+  plot &amp;lt;- ggraph(graph, &amp;#39;dendrogram&amp;#39;) + 
+    theme_bw() +
+    geom_edge_link() +
+    geom_node_point() +
+    geom_node_text(aes(label = node_label), na.rm = TRUE, repel = TRUE) +
+    geom_node_label(aes(label = split), vjust = 2.5, na.rm = TRUE, fill = &amp;quot;white&amp;quot;) +
+    geom_node_label(aes(label = leaf_label, fill = leaf_label), na.rm = TRUE, 
+                    repel = TRUE, colour = &amp;quot;white&amp;quot;, fontface = &amp;quot;bold&amp;quot;, show.legend = FALSE) +
+    theme(panel.grid.minor = element_blank(),
+          panel.grid.major = element_blank(),
+          panel.background = element_blank(),
+          plot.background = element_rect(fill = &amp;quot;white&amp;quot;),
+          panel.border = element_blank(),
+          axis.line = element_blank(),
+          axis.text.x = element_blank(),
+          axis.text.y = element_blank(),
+          axis.ticks = element_blank(),
+          axis.title.x = element_blank(),
+          axis.title.y = element_blank(),
+          plot.title = element_text(size = 18))
+  
+  print(plot)
+}
+
+tree_num &amp;lt;- which(model_rf$finalModel$forest$ndbigtree == min(model_rf$finalModel$forest$ndbigtree))
+
+tree_func(final_model = model_rf$finalModel, tree_num)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-04-supervised-learning_files/figure-html/unnamed-chunk-17-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;predictions&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Predictions&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;predictions &amp;lt;- predict(model_rf, newdata = villagers_test)
+confusionMatrix(predictions, factor(villagers_test$personality))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Confusion Matrix and Statistics
+## 
+##           Reference
+## Prediction cranky jock lazy normal peppy smug snooty uchi
+##     cranky      5    1    0      0     0    1      0    0
+##     jock        1   10    2      0     0    2      0    0
+##     lazy        0    5   13      0     0    2      0    0
+##     normal      0    0    0     12     1    0      1    2
+##     peppy       0    0    0      2     9    0      3    0
+##     smug        0    1    0      0     0    3      0    0
+##     snooty      0    0    0      3     0    0     13    2
+##     uchi        0    0    0      0     0    0      0    3
+## 
+## Overall Statistics
+##                                           
+##                Accuracy : 0.701           
+##                  95% CI : (0.5996, 0.7898)
+##     No Information Rate : 0.1753          
+##     P-Value [Acc &amp;gt; NIR] : &amp;lt; 2.2e-16       
+##                                           
+##                   Kappa : 0.6502          
+##                                           
+##  Mcnemar&amp;#39;s Test P-Value : NA              
+## 
+## Statistics by Class:
+## 
+##                      Class: cranky Class: jock Class: lazy Class: normal
+## Sensitivity                0.83333      0.5882      0.8667        0.7059
+## Specificity                0.97802      0.9375      0.9146        0.9500
+## Pos Pred Value             0.71429      0.6667      0.6500        0.7500
+## Neg Pred Value             0.98889      0.9146      0.9740        0.9383
+## Prevalence                 0.06186      0.1753      0.1546        0.1753
+## Detection Rate             0.05155      0.1031      0.1340        0.1237
+## Detection Prevalence       0.07216      0.1546      0.2062        0.1649
+## Balanced Accuracy          0.90568      0.7629      0.8907        0.8279
+##                      Class: peppy Class: smug Class: snooty Class: uchi
+## Sensitivity               0.90000     0.37500        0.7647     0.42857
+## Specificity               0.94253     0.98876        0.9375     1.00000
+## Pos Pred Value            0.64286     0.75000        0.7222     1.00000
+## Neg Pred Value            0.98795     0.94624        0.9494     0.95745
+## Prevalence                0.10309     0.08247        0.1753     0.07216
+## Detection Rate            0.09278     0.03093        0.1340     0.03093
+## Detection Prevalence      0.14433     0.04124        0.1856     0.03093
+## Balanced Accuracy         0.92126     0.68188        0.8511     0.71429&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to Machine Learning</title>
+      <link>https://dsollberger.netlify.com/post/introduction-to-machine-learning/</link>
+      <pubDate>Fri, 01 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/introduction-to-machine-learning/</guid>
+      <description>
+
+
+&lt;div id=&#34;goals-for-today&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Goals for today&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;introduce machine learning (ideas and terminology)&lt;/li&gt;
+&lt;li&gt;introduce &lt;code&gt;tidymodels&lt;/code&gt; package&lt;/li&gt;
+&lt;li&gt;practice with a &lt;code&gt;TidyTuesday&lt;/code&gt; data set&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidymodels&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-tour-de-france&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data: Tour de France&lt;/h1&gt;
+&lt;p&gt;Source: &lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-04-07/readme.md&#34;&gt;TidyTuesday&lt;/a&gt; data set from April 7, 2020&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tdf_winners &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-07/tdf_winners.csv&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;str(tdf_winners)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Classes &amp;#39;spec_tbl_df&amp;#39;, &amp;#39;tbl_df&amp;#39;, &amp;#39;tbl&amp;#39; and &amp;#39;data.frame&amp;#39;: 106 obs. of  19 variables:
+##  $ edition      : num  1 2 3 4 5 6 7 8 9 10 ...
+##  $ start_date   : Date, format: &amp;quot;1903-07-01&amp;quot; &amp;quot;1904-07-02&amp;quot; ...
+##  $ winner_name  : chr  &amp;quot;Maurice Garin&amp;quot; &amp;quot;Henri Cornet&amp;quot; &amp;quot;Louis Trousselier&amp;quot; &amp;quot;René Pottier&amp;quot; ...
+##  $ winner_team  : chr  &amp;quot;La Française&amp;quot; &amp;quot;Conte&amp;quot; &amp;quot;Peugeot–Wolber&amp;quot; &amp;quot;Peugeot–Wolber&amp;quot; ...
+##  $ distance     : num  2428 2428 2994 4637 4488 ...
+##  $ time_overall : num  94.6 96.1 NA NA NA ...
+##  $ time_margin  : num  2.99 2.27 NA NA NA ...
+##  $ stage_wins   : num  3 1 5 5 2 5 6 4 2 3 ...
+##  $ stages_led   : num  6 3 10 12 5 13 13 3 13 13 ...
+##  $ height       : num  1.62 NA NA NA NA NA 1.78 NA NA NA ...
+##  $ weight       : num  60 NA NA NA NA NA 88 NA NA NA ...
+##  $ age          : num  32 19 24 27 24 25 22 22 26 23 ...
+##  $ born         : Date, format: &amp;quot;1871-03-03&amp;quot; &amp;quot;1884-08-04&amp;quot; ...
+##  $ died         : Date, format: &amp;quot;1957-02-19&amp;quot; &amp;quot;1941-03-18&amp;quot; ...
+##  $ full_name    : chr  NA NA NA NA ...
+##  $ nickname     : chr  &amp;quot;The Little Chimney-sweep&amp;quot; &amp;quot;Le rigolo (The joker)&amp;quot; &amp;quot;Levaloy / Trou-trou&amp;quot; NA ...
+##  $ birth_town   : chr  &amp;quot;Arvier&amp;quot; &amp;quot;Desvres&amp;quot; &amp;quot;Paris&amp;quot; &amp;quot;Moret-sur-Loing&amp;quot; ...
+##  $ birth_country: chr  &amp;quot;Italy&amp;quot; &amp;quot;France&amp;quot; &amp;quot;France&amp;quot; &amp;quot;France&amp;quot; ...
+##  $ nationality  : chr  &amp;quot; France&amp;quot; &amp;quot; France&amp;quot; &amp;quot; France&amp;quot; &amp;quot; France&amp;quot; ...
+##  - attr(*, &amp;quot;spec&amp;quot;)=
+##   .. cols(
+##   ..   edition = col_double(),
+##   ..   start_date = col_date(format = &amp;quot;&amp;quot;),
+##   ..   winner_name = col_character(),
+##   ..   winner_team = col_character(),
+##   ..   distance = col_double(),
+##   ..   time_overall = col_double(),
+##   ..   time_margin = col_double(),
+##   ..   stage_wins = col_double(),
+##   ..   stages_led = col_double(),
+##   ..   height = col_double(),
+##   ..   weight = col_double(),
+##   ..   age = col_double(),
+##   ..   born = col_date(format = &amp;quot;&amp;quot;),
+##   ..   died = col_date(format = &amp;quot;&amp;quot;),
+##   ..   full_name = col_character(),
+##   ..   nickname = col_character(),
+##   ..   birth_town = col_character(),
+##   ..   birth_country = col_character(),
+##   ..   nationality = col_character()
+##   .. )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;colnames(tdf_winners)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;edition&amp;quot;       &amp;quot;start_date&amp;quot;    &amp;quot;winner_name&amp;quot;   &amp;quot;winner_team&amp;quot;  
+##  [5] &amp;quot;distance&amp;quot;      &amp;quot;time_overall&amp;quot;  &amp;quot;time_margin&amp;quot;   &amp;quot;stage_wins&amp;quot;   
+##  [9] &amp;quot;stages_led&amp;quot;    &amp;quot;height&amp;quot;        &amp;quot;weight&amp;quot;        &amp;quot;age&amp;quot;          
+## [13] &amp;quot;born&amp;quot;          &amp;quot;died&amp;quot;          &amp;quot;full_name&amp;quot;     &amp;quot;nickname&amp;quot;     
+## [17] &amp;quot;birth_town&amp;quot;    &amp;quot;birth_country&amp;quot; &amp;quot;nationality&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cleaning-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Cleaning Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df &amp;lt;- tdf_winners %&amp;gt;%
+  select(c(distance, time_overall, 
+           height, weight, age)) %&amp;gt;%
+  filter(complete.cases(.)) %&amp;gt;%
+  filter(height &amp;gt;= 1.7) %&amp;gt;%
+  mutate(pace = distance / time_overall) %&amp;gt;%
+  select(c(pace, height, weight, age))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 62  4&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-visualization&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Visualization&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = height, y = pace)) +
+  geom_point(color = &amp;quot;blue&amp;quot;) +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = FALSE, color = &amp;quot;red&amp;quot;) +
+  labs(title = &amp;quot;Are taller bicyclists faster?&amp;quot;,
+       subtitle = &amp;quot;featuring Tour de France winners&amp;quot;,
+       caption = &amp;quot;Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;height (meters)&amp;quot;,
+       y = &amp;quot;pace (km/hr)&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = age, y = pace)) +
+  geom_point(color = &amp;quot;blue&amp;quot;) +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = FALSE, color = &amp;quot;red&amp;quot;) +
+  labs(title = &amp;quot;Are older bicyclists faster?&amp;quot;,
+       subtitle = &amp;quot;featuring Tour de France winners&amp;quot;,
+       caption = &amp;quot;Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;age&amp;quot;,
+       y = &amp;quot;pace (km/hr)&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = weight, y = pace)) +
+  geom_point(color = &amp;quot;blue&amp;quot;) +
+  geom_smooth(method = &amp;quot;lm&amp;quot;, se = FALSE, color = &amp;quot;red&amp;quot;) +
+  labs(title = &amp;quot;Are heavier bicyclists faster?&amp;quot;,
+       subtitle = &amp;quot;featuring Tour de France winners&amp;quot;,
+       caption = &amp;quot;Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;weight (kg)&amp;quot;,
+       y = &amp;quot;pace (km/hr)&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;first-model&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;First Model&lt;/h1&gt;
+&lt;p&gt;“With tidymodels, we start by specifying the functional form of the model that we want using the &lt;code&gt;parsnip&lt;/code&gt; package.”&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;linear_reg()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Linear Regression Model Specification (regression)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;model-engine&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;model engine&lt;/h2&gt;
+&lt;p&gt;“However, now that the type of model has been specified, a method for fitting or training the model can be stated using the engine. The engine value is often a mash-up of the software that can be used to fit or train the model as well as the estimation method.”&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;linear_reg() %&amp;gt;% 
+  set_engine(&amp;quot;lm&amp;quot;) #linear model&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Linear Regression Model Specification (regression)
+## 
+## Computational engine: lm&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;fitting-a-model&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;fitting a model&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm_fit &amp;lt;- linear_reg() %&amp;gt;% 
+  set_engine(&amp;quot;lm&amp;quot;) %&amp;gt;%
+  fit(pace ~ height + weight + age, data = df)
+lm_fit&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## parsnip model object
+## 
+## Fit time:  0ms 
+## 
+## Call:
+## stats::lm(formula = formula, data = data)
+## 
+## Coefficients:
+## (Intercept)       height       weight          age  
+##      3.8455      21.0987      -0.1387       0.2113&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;examining-a-model&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;examining a model&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tidy(lm_fit)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 4 x 5
+##   term        estimate std.error statistic p.value
+##   &amp;lt;chr&amp;gt;          &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
+## 1 (Intercept)    3.85    12.3        0.313  0.755 
+## 2 height        21.1      8.06       2.62   0.0112
+## 3 weight        -0.139    0.0685    -2.03   0.0474
+## 4 age            0.211    0.0979     2.16   0.0350&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;interaction-terms&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;interaction terms&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm_fit_with_interaction &amp;lt;- linear_reg() %&amp;gt;% 
+  set_engine(&amp;quot;lm&amp;quot;) %&amp;gt;%
+  fit(pace ~ height + weight + age + height:weight + height:age + weight:age +
+        height:weight:age,
+      data = df)
+lm_fit_with_interaction&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## parsnip model object
+## 
+## Fit time:  0ms 
+## 
+## Call:
+## stats::lm(formula = formula, data = data)
+## 
+## Coefficients:
+##       (Intercept)             height             weight                age  
+##          924.8499          -444.1560           -15.6339           -27.8628  
+##     height:weight         height:age         weight:age  height:weight:age  
+##            7.9297            13.9352             0.4802            -0.2425&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;tidy(lm_fit_with_interaction)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 8 x 5
+##   term              estimate std.error statistic p.value
+##   &amp;lt;chr&amp;gt;                &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;   &amp;lt;dbl&amp;gt;
+## 1 (Intercept)        925.     2272.        0.407   0.686
+## 2 height            -444.     1287.       -0.345   0.731
+## 3 weight             -15.6      32.8      -0.477   0.635
+## 4 age                -27.9      80.3      -0.347   0.730
+## 5 height:weight        7.93     18.5       0.428   0.670
+## 6 height:age          13.9      45.5       0.306   0.761
+## 7 weight:age           0.480     1.16      0.414   0.680
+## 8 height:weight:age   -0.243     0.656    -0.370   0.713&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;predictions&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Predictions&lt;/h1&gt;
+&lt;div id=&#34;new-data&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;new data&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;SpongeBob is a 26-year-old, 1.77 m tall bicyclist who weighs 55 kg&lt;/li&gt;
+&lt;li&gt;Patrick is a 25-year-old, 1.81 m tall bicyclist who weighs 75 kg&lt;/li&gt;
+&lt;li&gt;Squidward is a 31-year-old, 1.89 m tall bicyclist who weighs 65 kg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;new_contestants &amp;lt;- data.frame(name = c(&amp;quot;SpongeBob&amp;quot;, &amp;quot;Patrick&amp;quot;, &amp;quot;Squidward&amp;quot;),
+                              age = c(26, 25, 31),
+                              height = c(1.77, 1.81, 1.89),
+                              weight = c(55, 75, 65))
+
+mean_predictions &amp;lt;- predict(lm_fit, new_data = new_contestants)
+mean_predictions&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 1
+##   .pred
+##   &amp;lt;dbl&amp;gt;
+## 1  39.1
+## 2  36.9
+## 3  41.3&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;confidence-intervals&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;confidence intervals&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;CI_predictions &amp;lt;- predict(lm_fit,
+                          new_data = new_contestants,
+                          type = &amp;quot;conf_int&amp;quot;)
+CI_predictions&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 3 x 2
+##   .pred_lower .pred_upper
+##         &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;
+## 1        37.1        41.0
+## 2        35.9        38.0
+## 3        39.0        43.5&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;error-bars&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;error bars&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_df &amp;lt;- new_contestants %&amp;gt;%
+  bind_cols(mean_predictions) %&amp;gt;%
+  bind_cols(CI_predictions)
+plot_df&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##        name age height weight    .pred .pred_lower .pred_upper
+## 1 SpongeBob  26   1.77     55 39.05386    37.07966    41.02807
+## 2   Patrick  25   1.81     75 36.91179    35.85758    37.96601
+## 3 Squidward  31   1.89     65 41.25491    38.97189    43.53794&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_df %&amp;gt;%
+  ggplot(aes(x = name)) +
+  geom_errorbar(aes(ymin = .pred_lower,
+                    ymax = .pred_upper),
+                color = &amp;quot;red&amp;quot;,
+                width = 0.32) +
+  geom_point(aes(y = .pred), color = &amp;quot;blue&amp;quot;, size = 5) +
+  labs(title = &amp;quot;Tour de Under the Sea&amp;quot;,
+       subtitle = &amp;quot;Welcome the new contestants!&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;pace (km/hr)&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-splitting&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Splitting&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;“The &lt;em&gt;training set&lt;/em&gt; is used to estimate parameters, compare models and feature engineering techniques, tune models, etc.”&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;“The &lt;em&gt;test set&lt;/em&gt; is held in reserve until the end of the project, at which point there should only be one or two models under serious consideration. It is used as an unbiased source for measuring final model performance.”&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data_split &amp;lt;- initial_split(df)
+train_df &amp;lt;- training(data_split)
+test_df &amp;lt;- testing(data_split)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(paste(&amp;quot;The number of observations in the training set is:&amp;quot;, nrow(train_df)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;The number of observations in the training set is: 47&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;print(paste(&amp;quot;The number of observations in the testing set is:&amp;quot;, nrow(test_df)))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;The number of observations in the testing set is: 15&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;visualizing-the-split&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;visualizing the split&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data_split &amp;lt;- initial_split(df)
+train_df &amp;lt;- training(data_split)
+test_df &amp;lt;- testing(data_split)
+
+train_df %&amp;gt;%
+  ggplot(aes(x = height, y = pace)) +
+  geom_point(aes(color = &amp;quot;training set&amp;quot;), 
+             # color = &amp;quot;black&amp;quot;
+             ) +
+  geom_smooth(method = &amp;quot;lm&amp;quot;,
+              aes(x = height, y = pace),
+              color = &amp;quot;black&amp;quot;,
+              data = train_df,
+               se = FALSE) +
+  geom_point(aes(x = height, y = pace, color = &amp;quot;testing set&amp;quot;),
+             # color = &amp;quot;red&amp;quot;,
+             data = test_df,
+             size = 3) +
+  labs(title = &amp;quot;Training and Testing Sets&amp;quot;,
+       subtitle = &amp;quot;approx 75-25 percent split&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;,
+       x = &amp;quot;height (meters)&amp;quot;,
+       y = &amp;quot;pace (km/hr)&amp;quot;) +
+  scale_color_manual(name = &amp;quot;Data Split&amp;quot;,
+                     breaks = c(&amp;quot;training set&amp;quot;, &amp;quot;testing set&amp;quot;),
+                     values = c(&amp;quot;training set&amp;quot; = &amp;quot;black&amp;quot;,
+                                &amp;quot;testing set&amp;quot; = &amp;quot;red&amp;quot;)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-01-introduction-to-machine-learning_files/figure-html/unnamed-chunk-21-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Tip: run the last code block several times (keyboard shortcut: CTRL-SHFT-ENTER) for the full effect!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>math | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/category/math/</link>
+      <atom:link href="https://dsollberger.netlify.com/category/math/index.xml" rel="self" type="application/rss+xml" />
+    <description>math</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 11 Oct 2018 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>math</title>
+      <link>https://dsollberger.netlify.com/category/math/</link>
+    </image>
+    
+    <item>
+      <title>SAMPLe talk (Fall 2018)</title>
+      <link>https://dsollberger.netlify.com/post/sample-talk-fall-2018/</link>
+      <pubDate>Thu, 11 Oct 2018 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/sample-talk-fall-2018/</guid>
+      <description>
+
+
+&lt;div id=&#34;ggplot2&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;ggplot2&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://rpubs.com/dsollberger/activelearning&#34; class=&#34;uri&#34;&gt;http://rpubs.com/dsollberger/activelearning&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plotly&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Plotly&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://rpubs.com/dsollberger/scc&#34; class=&#34;uri&#34;&gt;http://rpubs.com/dsollberger/scc&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;shiny-dashboard&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Shiny Dashboard&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dsollberger.shinyapps.io/SHW3/&#34; class=&#34;uri&#34;&gt;https://dsollberger.shinyapps.io/SHW3/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;flex-dashboard&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Flex Dashboard&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dsollberger.shinyapps.io/shw7/&#34; class=&#34;uri&#34;&gt;https://dsollberger.shinyapps.io/shw7/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;shiny-and-htmlwidgets&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Shiny and htmlwidgets&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://dsollberger.shinyapps.io/SAMPLe/&#34; class=&#34;uri&#34;&gt;https://dsollberger.shinyapps.io/SAMPLe/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

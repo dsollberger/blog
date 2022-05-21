@@ -1,0 +1,1563 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ggplot | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/ggplot/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/ggplot/index.xml" rel="self" type="application/rss+xml" />
+    <description>ggplot</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Thu, 07 Jan 2021 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>ggplot</title>
+      <link>https://dsollberger.netlify.com/tag/ggplot/</link>
+    </image>
+    
+    <item>
+      <title>Payrolls of the Cleveland Baseball Team</title>
+      <link>https://dsollberger.netlify.com/post/payrolls-of-the-cleveland-baseball-team/</link>
+      <pubDate>Thu, 07 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/payrolls-of-the-cleveland-baseball-team/</guid>
+      <description>
+
+
+&lt;p&gt;Today I made a quick graph of the player payrolls for the Cleveland baseball team to compare their projected payroll after today’s trade with the Mets (Lindor, Carrasco, etc.) to past seasons.&lt;/p&gt;
+&lt;p&gt;Sources:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;(past) &lt;a href=&#34;http://www.stevetheump.com/Payrolls.htm&#34; class=&#34;uri&#34;&gt;http://www.stevetheump.com/Payrolls.htm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;(2021 projection) &lt;a href=&#34;https://twitter.com/ZackMeisel/status/1347246681520295936&#34; class=&#34;uri&#34;&gt;https://twitter.com/ZackMeisel/status/1347246681520295936&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://teamcolorcodes.com/cleveland-indians-color-codes/&#34; class=&#34;uri&#34;&gt;https://teamcolorcodes.com/cleveland-indians-color-codes/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;years &amp;lt;- 2014:2021
+payrolls &amp;lt;- c(82.5, 86.1, 86.3, 124.3, 134.4, 88.7, 37.6, 35)
+df &amp;lt;- data.frame(years, payrolls)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = years, y = payrolls, label = payrolls)) +
+  geom_bar(stat = &amp;quot;identity&amp;quot;, fill = &amp;quot;#E31937&amp;quot;, color = &amp;quot;#0C2340&amp;quot;) +
+  geom_label() +
+  labs(title = &amp;quot;Opening Day Payrolls of the Cleveland Baseball Team&amp;quot;,
+       subtitle = &amp;quot;2016: World Series appearance\n2020: pandemic-shortened season\n2021: projected&amp;quot;,
+       caption = &amp;quot;Sources:  http://www.stevetheump.com/Payrolls.htm \n https://twitter.com/ZackMeisel/status/1347246681520295936&amp;quot;,
+       x = &amp;quot;season&amp;quot;, y = &amp;quot;payroll (in millions of dollars)&amp;quot;) +
+  scale_x_continuous(breaks = 2014:2021, 
+                     labels = c(&amp;quot;2014&amp;quot;, &amp;quot;2015&amp;quot;, &amp;quot;2016&amp;quot;, &amp;quot;2017&amp;quot;, &amp;quot;2018&amp;quot;, &amp;quot;2019&amp;quot;, &amp;quot;2020&amp;quot;, &amp;quot;2021&amp;quot;)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2021-01-07-payrolls-of-the-cleveland-baseball-team_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Covid-19 Cases in the Central Valley</title>
+      <link>https://dsollberger.netlify.com/post/covid-19-cases-in-the-central-valley/</link>
+      <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/covid-19-cases-in-the-central-valley/</guid>
+      <description>
+
+
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;p&gt;Source: &lt;a href=&#34;https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/&#34;&gt;USA Facts&lt;/a&gt; — downloaded July 6, 2020&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)
+library(&amp;quot;zoo&amp;quot;)
+
+start_date &amp;lt;- &amp;quot;5/28/20&amp;quot;
+end_date &amp;lt;- &amp;quot;7/5/20&amp;quot;
+
+county_list &amp;lt;- c(&amp;quot;Santa Clara&amp;quot;, &amp;quot;Stanislaus&amp;quot;, &amp;quot;Calaveras&amp;quot;,
+              &amp;quot;San Benito&amp;quot;, &amp;quot;Merced&amp;quot;, &amp;quot;Tuolumne&amp;quot;,
+              &amp;quot;Fresno&amp;quot;, &amp;quot;Madera&amp;quot;, &amp;quot;Mariposa&amp;quot;)
+lag &amp;lt;- 7 #number of days for rolling average&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#loads files
+cases_raw &amp;lt;- read_csv(&amp;quot;covid_confirmed_usafacts.csv&amp;quot;)
+populations &amp;lt;- read_csv(&amp;quot;covid_county_population_usafacts.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Wrangling&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;raw_data_merged &amp;lt;- cases_raw %&amp;gt;%
+  full_join(populations, by = c(&amp;quot;County Name&amp;quot;, &amp;quot;State&amp;quot;))
+
+# find column positions by date
+column_names &amp;lt;- colnames(raw_data_merged)
+start_loc &amp;lt;- match(start_date, column_names)
+end_loc   &amp;lt;- match(end_date, column_names)
+
+cases_filtered &amp;lt;- cases_raw %&amp;gt;%
+  filter(State == &amp;quot;CA&amp;quot;) %&amp;gt;%
+  select(&amp;quot;County Name&amp;quot;, all_of(start_loc:end_loc))
+  
+
+populations_filtered &amp;lt;- populations %&amp;gt;%
+  filter(State == &amp;quot;CA&amp;quot;) %&amp;gt;%
+  select(&amp;quot;County Name&amp;quot;, &amp;quot;population&amp;quot;)
+  
+
+df_merged &amp;lt;- cases_filtered %&amp;gt;%
+  full_join(populations_filtered, 
+            by = &amp;quot;County Name&amp;quot;)
+
+df_clean &amp;lt;- df_merged %&amp;gt;%
+  
+  # avoids unallocated cases and the cruise ship!
+  filter(str_detect(`County Name`, &amp;quot;County&amp;quot;)) %&amp;gt;%
+  mutate(county = str_replace(`County Name`, &amp;quot; County&amp;quot;, &amp;quot;&amp;quot;)) %&amp;gt;%
+  select(-`County Name`)
+
+tall_data &amp;lt;- df_clean %&amp;gt;%
+  gather(key = &amp;quot;date&amp;quot;, value = &amp;quot;cases&amp;quot;, -county, -population)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rolling-average&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Rolling Average&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# rough draft
+draft_data &amp;lt;- tall_data %&amp;gt;%
+  group_by(county) %&amp;gt;%
+  mutate(new_cases = c(NA, diff(cases))) %&amp;gt;%
+  mutate(rolling_average = rollapply(new_cases, 3, mean, fill = NA)) %&amp;gt;%
+  filter(county == &amp;quot;Merced&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;final-product&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Final Product&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;requested_region &amp;lt;- tall_data %&amp;gt;%
+  filter(county %in% county_list)
+
+# factors to affect facet grid order
+requested_region$county &amp;lt;- factor(requested_region$county,
+                                  levels = county_list)
+
+# requested_region$date &amp;lt;- as.Date(requested_region$date)
+dates_list &amp;lt;- unique(requested_region$date)
+dates_weekly &amp;lt;- dates_list[seq(1, length(dates_list), 7)]
+
+requested_region %&amp;gt;%
+  group_by(county) %&amp;gt;%
+  mutate(new_cases = c(NA, diff(cases))) %&amp;gt;%
+  mutate(rolling_average = rollapply(new_cases, lag, 
+                                     mean, fill = NA)) %&amp;gt;%
+  
+  # normalized by population
+  mutate(roll_avg_per_cap = 100000*rolling_average / population) %&amp;gt;%
+  ggplot(aes(x = date, y = roll_avg_per_cap,
+             color = county, group = county)) + 
+  geom_line() +
+  facet_wrap(. ~ county, nrow = 3) +
+  labs(title = &amp;quot;Covid-19 in the Calfornia Central Valley&amp;quot;,
+       subtitle = &amp;quot;since Memorial Day, 7-day rolling average, per 100000 people&amp;quot;,
+       caption = &amp;quot;Source: USA Facts&amp;quot;,
+       x = &amp;quot;date&amp;quot;,
+       y = &amp;quot;new cases per capita&amp;quot;) +
+  # scale_x_date(date_breaks = &amp;quot;1 week&amp;quot;) +
+  scale_x_discrete(breaks = dates_weekly) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &amp;quot;none&amp;quot;,
+        panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank())&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-07-07-covid-19-cases-in-the-central-valley_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>TidyTuesday: Roman Emperors</title>
+      <link>https://dsollberger.netlify.com/post/tidytuesday-roman-emperors/</link>
+      <pubDate>Fri, 19 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/tidytuesday-roman-emperors/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Today, for practice with &lt;code&gt;ggplot2&lt;/code&gt;, I wish to replicate &lt;span class=&#34;citation&#34;&gt;@JoshuaFeldman&lt;/span&gt;’s wonderful #TidyTuesday submission about the dataset of Roman emperors.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-08-13&#34;&gt;TidyTuesday’s Roman Emperor dataset&lt;/a&gt; — posted on August 13, 2019&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# TidyTuesday&amp;#39;s given line of code to load the data
+emperors &amp;lt;- readr::read_csv(&amp;quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploring-the-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Exploring the Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(emperors)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 68 16&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;colnames(emperors)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;index&amp;quot;       &amp;quot;name&amp;quot;        &amp;quot;name_full&amp;quot;   &amp;quot;birth&amp;quot;       &amp;quot;death&amp;quot;      
+##  [6] &amp;quot;birth_cty&amp;quot;   &amp;quot;birth_prv&amp;quot;   &amp;quot;rise&amp;quot;        &amp;quot;reign_start&amp;quot; &amp;quot;reign_end&amp;quot;  
+## [11] &amp;quot;cause&amp;quot;       &amp;quot;killer&amp;quot;      &amp;quot;dynasty&amp;quot;     &amp;quot;era&amp;quot;         &amp;quot;notes&amp;quot;      
+## [16] &amp;quot;verif_who&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(birth_prv != &amp;quot;Unknown&amp;quot;) %&amp;gt;%
+  ggplot(aes(x = birth_prv)) +
+  geom_bar(aes(fill = birth_prv), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Birth Provinces of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 62 BC to 347 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;birth province&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  ggplot(aes(x = fct_rev(rise))) +
+  geom_bar(aes(fill = rise), stat = &amp;quot;count&amp;quot;) +
+  coord_flip() +
+  labs(title = &amp;quot;How Roman Emperors Rose to Power&amp;quot;,
+       subtitle = &amp;quot;Years 26 BC to 379 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(cause != &amp;quot;Unknown&amp;quot;) %&amp;gt;%
+  ggplot(aes(x = fct_rev(cause))) +
+  geom_bar(aes(fill = cause), stat = &amp;quot;count&amp;quot;) +
+  coord_flip() +
+  labs(title = &amp;quot;Causes of Death of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 14 AD to 395 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors$dynasty_factor &amp;lt;- factor(emperors$dynasty,
+                                  levels = unique(emperors$dynasty))
+
+emperors %&amp;gt;%
+  ggplot(aes(x = fct_rev(dynasty_factor))) +
+  geom_bar(aes(fill = dynasty_factor), stat = &amp;quot;count&amp;quot;) +
+  coord_flip() +
+  labs(title = &amp;quot;Roman Dynasties&amp;quot;,
+       subtitle = &amp;quot;Years 26 BC to 395 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Wrangling&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#extracting birth and death years
+emperors &amp;lt;- emperors %&amp;gt;%
+  separate(birth, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;birth_year&amp;quot;, &amp;quot;birth_month&amp;quot;, &amp;quot;birth_day&amp;quot;),
+           remove = FALSE) %&amp;gt;%
+  separate(death, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;death_year&amp;quot;, &amp;quot;death_month&amp;quot;, &amp;quot;death_day&amp;quot;),
+           remove = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# remove leading zeros and convert from character to numeric
+emperors$birth_year  &amp;lt;- as.numeric(emperors$birth_year)
+emperors$birth_month &amp;lt;- as.numeric(emperors$birth_month)
+emperors$birth_day   &amp;lt;- as.numeric(emperors$birth_day)
+emperors$death_year  &amp;lt;- as.numeric(emperors$death_year)
+emperors$death_month &amp;lt;- as.numeric(emperors$death_month)
+emperors$death_day   &amp;lt;- as.numeric(emperors$death_day)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# ensuring order of months for the graphs
+emperors$birth_month &amp;lt;- factor(emperors$birth_month,
+                               levels = 1:12)
+emperors$death_month &amp;lt;- factor(emperors$death_month,
+                               levels = 1:12)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(!is.na(birth_month)) %&amp;gt;%
+  ggplot(aes(x = birth_month)) +
+  geom_bar(aes(fill = birth_month), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Birth Months of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 26 BC to 347 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(!is.na(death_month)) %&amp;gt;%
+  ggplot(aes(x = death_month)) +
+  geom_bar(aes(fill = death_month), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Death Months of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 14 AD to 395 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# only a few year data points were BC, so here is a quick fix for &amp;quot;negative years&amp;quot;
+emperors$birth_year[1:3] &amp;lt;- -emperors$birth_year[1:3]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;emperors&lt;/code&gt; dataset had some missing values for &lt;code&gt;birth_year&lt;/code&gt;, so here is what I am going to due to &lt;em&gt;impute&lt;/em&gt; the missing values:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;calculate the lifespan of the other emperors&lt;/li&gt;
+&lt;li&gt;calculate the average lifespan&lt;/li&gt;
+&lt;li&gt;if &lt;code&gt;birth_year&lt;/code&gt; is missing, subtract &lt;code&gt;death_year&lt;/code&gt; by the average lifespan&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors$lifespan &amp;lt;- emperors$death_year - emperors$birth_year
+average_emperor_lifespan &amp;lt;- round(mean(emperors$lifespan, na.rm = TRUE))
+
+for(i in 1:nrow(emperors)){
+  if(is.na(emperors$birth_year[i])){
+    emperors$birth_year[i] &amp;lt;- emperors$death_year[i] - average_emperor_lifespan
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#later, ggplot had a minor issue with 7 (i.e. greater than 6) causes of death
+emperors$cause[emperors$cause == &amp;quot;Unknown&amp;quot;] &amp;lt;- &amp;quot;Natural Causes&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;main-graph&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Main Graph&lt;/h1&gt;
+&lt;p&gt;As inspired by &lt;span class=&#34;citation&#34;&gt;@JoshuaFeldman&lt;/span&gt;, the goals for today’s main graph include&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;birth years by province&lt;/li&gt;
+&lt;li&gt;death years by cause of death&lt;/li&gt;
+&lt;li&gt;reign as a line segment&lt;/li&gt;
+&lt;li&gt;segment color by dynasty&lt;/li&gt;
+&lt;li&gt;also delineate the two eras&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#extracting reign years
+emperors &amp;lt;- emperors %&amp;gt;%
+  separate(reign_start, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;reign_start_year&amp;quot;, &amp;quot;reign_start_month&amp;quot;, &amp;quot;reign_start_day&amp;quot;),
+           remove = FALSE) %&amp;gt;%
+  separate(reign_end, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;reign_end_year&amp;quot;, &amp;quot;reign_end_month&amp;quot;, &amp;quot;reign_end_day&amp;quot;),
+           remove = FALSE)
+
+emperors$reign_start_year  &amp;lt;- as.numeric(emperors$reign_start_year)
+emperors$reign_start_month &amp;lt;- as.numeric(emperors$reign_start_month)
+emperors$reign_start_day   &amp;lt;- as.numeric(emperors$reign_start_day)
+emperors$reign_end_year    &amp;lt;- as.numeric(emperors$reign_end_year)
+emperors$reign_end_month   &amp;lt;- as.numeric(emperors$reign_end_month)
+emperors$reign_end_day     &amp;lt;- as.numeric(emperors$reign_end_day)
+
+# only a few year data points were BC, so here is a quick fix for &amp;quot;negative years&amp;quot;
+emperors$reign_start_year[1:2] &amp;lt;- -emperors$reign_start_year[1:2]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;main_plot &amp;lt;- emperors %&amp;gt;%
+  ggplot() +
+  geom_segment(aes(x = reign_start_year, y = reorder(name, -reign_start_year), 
+                   xend = reign_end_year, yend = reorder(name, -reign_start_year),
+                   color = dynasty_factor, group = dynasty_factor),
+               data = emperors, size = 2) +
+  geom_point(aes(x = birth_year, y = reorder(name, -reign_start_year),
+                 group = birth_prv), 
+             color = &amp;quot;black&amp;quot;, size = 1) +
+  geom_point(aes(x = death_year, y = reorder(name, -reign_start_year),
+                 shape = cause, group = cause), 
+             color = &amp;quot;black&amp;quot;, size = 3) +
+  #geom_label(aes(x = birth_year, y = reorder(name, -reign_start_year), label = name)) +
+  scale_color_discrete(name = &amp;quot;Dynasty&amp;quot;) +
+  scale_shape_discrete(name = &amp;quot;Cause of Death&amp;quot;) +
+  labs(title = &amp;quot;Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Ordered by the start of their reign (small dots are birth years)&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;year&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#plot
+main_plot&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Recent Supreme Court Cases</title>
+      <link>https://dsollberger.netlify.com/post/recent-supreme-court-cases/</link>
+      <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/recent-supreme-court-cases/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Today, I am going to create an overly simplified view of the past 10 Supreme Court decisions for the sake of coding practice with the &lt;code&gt;ggplot&lt;/code&gt; package.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;data source: &lt;a href=&#34;https://www.scotusblog.com/&#34;&gt;SCOTUS Blog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;useful tool: &lt;a href=&#34;https://convert.town/&#34;&gt;Convert Town’s&lt;/a&gt; “Column to Comma Separated Values” function&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;p&gt;Just in case anyone actually uses my blog post, I will type out the data manually instead of load a separate CSV file so that anyone can copy-and-paste the code for replicability.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# building the small data frame this way simply for replicability
+case_number &amp;lt;- 37:46
+summary &amp;lt;- strsplit(&amp;quot;arbitration agreements,PR Finance Board,successive habeas,retirement lawsuits,extradition to torture,prisoner lawsuits,forest land use,LGBT job termination,Andrus counsel,DACA&amp;quot;,
+                    split = &amp;quot;,&amp;quot;)[[1]]
+case_name &amp;lt;- strsplit(&amp;quot;GE Energy Power Conversion France SAS v. Outokumpu Stainless USA LLC,Financial Oversight and Management Bd. for Puerto Rico v. Aurelius Investment LLC,Banister v. Davis,Thole v. U.S. Bank N.A.,Nasrallah v. Barr,Lomax v. Ortiz-Marquez,United States Forest Service v. Cowpasture River Preservation Assn.,Bostock v. Clayton County,Andrus v. Texas,Department of Homeland Security v. Regents of Univ. of Cal&amp;quot;, 
+                      split = &amp;quot;,&amp;quot;)[[1]]
+argued &amp;lt;- strsplit(&amp;quot;21-Jan-20,15-Oct-19,4-Dec-19,13-Jan-20,2-Mar-20,26-Feb-20,24-Feb-20,8-Oct-19,NA,12-Nov-19&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+decided &amp;lt;- strsplit(&amp;quot;1-Jun-20,1-Jun-20,1-Jun-20,1-Jun-20,1-Jun-20,8-Jun-20,15-Jun-20,15-Jun-20,15-Jun-20,18-Jun-20,&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+
+# the votes of the Supreme Court justices
+Roberts   &amp;lt;- strsplit(&amp;quot;O,O,O,O,O,O,O,O,O,O&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Thomas    &amp;lt;- strsplit(&amp;quot;O,O,D,O,D,O,O,D,D,D&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Ginsburg  &amp;lt;- strsplit(&amp;quot;O,O,O,D,O,O,O,O,O,O&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Breyer    &amp;lt;- strsplit(&amp;quot;O,O,O,D,O,O,O,O,O,O&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Alito     &amp;lt;- strsplit(&amp;quot;O,O,D,O,D,O,O,D,D,D&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Sotomayor &amp;lt;- strsplit(&amp;quot;O,O,O,D,O,O,D,O,O,O&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Kagan     &amp;lt;- strsplit(&amp;quot;O,O,O,D,O,O,D,O,O,O&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Gorsuch   &amp;lt;- strsplit(&amp;quot;O,O,O,O,O,O,O,O,D,D&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+Kavanaugh &amp;lt;- strsplit(&amp;quot;O,O,O,O,O,O,O,D,O,D&amp;quot;, split = &amp;quot;,&amp;quot;)[[1]]
+
+raw_data &amp;lt;- data.frame(case_number, summary, case_name, argued, decided,
+                       Roberts, Thomas, Ginsburg, Breyer, Alito,
+                       Sotomayor, Kagan, Gorsuch, Kavanaugh)
+
+dim(raw_data)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 10 14&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;At the moment, we have a data frame with 10 observations (i.e. 10 Supreme Court cases) and 14 variables.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidy-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Tidy Data&lt;/h1&gt;
+&lt;p&gt;Next, I want to &lt;code&gt;gather&lt;/code&gt; the justices’ votes (“opinion” or “dissent”) to make graphing easy.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df &amp;lt;- raw_data %&amp;gt;%
+  gather(key = &amp;quot;Justice&amp;quot;, value = &amp;quot;vote&amp;quot;, 
+         c(&amp;quot;Roberts&amp;quot;, &amp;quot;Thomas&amp;quot;, &amp;quot;Ginsburg&amp;quot;, &amp;quot;Breyer&amp;quot;, &amp;quot;Alito&amp;quot;,
+           &amp;quot;Sotomayor&amp;quot;, &amp;quot;Kagan&amp;quot;, &amp;quot;Gorsuch&amp;quot;, &amp;quot;Kavanaugh&amp;quot;))
+df$vote &amp;lt;- factor(df$vote,
+                  levels = c(&amp;quot;O&amp;quot;, &amp;quot;D&amp;quot;))
+
+dim(df)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 90  7&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That is, we now have a data frame with 90 observations (10 cases times 9 justices) and 7 variables.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;graph&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Graph&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;y_labels &amp;lt;- paste0(case_number, &amp;quot;: &amp;quot;, summary)
+
+df %&amp;gt;%
+  ggplot(aes(x = Justice, y = case_number)) +
+  geom_point(aes(shape = vote, color = vote), size = 5) +
+  
+  #http://www.sthda.com/english/wiki/ggplot2-point-shapes
+  scale_shape_manual(name = &amp;quot;Vote&amp;quot;, 
+                     values = c(16, 4),
+                     labels = c(&amp;quot;Court&amp;#39;s Opinion&amp;quot;, &amp;quot;Dissent Statement(s)&amp;quot;)) + 
+  scale_color_manual(name = &amp;quot;Vote&amp;quot;, 
+                       labels = c(&amp;quot;Court&amp;#39;s Opinion&amp;quot;, &amp;quot;Dissent Statement(s)&amp;quot;),
+                       values=c(&amp;quot;green&amp;quot;, &amp;quot;orange&amp;quot;)) +
+  
+  labs(title = &amp;quot;Recent Supreme Court Decisions&amp;quot;,
+       subtitle = &amp;quot;Justices supply the court&amp;#39;s &amp;#39;opinion&amp;#39; or &amp;#39;dissent&amp;#39; (Data source: SCOTUS Blog)&amp;quot;,
+       caption = &amp;quot;&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  scale_y_continuous(breaks = 37:46,
+                     labels = y_labels) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &amp;quot;top&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-18-recent-supreme-court-cases_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;captions &amp;lt;- paste0( rev(paste0(case_number, &amp;quot;: &amp;quot;, case_name)), collapse = &amp;quot;\n&amp;quot;)
+rev(paste0(case_number, &amp;quot;: &amp;quot;, case_name))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;46: Department of Homeland Security v. Regents of Univ. of Cal&amp;quot;                       
+##  [2] &amp;quot;45: Andrus v. Texas&amp;quot;                                                                  
+##  [3] &amp;quot;44: Bostock v. Clayton County&amp;quot;                                                        
+##  [4] &amp;quot;43: United States Forest Service v. Cowpasture River Preservation Assn.&amp;quot;              
+##  [5] &amp;quot;42: Lomax v. Ortiz-Marquez&amp;quot;                                                           
+##  [6] &amp;quot;41: Nasrallah v. Barr&amp;quot;                                                                
+##  [7] &amp;quot;40: Thole v. U.S. Bank N.A.&amp;quot;                                                          
+##  [8] &amp;quot;39: Banister v. Davis&amp;quot;                                                                
+##  [9] &amp;quot;38: Financial Oversight and Management Bd. for Puerto Rico v. Aurelius Investment LLC&amp;quot;
+## [10] &amp;quot;37: GE Energy Power Conversion France SAS v. Outokumpu Stainless USA LLC&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to Unsupervised Learning</title>
+      <link>https://dsollberger.netlify.com/post/introduction-to-unsupervised-learning/</link>
+      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/introduction-to-unsupervised-learning/</guid>
+      <description>
+
+
+&lt;div id=&#34;unsupervised-learning&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Unsupervised Learning&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supervised learning&lt;/strong&gt; has the goal of making predictions with a set of &lt;em&gt;known&lt;/em&gt; labels for the response variable.&lt;/li&gt;
+&lt;li&gt;In &lt;strong&gt;unsupervised learning&lt;/strong&gt;, we try to find structure in the data of the response variable without predetermined labels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Goal: organize the items available in the &lt;code&gt;Animal Crossing&lt;/code&gt; video game&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-set-animal-crossing&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data set: Animal Crossing&lt;/h1&gt;
+&lt;p&gt;Source: VillagerDB, MetaCritic, and TidyTuesday&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md&#34;&gt;Animal Crossing Tidy Tuesday&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;ggrepel&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)
+
+# critic &amp;lt;- readr::read_tsv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv&amp;#39;)
+# user_reviews &amp;lt;- readr::read_tsv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv&amp;#39;)
+items &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&amp;#39;)
+# villagers &amp;lt;- readr::read_csv(&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv&amp;#39;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploratory-data-analysis&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Exploratory Data Analysis&lt;/h1&gt;
+&lt;div id=&#34;variables&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;variables&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(items)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 4565   16&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;str(items)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## tibble [4,565 x 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ num_id       : num [1:4565] 12 14 17 19 20 21 23 24 26 26 ...
+##  $ id           : chr [1:4565] &amp;quot;3d-glasses&amp;quot; &amp;quot;a-tee&amp;quot; &amp;quot;abstract-wall&amp;quot; &amp;quot;academy-uniform&amp;quot; ...
+##  $ name         : chr [1:4565] &amp;quot;3D Glasses&amp;quot; &amp;quot;A Tee&amp;quot; &amp;quot;Abstract Wall&amp;quot; &amp;quot;Academy Uniform&amp;quot; ...
+##  $ category     : chr [1:4565] &amp;quot;Accessories&amp;quot; &amp;quot;Tops&amp;quot; &amp;quot;Wallpaper&amp;quot; &amp;quot;Dresses&amp;quot; ...
+##  $ orderable    : logi [1:4565] NA NA TRUE NA FALSE TRUE ...
+##  $ sell_value   : num [1:4565] 122 140 390 520 2000 375 420 330 8990 8990 ...
+##  $ sell_currency: chr [1:4565] &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; ...
+##  $ buy_value    : num [1:4565] 490 560 1560 2080 NA ...
+##  $ buy_currency : chr [1:4565] &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; ...
+##  $ sources      : chr [1:4565] NA NA &amp;quot;Nook&amp;#39;s Cranny&amp;quot; NA ...
+##  $ customizable : logi [1:4565] NA NA NA NA NA FALSE ...
+##  $ recipe       : num [1:4565] NA NA NA NA NA NA NA NA NA NA ...
+##  $ recipe_id    : chr [1:4565] NA NA NA NA ...
+##  $ games_id     : chr [1:4565] &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; ...
+##  $ id_full      : chr [1:4565] &amp;quot;item-3d-glasses&amp;quot; &amp;quot;item-a-tee&amp;quot; NA &amp;quot;item-academy-uniform&amp;quot; ...
+##  $ image_url    : chr [1:4565] &amp;quot;https://villagerdb.com/images/items/full/3d-glasses.b8e1b5a.png&amp;quot; &amp;quot;https://villagerdb.com/images/items/full/a-tee.a1af443.png&amp;quot; NA &amp;quot;https://villagerdb.com/images/items/full/academy-uniform.4475eb5.png&amp;quot; ...
+##  - attr(*, &amp;quot;problems&amp;quot;)= tibble [2 x 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ row     : int [1:2] 4472 4473
+##   ..$ col     : chr [1:2] &amp;quot;customizable&amp;quot; &amp;quot;customizable&amp;quot;
+##   ..$ expected: chr [1:2] &amp;quot;1/0/T/F/TRUE/FALSE&amp;quot; &amp;quot;1/0/T/F/TRUE/FALSE&amp;quot;
+##   ..$ actual  : chr [1:2] &amp;quot;Yes&amp;quot; &amp;quot;Yes&amp;quot;
+##   ..$ file    : chr [1:2] &amp;quot;&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&amp;#39;&amp;quot; &amp;quot;&amp;#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&amp;#39;&amp;quot;
+##  - attr(*, &amp;quot;spec&amp;quot;)=
+##   .. cols(
+##   ..   num_id = col_double(),
+##   ..   id = col_character(),
+##   ..   name = col_character(),
+##   ..   category = col_character(),
+##   ..   orderable = col_logical(),
+##   ..   sell_value = col_double(),
+##   ..   sell_currency = col_character(),
+##   ..   buy_value = col_double(),
+##   ..   buy_currency = col_character(),
+##   ..   sources = col_character(),
+##   ..   customizable = col_logical(),
+##   ..   recipe = col_double(),
+##   ..   recipe_id = col_character(),
+##   ..   games_id = col_character(),
+##   ..   id_full = col_character(),
+##   ..   image_url = col_character()
+##   .. )&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(items$category)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Accessories     Bottoms        Bugs     Dresses        Fish    Flooring 
+##         123         142          80         239         101         324 
+##     Flowers     Fossils       Fruit   Furniture        Hats       Music 
+##         109          76          12        1264         230          95 
+##      Photos   Seashells       Shoes       Socks       Tools        Tops 
+##         840           8          89          60          74         289 
+##   Umbrellas     Usables   Wallpaper 
+##          67          88         255&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(items$buy_value)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&amp;#39;s 
+##      40     870    1300    6960    2700 1200000    1014&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# table(items$buy_currency)
+summary(items$sell_value)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&amp;#39;s 
+##       5     240     390    2261    1000  300000      36&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(items$num_id)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      12    1722    3569    3662    5607    7443&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(items$recipe)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&amp;#39;s 
+##   1.000   2.000   3.000   4.711   6.000  90.000    3977&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;numerical-variables&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;numerical variables&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;items %&amp;gt;%
+  ggplot(aes(x = buy_value, y = sell_value, color = category)) +
+  geom_point() +
+  coord_trans(x = &amp;quot;log10&amp;quot;) + 
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Sell Values vs Buy Values&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = c(0, 10, 100, 1000, 10000, 100000, 1000000),
+                     labels = c(&amp;quot;0&amp;quot;, &amp;quot;10&amp;quot;, &amp;quot;100&amp;quot;, &amp;quot;1000&amp;quot;, &amp;quot;10000&amp;quot;, &amp;quot;100000&amp;quot;, &amp;quot;1000000&amp;quot;)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = c(0, 50000, 100000, 150000, 200000, 250000, 300000),
+                     labels = c(&amp;quot;0&amp;quot;, &amp;quot;50000&amp;quot;, &amp;quot;100000&amp;quot;, &amp;quot;150000&amp;quot;, &amp;quot;200000&amp;quot;, &amp;quot;250000&amp;quot;, &amp;quot;300000&amp;quot;)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 1035 rows containing missing values (geom_point).&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;k-means-clustering&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;K-Means Clustering&lt;/h1&gt;
+&lt;div id=&#34;first-look&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;first look&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_numerical &amp;lt;- items %&amp;gt;%
+  select(num_id, buy_value, sell_value, recipe) %&amp;gt;%
+  filter(complete.cases(.))
+
+summary(df_numerical$buy_value)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     240    3780    7080   16912   16480  320000&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(df_numerical$sell_value)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      60     945    1770    4228    4120   80000&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;clusters4 &amp;lt;- kmeans(df_numerical, 4)
+
+items_with_clusters &amp;lt;- cbind(df_numerical, clusters4$cluster)
+colnames(items_with_clusters) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;buy&amp;quot;, &amp;quot;sell&amp;quot;, &amp;quot;recipe&amp;quot;, &amp;quot;cluster&amp;quot;)
+items_with_clusters$cluster &amp;lt;- factor(items_with_clusters$cluster)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x_breaks &amp;lt;- c(0, 10, 100, 1000, 10000, 100000, 1000000)
+y_breaks &amp;lt;- c(0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000)
+
+items_with_clusters %&amp;gt;%
+  ggplot() +
+  geom_point(aes(x = buy, y = sell)) +
+  geom_point(aes(x = buy_value, y = sell_value), 
+             data = data.frame(clusters4$centers),
+             size = 5,
+             color = &amp;quot;blue&amp;quot;) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Cluster Centers&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;items_with_clusters %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;4 Clusters&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;selecting-the-amount-of-clusters&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;selecting the amount of clusters&lt;/h2&gt;
+&lt;p&gt;Selecting the number of clusters is rather subjective.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;too few clusters: items that are “far” from each other are still grouped together&lt;/li&gt;
+&lt;li&gt;too many clusters: harder to describe and label groups later&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We start with an &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;-dimensional data set of numerical variables and prescribe a number &lt;span class=&#34;math inline&#34;&gt;\(k\)&lt;/span&gt; for the number of clusters and run the &lt;code&gt;kmeans&lt;/code&gt; algorithm.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each cluster &lt;span class=&#34;math inline&#34;&gt;\(C_{k}\)&lt;/span&gt; has &lt;span class=&#34;math inline&#34;&gt;\(n_{k}\)&lt;/span&gt; points labeled &lt;span class=&#34;math inline&#34;&gt;\(x_{i}\)&lt;/span&gt; in &lt;span class=&#34;math inline&#34;&gt;\(d\)&lt;/span&gt;-dimensional space&lt;/li&gt;
+&lt;li&gt;Each cluster has a cluster center &lt;span class=&#34;math inline&#34;&gt;\(\mu_{k}\)&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;Each cluster has a &lt;em&gt;within-sum-of-squares&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[WSS = \displaystyle\sum_{x_{i} \in C_{k}} (x_{i} - \mu_{k})^{2}\]&lt;/span&gt;
+Thus, our metric for the clustering will be the reported &lt;em&gt;total-within-sum-of-squares&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[TWSS = \displaystyle\sum_{j=1}^{k}\sum_{x_{i} \in C_{k}} (x_{i} - \mu_{k})^{2}\]&lt;/span&gt;
+For example, the total-within-sum-of-squares for the 4-cluster results above is 3.148635410^{10}.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;scree-plot&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;scree plot&lt;/h2&gt;
+&lt;p&gt;It is common practice to build a &lt;em&gt;scree plot&lt;/em&gt; and look for the “elbow”.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;clusters1 &amp;lt;- kmeans(df_numerical, 1)
+clusters2 &amp;lt;- kmeans(df_numerical, 2)
+clusters3 &amp;lt;- kmeans(df_numerical, 3)
+clusters4 &amp;lt;- kmeans(df_numerical, 4)
+clusters5 &amp;lt;- kmeans(df_numerical, 5)
+clusters6 &amp;lt;- kmeans(df_numerical, 6)
+clusters7 &amp;lt;- kmeans(df_numerical, 7)
+clusters8 &amp;lt;- kmeans(df_numerical, 8)
+clusters9 &amp;lt;- kmeans(df_numerical, 9)
+
+TSS_vector &amp;lt;- c(clusters1$tot.withinss, clusters2$tot.withinss, clusters3$tot.withinss, 
+                clusters4$tot.withinss, clusters5$tot.withinss, clusters6$tot.withinss, 
+                clusters7$tot.withinss, clusters8$tot.withinss, clusters9$tot.withinss)
+
+k_vals &amp;lt;- 1:9
+df_for_scree_plot &amp;lt;- data.frame(k_vals, TSS_vector)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_for_scree_plot %&amp;gt;%
+  ggplot(aes(x = k_vals, y = TSS_vector)) +
+  geom_point(size = 3) +
+  geom_line() +
+  labs(title = &amp;quot;Scree Plot&amp;quot;,
+       subtitle = &amp;quot;(find the &amp;#39;elbow&amp;#39;)&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;,
+       x = &amp;quot;number of clusters&amp;quot;,
+       y = &amp;quot;total-within-sum-of-squares&amp;quot;) +
+  scale_x_discrete(name = &amp;quot;number of clusters&amp;quot;,
+                   breaks = paste(1:9),
+                   labels = paste(1:9),
+                   limits = 1:9) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;conclusion&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;It appears that the optimal number of clusters for our data set is &lt;span class=&#34;math inline&#34;&gt;\(k = 3\)&lt;/span&gt;.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;items_with_clusters &amp;lt;- cbind(df_numerical, clusters3$cluster)
+colnames(items_with_clusters) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;buy&amp;quot;, &amp;quot;sell&amp;quot;, &amp;quot;recipe&amp;quot;, &amp;quot;cluster&amp;quot;)
+items_with_clusters$cluster &amp;lt;- factor(items_with_clusters$cluster)
+
+df_categorical &amp;lt;- items %&amp;gt;%
+  select(num_id, name, category) %&amp;gt;%
+  filter(complete.cases(.))
+colnames(df_categorical) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;name&amp;quot;, &amp;quot;category&amp;quot;)
+
+main_df &amp;lt;- df_categorical %&amp;gt;%
+  inner_join(items_with_clusters, by = &amp;quot;ID&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;main_df %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Optimal Clustering&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;appendix-label-a-sample-of-points-from-each-cluster&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Appendix: label a sample of points from each cluster&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;label_df &amp;lt;- main_df %&amp;gt;%
+  group_by(cluster) %&amp;gt;%
+  sample_n(2)
+
+main_df %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  geom_label_repel(aes(x = buy, y = sell, label = name), 
+                   data = label_df,
+                   nudge_x = -1000,
+                   nudge_y = 10000) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Optimal Clustering&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to Unsupervised Learning</title>
+      <link>https://dsollberger.netlify.com/post/introduction-to-unsupervised-learning/</link>
+      <pubDate>Wed, 06 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/introduction-to-unsupervised-learning/</guid>
+      <description>&lt;h1 id=&#34;unsupervised-learning&#34;&gt;Unsupervised Learning&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Supervised learning&lt;/strong&gt; has the goal of making predictions with a set of &lt;em&gt;known&lt;/em&gt; labels for the response variable.&lt;/li&gt;
+&lt;li&gt;In &lt;strong&gt;unsupervised learning&lt;/strong&gt;, we try to find structure in the data of the response variable without predetermined labels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Goal: organize the items available in the &lt;code&gt;Animal Crossing&lt;/code&gt; video game&lt;/p&gt;
+&lt;h1 id=&#34;data-set-animal-crossing&#34;&gt;Data set: Animal Crossing&lt;/h1&gt;
+&lt;p&gt;Source:  VillagerDB, MetaCritic, and TidyTuesday&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-05-05/readme.md&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Animal Crossing Tidy Tuesday&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;ggrepel&amp;quot;)
+library(&amp;quot;tidyverse&amp;quot;)
+
+# critic &amp;lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/critic.tsv&#39;)
+# user_reviews &amp;lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/user_reviews.tsv&#39;)
+items &amp;lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&#39;)
+# villagers &amp;lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/villagers.csv&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;exploratory-data-analysis&#34;&gt;Exploratory Data Analysis&lt;/h1&gt;
+&lt;h2 id=&#34;variables&#34;&gt;variables&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;dim(items)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 4565   16
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;str(items)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## tibble [4,565 x 16] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ num_id       : num [1:4565] 12 14 17 19 20 21 23 24 26 26 ...
+##  $ id           : chr [1:4565] &amp;quot;3d-glasses&amp;quot; &amp;quot;a-tee&amp;quot; &amp;quot;abstract-wall&amp;quot; &amp;quot;academy-uniform&amp;quot; ...
+##  $ name         : chr [1:4565] &amp;quot;3D Glasses&amp;quot; &amp;quot;A Tee&amp;quot; &amp;quot;Abstract Wall&amp;quot; &amp;quot;Academy Uniform&amp;quot; ...
+##  $ category     : chr [1:4565] &amp;quot;Accessories&amp;quot; &amp;quot;Tops&amp;quot; &amp;quot;Wallpaper&amp;quot; &amp;quot;Dresses&amp;quot; ...
+##  $ orderable    : logi [1:4565] NA NA TRUE NA FALSE TRUE ...
+##  $ sell_value   : num [1:4565] 122 140 390 520 2000 375 420 330 8990 8990 ...
+##  $ sell_currency: chr [1:4565] &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; ...
+##  $ buy_value    : num [1:4565] 490 560 1560 2080 NA ...
+##  $ buy_currency : chr [1:4565] &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; &amp;quot;bells&amp;quot; ...
+##  $ sources      : chr [1:4565] NA NA &amp;quot;Nook&#39;s Cranny&amp;quot; NA ...
+##  $ customizable : logi [1:4565] NA NA NA NA NA FALSE ...
+##  $ recipe       : num [1:4565] NA NA NA NA NA NA NA NA NA NA ...
+##  $ recipe_id    : chr [1:4565] NA NA NA NA ...
+##  $ games_id     : chr [1:4565] &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; &amp;quot;nh&amp;quot; ...
+##  $ id_full      : chr [1:4565] &amp;quot;item-3d-glasses&amp;quot; &amp;quot;item-a-tee&amp;quot; NA &amp;quot;item-academy-uniform&amp;quot; ...
+##  $ image_url    : chr [1:4565] &amp;quot;https://villagerdb.com/images/items/full/3d-glasses.b8e1b5a.png&amp;quot; &amp;quot;https://villagerdb.com/images/items/full/a-tee.a1af443.png&amp;quot; NA &amp;quot;https://villagerdb.com/images/items/full/academy-uniform.4475eb5.png&amp;quot; ...
+##  - attr(*, &amp;quot;problems&amp;quot;)= tibble [2 x 5] (S3: tbl_df/tbl/data.frame)
+##   ..$ row     : int [1:2] 4472 4473
+##   ..$ col     : chr [1:2] &amp;quot;customizable&amp;quot; &amp;quot;customizable&amp;quot;
+##   ..$ expected: chr [1:2] &amp;quot;1/0/T/F/TRUE/FALSE&amp;quot; &amp;quot;1/0/T/F/TRUE/FALSE&amp;quot;
+##   ..$ actual  : chr [1:2] &amp;quot;Yes&amp;quot; &amp;quot;Yes&amp;quot;
+##   ..$ file    : chr [1:2] &amp;quot;&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&#39;&amp;quot; &amp;quot;&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-05/items.csv&#39;&amp;quot;
+##  - attr(*, &amp;quot;spec&amp;quot;)=
+##   .. cols(
+##   ..   num_id = col_double(),
+##   ..   id = col_character(),
+##   ..   name = col_character(),
+##   ..   category = col_character(),
+##   ..   orderable = col_logical(),
+##   ..   sell_value = col_double(),
+##   ..   sell_currency = col_character(),
+##   ..   buy_value = col_double(),
+##   ..   buy_currency = col_character(),
+##   ..   sources = col_character(),
+##   ..   customizable = col_logical(),
+##   ..   recipe = col_double(),
+##   ..   recipe_id = col_character(),
+##   ..   games_id = col_character(),
+##   ..   id_full = col_character(),
+##   ..   image_url = col_character()
+##   .. )
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(items$category)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Accessories     Bottoms        Bugs     Dresses        Fish    Flooring 
+##         123         142          80         239         101         324 
+##     Flowers     Fossils       Fruit   Furniture        Hats       Music 
+##         109          76          12        1264         230          95 
+##      Photos   Seashells       Shoes       Socks       Tools        Tops 
+##         840           8          89          60          74         289 
+##   Umbrellas     Usables   Wallpaper 
+##          67          88         255
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(items$buy_value)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##      40     870    1300    6960    2700 1200000    1014
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;# table(items$buy_currency)
+summary(items$sell_value)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##       5     240     390    2261    1000  300000      36
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(items$num_id)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      12    1722    3569    3662    5607    7443
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(items$recipe)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##   1.000   2.000   3.000   4.711   6.000  90.000    3977
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;numerical-variables&#34;&gt;numerical variables&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;items %&amp;gt;%
+  ggplot(aes(x = buy_value, y = sell_value, color = category)) +
+  geom_point() +
+  coord_trans(x = &amp;quot;log10&amp;quot;) + 
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Sell Values vs Buy Values&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = c(0, 10, 100, 1000, 10000, 100000, 1000000),
+                     labels = c(&amp;quot;0&amp;quot;, &amp;quot;10&amp;quot;, &amp;quot;100&amp;quot;, &amp;quot;1000&amp;quot;, &amp;quot;10000&amp;quot;, &amp;quot;100000&amp;quot;, &amp;quot;1000000&amp;quot;)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = c(0, 50000, 100000, 150000, 200000, 250000, 300000),
+                     labels = c(&amp;quot;0&amp;quot;, &amp;quot;50000&amp;quot;, &amp;quot;100000&amp;quot;, &amp;quot;150000&amp;quot;, &amp;quot;200000&amp;quot;, &amp;quot;250000&amp;quot;, &amp;quot;300000&amp;quot;)) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: Removed 1035 rows containing missing values (geom_point).
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;h1 id=&#34;k-means-clustering&#34;&gt;K-Means Clustering&lt;/h1&gt;
+&lt;h2 id=&#34;first-look&#34;&gt;first look&lt;/h2&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;df_numerical &amp;lt;- items %&amp;gt;%
+  select(num_id, buy_value, sell_value, recipe) %&amp;gt;%
+  filter(complete.cases(.))
+
+summary(df_numerical$buy_value)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     240    3780    7080   16912   16480  320000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;summary(df_numerical$sell_value)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##      60     945    1770    4228    4120   80000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;clusters4 &amp;lt;- kmeans(df_numerical, 4)
+
+items_with_clusters &amp;lt;- cbind(df_numerical, clusters4$cluster)
+colnames(items_with_clusters) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;buy&amp;quot;, &amp;quot;sell&amp;quot;, &amp;quot;recipe&amp;quot;, &amp;quot;cluster&amp;quot;)
+items_with_clusters$cluster &amp;lt;- factor(items_with_clusters$cluster)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;x_breaks &amp;lt;- c(0, 10, 100, 1000, 10000, 100000, 1000000)
+y_breaks &amp;lt;- c(0, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000)
+
+items_with_clusters %&amp;gt;%
+  ggplot() +
+  geom_point(aes(x = buy, y = sell)) +
+  geom_point(aes(x = buy_value, y = sell_value), 
+             data = data.frame(clusters4$centers),
+             size = 5,
+             color = &amp;quot;blue&amp;quot;) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Cluster Centers&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-8-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;items_with_clusters %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;4 Clusters&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-9-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;h2 id=&#34;selecting-the-amount-of-clusters&#34;&gt;selecting the amount of clusters&lt;/h2&gt;
+&lt;p&gt;Selecting the number of clusters is rather subjective.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;too few clusters: items that are &amp;ldquo;far&amp;rdquo; from each other are still grouped together&lt;/li&gt;
+&lt;li&gt;too many clusters: harder to describe and label groups later&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We start with an $d$-dimensional data set of numerical variables and prescribe a number $k$ for the number of clusters and run the &lt;code&gt;kmeans&lt;/code&gt; algorithm.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each cluster $C_{k}$ has $n_{k}$ points labeled $x_{i}$ in $d$-dimensional space&lt;/li&gt;
+&lt;li&gt;Each cluster has a cluster center $\mu_{k}$&lt;/li&gt;
+&lt;li&gt;Each cluster has a &lt;em&gt;within-sum-of-squares&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;$$WSS = \displaystyle\sum_{x_{i} \in C_{k}} (x_{i} - \mu_{k})^{2}$$
+Thus, our metric for the clustering will be the reported &lt;em&gt;total-within-sum-of-squares&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;$$TWSS = \displaystyle\sum_{j=1}^{k}\sum_{x_{i} \in C_{k}} (x_{i} - \mu_{k})^{2}$$
+For example, the total-within-sum-of-squares for the 4-cluster results above is 3.1486354\times 10^{10}.&lt;/p&gt;
+&lt;h2 id=&#34;scree-plot&#34;&gt;scree plot&lt;/h2&gt;
+&lt;p&gt;It is common practice to build a &lt;em&gt;scree plot&lt;/em&gt; and look for the &amp;ldquo;elbow&amp;rdquo;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;clusters1 &amp;lt;- kmeans(df_numerical, 1)
+clusters2 &amp;lt;- kmeans(df_numerical, 2)
+clusters3 &amp;lt;- kmeans(df_numerical, 3)
+clusters4 &amp;lt;- kmeans(df_numerical, 4)
+clusters5 &amp;lt;- kmeans(df_numerical, 5)
+clusters6 &amp;lt;- kmeans(df_numerical, 6)
+clusters7 &amp;lt;- kmeans(df_numerical, 7)
+clusters8 &amp;lt;- kmeans(df_numerical, 8)
+clusters9 &amp;lt;- kmeans(df_numerical, 9)
+
+TSS_vector &amp;lt;- c(clusters1$tot.withinss, clusters2$tot.withinss, clusters3$tot.withinss, 
+                clusters4$tot.withinss, clusters5$tot.withinss, clusters6$tot.withinss, 
+                clusters7$tot.withinss, clusters8$tot.withinss, clusters9$tot.withinss)
+
+k_vals &amp;lt;- 1:9
+df_for_scree_plot &amp;lt;- data.frame(k_vals, TSS_vector)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;df_for_scree_plot %&amp;gt;%
+  ggplot(aes(x = k_vals, y = TSS_vector)) +
+  geom_point(size = 3) +
+  geom_line() +
+  labs(title = &amp;quot;Scree Plot&amp;quot;,
+       subtitle = &amp;quot;(find the &#39;elbow&#39;)&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;,
+       x = &amp;quot;number of clusters&amp;quot;,
+       y = &amp;quot;total-within-sum-of-squares&amp;quot;) +
+  scale_x_discrete(name = &amp;quot;number of clusters&amp;quot;,
+                   breaks = paste(1:9),
+                   labels = paste(1:9),
+                   limits = 1:9) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;h1 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;It appears that the optimal number of clusters for our data set is $k = 3$.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;items_with_clusters &amp;lt;- cbind(df_numerical, clusters3$cluster)
+colnames(items_with_clusters) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;buy&amp;quot;, &amp;quot;sell&amp;quot;, &amp;quot;recipe&amp;quot;, &amp;quot;cluster&amp;quot;)
+items_with_clusters$cluster &amp;lt;- factor(items_with_clusters$cluster)
+
+df_categorical &amp;lt;- items %&amp;gt;%
+  select(num_id, name, category) %&amp;gt;%
+  filter(complete.cases(.))
+colnames(df_categorical) &amp;lt;- c(&amp;quot;ID&amp;quot;, &amp;quot;name&amp;quot;, &amp;quot;category&amp;quot;)
+
+main_df &amp;lt;- df_categorical %&amp;gt;%
+  inner_join(items_with_clusters, by = &amp;quot;ID&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;main_df %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Optimal Clustering&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-13-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;h1 id=&#34;appendix-label-a-sample-of-points-from-each-cluster&#34;&gt;Appendix: label a sample of points from each cluster&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;label_df &amp;lt;- main_df %&amp;gt;%
+  group_by(cluster) %&amp;gt;%
+  sample_n(2)
+
+main_df %&amp;gt;%
+  ggplot(group = cluster) +
+  geom_point(aes(x = buy, y = sell, color = cluster), size = 3) +
+  geom_label_repel(aes(x = buy, y = sell, label = name), 
+                   data = label_df,
+                   nudge_x = -1000,
+                   nudge_y = 10000) +
+  coord_trans(x = &amp;quot;log10&amp;quot;) +
+  labs(title = &amp;quot;Items in Animal Crossing&amp;quot;,
+       subtitle = &amp;quot;Optimal Clustering&amp;quot;,
+       caption = &amp;quot;Math 32&amp;quot;) +
+  scale_x_continuous(name = &amp;quot;Buy Value&amp;quot;,
+                     breaks = x_breaks,
+                     labels = paste(x_breaks)) +
+  scale_y_continuous(name = &amp;quot;Sell Value&amp;quot;,
+                     breaks = y_breaks,
+                     labels = paste(y_breaks)) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2020-05-06-introduction-to-unsupervised-learning_files/figure-html/unnamed-chunk-14-1.png&#34; width=&#34;672&#34; /&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Hikes I&#39;ve Completed</title>
+      <link>https://dsollberger.netlify.com/post/hikes-i-ve-completed/</link>
+      <pubDate>Sat, 11 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/hikes-i-ve-completed/</guid>
+      <description>
+
+
+&lt;p&gt;Here I will plot some of the hikes I have done as elevation (from sea level) versus distance. I was inspired by &lt;a href=&#34;https://www.reddit.com/r/dataisbeautiful/comments/bwm184/my_first_attempt_at_data_visualization_hikes_ive/&#34;&gt;this Reddit post&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Today’s code was great practice with&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;geom_segment&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;geom_label_repel&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;and using &lt;code&gt;xlim&lt;/code&gt; and &lt;code&gt;ylim&lt;/code&gt; to expand the plot.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(ggrepel)
+library(tidyverse)
+library(readxl)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_info &amp;lt;- read_excel(&amp;quot;hikes.xlsx&amp;quot;, sheet = &amp;quot;info&amp;quot;)
+df_info %&amp;gt;% print()&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 9 x 6
+##   Region    trail                distance trailhead elevation  peak
+##   &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;                   &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+## 1 Tahoe     Mt Tallac                 5.1      6445      3290  9735
+## 2 Tahoe     Flume                     6.4      6980      1420  8400
+## 3 Tahoe     Mt Rose                   5.4      8388      2388 10776
+## 4 Tahoe     Relay Peak                4.7      8388      1515  9903
+## 5 Tahoe     Donner Peak               1.9      6175       882  7057
+## 6 Yosemite  Four-Mile                 4.7      4000      3200  7200
+## 7 Yosemite  Nevada Falls              4.4      4000      2191  6191
+## 8 Yosemite  Upper Yosemite Falls      3.6      4000      3175  7175
+## 9 Mt Diablo Waterfall                 4         374      1709  2083&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df_info %&amp;gt;%
+  mutate(start = 0) %&amp;gt;% #the first x-value for each line segment
+  ggplot() +
+  geom_segment(aes(x = start, y = trailhead, 
+                   xend = distance, yend = peak, 
+                   color = Region)) +
+  geom_label_repel(aes(x = distance, y = peak, 
+                       color = Region,
+                       label = trail),
+                   box.padding = 1,
+                   segment.color = &amp;quot;grey50&amp;quot;,
+                   segment.size = 0.5) +
+  geom_point(aes(x = distance, y = peak, color = Region), size = 5) +
+  labs(title = &amp;quot;Hikes I&amp;#39;ve Completed&amp;quot;,
+       subtitle = &amp;quot;Derek Sollberger&amp;quot;,
+       caption = &amp;quot;2010 to 2019&amp;quot;,
+       x = &amp;quot;One-Way Distance (in miles)&amp;quot;,
+       y = &amp;quot;Elevation (in feet)&amp;quot;) +
+  theme_minimal() +
+  xlim(0,8) +
+  ylim(0, 15000)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-01-11-hikes-i-ve-completed_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to R Workshop</title>
+      <link>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</guid>
+      <description>
+
+
+&lt;div id=&#34;packages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Packages&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;workshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;)
+install.packages(workshop_packages)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;gganimate&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;ggplot2&amp;quot;)
+library(&amp;quot;mosaic&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: dplyr&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;dplyr&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:stats&amp;#39;:
+## 
+##     filter, lag&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:base&amp;#39;:
+## 
+##     intersect, setdiff, setequal, union&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: lattice&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggformula&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggstance&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;ggstance&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:ggplot2&amp;#39;:
+## 
+##     geom_errorbarh, GeomErrorbarh&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## New to ggformula?  Try the tutorials: 
+##  learnr::run_tutorial(&amp;quot;introduction&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
+##  learnr::run_tutorial(&amp;quot;refining&amp;quot;, package = &amp;quot;ggformula&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: mosaicData&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: Matrix&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## The &amp;#39;mosaic&amp;#39; package masks several functions from core packages in order to add 
+## additional features.  The original behavior of these functions should not be affected by this.
+## 
+## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;mosaic&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:Matrix&amp;#39;:
+## 
+##     mean&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:dplyr&amp;#39;:
+## 
+##     count, do, tally&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:ggplot2&amp;#39;:
+## 
+##     stat&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:stats&amp;#39;:
+## 
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median,
+##     prop.test, quantile, sd, t.test, var&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:base&amp;#39;:
+## 
+##     max, mean, min, prod, range, sample, sum&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(Weather)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 25
+## # Groups:   city, year [1]
+##   city  date        year month   day high_temp avg_temp low_temp high_dewpt
+##   &amp;lt;chr&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1 Auck~ 2016-01-01  2016     1     1        68       65       62         64
+## 2 Auck~ 2016-01-02  2016     1     2        68       66       64         64
+## 3 Auck~ 2016-01-03  2016     1     3        77       72       66         70
+## 4 Auck~ 2016-01-04  2016     1     4        73       66       60         66
+## 5 Auck~ 2016-01-05  2016     1     5        69       62       55         55
+## 6 Auck~ 2016-01-06  2016     1     6        69       63       57         54
+## # ... with 16 more variables: avg_dewpt &amp;lt;dbl&amp;gt;, low_dewpt &amp;lt;dbl&amp;gt;,
+## #   high_humidity &amp;lt;dbl&amp;gt;, avg_humidity &amp;lt;dbl&amp;gt;, low_humidity &amp;lt;dbl&amp;gt;,
+## #   high_hg &amp;lt;dbl&amp;gt;, avg_hg &amp;lt;dbl&amp;gt;, low_hg &amp;lt;dbl&amp;gt;, high_vis &amp;lt;dbl&amp;gt;,
+## #   avg_vis &amp;lt;dbl&amp;gt;, low_vis &amp;lt;dbl&amp;gt;, high_wind &amp;lt;dbl&amp;gt;, avg_wind &amp;lt;dbl&amp;gt;,
+## #   low_wind &amp;lt;dbl&amp;gt;, precip &amp;lt;chr&amp;gt;, events &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(Weather$city)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Auckland   Beijing   Chicago    Mumbai San Diego 
+##       731       731       731       731       731&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(Weather$year)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## 2016 2017 
+## 1830 1825&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sample-statistics&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sample Statistics&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(Weather$high_temp)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 71.32421&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;median(Weather$precip)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sd(Weather$avg_wind)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3.865026&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plotting&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Plotting&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Chicago &amp;lt;- subset(Weather, city == &amp;quot;Chicago&amp;quot;)
+
+# boxplots
+ggplot(Chicago, aes(x = month, y = high_temp, group = month, fill = month)) +
+  geom_boxplot() +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;month&amp;quot;,
+       y = &amp;quot;high temperature&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;regression&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Regression&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
+  geom_point() +
+  geom_smooth(method = &amp;quot;lm&amp;quot;) +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;hypothesis-testing&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Hypothesis Testing&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;SanDiego &amp;lt;- subset(Weather, city == &amp;quot;San Diego&amp;quot;)
+
+# Do Chicago and San Diego have the same high temperatures?
+t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &amp;quot;two.sided&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Welch Two Sample t-test
+## 
+## data:  Chicago$high_temp and SanDiego$high_temp
+## t = -14.221, df = 886.31, p-value &amp;lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -13.21560 -10.01012
+## sample estimates:
+## mean of x mean of y 
+##  61.00821  72.62107&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;animation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Animation&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
+  geom_point() +
+  labs(title = &amp;quot;Worldwide Weather (2016-2017)&amp;quot;,
+       caption = &amp;quot;Source: Mosaic Foundation&amp;quot;,
+       subtitle = &amp;quot;(by months)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal() +
+  transition_states(month, transition_length = 1, state_length = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to R Workshop</title>
+      <link>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</guid>
+      <description>&lt;h1 id=&#34;packages&#34;&gt;Packages&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;workshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;)
+install.packages(workshop_packages)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;gganimate&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;ggplot2&amp;quot;)
+library(&amp;quot;mosaic&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: dplyr
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &#39;dplyr&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: lattice
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggformula
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggstance
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &#39;ggstance&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     geom_errorbarh, GeomErrorbarh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## New to ggformula?  Try the tutorials: 
+## 	learnr::run_tutorial(&amp;quot;introduction&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
+## 	learnr::run_tutorial(&amp;quot;refining&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: mosaicData
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: Matrix
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## The &#39;mosaic&#39; package masks several functions from core packages in order to add 
+## additional features.  The original behavior of these functions should not be affected by this.
+## 
+## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &#39;mosaic&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &#39;package:Matrix&#39;:
+## 
+##     mean
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     count, do, tally
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     stat
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median,
+##     prop.test, quantile, sd, t.test, var
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:base&#39;:
+## 
+##     max, mean, min, prod, range, sample, sum
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;data&#34;&gt;Data&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;head(Weather)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 25
+## # Groups:   city, year [1]
+##   city  date        year month   day high_temp avg_temp low_temp high_dewpt
+##   &amp;lt;chr&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1 Auck~ 2016-01-01  2016     1     1        68       65       62         64
+## 2 Auck~ 2016-01-02  2016     1     2        68       66       64         64
+## 3 Auck~ 2016-01-03  2016     1     3        77       72       66         70
+## 4 Auck~ 2016-01-04  2016     1     4        73       66       60         66
+## 5 Auck~ 2016-01-05  2016     1     5        69       62       55         55
+## 6 Auck~ 2016-01-06  2016     1     6        69       63       57         54
+## # ... with 16 more variables: avg_dewpt &amp;lt;dbl&amp;gt;, low_dewpt &amp;lt;dbl&amp;gt;,
+## #   high_humidity &amp;lt;dbl&amp;gt;, avg_humidity &amp;lt;dbl&amp;gt;, low_humidity &amp;lt;dbl&amp;gt;,
+## #   high_hg &amp;lt;dbl&amp;gt;, avg_hg &amp;lt;dbl&amp;gt;, low_hg &amp;lt;dbl&amp;gt;, high_vis &amp;lt;dbl&amp;gt;,
+## #   avg_vis &amp;lt;dbl&amp;gt;, low_vis &amp;lt;dbl&amp;gt;, high_wind &amp;lt;dbl&amp;gt;, avg_wind &amp;lt;dbl&amp;gt;,
+## #   low_wind &amp;lt;dbl&amp;gt;, precip &amp;lt;chr&amp;gt;, events &amp;lt;chr&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(Weather$city)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Auckland   Beijing   Chicago    Mumbai San Diego 
+##       731       731       731       731       731
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(Weather$year)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## 2016 2017 
+## 1830 1825
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;sample-statistics&#34;&gt;Sample Statistics&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;mean(Weather$high_temp)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 71.32421
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;median(Weather$precip)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;0&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;sd(Weather$avg_wind)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3.865026
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;plotting&#34;&gt;Plotting&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;Chicago &amp;lt;- subset(Weather, city == &amp;quot;Chicago&amp;quot;)
+
+# boxplots
+ggplot(Chicago, aes(x = month, y = high_temp, group = month, fill = month)) +
+  geom_boxplot() +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;month&amp;quot;,
+       y = &amp;quot;high temperature&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;h1 id=&#34;regression&#34;&gt;Regression&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
+  geom_point() +
+  geom_smooth(method = &amp;quot;lm&amp;quot;) +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;h1 id=&#34;hypothesis-testing&#34;&gt;Hypothesis Testing&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;SanDiego &amp;lt;- subset(Weather, city == &amp;quot;San Diego&amp;quot;)
+
+# Do Chicago and San Diego have the same high temperatures?
+t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &amp;quot;two.sided&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## 	Welch Two Sample t-test
+## 
+## data:  Chicago$high_temp and SanDiego$high_temp
+## t = -14.221, df = 886.31, p-value &amp;lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -13.21560 -10.01012
+## sample estimates:
+## mean of x mean of y 
+##  61.00821  72.62107
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;animation&#34;&gt;Animation&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
+  geom_point() +
+  labs(title = &amp;quot;Worldwide Weather (2016-2017)&amp;quot;,
+       caption = &amp;quot;Source: Mosaic Foundation&amp;quot;,
+       subtitle = &amp;quot;(by months)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal() +
+  transition_states(month, transition_length = 1, state_length = 1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;!-- --&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Supreme Court Confirmations (1967-present)</title>
+      <link>https://dsollberger.netlify.com/post/supreme-court-confirmations-1967-present/</link>
+      <pubDate>Sun, 07 Oct 2018 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/supreme-court-confirmations-1967-present/</guid>
+      <description>
+&lt;script src=&#34;https://dsollberger.netlify.com/rmarkdown-libs/htmlwidgets/htmlwidgets.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://dsollberger.netlify.com/rmarkdown-libs/jquery/jquery.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://dsollberger.netlify.com/rmarkdown-libs/datatables-css/datatables-crosstalk.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://dsollberger.netlify.com/rmarkdown-libs/datatables-binding/datatables.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://dsollberger.netlify.com/rmarkdown-libs/dt-core/css/jquery.dataTables.min.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;link href=&#34;https://dsollberger.netlify.com/rmarkdown-libs/dt-core/css/jquery.dataTables.extra.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://dsollberger.netlify.com/rmarkdown-libs/dt-core/js/jquery.dataTables.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://dsollberger.netlify.com/rmarkdown-libs/crosstalk/css/crosstalk.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://dsollberger.netlify.com/rmarkdown-libs/crosstalk/js/crosstalk.min.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://dsollberger.netlify.com/rmarkdown-libs/plotly-binding/plotly.js&#34;&gt;&lt;/script&gt;
+&lt;script src=&#34;https://dsollberger.netlify.com/rmarkdown-libs/typedarray/typedarray.min.js&#34;&gt;&lt;/script&gt;
+&lt;link href=&#34;https://dsollberger.netlify.com/rmarkdown-libs/plotly-htmlwidgets-css/plotly-htmlwidgets.css&#34; rel=&#34;stylesheet&#34; /&gt;
+&lt;script src=&#34;https://dsollberger.netlify.com/rmarkdown-libs/plotly-main/plotly-latest.min.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;Following up on &lt;a href=&#34;https://twitter.com/rachelwellford/status/1048308997219082240&#34;&gt;Rachel Wellford’s tweet&lt;/a&gt; about Senate votes for Supreme Court confirmations, I decided to try to graph the data. Below, I have&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;a &lt;code&gt;ggplot&lt;/code&gt; picture with decent labeling&lt;/li&gt;
+&lt;li&gt;a searchable &lt;code&gt;datatable&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;a &lt;code&gt;plotly&lt;/code&gt; interactive graph&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The data came from &lt;a href=&#34;https://www.senate.gov/pagelayout/reference/nominations/Nominations.htm&#34;&gt;Senate.gov&lt;/a&gt;. I chose to focus on 1967 onward because it appeared that voting procedures were slightly different before Thurgood Marshall’s nomination process. Otherwise, I would have chosen to go back to when the Senate first had 100 members.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;DT&amp;quot;)
+library(&amp;quot;ggplot2&amp;quot;)
+library(&amp;quot;ggrepel&amp;quot;)
+library(&amp;quot;plotly&amp;quot;)
+library(&amp;quot;readxl&amp;quot;)
+scc &amp;lt;- read_excel(&amp;quot;../../static/Supreme Court confirmations.xlsx&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;ggplot&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;ggplot&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(scc, aes(x = Nay, y = Yea, label = Last)) +
+  geom_point() +
+  geom_text_repel() +
+  labs(x = &amp;quot;Nay votes&amp;quot;, y = &amp;quot;Yea votes&amp;quot;, 
+       title = &amp;quot;Supreme Court Confirmations (1967 to present)&amp;quot;,
+       subtitle = &amp;quot;Marshall to Kavanaugh&amp;quot;,
+       caption = &amp;quot;Source: Senate.gov&amp;quot;) + 
+  xlim(c(-10, 60)) +
+  ylim(c(40, 110))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2018-10-07-supreme-court-confirmations-1967-present_files/figure-html/unnamed-chunk-2-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;datatable&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Datatable&lt;/h3&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;DT::datatable(scc)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-1&#34; style=&#34;width:100%;height:auto;&#34; class=&#34;datatables html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-1&#34;&gt;{&#34;x&#34;:{&#34;filter&#34;:&#34;none&#34;,&#34;data&#34;:[[&#34;1&#34;,&#34;2&#34;,&#34;3&#34;,&#34;4&#34;,&#34;5&#34;,&#34;6&#34;,&#34;7&#34;,&#34;8&#34;,&#34;9&#34;,&#34;10&#34;,&#34;11&#34;,&#34;12&#34;,&#34;13&#34;,&#34;14&#34;,&#34;15&#34;,&#34;16&#34;,&#34;17&#34;,&#34;18&#34;,&#34;19&#34;],[&#34;Brett Kavanaugh&#34;,&#34;Neil Gorsuch&#34;,&#34;Elena Kagan&#34;,&#34;Sonia Sotomayor&#34;,&#34;Samuel Alito&#34;,&#34;John Roberts&#34;,&#34;Steven Breyer&#34;,&#34;Ruth Bader Ginsburg&#34;,&#34;Clarence Thomas&#34;,&#34;David Souter&#34;,&#34;Anthony Kennedy&#34;,&#34;Antonin Scalia&#34;,&#34;Sandra Day O&#39;Connor&#34;,&#34;John Paul Stevens&#34;,&#34;William Rehnquist&#34;,&#34;Lewis Powell&#34;,&#34;Harry Blackmun&#34;,&#34;Warren Burger&#34;,&#34;Thurgood Marshall&#34;],[&#34;2018-07-10T00:00:00Z&#34;,&#34;2017-02-01T00:00:00Z&#34;,&#34;2010-05-10T00:00:00Z&#34;,&#34;2009-06-01T00:00:00Z&#34;,&#34;2005-11-10T00:00:00Z&#34;,&#34;2005-09-06T00:00:00Z&#34;,&#34;1994-05-17T00:00:00Z&#34;,&#34;1993-07-22T00:00:00Z&#34;,&#34;1991-07-08T00:00:00Z&#34;,&#34;1990-07-25T00:00:00Z&#34;,&#34;1987-11-30T00:00:00Z&#34;,&#34;1986-06-24T00:00:00Z&#34;,&#34;1981-08-19T00:00:00Z&#34;,&#34;1975-11-28T00:00:00Z&#34;,&#34;1971-10-22T00:00:00Z&#34;,&#34;1971-10-22T00:00:00Z&#34;,&#34;1970-04-15T00:00:00Z&#34;,&#34;1969-05-23T00:00:00Z&#34;,&#34;1967-06-13T00:00:00Z&#34;],[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],[48,45,37,31,42,22,9,3,48,9,0,0,0,0,26,1,0,3,11],[&#34;2018-10-06T00:00:00Z&#34;,&#34;2017-04-07T00:00:00Z&#34;,&#34;2010-08-05T00:00:00Z&#34;,&#34;2009-08-06T00:00:00Z&#34;,&#34;2006-01-31T00:00:00Z&#34;,&#34;2005-09-29T00:00:00Z&#34;,&#34;1994-07-29T00:00:00Z&#34;,&#34;1993-08-03T00:00:00Z&#34;,&#34;1991-10-15T00:00:00Z&#34;,&#34;1990-10-02T00:00:00Z&#34;,&#34;1998-02-03T00:00:00Z&#34;,&#34;1986-09-17T00:00:00Z&#34;,&#34;1981-09-21T00:00:00Z&#34;,&#34;1975-12-17T00:00:00Z&#34;,&#34;1971-12-10T00:00:00Z&#34;,&#34;1971-12-06T00:00:00Z&#34;,&#34;1970-05-12T00:00:00Z&#34;,&#34;1969-06-09T00:00:00Z&#34;,&#34;1967-08-30T00:00:00Z&#34;],[&#34;Donald Trump&#34;,&#34;Donald Trump&#34;,&#34;Barack Obama&#34;,&#34;Barack Obama&#34;,&#34;George W. Bush&#34;,&#34;George W. Bush&#34;,&#34;Bill Clinton&#34;,&#34;Bill Clinton&#34;,&#34;George H.W. Bush&#34;,&#34;George H.W. Bush&#34;,&#34;Ronald Reagan&#34;,&#34;Ronald Reagan&#34;,&#34;Ronald Reagan&#34;,&#34;Gerald Ford&#34;,&#34;Richard Nixon&#34;,&#34;Richard Nixon&#34;,&#34;Richard Nixon&#34;,&#34;Richard Nixon&#34;,&#34;Lyndon Johnson&#34;],[&#34;Brett&#34;,&#34;Neil&#34;,&#34;Elena&#34;,&#34;Sonia&#34;,&#34;Samuel&#34;,&#34;John&#34;,&#34;Steven&#34;,&#34;Ruth Bader&#34;,&#34;Clarence&#34;,&#34;David&#34;,&#34;Anthony&#34;,&#34;Antonin&#34;,&#34;Sandra Day&#34;,&#34;John Paul&#34;,&#34;William&#34;,&#34;Lewis&#34;,&#34;Harry&#34;,&#34;Warren&#34;,&#34;Thurgood&#34;],[&#34;Kavanaugh&#34;,&#34;Gorsuch&#34;,&#34;Kagan&#34;,&#34;Sotomayor&#34;,&#34;Alito&#34;,&#34;Roberts&#34;,&#34;Breyer&#34;,&#34;Ginsburg&#34;,&#34;Thomas&#34;,&#34;Souter&#34;,&#34;Kennedy&#34;,&#34;Scalia&#34;,&#34;O&#39;Conner&#34;,&#34;Stevens&#34;,&#34;Rehnquist&#34;,&#34;Powell&#34;,&#34;Blackmun&#34;,&#34;Burger&#34;,&#34;Marshall&#34;]],&#34;container&#34;:&#34;&lt;table class=\&#34;display\&#34;&gt;\n  &lt;thead&gt;\n    &lt;tr&gt;\n      &lt;th&gt; &lt;\/th&gt;\n      &lt;th&gt;Nominee&lt;\/th&gt;\n      &lt;th&gt;Nominated&lt;\/th&gt;\n      &lt;th&gt;Yea&lt;\/th&gt;\n      &lt;th&gt;Nay&lt;\/th&gt;\n      &lt;th&gt;Confirmed&lt;\/th&gt;\n      &lt;th&gt;President&lt;\/th&gt;\n      &lt;th&gt;First&lt;\/th&gt;\n      &lt;th&gt;Last&lt;\/th&gt;\n    &lt;\/tr&gt;\n  &lt;\/thead&gt;\n&lt;\/table&gt;&#34;,&#34;options&#34;:{&#34;columnDefs&#34;:[{&#34;className&#34;:&#34;dt-right&#34;,&#34;targets&#34;:[3,4]},{&#34;orderable&#34;:false,&#34;targets&#34;:0}],&#34;order&#34;:[],&#34;autoWidth&#34;:false,&#34;orderClasses&#34;:false}},&#34;evals&#34;:[],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plotly&#34; class=&#34;section level3&#34;&gt;
+&lt;h3&gt;Plotly&lt;/h3&gt;
+&lt;p&gt;Here is a slightly interactive graph built with a combination of &lt;code&gt;ggplot&lt;/code&gt; and &lt;code&gt;plotly&lt;/code&gt;:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;basemap &amp;lt;- ggplot(scc, aes(x = Nay, y = Yea, label = Last)) +
+  geom_point() +
+  geom_text(nudge_x = 5) + # geom_text_repel is not supported by Plotly yet
+  labs(x = &amp;quot;Nay votes&amp;quot;, y = &amp;quot;Yea votes&amp;quot;, 
+       title = &amp;quot;Supreme Court Confirmations (1967 to present)&amp;quot;,
+       subtitle = &amp;quot;Marshall to Kavanaugh&amp;quot;,
+       caption = &amp;quot;Source: Senate.gov&amp;quot;) + 
+  xlim(c(-10, 60)) +
+  ylim(c(40, 110))
+ggplotly(basemap)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-2&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;plotly html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-2&#34;&gt;{&#34;x&#34;:{&#34;data&#34;:[{&#34;x&#34;:[48,45,37,31,42,22,9,3,48,9,0,0,0,0,26,1,0,3,11],&#34;y&#34;:[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],&#34;text&#34;:[&#34;Nay: 48&lt;br /&gt;Yea: 50&lt;br /&gt;Last: Kavanaugh&#34;,&#34;Nay: 45&lt;br /&gt;Yea: 54&lt;br /&gt;Last: Gorsuch&#34;,&#34;Nay: 37&lt;br /&gt;Yea: 63&lt;br /&gt;Last: Kagan&#34;,&#34;Nay: 31&lt;br /&gt;Yea: 68&lt;br /&gt;Last: Sotomayor&#34;,&#34;Nay: 42&lt;br /&gt;Yea: 58&lt;br /&gt;Last: Alito&#34;,&#34;Nay: 22&lt;br /&gt;Yea: 78&lt;br /&gt;Last: Roberts&#34;,&#34;Nay:  9&lt;br /&gt;Yea: 87&lt;br /&gt;Last: Breyer&#34;,&#34;Nay:  3&lt;br /&gt;Yea: 96&lt;br /&gt;Last: Ginsburg&#34;,&#34;Nay: 48&lt;br /&gt;Yea: 52&lt;br /&gt;Last: Thomas&#34;,&#34;Nay:  9&lt;br /&gt;Yea: 90&lt;br /&gt;Last: Souter&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 97&lt;br /&gt;Last: Kennedy&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 98&lt;br /&gt;Last: Scalia&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 99&lt;br /&gt;Last: O&#39;Conner&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 98&lt;br /&gt;Last: Stevens&#34;,&#34;Nay: 26&lt;br /&gt;Yea: 68&lt;br /&gt;Last: Rehnquist&#34;,&#34;Nay:  1&lt;br /&gt;Yea: 89&lt;br /&gt;Last: Powell&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 94&lt;br /&gt;Last: Blackmun&#34;,&#34;Nay:  3&lt;br /&gt;Yea: 73&lt;br /&gt;Last: Burger&#34;,&#34;Nay: 11&lt;br /&gt;Yea: 69&lt;br /&gt;Last: Marshall&#34;],&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;markers&#34;,&#34;marker&#34;:{&#34;autocolorscale&#34;:false,&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;opacity&#34;:1,&#34;size&#34;:5.66929133858268,&#34;symbol&#34;:&#34;circle&#34;,&#34;line&#34;:{&#34;width&#34;:1.88976377952756,&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;}},&#34;hoveron&#34;:&#34;points&#34;,&#34;showlegend&#34;:false,&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;frame&#34;:null},{&#34;x&#34;:[53,50,42,36,47,27,14,8,53,14,5,5,5,5,31,6,5,8,16],&#34;y&#34;:[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],&#34;text&#34;:[&#34;Kavanaugh&#34;,&#34;Gorsuch&#34;,&#34;Kagan&#34;,&#34;Sotomayor&#34;,&#34;Alito&#34;,&#34;Roberts&#34;,&#34;Breyer&#34;,&#34;Ginsburg&#34;,&#34;Thomas&#34;,&#34;Souter&#34;,&#34;Kennedy&#34;,&#34;Scalia&#34;,&#34;O&#39;Conner&#34;,&#34;Stevens&#34;,&#34;Rehnquist&#34;,&#34;Powell&#34;,&#34;Blackmun&#34;,&#34;Burger&#34;,&#34;Marshall&#34;],&#34;hovertext&#34;:[&#34;Nay: 48&lt;br /&gt;Yea: 50&lt;br /&gt;Last: Kavanaugh&#34;,&#34;Nay: 45&lt;br /&gt;Yea: 54&lt;br /&gt;Last: Gorsuch&#34;,&#34;Nay: 37&lt;br /&gt;Yea: 63&lt;br /&gt;Last: Kagan&#34;,&#34;Nay: 31&lt;br /&gt;Yea: 68&lt;br /&gt;Last: Sotomayor&#34;,&#34;Nay: 42&lt;br /&gt;Yea: 58&lt;br /&gt;Last: Alito&#34;,&#34;Nay: 22&lt;br /&gt;Yea: 78&lt;br /&gt;Last: Roberts&#34;,&#34;Nay:  9&lt;br /&gt;Yea: 87&lt;br /&gt;Last: Breyer&#34;,&#34;Nay:  3&lt;br /&gt;Yea: 96&lt;br /&gt;Last: Ginsburg&#34;,&#34;Nay: 48&lt;br /&gt;Yea: 52&lt;br /&gt;Last: Thomas&#34;,&#34;Nay:  9&lt;br /&gt;Yea: 90&lt;br /&gt;Last: Souter&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 97&lt;br /&gt;Last: Kennedy&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 98&lt;br /&gt;Last: Scalia&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 99&lt;br /&gt;Last: O&#39;Conner&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 98&lt;br /&gt;Last: Stevens&#34;,&#34;Nay: 26&lt;br /&gt;Yea: 68&lt;br /&gt;Last: Rehnquist&#34;,&#34;Nay:  1&lt;br /&gt;Yea: 89&lt;br /&gt;Last: Powell&#34;,&#34;Nay:  0&lt;br /&gt;Yea: 94&lt;br /&gt;Last: Blackmun&#34;,&#34;Nay:  3&lt;br /&gt;Yea: 73&lt;br /&gt;Last: Burger&#34;,&#34;Nay: 11&lt;br /&gt;Yea: 69&lt;br /&gt;Last: Marshall&#34;],&#34;textfont&#34;:{&#34;size&#34;:14.6645669291339,&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;},&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;text&#34;,&#34;hoveron&#34;:&#34;points&#34;,&#34;showlegend&#34;:false,&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;frame&#34;:null}],&#34;layout&#34;:{&#34;margin&#34;:{&#34;t&#34;:43.7625570776256,&#34;r&#34;:7.30593607305936,&#34;b&#34;:40.1826484018265,&#34;l&#34;:43.1050228310502},&#34;plot_bgcolor&#34;:&#34;rgba(235,235,235,1)&#34;,&#34;paper_bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;title&#34;:&#34;Supreme Court Confirmations (1967 to present)&#34;,&#34;titlefont&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:17.5342465753425},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[-13.5,63.5],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;0&#34;,&#34;20&#34;,&#34;40&#34;,&#34;60&#34;],&#34;tickvals&#34;:[0,20,40,60],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;0&#34;,&#34;20&#34;,&#34;40&#34;,&#34;60&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;y&#34;,&#34;title&#34;:&#34;Nay votes&#34;,&#34;titlefont&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;type&#34;:&#34;linear&#34;,&#34;autorange&#34;:false,&#34;range&#34;:[36.5,113.5],&#34;tickmode&#34;:&#34;array&#34;,&#34;ticktext&#34;:[&#34;40&#34;,&#34;60&#34;,&#34;80&#34;,&#34;100&#34;],&#34;tickvals&#34;:[40,60,80,100],&#34;categoryorder&#34;:&#34;array&#34;,&#34;categoryarray&#34;:[&#34;40&#34;,&#34;60&#34;,&#34;80&#34;,&#34;100&#34;],&#34;nticks&#34;:null,&#34;ticks&#34;:&#34;outside&#34;,&#34;tickcolor&#34;:&#34;rgba(51,51,51,1)&#34;,&#34;ticklen&#34;:3.65296803652968,&#34;tickwidth&#34;:0.66417600664176,&#34;showticklabels&#34;:true,&#34;tickfont&#34;:{&#34;color&#34;:&#34;rgba(77,77,77,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895},&#34;tickangle&#34;:-0,&#34;showline&#34;:false,&#34;linecolor&#34;:null,&#34;linewidth&#34;:0,&#34;showgrid&#34;:true,&#34;gridcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;gridwidth&#34;:0.66417600664176,&#34;zeroline&#34;:false,&#34;anchor&#34;:&#34;x&#34;,&#34;title&#34;:&#34;Yea votes&#34;,&#34;titlefont&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:14.6118721461187},&#34;hoverformat&#34;:&#34;.2f&#34;},&#34;shapes&#34;:[{&#34;type&#34;:&#34;rect&#34;,&#34;fillcolor&#34;:null,&#34;line&#34;:{&#34;color&#34;:null,&#34;width&#34;:0,&#34;linetype&#34;:[]},&#34;yref&#34;:&#34;paper&#34;,&#34;xref&#34;:&#34;paper&#34;,&#34;x0&#34;:0,&#34;x1&#34;:1,&#34;y0&#34;:0,&#34;y1&#34;:1}],&#34;showlegend&#34;:false,&#34;legend&#34;:{&#34;bgcolor&#34;:&#34;rgba(255,255,255,1)&#34;,&#34;bordercolor&#34;:&#34;transparent&#34;,&#34;borderwidth&#34;:1.88976377952756,&#34;font&#34;:{&#34;color&#34;:&#34;rgba(0,0,0,1)&#34;,&#34;family&#34;:&#34;&#34;,&#34;size&#34;:11.689497716895}},&#34;hovermode&#34;:&#34;closest&#34;,&#34;barmode&#34;:&#34;relative&#34;},&#34;config&#34;:{&#34;doubleClick&#34;:&#34;reset&#34;,&#34;modeBarButtonsToAdd&#34;:[{&#34;name&#34;:&#34;Collaborate&#34;,&#34;icon&#34;:{&#34;width&#34;:1000,&#34;ascent&#34;:500,&#34;descent&#34;:-50,&#34;path&#34;:&#34;M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z&#34;},&#34;click&#34;:&#34;function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == &#39;?viewer_pane=1&#39;) {\n          alert(&#39;To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;);\n        } else {\n          window.open(&#39;https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;, &#39;_blank&#39;);\n        }\n      }&#34;}],&#34;cloud&#34;:false},&#34;source&#34;:&#34;A&#34;,&#34;attrs&#34;:{&#34;160cd611208&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;label&#34;:{},&#34;type&#34;:&#34;scatter&#34;},&#34;160c1b9a1bd8&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;label&#34;:{}}},&#34;cur_data&#34;:&#34;160cd611208&#34;,&#34;visdat&#34;:{&#34;160cd611208&#34;:[&#34;function (y) &#34;,&#34;x&#34;],&#34;160c1b9a1bd8&#34;:[&#34;function (y) &#34;,&#34;x&#34;]},&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[&#34;config.modeBarButtonsToAdd.0.click&#34;],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Here is a slightly interactive graph with readable labels:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;t &amp;lt;- list(
+  family = &amp;quot;sans serif&amp;quot;,
+  size = 14,
+  color = toRGB(&amp;quot;grey80&amp;quot;))
+
+plot_ly(scc, x = ~Nay, y = ~Yea, text = ~Nominee) %&amp;gt;%
+  add_markers() %&amp;gt;%
+  add_text(textfont = t, textposition = &amp;quot;top right&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-3&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;plotly html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-3&#34;&gt;{&#34;x&#34;:{&#34;visdat&#34;:{&#34;160c25b918be&#34;:[&#34;function () &#34;,&#34;plotlyVisDat&#34;]},&#34;cur_data&#34;:&#34;160c25b918be&#34;,&#34;attrs&#34;:{&#34;160c25b918be&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;text&#34;:{},&#34;alpha_stroke&#34;:1,&#34;sizes&#34;:[10,100],&#34;spans&#34;:[1,20],&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;markers&#34;,&#34;inherit&#34;:true},&#34;160c25b918be.1&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;text&#34;:{},&#34;alpha_stroke&#34;:1,&#34;sizes&#34;:[10,100],&#34;spans&#34;:[1,20],&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;text&#34;,&#34;textfont&#34;:{&#34;family&#34;:&#34;sans serif&#34;,&#34;size&#34;:14,&#34;color&#34;:&#34;rgba(204,204,204,1)&#34;},&#34;textposition&#34;:&#34;top right&#34;,&#34;inherit&#34;:true}},&#34;layout&#34;:{&#34;margin&#34;:{&#34;b&#34;:40,&#34;l&#34;:60,&#34;t&#34;:25,&#34;r&#34;:10},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;title&#34;:&#34;Nay&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;title&#34;:&#34;Yea&#34;},&#34;hovermode&#34;:&#34;closest&#34;,&#34;showlegend&#34;:true},&#34;source&#34;:&#34;A&#34;,&#34;config&#34;:{&#34;modeBarButtonsToAdd&#34;:[{&#34;name&#34;:&#34;Collaborate&#34;,&#34;icon&#34;:{&#34;width&#34;:1000,&#34;ascent&#34;:500,&#34;descent&#34;:-50,&#34;path&#34;:&#34;M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z&#34;},&#34;click&#34;:&#34;function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == &#39;?viewer_pane=1&#39;) {\n          alert(&#39;To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;);\n        } else {\n          window.open(&#39;https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;, &#39;_blank&#39;);\n        }\n      }&#34;}],&#34;cloud&#34;:false},&#34;data&#34;:[{&#34;x&#34;:[48,45,37,31,42,22,9,3,48,9,0,0,0,0,26,1,0,3,11],&#34;y&#34;:[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],&#34;text&#34;:[&#34;Brett Kavanaugh&#34;,&#34;Neil Gorsuch&#34;,&#34;Elena Kagan&#34;,&#34;Sonia Sotomayor&#34;,&#34;Samuel Alito&#34;,&#34;John Roberts&#34;,&#34;Steven Breyer&#34;,&#34;Ruth Bader Ginsburg&#34;,&#34;Clarence Thomas&#34;,&#34;David Souter&#34;,&#34;Anthony Kennedy&#34;,&#34;Antonin Scalia&#34;,&#34;Sandra Day O&#39;Connor&#34;,&#34;John Paul Stevens&#34;,&#34;William Rehnquist&#34;,&#34;Lewis Powell&#34;,&#34;Harry Blackmun&#34;,&#34;Warren Burger&#34;,&#34;Thurgood Marshall&#34;],&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;markers&#34;,&#34;marker&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;,&#34;line&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;}},&#34;error_y&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;error_x&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;line&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;frame&#34;:null},{&#34;x&#34;:[48,45,37,31,42,22,9,3,48,9,0,0,0,0,26,1,0,3,11],&#34;y&#34;:[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],&#34;text&#34;:[&#34;Brett Kavanaugh&#34;,&#34;Neil Gorsuch&#34;,&#34;Elena Kagan&#34;,&#34;Sonia Sotomayor&#34;,&#34;Samuel Alito&#34;,&#34;John Roberts&#34;,&#34;Steven Breyer&#34;,&#34;Ruth Bader Ginsburg&#34;,&#34;Clarence Thomas&#34;,&#34;David Souter&#34;,&#34;Anthony Kennedy&#34;,&#34;Antonin Scalia&#34;,&#34;Sandra Day O&#39;Connor&#34;,&#34;John Paul Stevens&#34;,&#34;William Rehnquist&#34;,&#34;Lewis Powell&#34;,&#34;Harry Blackmun&#34;,&#34;Warren Burger&#34;,&#34;Thurgood Marshall&#34;],&#34;type&#34;:&#34;scatter&#34;,&#34;mode&#34;:&#34;text&#34;,&#34;textfont&#34;:{&#34;family&#34;:&#34;sans serif&#34;,&#34;size&#34;:14,&#34;color&#34;:&#34;rgba(204,204,204,1)&#34;},&#34;textposition&#34;:[&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;,&#34;top right&#34;],&#34;marker&#34;:{&#34;color&#34;:&#34;rgba(255,127,14,1)&#34;,&#34;line&#34;:{&#34;color&#34;:&#34;rgba(255,127,14,1)&#34;}},&#34;error_y&#34;:{&#34;color&#34;:&#34;rgba(255,127,14,1)&#34;},&#34;error_x&#34;:{&#34;color&#34;:&#34;rgba(255,127,14,1)&#34;},&#34;line&#34;:{&#34;color&#34;:&#34;rgba(255,127,14,1)&#34;},&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;frame&#34;:null}],&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[&#34;config.modeBarButtonsToAdd.0.click&#34;],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;p&gt;Finally, here is a fully interactive graph, but the labels are not revealed until someone hovers their mouse cursor over the points:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;plot_ly(scc, x = ~Nay, y = ~Yea, type = &amp;#39;scatter&amp;#39;, mode = &amp;#39;markers&amp;#39;,
+        hoverinfo = &amp;#39;text&amp;#39;,
+        text = ~paste(&amp;#39;&amp;lt;b&amp;gt;Nominee:&amp;lt;/b&amp;gt; &amp;#39;, Nominee,
+                      &amp;#39;&amp;lt;br&amp;gt; Yea: &amp;#39;, Yea,
+                      &amp;#39;&amp;lt;br&amp;gt; Nay: &amp;#39;, Nay,
+                      &amp;#39;&amp;lt;br&amp;gt; Nominated: &amp;#39;, Nominated,
+                      &amp;#39;&amp;lt;br&amp;gt; Confirmed: &amp;#39;, Confirmed,
+                      &amp;#39;&amp;lt;br&amp;gt; President: &amp;#39;, President))&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;htmlwidget-4&#34; style=&#34;width:672px;height:480px;&#34; class=&#34;plotly html-widget&#34;&gt;&lt;/div&gt;
+&lt;script type=&#34;application/json&#34; data-for=&#34;htmlwidget-4&#34;&gt;{&#34;x&#34;:{&#34;visdat&#34;:{&#34;160cb0ac56&#34;:[&#34;function () &#34;,&#34;plotlyVisDat&#34;]},&#34;cur_data&#34;:&#34;160cb0ac56&#34;,&#34;attrs&#34;:{&#34;160cb0ac56&#34;:{&#34;x&#34;:{},&#34;y&#34;:{},&#34;mode&#34;:&#34;markers&#34;,&#34;hoverinfo&#34;:&#34;text&#34;,&#34;text&#34;:{},&#34;alpha_stroke&#34;:1,&#34;sizes&#34;:[10,100],&#34;spans&#34;:[1,20],&#34;type&#34;:&#34;scatter&#34;}},&#34;layout&#34;:{&#34;margin&#34;:{&#34;b&#34;:40,&#34;l&#34;:60,&#34;t&#34;:25,&#34;r&#34;:10},&#34;xaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;title&#34;:&#34;Nay&#34;},&#34;yaxis&#34;:{&#34;domain&#34;:[0,1],&#34;automargin&#34;:true,&#34;title&#34;:&#34;Yea&#34;},&#34;hovermode&#34;:&#34;closest&#34;,&#34;showlegend&#34;:false},&#34;source&#34;:&#34;A&#34;,&#34;config&#34;:{&#34;modeBarButtonsToAdd&#34;:[{&#34;name&#34;:&#34;Collaborate&#34;,&#34;icon&#34;:{&#34;width&#34;:1000,&#34;ascent&#34;:500,&#34;descent&#34;:-50,&#34;path&#34;:&#34;M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z&#34;},&#34;click&#34;:&#34;function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == &#39;?viewer_pane=1&#39;) {\n          alert(&#39;To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;);\n        } else {\n          window.open(&#39;https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html&#39;, &#39;_blank&#39;);\n        }\n      }&#34;}],&#34;cloud&#34;:false},&#34;data&#34;:[{&#34;x&#34;:[48,45,37,31,42,22,9,3,48,9,0,0,0,0,26,1,0,3,11],&#34;y&#34;:[50,54,63,68,58,78,87,96,52,90,97,98,99,98,68,89,94,73,69],&#34;mode&#34;:&#34;markers&#34;,&#34;hoverinfo&#34;:[&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;,&#34;text&#34;],&#34;text&#34;:[&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Brett Kavanaugh &lt;br&gt; Yea:  50 &lt;br&gt; Nay:  48 &lt;br&gt; Nominated:  2018-07-10 &lt;br&gt; Confirmed:  2018-10-06 &lt;br&gt; President:  Donald Trump&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Neil Gorsuch &lt;br&gt; Yea:  54 &lt;br&gt; Nay:  45 &lt;br&gt; Nominated:  2017-02-01 &lt;br&gt; Confirmed:  2017-04-07 &lt;br&gt; President:  Donald Trump&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Elena Kagan &lt;br&gt; Yea:  63 &lt;br&gt; Nay:  37 &lt;br&gt; Nominated:  2010-05-10 &lt;br&gt; Confirmed:  2010-08-05 &lt;br&gt; President:  Barack Obama&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Sonia Sotomayor &lt;br&gt; Yea:  68 &lt;br&gt; Nay:  31 &lt;br&gt; Nominated:  2009-06-01 &lt;br&gt; Confirmed:  2009-08-06 &lt;br&gt; President:  Barack Obama&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Samuel Alito &lt;br&gt; Yea:  58 &lt;br&gt; Nay:  42 &lt;br&gt; Nominated:  2005-11-10 &lt;br&gt; Confirmed:  2006-01-31 &lt;br&gt; President:  George W. Bush&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  John Roberts &lt;br&gt; Yea:  78 &lt;br&gt; Nay:  22 &lt;br&gt; Nominated:  2005-09-06 &lt;br&gt; Confirmed:  2005-09-29 &lt;br&gt; President:  George W. Bush&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Steven Breyer &lt;br&gt; Yea:  87 &lt;br&gt; Nay:  9 &lt;br&gt; Nominated:  1994-05-17 &lt;br&gt; Confirmed:  1994-07-29 &lt;br&gt; President:  Bill Clinton&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Ruth Bader Ginsburg &lt;br&gt; Yea:  96 &lt;br&gt; Nay:  3 &lt;br&gt; Nominated:  1993-07-22 &lt;br&gt; Confirmed:  1993-08-03 &lt;br&gt; President:  Bill Clinton&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Clarence Thomas &lt;br&gt; Yea:  52 &lt;br&gt; Nay:  48 &lt;br&gt; Nominated:  1991-07-08 &lt;br&gt; Confirmed:  1991-10-15 &lt;br&gt; President:  George H.W. Bush&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  David Souter &lt;br&gt; Yea:  90 &lt;br&gt; Nay:  9 &lt;br&gt; Nominated:  1990-07-25 &lt;br&gt; Confirmed:  1990-10-02 &lt;br&gt; President:  George H.W. Bush&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Anthony Kennedy &lt;br&gt; Yea:  97 &lt;br&gt; Nay:  0 &lt;br&gt; Nominated:  1987-11-30 &lt;br&gt; Confirmed:  1998-02-03 &lt;br&gt; President:  Ronald Reagan&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Antonin Scalia &lt;br&gt; Yea:  98 &lt;br&gt; Nay:  0 &lt;br&gt; Nominated:  1986-06-24 &lt;br&gt; Confirmed:  1986-09-17 &lt;br&gt; President:  Ronald Reagan&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Sandra Day O&#39;Connor &lt;br&gt; Yea:  99 &lt;br&gt; Nay:  0 &lt;br&gt; Nominated:  1981-08-19 &lt;br&gt; Confirmed:  1981-09-21 &lt;br&gt; President:  Ronald Reagan&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  John Paul Stevens &lt;br&gt; Yea:  98 &lt;br&gt; Nay:  0 &lt;br&gt; Nominated:  1975-11-28 &lt;br&gt; Confirmed:  1975-12-17 &lt;br&gt; President:  Gerald Ford&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  William Rehnquist &lt;br&gt; Yea:  68 &lt;br&gt; Nay:  26 &lt;br&gt; Nominated:  1971-10-22 &lt;br&gt; Confirmed:  1971-12-10 &lt;br&gt; President:  Richard Nixon&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Lewis Powell &lt;br&gt; Yea:  89 &lt;br&gt; Nay:  1 &lt;br&gt; Nominated:  1971-10-22 &lt;br&gt; Confirmed:  1971-12-06 &lt;br&gt; President:  Richard Nixon&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Harry Blackmun &lt;br&gt; Yea:  94 &lt;br&gt; Nay:  0 &lt;br&gt; Nominated:  1970-04-15 &lt;br&gt; Confirmed:  1970-05-12 &lt;br&gt; President:  Richard Nixon&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Warren Burger &lt;br&gt; Yea:  73 &lt;br&gt; Nay:  3 &lt;br&gt; Nominated:  1969-05-23 &lt;br&gt; Confirmed:  1969-06-09 &lt;br&gt; President:  Richard Nixon&#34;,&#34;&lt;b&gt;Nominee:&lt;\/b&gt;  Thurgood Marshall &lt;br&gt; Yea:  69 &lt;br&gt; Nay:  11 &lt;br&gt; Nominated:  1967-06-13 &lt;br&gt; Confirmed:  1967-08-30 &lt;br&gt; President:  Lyndon Johnson&#34;],&#34;type&#34;:&#34;scatter&#34;,&#34;marker&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;,&#34;line&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;}},&#34;error_y&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;error_x&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;line&#34;:{&#34;color&#34;:&#34;rgba(31,119,180,1)&#34;},&#34;xaxis&#34;:&#34;x&#34;,&#34;yaxis&#34;:&#34;y&#34;,&#34;frame&#34;:null}],&#34;highlight&#34;:{&#34;on&#34;:&#34;plotly_click&#34;,&#34;persistent&#34;:false,&#34;dynamic&#34;:false,&#34;selectize&#34;:false,&#34;opacityDim&#34;:0.2,&#34;selected&#34;:{&#34;opacity&#34;:1},&#34;debounce&#34;:0},&#34;base_url&#34;:&#34;https://plot.ly&#34;},&#34;evals&#34;:[&#34;config.modeBarButtonsToAdd.0.click&#34;],&#34;jsHooks&#34;:[]}&lt;/script&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

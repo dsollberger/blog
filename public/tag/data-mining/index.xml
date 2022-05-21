@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>data mining | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/data-mining/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/data-mining/index.xml" rel="self" type="application/rss+xml" />
+    <description>data mining</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Fri, 19 Jun 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>data mining</title>
+      <link>https://dsollberger.netlify.com/tag/data-mining/</link>
+    </image>
+    
+    <item>
+      <title>TidyTuesday: Roman Emperors</title>
+      <link>https://dsollberger.netlify.com/post/tidytuesday-roman-emperors/</link>
+      <pubDate>Fri, 19 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/tidytuesday-roman-emperors/</guid>
+      <description>
+
+
+&lt;div id=&#34;introduction&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Introduction&lt;/h1&gt;
+&lt;p&gt;Today, for practice with &lt;code&gt;ggplot2&lt;/code&gt;, I wish to replicate &lt;span class=&#34;citation&#34;&gt;@JoshuaFeldman&lt;/span&gt;’s wonderful #TidyTuesday submission about the dataset of Roman emperors.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/rfordatascience/tidytuesday/tree/master/data/2019/2019-08-13&#34;&gt;TidyTuesday’s Roman Emperor dataset&lt;/a&gt; — posted on August 13, 2019&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# TidyTuesday&amp;#39;s given line of code to load the data
+emperors &amp;lt;- readr::read_csv(&amp;quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-08-13/emperors.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploring-the-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Exploring the Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dim(emperors)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 68 16&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;colnames(emperors)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##  [1] &amp;quot;index&amp;quot;       &amp;quot;name&amp;quot;        &amp;quot;name_full&amp;quot;   &amp;quot;birth&amp;quot;       &amp;quot;death&amp;quot;      
+##  [6] &amp;quot;birth_cty&amp;quot;   &amp;quot;birth_prv&amp;quot;   &amp;quot;rise&amp;quot;        &amp;quot;reign_start&amp;quot; &amp;quot;reign_end&amp;quot;  
+## [11] &amp;quot;cause&amp;quot;       &amp;quot;killer&amp;quot;      &amp;quot;dynasty&amp;quot;     &amp;quot;era&amp;quot;         &amp;quot;notes&amp;quot;      
+## [16] &amp;quot;verif_who&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(birth_prv != &amp;quot;Unknown&amp;quot;) %&amp;gt;%
+  ggplot(aes(x = birth_prv)) +
+  geom_bar(aes(fill = birth_prv), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Birth Provinces of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 62 BC to 347 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;birth province&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  ggplot(aes(x = fct_rev(rise))) +
+  geom_bar(aes(fill = rise), stat = &amp;quot;count&amp;quot;) +
+  coord_flip() +
+  labs(title = &amp;quot;How Roman Emperors Rose to Power&amp;quot;,
+       subtitle = &amp;quot;Years 26 BC to 379 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(cause != &amp;quot;Unknown&amp;quot;) %&amp;gt;%
+  ggplot(aes(x = fct_rev(cause))) +
+  geom_bar(aes(fill = cause), stat = &amp;quot;count&amp;quot;) +
+  coord_flip() +
+  labs(title = &amp;quot;Causes of Death of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 14 AD to 395 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors$dynasty_factor &amp;lt;- factor(emperors$dynasty,
+                                  levels = unique(emperors$dynasty))
+
+emperors %&amp;gt;%
+  ggplot(aes(x = fct_rev(dynasty_factor))) +
+  geom_bar(aes(fill = dynasty_factor), stat = &amp;quot;count&amp;quot;) +
+  coord_flip() +
+  labs(title = &amp;quot;Roman Dynasties&amp;quot;,
+       subtitle = &amp;quot;Years 26 BC to 395 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Wrangling&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#extracting birth and death years
+emperors &amp;lt;- emperors %&amp;gt;%
+  separate(birth, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;birth_year&amp;quot;, &amp;quot;birth_month&amp;quot;, &amp;quot;birth_day&amp;quot;),
+           remove = FALSE) %&amp;gt;%
+  separate(death, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;death_year&amp;quot;, &amp;quot;death_month&amp;quot;, &amp;quot;death_day&amp;quot;),
+           remove = FALSE)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# remove leading zeros and convert from character to numeric
+emperors$birth_year  &amp;lt;- as.numeric(emperors$birth_year)
+emperors$birth_month &amp;lt;- as.numeric(emperors$birth_month)
+emperors$birth_day   &amp;lt;- as.numeric(emperors$birth_day)
+emperors$death_year  &amp;lt;- as.numeric(emperors$death_year)
+emperors$death_month &amp;lt;- as.numeric(emperors$death_month)
+emperors$death_day   &amp;lt;- as.numeric(emperors$death_day)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# ensuring order of months for the graphs
+emperors$birth_month &amp;lt;- factor(emperors$birth_month,
+                               levels = 1:12)
+emperors$death_month &amp;lt;- factor(emperors$death_month,
+                               levels = 1:12)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(!is.na(birth_month)) %&amp;gt;%
+  ggplot(aes(x = birth_month)) +
+  geom_bar(aes(fill = birth_month), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Birth Months of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 26 BC to 347 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-11-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors %&amp;gt;%
+  filter(!is.na(death_month)) %&amp;gt;%
+  ggplot(aes(x = death_month)) +
+  geom_bar(aes(fill = death_month), stat = &amp;quot;count&amp;quot;) +
+  labs(title = &amp;quot;Death Months of Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Years 14 AD to 395 AD&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;&amp;quot;,
+       y = &amp;quot;number of emperors&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-12-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# only a few year data points were BC, so here is a quick fix for &amp;quot;negative years&amp;quot;
+emperors$birth_year[1:3] &amp;lt;- -emperors$birth_year[1:3]&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The &lt;code&gt;emperors&lt;/code&gt; dataset had some missing values for &lt;code&gt;birth_year&lt;/code&gt;, so here is what I am going to due to &lt;em&gt;impute&lt;/em&gt; the missing values:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;calculate the lifespan of the other emperors&lt;/li&gt;
+&lt;li&gt;calculate the average lifespan&lt;/li&gt;
+&lt;li&gt;if &lt;code&gt;birth_year&lt;/code&gt; is missing, subtract &lt;code&gt;death_year&lt;/code&gt; by the average lifespan&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;emperors$lifespan &amp;lt;- emperors$death_year - emperors$birth_year
+average_emperor_lifespan &amp;lt;- round(mean(emperors$lifespan, na.rm = TRUE))
+
+for(i in 1:nrow(emperors)){
+  if(is.na(emperors$birth_year[i])){
+    emperors$birth_year[i] &amp;lt;- emperors$death_year[i] - average_emperor_lifespan
+  }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#later, ggplot had a minor issue with 7 (i.e. greater than 6) causes of death
+emperors$cause[emperors$cause == &amp;quot;Unknown&amp;quot;] &amp;lt;- &amp;quot;Natural Causes&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;main-graph&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Main Graph&lt;/h1&gt;
+&lt;p&gt;As inspired by &lt;span class=&#34;citation&#34;&gt;@JoshuaFeldman&lt;/span&gt;, the goals for today’s main graph include&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;birth years by province&lt;/li&gt;
+&lt;li&gt;death years by cause of death&lt;/li&gt;
+&lt;li&gt;reign as a line segment&lt;/li&gt;
+&lt;li&gt;segment color by dynasty&lt;/li&gt;
+&lt;li&gt;also delineate the two eras&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#extracting reign years
+emperors &amp;lt;- emperors %&amp;gt;%
+  separate(reign_start, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;reign_start_year&amp;quot;, &amp;quot;reign_start_month&amp;quot;, &amp;quot;reign_start_day&amp;quot;),
+           remove = FALSE) %&amp;gt;%
+  separate(reign_end, 
+           sep = &amp;quot;-&amp;quot;, 
+           into = c(&amp;quot;reign_end_year&amp;quot;, &amp;quot;reign_end_month&amp;quot;, &amp;quot;reign_end_day&amp;quot;),
+           remove = FALSE)
+
+emperors$reign_start_year  &amp;lt;- as.numeric(emperors$reign_start_year)
+emperors$reign_start_month &amp;lt;- as.numeric(emperors$reign_start_month)
+emperors$reign_start_day   &amp;lt;- as.numeric(emperors$reign_start_day)
+emperors$reign_end_year    &amp;lt;- as.numeric(emperors$reign_end_year)
+emperors$reign_end_month   &amp;lt;- as.numeric(emperors$reign_end_month)
+emperors$reign_end_day     &amp;lt;- as.numeric(emperors$reign_end_day)
+
+# only a few year data points were BC, so here is a quick fix for &amp;quot;negative years&amp;quot;
+emperors$reign_start_year[1:2] &amp;lt;- -emperors$reign_start_year[1:2]&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;main_plot &amp;lt;- emperors %&amp;gt;%
+  ggplot() +
+  geom_segment(aes(x = reign_start_year, y = reorder(name, -reign_start_year), 
+                   xend = reign_end_year, yend = reorder(name, -reign_start_year),
+                   color = dynasty_factor, group = dynasty_factor),
+               data = emperors, size = 2) +
+  geom_point(aes(x = birth_year, y = reorder(name, -reign_start_year),
+                 group = birth_prv), 
+             color = &amp;quot;black&amp;quot;, size = 1) +
+  geom_point(aes(x = death_year, y = reorder(name, -reign_start_year),
+                 shape = cause, group = cause), 
+             color = &amp;quot;black&amp;quot;, size = 3) +
+  #geom_label(aes(x = birth_year, y = reorder(name, -reign_start_year), label = name)) +
+  scale_color_discrete(name = &amp;quot;Dynasty&amp;quot;) +
+  scale_shape_discrete(name = &amp;quot;Cause of Death&amp;quot;) +
+  labs(title = &amp;quot;Roman Emperors&amp;quot;,
+       subtitle = &amp;quot;Ordered by the start of their reign (small dots are birth years)&amp;quot;,
+       caption = &amp;quot;Data Source: TidyTuesday&amp;quot;,
+       x = &amp;quot;year&amp;quot;,
+       y = &amp;quot;&amp;quot;) +
+  theme(legend.position = &amp;quot;bottom&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#plot
+main_plot&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-06-19-tidytuesday-roman-emperors_files/figure-html/unnamed-chunk-18-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Gender of Frasier Characters</title>
+      <link>https://dsollberger.netlify.com/post/gender-of-frasier-characters/</link>
+      <pubDate>Thu, 09 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/gender-of-frasier-characters/</guid>
+      <description>
+
+
+&lt;p&gt;“I am not a man…”&lt;/p&gt;
+&lt;p&gt;For work, I need to take a list of names and try to infer the gender. Here I try an R package on the character names in the TV show &lt;em&gt;Fraiser&lt;/em&gt;.&lt;/p&gt;
+&lt;div id=&#34;the-gender-package&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;The gender package&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#install.packages(&amp;quot;gender&amp;quot;) #works fine
+
+## user needs to download database too
+#install_genderdata_package() #did not work (&amp;quot;error reading from connection&amp;quot;)
+
+## as suggested by the bug report at https://github.com/ropensci/drat/issues/6
+#install.packages(&amp;quot;devtools&amp;quot;)
+#library(devtools)
+#devtools::install_github(&amp;quot;ropensci/genderdata&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;trial-run&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Trial Run&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gender)
+library(ggpubr)
+library(tidyverse)
+
+gender(&amp;quot;frasier&amp;quot;, method = &amp;quot;ssa&amp;quot;, years = c(1940, 1990))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 1 x 6
+##   name    proportion_male proportion_female gender year_min year_max
+##   &amp;lt;chr&amp;gt;             &amp;lt;dbl&amp;gt;             &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
+## 1 frasier               1                 0 male       1940     1990&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;cast-of-characters&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Cast of Characters&lt;/h1&gt;
+&lt;p&gt;Now I will try to run the &lt;code&gt;gender&lt;/code&gt; function over a list of names (criteria: characters that appeared in at least 6 episodes).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#making a data frame of characters (i.e. the TV show characters)
+name &amp;lt;- c(&amp;quot;frasier&amp;quot;, &amp;quot;daphne&amp;quot;, &amp;quot;niles&amp;quot;, &amp;quot;roz&amp;quot;, &amp;quot;martin&amp;quot;, 
+          &amp;quot;eddie&amp;quot;, &amp;quot;bulldog&amp;quot;, &amp;quot;kenny&amp;quot;, &amp;quot;gil&amp;quot;, &amp;quot;noel&amp;quot;, 
+          &amp;quot;gertrude&amp;quot;, &amp;quot;donny&amp;quot;, &amp;quot;lilith&amp;quot;, &amp;quot;bebe&amp;quot;, &amp;quot;mel&amp;quot;,
+          &amp;quot;ronee&amp;quot;, &amp;quot;alice&amp;quot;, &amp;quot;julia&amp;quot;, &amp;quot;frederick&amp;quot;, &amp;quot;simon&amp;quot;,
+          &amp;quot;lana&amp;quot;, &amp;quot;sherry&amp;quot;, &amp;quot;kirby&amp;quot;, &amp;quot;charlotte&amp;quot;)
+start_year &amp;lt;- 1940
+end_year &amp;lt;- 1990
+df &amp;lt;- data.frame(name, start_year, end_year, stringsAsFactors=FALSE)
+main_cast &amp;lt;- df %&amp;gt;% slice(1:5)
+
+gender_df(df, method = &amp;quot;ssa&amp;quot;, name_col = &amp;quot;name&amp;quot;, year_col = c(&amp;quot;start_year&amp;quot;, &amp;quot;end_year&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 23 x 6
+##    name      proportion_male proportion_female gender year_min year_max
+##  * &amp;lt;chr&amp;gt;               &amp;lt;dbl&amp;gt;             &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;
+##  1 alice              0.0033            0.997  female     1940     1990
+##  2 bebe               0                 1      female     1940     1990
+##  3 charlotte          0.0026            0.997  female     1940     1990
+##  4 daphne             0.0004            1.00   female     1940     1990
+##  5 donny              0.996             0.0039 male       1940     1990
+##  6 eddie              0.959             0.0414 male       1940     1990
+##  7 frasier            1                 0      male       1940     1990
+##  8 frederick          0.995             0.0052 male       1940     1990
+##  9 gertrude           0.0008            0.999  female     1940     1990
+## 10 gil                1                 0      male       1940     1990
+## # ... with 13 more rows&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sorting-the-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sorting the Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;results &amp;lt;- gender_df(df, method = &amp;quot;ssa&amp;quot;, name_col = &amp;quot;name&amp;quot;, year_col = c(&amp;quot;start_year&amp;quot;, &amp;quot;end_year&amp;quot;))
+
+results_classified &amp;lt;- results %&amp;gt;%
+  select(name, proportion_male, gender) %&amp;gt;%
+  arrange(desc(proportion_male)) 
+
+ggtexttable(results_classified, rows = NULL)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-01-09-gender-of-frasier-characters_files/figure-html/unnamed-chunk-4-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Note that “Mel” is a female character in the TV show. The calculations are tougher when the input is a nickname.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# just the main cast
+main_cast_classified &amp;lt;- gender_df(main_cast, 
+          method = &amp;quot;ssa&amp;quot;, name_col = &amp;quot;name&amp;quot;, 
+          year_col = c(&amp;quot;start_year&amp;quot;, &amp;quot;end_year&amp;quot;)) %&amp;gt;%
+  select(name, proportion_male, gender) %&amp;gt;%
+  arrange(desc(proportion_male))
+
+ggtexttable(main_cast_classified, rows = NULL)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-01-09-gender-of-frasier-characters_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

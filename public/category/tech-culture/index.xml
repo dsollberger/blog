@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tech culture | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/category/tech-culture/</link>
+      <atom:link href="https://dsollberger.netlify.com/category/tech-culture/index.xml" rel="self" type="application/rss+xml" />
+    <description>tech culture</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sat, 06 Apr 2019 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>tech culture</title>
+      <link>https://dsollberger.netlify.com/category/tech-culture/</link>
+    </image>
+    
+    <item>
+      <title>Response to DataCamp&#39;s 20190404 Community Post</title>
+      <link>https://dsollberger.netlify.com/post/response-to-datacamp-s-20190404-community-post/</link>
+      <pubDate>Sat, 06 Apr 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/response-to-datacamp-s-20190404-community-post/</guid>
+      <description>
+
+
+&lt;p&gt;&lt;em&gt;This is the letter I sent out to my data science organization about the news that came out of DataCamp this week.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;4/6/2019&lt;/p&gt;
+&lt;p&gt;Dear DatASci,&lt;/p&gt;
+&lt;p&gt;I write to ask you for your input in developing a group response to these recent events.&lt;/p&gt;
+&lt;p&gt;Overnight on Thursday, April 4, DataCamp released a statement in their official blog that you can find here: &lt;a href=&#34;https://www.datacamp.com/community/blog/note-to-our-community&#34; class=&#34;uri&#34;&gt;https://www.datacamp.com/community/blog/note-to-our-community&lt;/a&gt;. To summarize, in October of 2017, an executive at the company sexually harassed an employee at a company social event. The employee reported the event a few months later, which means that the official statement finally appeared about a full year later. Furthermore, DataCamp only released that statement after a unified complaint from over 100 instructors.&lt;/p&gt;
+&lt;p&gt;At this moment, I wish to personally condemn the perpetrator and the leadership at DataCamp over their actions and mismanagement of their company culture.&lt;/p&gt;
+&lt;p&gt;It is simple to state that I do not condone the behavior of that employee and the peers. However, it is difficult to reconcile the event with my relationship with the DataCamp company itself. The educational material has allowed me to increase my status at my own workplace, and I have subsequently and frequently recommended DataCamp to those who also wished to improve their technical skills. During the Spring semester and Summer session of 2018, I led efforts to connect our DatASci club and graduate students with the online courses offered by DataCamp.&lt;/p&gt;
+&lt;p&gt;In addition to coordinating the use of the education product, I have met several wonderful DataCamp employees and instructors at conferences—all while being unaware of negligent events happening in the background. I might have even met the perpetrator too.&lt;/p&gt;
+&lt;p&gt;This news coming out of DataCamp is quite antithetical to the culture of the data science community. Just the day before in the Twitter space, we were praising the data science community on being diverse, inclusive, and very genial to programmers of all skill levels. Unfortunately, the actions made by DataCamp is a step backward and will leave a scar. We can do better.&lt;/p&gt;
+&lt;p&gt;The views here presented in this letter are my own and do not reflect the opinion or stances of my colleagues at UC Merced for the simple reason that this letter is the dissemination of the news to my peers in the DatASci graduate student organization and my coworkers at UC Merced. If we need to solidify a view of the DataCamp business and our relationship with this education partner and the values of vendors, I will welcome future conversation about these matters.&lt;/p&gt;
+&lt;p&gt;Sincerely,
+Derek Sollberger
+Continuing Lecturer at UC Merced&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Response to DataCamp&#39;s 20190404 Community Post</title>
+      <link>https://dsollberger.netlify.com/post/response-to-datacamp-s-20190404-community-post/</link>
+      <pubDate>Sat, 06 Apr 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/response-to-datacamp-s-20190404-community-post/</guid>
+      <description>&lt;p&gt;&lt;em&gt;This is the letter I sent out to my data science organization about the news that came out of DataCamp this week.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;4/6/2019&lt;/p&gt;
+&lt;p&gt;Dear DatASci,&lt;/p&gt;
+&lt;p&gt;I write to ask you for your input in developing a group response to these recent events.&lt;/p&gt;
+&lt;p&gt;Overnight on Thursday, April 4, DataCamp released a statement in their official blog that you can find here:  &lt;a href=&#34;https://www.datacamp.com/community/blog/note-to-our-community&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;https://www.datacamp.com/community/blog/note-to-our-community&lt;/a&gt;.  To summarize, in October of 2017, an executive at the company sexually harassed an employee at a company social event.  The employee reported the event a few months later, which means that the official statement finally appeared about a full year later.  Furthermore, DataCamp only released that statement after a unified complaint from over 100 instructors.&lt;/p&gt;
+&lt;p&gt;At this moment, I wish to personally condemn the perpetrator and the leadership at DataCamp over their actions and mismanagement of their company culture.&lt;/p&gt;
+&lt;p&gt;It is simple to state that I do not condone the behavior of that employee and the peers.  However, it is difficult to reconcile the event with my relationship with the DataCamp company itself.  The educational material has allowed me to increase my status at my own workplace, and I have subsequently and frequently recommended DataCamp to those who also wished to improve their technical skills.  During the Spring semester and Summer session of 2018, I led efforts to connect our DatASci club and graduate students with the online courses offered by DataCamp.&lt;/p&gt;
+&lt;p&gt;In addition to coordinating the use of the education product, I have met several wonderful DataCamp employees and instructors at conferences&amp;mdash;all while being unaware of negligent events happening in the background.  I might have even met the perpetrator too.&lt;/p&gt;
+&lt;p&gt;This news coming out of DataCamp is quite antithetical to the culture of the data science community.  Just the day before in the Twitter space, we were praising the data science community on being diverse, inclusive, and very genial to programmers of all skill levels.  Unfortunately, the actions made by DataCamp is a step backward and will leave a scar.  We can do better.&lt;/p&gt;
+&lt;p&gt;The views here presented in this letter are my own and do not reflect the opinion or stances of my colleagues at UC Merced for the simple reason that this letter is the dissemination of the news to my peers in the DatASci graduate student organization and my coworkers at UC Merced.  If we need to solidify a view of the DataCamp business and our relationship with this education partner and the values of vendors, I will welcome future conversation about these matters.&lt;/p&gt;
+&lt;p&gt;Sincerely,
+Derek Sollberger
+Continuing Lecturer at UC Merced&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

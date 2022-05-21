@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>R | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/category/r/</link>
+      <atom:link href="https://dsollberger.netlify.com/category/r/index.xml" rel="self" type="application/rss+xml" />
+    <description>R</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 01 Dec 2020 21:13:14 -0500</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>R</title>
+      <link>https://dsollberger.netlify.com/category/r/</link>
+    </image>
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>https://dsollberger.netlify.com/post/2020-12-01-r-rmarkdown/</link>
+      <pubDate>Tue, 01 Dec 2020 21:13:14 -0500</pubDate>
+      <guid>https://dsollberger.netlify.com/post/2020-12-01-r-rmarkdown/</guid>
+      <description>
+&lt;script src=&#34;https://dsollberger.netlify.com/post/2020-12-01-r-rmarkdown/index.en_files/header-attrs/header-attrs.js&#34;&gt;&lt;/script&gt;
+
+
+&lt;div id=&#34;r-markdown&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;R Markdown&lt;/h1&gt;
+&lt;p&gt;This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;a href=&#34;http://rmarkdown.rstudio.com&#34; class=&#34;uri&#34;&gt;http://rmarkdown.rstudio.com&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can embed an R code chunk like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(cars)
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+fit &amp;lt;- lm(dist ~ speed, data = cars)
+fit
+## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;including-plots&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Including Plots&lt;/h1&gt;
+&lt;p&gt;You can also embed plots. See Figure &lt;a href=&#34;#fig:pie&#34;&gt;1&lt;/a&gt; for example:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c(&amp;#39;Sky&amp;#39;, &amp;#39;Sunny side of pyramid&amp;#39;, &amp;#39;Shady side of pyramid&amp;#39;),
+  col = c(&amp;#39;#0292D8&amp;#39;, &amp;#39;#F7EA39&amp;#39;, &amp;#39;#C4B632&amp;#39;),
+  init.angle = -50, border = NA
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span style=&#34;display:block;&#34; id=&#34;fig:pie&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-12-01-r-rmarkdown/index.en_files/figure-html/pie-1.png&#34; alt=&#34;A fancy pie chart.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: A fancy pie chart.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>R Installation (Summer 2020)</title>
+      <link>https://dsollberger.netlify.com/post/r-installation-summer-2020/</link>
+      <pubDate>Wed, 03 Jun 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/r-installation-summer-2020/</guid>
+      <description>
+
+
+&lt;p&gt;If you are planning to do the &lt;code&gt;R&lt;/code&gt; assignments on your own computer (recommended), then here is a quick outline for obtaining the software.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;There are two separate software programs&lt;/em&gt;. Most people find it easier to use &lt;code&gt;RStudio&lt;/code&gt;. than just &lt;code&gt;R&lt;/code&gt;, but you need to install &lt;code&gt;R&lt;/code&gt; first before installing &lt;code&gt;RStudio&lt;/code&gt; (analogously speaking: you need an cell phone before you can use an cell phone case).&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;If you have R and RStudio from a previous course, you still need to update to the current versions!&lt;/em&gt; (version 4.0.0 of R and version 1.3.959 of RStudio)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;downloading-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Downloading R&lt;/h1&gt;
+&lt;p&gt;Go to &lt;a href=&#34;https://cran.r-project.org/&#34;&gt;The Comprehensive R Archive Network&lt;/a&gt; (CRAN)&lt;/p&gt;
+&lt;p&gt;Windows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click “Download R for Windows”&lt;/li&gt;
+&lt;li&gt;click “install R for the first time”&lt;/li&gt;
+&lt;li&gt;click “Download R 4.0.0 for Windows”&lt;/li&gt;
+&lt;li&gt;click “Save File”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Mac:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click “Download R for (Mac) OS X”&lt;/li&gt;
+&lt;li&gt;click “R-4.0.0.pkg”&lt;/li&gt;
+&lt;li&gt;click “Ok”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing R&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: double-check icon for R-4.0.0-win.exe&lt;/li&gt;
+&lt;li&gt;Mac: double-click icon for R-4.0.0.pkg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;give computer permission to install&lt;/li&gt;
+&lt;li&gt;select language&lt;/li&gt;
+&lt;li&gt;agree to GNU General Public License&lt;/li&gt;
+&lt;li&gt;select destination location&lt;/li&gt;
+&lt;li&gt;select components&lt;/li&gt;
+&lt;li&gt;Startup options: select “No (accept defaults)”&lt;/li&gt;
+&lt;li&gt;select Start Menu Folder&lt;/li&gt;
+&lt;li&gt;select Additional Tasks&lt;/li&gt;
+&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
+&lt;li&gt;“Click Finish to exit Setup”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;downloading-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Downloading RStudio&lt;/h1&gt;
+&lt;p&gt;Go to the &lt;a href=&#34;https://rstudio.com/products/rstudio/download/#download&#34;&gt;RStudio Desktop download page&lt;/a&gt; (i.e. we are using the &lt;em&gt;free&lt;/em&gt;, desktop version of RStudio)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: click RStudio-1.3.959.exe, click “Save File”&lt;/li&gt;
+&lt;li&gt;Mac: click RStudio-1.3.959.dmg, click “Ok”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing RStudio&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: double-check icon for RStudio-1.3.959.exe&lt;/li&gt;
+&lt;li&gt;Mac: double-click icon for RStudio-1.3.959.dmg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;give computer permission to install&lt;/li&gt;
+&lt;li&gt;“Click Next to continue”&lt;/li&gt;
+&lt;li&gt;Choose Install Location&lt;/li&gt;
+&lt;li&gt;Choose Start Menu Folder&lt;/li&gt;
+&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
+&lt;li&gt;“Click Finish to close Setup”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;code-packages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Code Packages&lt;/h1&gt;
+&lt;p&gt;For R coding, we will often need more code—called code packages. To ease our coding sessions, please run the following lines of code before class (in the lower-left &lt;code&gt;console&lt;/code&gt; area of RStudio, just has to be done once this semester).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_list &amp;lt;- c(&amp;quot;tidyverse&amp;quot;, &amp;quot;readxl&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;titanic&amp;quot;)
+install.packages(package_list)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;file-types&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;File Types&lt;/h1&gt;
+&lt;p&gt;Also, while we are learning how I want homework assignments to be submitted, it will be useful if you can see file types in your computer.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;http://kb.winzip.com/kb/entry/26/&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/&#34;&gt;Mac OS X&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to R Workshop</title>
+      <link>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</guid>
+      <description>
+
+
+&lt;div id=&#34;packages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Packages&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;workshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;)
+install.packages(workshop_packages)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;gganimate&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;ggplot2&amp;quot;)
+library(&amp;quot;mosaic&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: dplyr&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;dplyr&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:stats&amp;#39;:
+## 
+##     filter, lag&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:base&amp;#39;:
+## 
+##     intersect, setdiff, setequal, union&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: lattice&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggformula&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggstance&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;ggstance&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:ggplot2&amp;#39;:
+## 
+##     geom_errorbarh, GeomErrorbarh&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## New to ggformula?  Try the tutorials: 
+##  learnr::run_tutorial(&amp;quot;introduction&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
+##  learnr::run_tutorial(&amp;quot;refining&amp;quot;, package = &amp;quot;ggformula&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: mosaicData&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: Matrix&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## The &amp;#39;mosaic&amp;#39; package masks several functions from core packages in order to add 
+## additional features.  The original behavior of these functions should not be affected by this.
+## 
+## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &amp;#39;mosaic&amp;#39;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:Matrix&amp;#39;:
+## 
+##     mean&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:dplyr&amp;#39;:
+## 
+##     count, do, tally&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &amp;#39;package:ggplot2&amp;#39;:
+## 
+##     stat&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:stats&amp;#39;:
+## 
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median,
+##     prop.test, quantile, sd, t.test, var&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &amp;#39;package:base&amp;#39;:
+## 
+##     max, mean, min, prod, range, sample, sum&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;head(Weather)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 25
+## # Groups:   city, year [1]
+##   city  date        year month   day high_temp avg_temp low_temp high_dewpt
+##   &amp;lt;chr&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1 Auck~ 2016-01-01  2016     1     1        68       65       62         64
+## 2 Auck~ 2016-01-02  2016     1     2        68       66       64         64
+## 3 Auck~ 2016-01-03  2016     1     3        77       72       66         70
+## 4 Auck~ 2016-01-04  2016     1     4        73       66       60         66
+## 5 Auck~ 2016-01-05  2016     1     5        69       62       55         55
+## 6 Auck~ 2016-01-06  2016     1     6        69       63       57         54
+## # ... with 16 more variables: avg_dewpt &amp;lt;dbl&amp;gt;, low_dewpt &amp;lt;dbl&amp;gt;,
+## #   high_humidity &amp;lt;dbl&amp;gt;, avg_humidity &amp;lt;dbl&amp;gt;, low_humidity &amp;lt;dbl&amp;gt;,
+## #   high_hg &amp;lt;dbl&amp;gt;, avg_hg &amp;lt;dbl&amp;gt;, low_hg &amp;lt;dbl&amp;gt;, high_vis &amp;lt;dbl&amp;gt;,
+## #   avg_vis &amp;lt;dbl&amp;gt;, low_vis &amp;lt;dbl&amp;gt;, high_wind &amp;lt;dbl&amp;gt;, avg_wind &amp;lt;dbl&amp;gt;,
+## #   low_wind &amp;lt;dbl&amp;gt;, precip &amp;lt;chr&amp;gt;, events &amp;lt;chr&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(Weather$city)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Auckland   Beijing   Chicago    Mumbai San Diego 
+##       731       731       731       731       731&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;table(Weather$year)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## 2016 2017 
+## 1830 1825&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sample-statistics&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Sample Statistics&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;mean(Weather$high_temp)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 71.32421&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;median(Weather$precip)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;0&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;sd(Weather$avg_wind)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3.865026&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;plotting&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Plotting&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Chicago &amp;lt;- subset(Weather, city == &amp;quot;Chicago&amp;quot;)
+
+# boxplots
+ggplot(Chicago, aes(x = month, y = high_temp, group = month, fill = month)) +
+  geom_boxplot() +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;month&amp;quot;,
+       y = &amp;quot;high temperature&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;regression&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Regression&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
+  geom_point() +
+  geom_smooth(method = &amp;quot;lm&amp;quot;) +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal()&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;hypothesis-testing&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Hypothesis Testing&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;SanDiego &amp;lt;- subset(Weather, city == &amp;quot;San Diego&amp;quot;)
+
+# Do Chicago and San Diego have the same high temperatures?
+t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &amp;quot;two.sided&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Welch Two Sample t-test
+## 
+## data:  Chicago$high_temp and SanDiego$high_temp
+## t = -14.221, df = 886.31, p-value &amp;lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -13.21560 -10.01012
+## sample estimates:
+## mean of x mean of y 
+##  61.00821  72.62107&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;animation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Animation&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
+  geom_point() +
+  labs(title = &amp;quot;Worldwide Weather (2016-2017)&amp;quot;,
+       caption = &amp;quot;Source: Mosaic Foundation&amp;quot;,
+       subtitle = &amp;quot;(by months)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal() +
+  transition_states(month, transition_length = 1, state_length = 1)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif&#34; /&gt;&lt;!-- --&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to R Workshop</title>
+      <link>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</link>
+      <pubDate>Tue, 05 Feb 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/introduction-to-r-workshop/</guid>
+      <description>&lt;h1 id=&#34;packages&#34;&gt;Packages&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;workshop_packages &amp;lt;-c(&amp;quot;ggplot2&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;gganimate&amp;quot;)
+install.packages(workshop_packages)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;gganimate&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;library(&amp;quot;ggplot2&amp;quot;)
+library(&amp;quot;mosaic&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: dplyr
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &#39;dplyr&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: lattice
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggformula
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggstance
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &#39;ggstance&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:ggplot2&#39;:
+## 
+##     geom_errorbarh, GeomErrorbarh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## New to ggformula?  Try the tutorials: 
+## 	learnr::run_tutorial(&amp;quot;introduction&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
+## 	learnr::run_tutorial(&amp;quot;refining&amp;quot;, package = &amp;quot;ggformula&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: mosaicData
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: Matrix
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## The &#39;mosaic&#39; package masks several functions from core packages in order to add 
+## additional features.  The original behavior of these functions should not be affected by this.
+## 
+## Note: If you use the Matrix package, be sure to load it BEFORE loading mosaic.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Attaching package: &#39;mosaic&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &#39;package:Matrix&#39;:
+## 
+##     mean
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     count, do, tally
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     stat
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     binom.test, cor, cor.test, cov, fivenum, IQR, median,
+##     prop.test, quantile, sd, t.test, var
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## The following objects are masked from &#39;package:base&#39;:
+## 
+##     max, mean, min, prod, range, sample, sum
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;data&#34;&gt;Data&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;head(Weather)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## # A tibble: 6 x 25
+## # Groups:   city, year [1]
+##   city  date        year month   day high_temp avg_temp low_temp high_dewpt
+##   &amp;lt;chr&amp;gt; &amp;lt;date&amp;gt;     &amp;lt;dbl&amp;gt; &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;     &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;    &amp;lt;dbl&amp;gt;      &amp;lt;dbl&amp;gt;
+## 1 Auck~ 2016-01-01  2016     1     1        68       65       62         64
+## 2 Auck~ 2016-01-02  2016     1     2        68       66       64         64
+## 3 Auck~ 2016-01-03  2016     1     3        77       72       66         70
+## 4 Auck~ 2016-01-04  2016     1     4        73       66       60         66
+## 5 Auck~ 2016-01-05  2016     1     5        69       62       55         55
+## 6 Auck~ 2016-01-06  2016     1     6        69       63       57         54
+## # ... with 16 more variables: avg_dewpt &amp;lt;dbl&amp;gt;, low_dewpt &amp;lt;dbl&amp;gt;,
+## #   high_humidity &amp;lt;dbl&amp;gt;, avg_humidity &amp;lt;dbl&amp;gt;, low_humidity &amp;lt;dbl&amp;gt;,
+## #   high_hg &amp;lt;dbl&amp;gt;, avg_hg &amp;lt;dbl&amp;gt;, low_hg &amp;lt;dbl&amp;gt;, high_vis &amp;lt;dbl&amp;gt;,
+## #   avg_vis &amp;lt;dbl&amp;gt;, low_vis &amp;lt;dbl&amp;gt;, high_wind &amp;lt;dbl&amp;gt;, avg_wind &amp;lt;dbl&amp;gt;,
+## #   low_wind &amp;lt;dbl&amp;gt;, precip &amp;lt;chr&amp;gt;, events &amp;lt;chr&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(Weather$city)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+##  Auckland   Beijing   Chicago    Mumbai San Diego 
+##       731       731       731       731       731
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;table(Weather$year)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## 2016 2017 
+## 1830 1825
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;sample-statistics&#34;&gt;Sample Statistics&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;mean(Weather$high_temp)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 71.32421
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;median(Weather$precip)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] &amp;quot;0&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;sd(Weather$avg_wind)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3.865026
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;plotting&#34;&gt;Plotting&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;Chicago &amp;lt;- subset(Weather, city == &amp;quot;Chicago&amp;quot;)
+
+# boxplots
+ggplot(Chicago, aes(x = month, y = high_temp, group = month, fill = month)) +
+  geom_boxplot() +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;month&amp;quot;,
+       y = &amp;quot;high temperature&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;h1 id=&#34;regression&#34;&gt;Regression&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(Chicago, aes(x = high_temp, y = low_temp, color = year)) +
+  geom_point() +
+  geom_smooth(method = &amp;quot;lm&amp;quot;) +
+  labs(title = &amp;quot;Chicago Weather (2016-2017)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-6-1.png&#34; width=&#34;672&#34; /&gt;
+&lt;h1 id=&#34;hypothesis-testing&#34;&gt;Hypothesis Testing&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;SanDiego &amp;lt;- subset(Weather, city == &amp;quot;San Diego&amp;quot;)
+
+# Do Chicago and San Diego have the same high temperatures?
+t.test(Chicago$high_temp, SanDiego$high_temp, alternative = &amp;quot;two.sided&amp;quot;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## 	Welch Two Sample t-test
+## 
+## data:  Chicago$high_temp and SanDiego$high_temp
+## t = -14.221, df = 886.31, p-value &amp;lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  -13.21560 -10.01012
+## sample estimates:
+## mean of x mean of y 
+##  61.00821  72.62107
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1 id=&#34;animation&#34;&gt;Animation&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-r&#34;&gt;ggplot(Weather, aes(x = high_temp, y = low_temp, color = city)) +
+  geom_point() +
+  labs(title = &amp;quot;Worldwide Weather (2016-2017)&amp;quot;,
+       caption = &amp;quot;Source: Mosaic Foundation&amp;quot;,
+       subtitle = &amp;quot;(by months)&amp;quot;,
+       x = &amp;quot;high temperature&amp;quot;,
+       y = &amp;quot;low temperature&amp;quot;) +
+  theme_minimal() +
+  transition_states(month, transition_length = 1, state_length = 1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure  &gt;
+  &lt;div class=&#34;d-flex justify-content-center&#34;&gt;
+    &lt;div class=&#34;w-100&#34; &gt;&lt;img src=&#34;2019-02-05-introduction-to-r-workshop_files/figure-html/unnamed-chunk-8-1.gif&#34; alt=&#34;&#34; loading=&#34;lazy&#34; data-zoomable /&gt;&lt;/div&gt;
+  &lt;/div&gt;&lt;/figure&gt;
+&lt;!-- --&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Degree-One Polynomials</title>
+      <link>https://dsollberger.netlify.com/post/degree-one-polynomials/</link>
+      <pubDate>Sun, 30 Sep 2018 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/degree-one-polynomials/</guid>
+      <description>
+
+
+&lt;div id=&#34;problem&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Problem&lt;/h2&gt;
+&lt;p&gt;The question that one of my teaching assistants posed was “What is the difference between &lt;code&gt;lm(y ~ x)&lt;/code&gt; and &lt;code&gt;lm(y ~ (poly,1))&lt;/code&gt; for linear regression in R?” That is, it is quickly apparent that those commands produce different results, but for the same intention. Here I will try to explore the underlying difference.&lt;/p&gt;
+&lt;p&gt;Disclaimer: I know that the following discussion is incomplete. These are simply notes that I threw together overnight.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exposition&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exposition&lt;/h2&gt;
+&lt;p&gt;For a quick study, we can observe that the commands &lt;code&gt;lm(y ~ x)&lt;/code&gt; and &lt;code&gt;lm(y ~ (poly,1))&lt;/code&gt; produce different results:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# 50 ordered pairs of random numbers
+x &amp;lt;- runif(50)
+y &amp;lt;- runif(50, -3, 3)
+
+# first linear model
+lm1 &amp;lt;- lm(y ~ x)
+
+# second linear model
+lm2 &amp;lt;- lm(y ~ poly(x, 1))
+
+# found coefficients
+lm1&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Coefficients:
+## (Intercept)            x  
+##    -0.03135     -0.37976&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = y ~ poly(x, 1))
+## 
+## Coefficients:
+## (Intercept)   poly(x, 1)  
+##     -0.2030      -0.7187&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# plot
+plot(x,y, main = &amp;quot;quick scatterplot and linear regression&amp;quot;)
+points(mean(x), mean(y), col = &amp;quot;purple&amp;quot;, pch = 8)
+abline(lm1, col = &amp;quot;red&amp;quot;, lwd = 3)
+abline(lm2, col = &amp;quot;blue&amp;quot;, lwd = 3)
+legend(0.5, 2, 
+       c(&amp;quot;lm(y ~ x)&amp;quot;, &amp;quot;lm(y ~ poly(x, 1))&amp;quot;),
+       col = c(&amp;quot;red&amp;quot;, &amp;quot;blue&amp;quot;),
+       lwd = c(3,3))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2018-09-30-degree-one-polynomials_files/figure-html/unnamed-chunk-1-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;We observe that &lt;code&gt;lm(y ~ x)&lt;/code&gt; goes though the sample means &lt;span class=&#34;math inline&#34;&gt;\((\bar{x}, \bar{y})\)&lt;/span&gt;, while &lt;code&gt;lm(y ~ (poly,1))&lt;/code&gt; does not. Oddly enough, if we apply a metric such as the coefficient of determination (&lt;span class=&#34;math inline&#34;&gt;\(R^{2}\)&lt;/span&gt;), then the model metrics are the same!&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(lm1)$adj.r.squared&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] -0.01688544&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(lm2)$adj.r.squared&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] -0.01688544&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;orthogonal-polynomials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Orthogonal Polynomials&lt;/h2&gt;
+&lt;p&gt;Some searches on the web point toward how the &lt;code&gt;poly&lt;/code&gt; command uses &lt;a href=&#34;https://mathoverflow.net/questions/38864/visualizing-orthogonal-polynomials&#34;&gt;othogonal polynomials&lt;/a&gt; by default. That is, modeling with &lt;span class=&#34;math display&#34;&gt;\[\hat{y} = a + bx + cx^{2} + ...\]&lt;/span&gt; is easy to interpret, higher degree terms will not add much to the predictive ability for our regression models (e.g. &lt;span class=&#34;math inline&#34;&gt;\(x^7\)&lt;/span&gt; and &lt;span class=&#34;math inline&#34;&gt;\(x^8\)&lt;/span&gt; are “too close” within some interval). Side note: with the &lt;span class=&#34;math display&#34;&gt;\[{1, x, x^{2}, ...}\]&lt;/span&gt; basis, we learn that the &lt;a href=&#34;https://math.stackexchange.com/questions/2211054/condition-number-for-polynomial-interpolation-matrix&#34;&gt;Vandermonde matrix&lt;/a&gt; for this basis has a &lt;em&gt;high condition number&lt;/em&gt; and calculations with this route are &lt;em&gt;ill-conditioned&lt;/em&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;coefficients-of-orthogonal-polynomials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Coefficients of Orthogonal Polynomials&lt;/h2&gt;
+&lt;p&gt;There has been a &lt;a href=&#34;https://stackoverflow.com/questions/39031172/how-poly-generates-orthogonal-polynomials-how-to-understand-the-coefs-ret&#34;&gt;lot of discussion&lt;/a&gt; about how &lt;code&gt;poly&lt;/code&gt; works and its internal and recursive algorithm to produce a set of orthogonal polynomials over an interval of values. Here I hope to produce a simple example where we can follow the numbers.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;x &amp;lt;- 1:5       # mean is 3
+y &amp;lt;- 15*x + 18 # line of slope 15 and y-intercept 18&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Using the &lt;code&gt;lm&lt;/code&gt; command quickly recovers the slope and intercept&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm_raw &amp;lt;- lm(y ~ x)
+lm_raw&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Coefficients:
+## (Intercept)            x  
+##          18           15&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;However, the route with orthogonal polynomials yields different coefficients.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;lm_orth &amp;lt;- lm(y ~ poly(x,1))
+lm_orth&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## 
+## Call:
+## lm(formula = y ~ poly(x, 1))
+## 
+## Coefficients:
+## (Intercept)   poly(x, 1)  
+##       63.00        47.43&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can &lt;a href=&#34;https://stackoverflow.com/questions/26728289/extracting-orthogonal-polynomial-coefficients-from-rs-poly-function&#34;&gt;extract the coefficents&lt;/a&gt; from the orthogonal polynomial route, along with some normalization factors.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;a &amp;lt;- attributes(poly(x,1))$coefs$alpha
+a&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1] 3&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;n &amp;lt;- attributes(poly(x,1))$coefs$norm2
+n&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## [1]  1  5 10&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;building-orthogonal-polynomials&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Building Orthogonal Polynomials&lt;/h2&gt;
+&lt;p&gt;There are several ways to build orthogonal polynomials, and here I will try out the &lt;a href=&#34;http://www.math.tamu.edu/~yvorobet/MATH304-503/Lect4-04web.pdf&#34;&gt;Gram-Schmidt process&lt;/a&gt;. For the base case, &lt;span class=&#34;math display&#34;&gt;\[p_{0} := 1\]&lt;/span&gt; The degree-one term is &lt;span class=&#34;math display&#34;&gt;\[p_{1}(x) = x - \frac{&amp;lt;x, p_{0}&amp;gt;}{&amp;lt;p_{0}, p_{0}&amp;gt;} = x - \frac{\int_{1}^{5} \! x \, dx}{\int_{1}^{5} \, dx} = x - 3\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;Note that &lt;span class=&#34;math inline&#34;&gt;\(p_{1}(x) = x - 3\)&lt;/span&gt; is centered at the mean &lt;span class=&#34;math inline&#34;&gt;\(\bar{x} = 3\)&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Combining the coefficients found from &lt;code&gt;lm(y ~ poly(x,1))&lt;/code&gt; and a normalization factor from above, we get&lt;/p&gt;
+&lt;p&gt;&lt;span class=&#34;math display&#34;&gt;\[\hat{y} = 63 + 47.43 \cdot \frac{x - 3}{\sqrt{10}}\]&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;which is indeed &lt;span class=&#34;math inline&#34;&gt;\(\hat{y} = 18 + 15x\)&lt;/span&gt; when simplified (up to rounding error, too much hand-waving, and a missing number).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;sources&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Sources&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&#34;https://mathoverflow.net/questions/38864/visualizing-orthogonal-polynomials&#34; class=&#34;uri&#34;&gt;https://mathoverflow.net/questions/38864/visualizing-orthogonal-polynomials&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://math.stackexchange.com/questions/2211054/condition-number-for-polynomial-interpolation-matrix&#34; class=&#34;uri&#34;&gt;https://math.stackexchange.com/questions/2211054/condition-number-for-polynomial-interpolation-matrix&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://stackoverflow.com/questions/39031172/how-poly-generates-orthogonal-polynomials-how-to-understand-the-coefs-ret&#34; class=&#34;uri&#34;&gt;https://stackoverflow.com/questions/39031172/how-poly-generates-orthogonal-polynomials-how-to-understand-the-coefs-ret&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://stackoverflow.com/questions/26728289/extracting-orthogonal-polynomial-coefficients-from-rs-poly-function&#34; class=&#34;uri&#34;&gt;https://stackoverflow.com/questions/26728289/extracting-orthogonal-polynomial-coefficients-from-rs-poly-function&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.math.tamu.edu/~yvorobet/MATH304-503/Lect4-04web.pdf&#34; class=&#34;uri&#34;&gt;http://www.math.tamu.edu/~yvorobet/MATH304-503/Lect4-04web.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Hello R Markdown</title>
+      <link>https://dsollberger.netlify.com/post/2015-07-23-r-rmarkdown/</link>
+      <pubDate>Thu, 23 Jul 2015 21:13:14 -0500</pubDate>
+      <guid>https://dsollberger.netlify.com/post/2015-07-23-r-rmarkdown/</guid>
+      <description>
+
+
+&lt;div id=&#34;r-markdown&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;R Markdown&lt;/h1&gt;
+&lt;p&gt;This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see &lt;a href=&#34;http://rmarkdown.rstudio.com&#34; class=&#34;uri&#34;&gt;http://rmarkdown.rstudio.com&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;You can embed an R code chunk like this:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;summary(cars)
+##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00
+fit &amp;lt;- lm(dist ~ speed, data = cars)
+fit
+## 
+## Call:
+## lm(formula = dist ~ speed, data = cars)
+## 
+## Coefficients:
+## (Intercept)        speed  
+##     -17.579        3.932&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;including-plots&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Including Plots&lt;/h1&gt;
+&lt;p&gt;You can also embed plots. See Figure &lt;a href=&#34;#fig:pie&#34;&gt;1&lt;/a&gt; for example:&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;par(mar = c(0, 1, 0, 1))
+pie(
+  c(280, 60, 20),
+  c(&amp;#39;Sky&amp;#39;, &amp;#39;Sunny side of pyramid&amp;#39;, &amp;#39;Shady side of pyramid&amp;#39;),
+  col = c(&amp;#39;#0292D8&amp;#39;, &amp;#39;#F7EA39&amp;#39;, &amp;#39;#C4B632&amp;#39;),
+  init.angle = -50, border = NA
+)&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;&lt;span id=&#34;fig:pie&#34;&gt;&lt;/span&gt;
+&lt;img src=&#34;https://dsollberger.netlify.com/dsollberger/blog/post/2015-07-23-r-rmarkdown_files/figure-html/pie-1.png&#34; alt=&#34;A fancy pie chart.&#34; width=&#34;672&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;
+Figure 1: A fancy pie chart.
+&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

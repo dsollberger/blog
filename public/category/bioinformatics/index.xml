@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bioinformatics | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/category/bioinformatics/</link>
+      <atom:link href="https://dsollberger.netlify.com/category/bioinformatics/index.xml" rel="self" type="application/rss+xml" />
+    <description>bioinformatics</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Tue, 07 Jul 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>bioinformatics</title>
+      <link>https://dsollberger.netlify.com/category/bioinformatics/</link>
+    </image>
+    
+    <item>
+      <title>Covid-19 Cases in the Central Valley</title>
+      <link>https://dsollberger.netlify.com/post/covid-19-cases-in-the-central-valley/</link>
+      <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/covid-19-cases-in-the-central-valley/</guid>
+      <description>
+
+
+&lt;div id=&#34;data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data&lt;/h1&gt;
+&lt;p&gt;Source: &lt;a href=&#34;https://usafacts.org/visualizations/coronavirus-covid-19-spread-map/&#34;&gt;USA Facts&lt;/a&gt; — downloaded July 6, 2020&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;tidyverse&amp;quot;)
+library(&amp;quot;zoo&amp;quot;)
+
+start_date &amp;lt;- &amp;quot;5/28/20&amp;quot;
+end_date &amp;lt;- &amp;quot;7/5/20&amp;quot;
+
+county_list &amp;lt;- c(&amp;quot;Santa Clara&amp;quot;, &amp;quot;Stanislaus&amp;quot;, &amp;quot;Calaveras&amp;quot;,
+              &amp;quot;San Benito&amp;quot;, &amp;quot;Merced&amp;quot;, &amp;quot;Tuolumne&amp;quot;,
+              &amp;quot;Fresno&amp;quot;, &amp;quot;Madera&amp;quot;, &amp;quot;Mariposa&amp;quot;)
+lag &amp;lt;- 7 #number of days for rolling average&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#loads files
+cases_raw &amp;lt;- read_csv(&amp;quot;covid_confirmed_usafacts.csv&amp;quot;)
+populations &amp;lt;- read_csv(&amp;quot;covid_county_population_usafacts.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;data-wrangling&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Data Wrangling&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;raw_data_merged &amp;lt;- cases_raw %&amp;gt;%
+  full_join(populations, by = c(&amp;quot;County Name&amp;quot;, &amp;quot;State&amp;quot;))
+
+# find column positions by date
+column_names &amp;lt;- colnames(raw_data_merged)
+start_loc &amp;lt;- match(start_date, column_names)
+end_loc   &amp;lt;- match(end_date, column_names)
+
+cases_filtered &amp;lt;- cases_raw %&amp;gt;%
+  filter(State == &amp;quot;CA&amp;quot;) %&amp;gt;%
+  select(&amp;quot;County Name&amp;quot;, all_of(start_loc:end_loc))
+  
+
+populations_filtered &amp;lt;- populations %&amp;gt;%
+  filter(State == &amp;quot;CA&amp;quot;) %&amp;gt;%
+  select(&amp;quot;County Name&amp;quot;, &amp;quot;population&amp;quot;)
+  
+
+df_merged &amp;lt;- cases_filtered %&amp;gt;%
+  full_join(populations_filtered, 
+            by = &amp;quot;County Name&amp;quot;)
+
+df_clean &amp;lt;- df_merged %&amp;gt;%
+  
+  # avoids unallocated cases and the cruise ship!
+  filter(str_detect(`County Name`, &amp;quot;County&amp;quot;)) %&amp;gt;%
+  mutate(county = str_replace(`County Name`, &amp;quot; County&amp;quot;, &amp;quot;&amp;quot;)) %&amp;gt;%
+  select(-`County Name`)
+
+tall_data &amp;lt;- df_clean %&amp;gt;%
+  gather(key = &amp;quot;date&amp;quot;, value = &amp;quot;cases&amp;quot;, -county, -population)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rolling-average&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Rolling Average&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# rough draft
+draft_data &amp;lt;- tall_data %&amp;gt;%
+  group_by(county) %&amp;gt;%
+  mutate(new_cases = c(NA, diff(cases))) %&amp;gt;%
+  mutate(rolling_average = rollapply(new_cases, 3, mean, fill = NA)) %&amp;gt;%
+  filter(county == &amp;quot;Merced&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;final-product&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Final Product&lt;/h1&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;requested_region &amp;lt;- tall_data %&amp;gt;%
+  filter(county %in% county_list)
+
+# factors to affect facet grid order
+requested_region$county &amp;lt;- factor(requested_region$county,
+                                  levels = county_list)
+
+# requested_region$date &amp;lt;- as.Date(requested_region$date)
+dates_list &amp;lt;- unique(requested_region$date)
+dates_weekly &amp;lt;- dates_list[seq(1, length(dates_list), 7)]
+
+requested_region %&amp;gt;%
+  group_by(county) %&amp;gt;%
+  mutate(new_cases = c(NA, diff(cases))) %&amp;gt;%
+  mutate(rolling_average = rollapply(new_cases, lag, 
+                                     mean, fill = NA)) %&amp;gt;%
+  
+  # normalized by population
+  mutate(roll_avg_per_cap = 100000*rolling_average / population) %&amp;gt;%
+  ggplot(aes(x = date, y = roll_avg_per_cap,
+             color = county, group = county)) + 
+  geom_line() +
+  facet_wrap(. ~ county, nrow = 3) +
+  labs(title = &amp;quot;Covid-19 in the Calfornia Central Valley&amp;quot;,
+       subtitle = &amp;quot;since Memorial Day, 7-day rolling average, per 100000 people&amp;quot;,
+       caption = &amp;quot;Source: USA Facts&amp;quot;,
+       x = &amp;quot;date&amp;quot;,
+       y = &amp;quot;new cases per capita&amp;quot;) +
+  # scale_x_date(date_breaks = &amp;quot;1 week&amp;quot;) +
+  scale_x_discrete(breaks = dates_weekly) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1),
+        legend.position = &amp;quot;none&amp;quot;,
+        panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_blank(),
+    panel.background = element_blank())&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-07-07-covid-19-cases-in-the-central-valley_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Introduction to Bioconductor</title>
+      <link>https://dsollberger.netlify.com/post/introduction-to-bioconductor/</link>
+      <pubDate>Wed, 12 Feb 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/introduction-to-bioconductor/</guid>
+      <description>
+
+
+&lt;p&gt;“&lt;a href=&#34;https://www.bioconductor.org/&#34;&gt;Bioconductor&lt;/a&gt; provides tools for the analysis and comprehension of high-throughput genomic data. Bioconductor uses the R statistical programming language, and is open source and open development.”&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.bioconductor.org/&#34;&gt;https://www.bioconductor.org/&lt;/a&gt;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;dplyr&amp;quot;)
+library(&amp;quot;ggplot2&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;installation&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installation&lt;/h1&gt;
+&lt;p&gt;To install core packages, type the following in an R command window.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This may take around 5 minutes&lt;/li&gt;
+&lt;li&gt;When the option for updating packages appears, type in “a” for “all”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#leave as eval = FALSE when knitting
+
+if (!requireNamespace(&amp;quot;BiocManager&amp;quot;, quietly = TRUE))
+    install.packages(&amp;quot;BiocManager&amp;quot;)
+BiocManager::install()&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;installing-bioconductor-packages&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Installing Bioconductor packages&lt;/h2&gt;
+&lt;p&gt;There are about 20000 packages in the &lt;em&gt;Bioconductor&lt;/em&gt; universe. For now, let us install a couple of the more popular packages with the following code. To install a &lt;code&gt;BioConductor&lt;/code&gt; package, simply type in the name of the package in quotes inside of &lt;code&gt;BiocManager::install()&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;This may take around 5 minutes&lt;/li&gt;
+&lt;li&gt;Hereafter, when the option for updating packages appears, type in “n” for “no”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#leave as eval = FALSE when knitting
+
+BiocManager::install(&amp;quot;GenomicFeatures&amp;quot;)
+BiocManager::install(&amp;quot;Biostrings&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploring-genomicfeatures&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Exploring GenomicFeatures&lt;/h1&gt;
+&lt;p&gt;The following instructions were extracted from the vignette for Genomic Features&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;browseVignettes(package = &#34;GenomicFeatures&#34;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Load the &lt;code&gt;GenomicFeatures&lt;/code&gt; package. It is suggested that you load the packages with the following code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+suppressPackageStartupMessages(library(&amp;#39;GenomicFeatures&amp;#39;))&lt;/code&gt;&lt;/pre&gt;
+&lt;div id=&#34;introduction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;“The &lt;code&gt;GenomicFeatures&lt;/code&gt; package retrieves and manages transcript-related features fromthe UCSC Genome Bioinformatics and BioMart data resources. The package isuseful for ChIP-chip, ChIP-seq, and RNA-seq analyses.”&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;txdb-objects&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;TxDb Objects&lt;/h2&gt;
+&lt;p&gt;&#34;The &lt;code&gt;GenomicFeatures&lt;/code&gt; package uses TxDb objects to store transcript metadata. This class maps the 5’ and 3’ untranslated regions (UTRs), protein coding sequences(CDSs) and exons for a set of mRNA transcripts to their associated genome. TxDb objects have numerous accessors functions to allow such features to be retrieved individually or grouped together in a way that reflects the underlying biology.&lt;/p&gt;
+&lt;p&gt;All TxDb objects are backed by a SQLite database that manages genomic locations and the relationships between pre-processed mRNA transcripts, exons, protein coding sequences, and their related gene identifiers.&#34;&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+samplefile &amp;lt;- system.file(&amp;quot;extdata&amp;quot;,
+                          &amp;quot;hg19_knownGene_sample.sqlite&amp;quot;,
+                          package=&amp;quot;GenomicFeatures&amp;quot;)
+txdb &amp;lt;- loadDb(samplefile)
+txdb&lt;/code&gt;&lt;/pre&gt;
+&lt;ol style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Write a couple of sentences about what you observe in the output (the description of the txdb sample file)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div id=&#34;loading-and-viewing-a-sequence&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Loading and Viewing a Sequence&lt;/h2&gt;
+&lt;ol start=&#34;2&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Install the following packages (i.e. figure out how from some code earlier in this tutorial)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;BSgenome.Hsapiens.UCSC.hg19&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TxDb.Hsapiens.UCSC.hg19.knownGene&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;3&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Run the following code and then write a couple of sentences about what you observe in the output.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+library(BSgenome.Hsapiens.UCSC.hg19)
+library(TxDb.Hsapiens.UCSC.hg19.knownGene)
+
+tx_seqs1 &amp;lt;- extractTranscriptSeqs(Hsapiens,
+                                  TxDb.Hsapiens.UCSC.hg19.knownGene,
+                                  use.names=TRUE)
+suppressWarnings(translate(tx_seqs1))&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exploring-biostrings&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Exploring Biostrings&lt;/h1&gt;
+&lt;p&gt;The following instructions were extracted from the vignette for &lt;code&gt;Biostrings&lt;/code&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;browseVignettes(package = &#34;Biostrings&#34;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol start=&#34;4&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;Install the following packages (i.e. figure out how from some code earlier in this tutorial)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;hgu95av2probe&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;hgu95av2cdf&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Load the &lt;code&gt;Biostrings&lt;/code&gt; package. It is suggested that you load the packages with the following code.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+suppressPackageStartupMessages(library(&amp;#39;Biostrings&amp;#39;))
+suppressPackageStartupMessages(library(&amp;#39;hgu95av2probe&amp;#39;))
+suppressPackageStartupMessages(library(&amp;#39;hgu95av2cdf&amp;#39;))&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;5&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;The following code will load an example of a “Large DNAStringSet” and perform a couple of simple data analyses. Run the code and write a couple of sentences about the results.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+this_DNAString_set &amp;lt;- DNAStringSet(hgu95av2probe)
+this_DNAString_set_bc &amp;lt;- alphabetFrequency(this_DNAString_set, baseOnly = TRUE)
+nrow(this_DNAString_set_bc)
+head(this_DNAString_set_bc)
+alphabetFrequency(this_DNAString_set_bc, baseOnly=TRUE, collapse=TRUE)&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;6&#34; style=&#34;list-style-type: decimal&#34;&gt;
+&lt;li&gt;The following code will perform a calculation called the &lt;code&gt;GC content&lt;/code&gt; of a DNA sequence and graph the resulting amounts as a histogram. Run the code and write a couple of sentences about the results.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#set as eval = TRUE when knitting
+
+this_DNAString_df &amp;lt;- data.frame(this_DNAString_set_bc)
+
+# alas &amp;quot;T&amp;quot; is treated as &amp;quot;TRUE&amp;quot; in R, so let&amp;#39;s use the full names of the nucleotides
+colnames(this_DNAString_df) &amp;lt;- c(&amp;quot;Adenine&amp;quot;, &amp;quot;Cytosine&amp;quot;, &amp;quot;Guanine&amp;quot;, &amp;quot;Thymine&amp;quot;, &amp;quot;other&amp;quot;)
+
+this_DNAString_df %&amp;gt;%
+  select(c(&amp;quot;Adenine&amp;quot;, &amp;quot;Cytosine&amp;quot;, &amp;quot;Guanine&amp;quot;, &amp;quot;Thymine&amp;quot;)) %&amp;gt;%
+  mutate(GC_content = 100*(Cytosine + Guanine) / 
+           (Adenine + Cytosine + Guanine + Thymine)) %&amp;gt;%
+  ggplot(aes(x = GC_content, fill = ..x..)) +
+  geom_histogram(binwidth = 5) + 
+  labs(title = &amp;quot;Affymetrix Human Genome U95 Set annotation data&amp;quot;,
+       subtitle = &amp;quot;GC Content of hgu95av2probe&amp;quot;,
+       caption = &amp;quot;Source: Bioconductor&amp;quot;,
+       x = &amp;quot;GC content (percentage)&amp;quot;) +
+  scale_fill_gradient(low = &amp;quot;yellow&amp;quot;, high= &amp;quot;blue&amp;quot;) +
+  theme_minimal() +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>gganatogram and gganimate</title>
+      <link>https://dsollberger.netlify.com/post/gganatogram-and-gganimate/</link>
+      <pubDate>Thu, 10 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/gganatogram-and-gganimate/</guid>
+      <description>
+
+
+&lt;p&gt;Today I wanted to see if I could create a slideshow of pictures from the &lt;code&gt;gganatogram&lt;/code&gt; package. I wanted to combine them with the &lt;code&gt;gganimate&lt;/code&gt; package, but I have not figured out how to get that to work. (In particular, the &lt;code&gt;gganatogram()&lt;/code&gt; function seems to return a different list layout than &lt;code&gt;ggplot&lt;/code&gt; objects.)&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gganatogram)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggpolypath&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Loading required package: ggplot2&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(gganimate)
+library(profvis)
+
+N &amp;lt;- 25 # number of cell samples&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;num_cell_parts &amp;lt;- nrow(cell_key$cell)
+
+# randomly select a random number of cell parts
+part_picker &amp;lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+
+cell_num &amp;lt;- rep(1, length(part_picker))
+this_cell &amp;lt;- cell_key[[&amp;#39;cell&amp;#39;]][part_picker, ]
+cell_samples &amp;lt;- cbind(this_cell, cell_num)
+
+
+for(j in 2:N){
+  part_picker &amp;lt;- sample(1:num_cell_parts, sample(1:num_cell_parts, 1))
+  cell_num &amp;lt;- rep(j, length(part_picker))
+  this_cell &amp;lt;- cbind( cell_key[[&amp;#39;cell&amp;#39;]][part_picker, ], cell_num)
+  cell_samples &amp;lt;- rbind(cell_samples, this_cell)
+  
+  # figure_list[j] &amp;lt;- gganatogram(data = this_cell,
+  #           outline = FALSE, fillOutline=&amp;#39;steelblue&amp;#39;, organism=&amp;quot;cell&amp;quot;, fill=&amp;quot;colour&amp;quot;) + 
+  # theme_void() + 
+  # coord_fixed()
+  
+  png(filename = paste0(j, &amp;quot;.png&amp;quot;))
+  
+  p &amp;lt;- gganatogram(data = this_cell,
+            outline = FALSE, fillOutline=&amp;#39;steelblue&amp;#39;, organism=&amp;quot;cell&amp;quot;, fill=&amp;quot;colour&amp;quot;) +
+  theme_void() +
+  coord_fixed() +
+    labs(title = &amp;quot;Sample of Cell Parts&amp;quot;,
+         subtitle = paste0(&amp;quot;sample &amp;quot;, j, &amp;quot; of &amp;quot;, N),
+         caption = &amp;quot;Bio 18, UC Merced&amp;quot;)
+  
+  plot(p)
+  
+  dev.off()
+  
+  # pause(0.5)
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;https://dsollberger.netlify.com/img/cell_samples.gif&#34; alt=&#34;the picture&#34; /&gt;
+&lt;p class=&#34;caption&#34;&gt;the picture&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;What I ended up doing to produce the picture above was using the &lt;code&gt;png()&lt;/code&gt; and &lt;code&gt;dev.off()&lt;/code&gt; functions to simply output individual pictures into my computer, and then using the &lt;a href=&#34;https://gifmaker.me/&#34;&gt;GIFmaker&lt;/a&gt; website to combine the images into an animated GIF.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

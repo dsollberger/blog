@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>r | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/r/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/r/index.xml" rel="self" type="application/rss+xml" />
+    <description>r</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Wed, 29 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>r</title>
+      <link>https://dsollberger.netlify.com/tag/r/</link>
+    </image>
+    
+    <item>
+      <title>Troubleshooting for R, RStudio, and Tidyverse installation</title>
+      <link>https://dsollberger.netlify.com/post/r-troubleshooting-for-students/</link>
+      <pubDate>Wed, 29 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/r-troubleshooting-for-students/</guid>
+      <description>
+
+&lt;div id=&#34;TOC&#34;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;#why-doesnt-my-r-look-like-your-r-software&#34;&gt;Why doesn’t my R look like your R [software]?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rstudio-says-that-it-cannot-find-the-r-binaries.&#34;&gt;RStudio says that it cannot find the R binaries.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#we-cannot-install-software-on-ipad-chromebook-etc.&#34;&gt;We cannot install software (on iPad, Chromebook, etc.)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#tidyverse-cannot-be-found&#34;&gt;tidyverse cannot be found&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#package-is-not-available-for-r-version&#34;&gt;[package] is not available for R version …&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#there-is-no-package-rlang&#34;&gt;there is no package ‘rlang’&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#there-is-no-package-broom&#34;&gt;there is no package ‘broom’&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#rlang-andor-broom-still-do-not-work&#34;&gt;rlang and/or broom still do not work&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;#how-do-we-know-which-is-the-rmd-file-and-which-is-the-html-file&#34;&gt;How do we know which is the RMD file and which is the HTML file?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;p&gt;In this site, I hope to address most of the issues that appear when we try to install &lt;code&gt;R&lt;/code&gt;, &lt;code&gt;RStudio&lt;/code&gt;, and &lt;code&gt;tidyverse&lt;/code&gt; in the classroom setting.&lt;/p&gt;
+&lt;div id=&#34;why-doesnt-my-r-look-like-your-r-software&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Why doesn’t my R look like your R [software]?&lt;/h1&gt;
+&lt;p&gt;There are two programs to install: &lt;code&gt;R&lt;/code&gt;, then &lt;code&gt;RStudio&lt;/code&gt;. Please follow the installation instructions at &lt;a href=&#34;https://dsollberger.netlify.com/post/r-installation-for-students/&#34; class=&#34;uri&#34;&gt;https://dsollberger.netlify.com/post/r-installation-for-students/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rstudio-says-that-it-cannot-find-the-r-binaries.&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;RStudio says that it cannot find the R binaries.&lt;/h1&gt;
+&lt;p&gt;There are two programs to install: &lt;code&gt;R&lt;/code&gt;, then &lt;code&gt;RStudio&lt;/code&gt;. Please follow the installation instructions at &lt;a href=&#34;https://dsollberger.netlify.com/post/r-installation-for-students/&#34; class=&#34;uri&#34;&gt;https://dsollberger.netlify.com/post/r-installation-for-students/&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;we-cannot-install-software-on-ipad-chromebook-etc.&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;We cannot install software (on iPad, Chromebook, etc.)&lt;/h1&gt;
+&lt;p&gt;There is a fantastic alternative at &lt;a href=&#34;https://rstudio.cloud/&#34;&gt;RStudio Cloud&lt;/a&gt;. That is, one can do their R programming online. There will be a few more steps involved compared to what we do in &lt;code&gt;RStudio&lt;/code&gt; Desktop, but past students have gotten &lt;code&gt;RStudio Cloud&lt;/code&gt; to work.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tidyverse-cannot-be-found&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;tidyverse cannot be found&lt;/h1&gt;
+&lt;p&gt;We need to install code packages before using code packages. Run &lt;code&gt;install.packages(&#34;tidyverse&#34;)&lt;/code&gt; in the console (lower-left area). The installation will take up to 5 minutes. This has to be done only once during the semester.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;package-is-not-available-for-r-version&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;[package] is not available for R version …&lt;/h1&gt;
+&lt;p&gt;To ensure compatibility between &lt;code&gt;R&lt;/code&gt; and code packages, the R community almost always asks users to use the newest version of &lt;code&gt;R&lt;/code&gt;. Please install the newest versions of &lt;code&gt;R&lt;/code&gt; and &lt;code&gt;RStudio&lt;/code&gt;. This semester we are using &lt;code&gt;R&lt;/code&gt; version 3.6.2 and &lt;code&gt;RStudio&lt;/code&gt; version 1.2.5033.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;there-is-no-package-rlang&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;there is no package ‘rlang’&lt;/h1&gt;
+&lt;p&gt;Run this command in the console&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;install.packages(&#34;dplyr&#34;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If a choice appears that says something like &lt;code&gt;Do you want to install from sources the package which needs compilation?.&lt;/code&gt;, select “No”.&lt;/p&gt;
+&lt;p&gt;Alternatively: &lt;a href=&#34;https://stackoverflow.com/questions/49721356/trouble-downloading-rlang-with-tidyverse&#34; class=&#34;uri&#34;&gt;https://stackoverflow.com/questions/49721356/trouble-downloading-rlang-with-tidyverse&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;there-is-no-package-broom&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;there is no package ‘broom’&lt;/h1&gt;
+&lt;p&gt;The explanation would be a deep dive into the notion of &lt;em&gt;dependencies&lt;/em&gt; (beyond the scope of the course). For now, we dive right into this case’s dependencies. Run these commands in the console.&lt;/p&gt;
+&lt;p&gt;If a choice appears that says something like &lt;code&gt;Do you want to install from sources the package which needs compilation?.&lt;/code&gt;, select “No”.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;install.packages(&#34;backports&#34;)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;then &lt;code&gt;install.packages(&#34;zeallot&#34;)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;then &lt;code&gt;install.packages(&#34;broom&#34;)&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;then &lt;code&gt;install.packages(&#34;tidyverse&#34;)&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sources:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://community.rstudio.com/t/fail-to-install-package-broom/11307/3&#34; class=&#34;uri&#34;&gt;https://community.rstudio.com/t/fail-to-install-package-broom/11307/3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://community.rstudio.com/t/error-lazy-loading-failed-for-package-broom/50777&#34; class=&#34;uri&#34;&gt;https://community.rstudio.com/t/error-lazy-loading-failed-for-package-broom/50777&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;rlang-andor-broom-still-do-not-work&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;rlang and/or broom still do not work&lt;/h1&gt;
+&lt;p&gt;Let’s try this. &lt;code&gt;tidyverse&lt;/code&gt; is a &lt;em&gt;set&lt;/em&gt; of packages that are supposed to work together well and emulate programming practices from other programming languages. In our introductory forays into &lt;code&gt;R&lt;/code&gt; programming, we do not need every package in the &lt;code&gt;tidyverse&lt;/code&gt;. Therefore, the simplest work-around is to load the needed packages individually.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#### instead of library(&amp;quot;tidyverse&amp;quot;) ####
+library(&amp;quot;dplyr&amp;quot;)    #for the pipe function %&amp;gt;% and other SQL commands
+library(&amp;quot;ggplot2&amp;quot;)  #modern data visualization
+#library(&amp;quot;readr&amp;quot;)    #to load CSV data files
+#library(&amp;quot;readxl&amp;quot;)   #to load Excel data files
+#library(&amp;quot;stringr&amp;quot;)  #manipulate strings and regular expressions
+#library(&amp;quot;tidyr&amp;quot;)    #to reshape data frames with functions like gather or spread&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;how-do-we-know-which-is-the-rmd-file-and-which-is-the-html-file&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;How do we know which is the RMD file and which is the HTML file?&lt;/h1&gt;
+&lt;p&gt;It will be useful if you can see file types in your computer.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;http://kb.winzip.com/kb/entry/26/&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/&#34;&gt;Mac OS X&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Also, the HTML file will probably have a similar icon as your web browser (Chrome, Firefox, etc.)&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

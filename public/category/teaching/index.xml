@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>teaching | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/category/teaching/</link>
+      <atom:link href="https://dsollberger.netlify.com/category/teaching/index.xml" rel="self" type="application/rss+xml" />
+    <description>teaching</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 19 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>teaching</title>
+      <link>https://dsollberger.netlify.com/category/teaching/</link>
+    </image>
+    
+    <item>
+      <title>R Installation</title>
+      <link>https://dsollberger.netlify.com/post/r-installation-for-students/</link>
+      <pubDate>Sun, 19 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/r-installation-for-students/</guid>
+      <description>
+
+
+&lt;p&gt;If you are planning to do the &lt;code&gt;R&lt;/code&gt; assignments on your own computer (recommended), then here is a quick outline for obtaining the software.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;There are two separate software programs&lt;/em&gt;. Most people find it easier to use &lt;code&gt;RStudio&lt;/code&gt;. than just &lt;code&gt;R&lt;/code&gt;, but you need to install &lt;code&gt;R&lt;/code&gt; first before installing &lt;code&gt;RStudio&lt;/code&gt; (analogously speaking: you need an cell phone before you can use an cell phone case).&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;If you have R and RStudio from a previous course, you still need to update to the current versions!&lt;/em&gt; (version 3.6.2 of R and version 1.2.5033 of RStudio)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div id=&#34;downloading-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Downloading R&lt;/h1&gt;
+&lt;p&gt;Go to &lt;a href=&#34;https://cran.r-project.org/&#34;&gt;The Comprehensive R Archive Network&lt;/a&gt; (CRAN)&lt;/p&gt;
+&lt;p&gt;Windows:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click “Download R for Windows”&lt;/li&gt;
+&lt;li&gt;click “install R for the first time”&lt;/li&gt;
+&lt;li&gt;click “Download R 3.6.2 for Windows”&lt;/li&gt;
+&lt;li&gt;click “Save File”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Mac:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;click “Download R for (Mac) OS X”&lt;/li&gt;
+&lt;li&gt;click “R-3.6.2.pkg”&lt;/li&gt;
+&lt;li&gt;click “Ok”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-r&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing R&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: double-check icon for R-3.6.2-win.exe&lt;/li&gt;
+&lt;li&gt;Mac: double-click icon for R-3.6.2.pkg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;give computer permission to install&lt;/li&gt;
+&lt;li&gt;select language&lt;/li&gt;
+&lt;li&gt;agree to GNU General Public License&lt;/li&gt;
+&lt;li&gt;select destination location&lt;/li&gt;
+&lt;li&gt;select components&lt;/li&gt;
+&lt;li&gt;Startup options: select “No (accept defaults)”&lt;/li&gt;
+&lt;li&gt;select Start Menu Folder&lt;/li&gt;
+&lt;li&gt;select Additional Tasks&lt;/li&gt;
+&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
+&lt;li&gt;“Click Finish to exit Setup”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;downloading-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Downloading RStudio&lt;/h1&gt;
+&lt;p&gt;Go to the &lt;a href=&#34;https://rstudio.com/products/rstudio/download/#download&#34;&gt;RStudio Desktop download page&lt;/a&gt; (i.e. we are using the &lt;em&gt;free&lt;/em&gt;, desktop version of RStudio)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: click RStudio-1.2.5033.exe, click “Save File”&lt;/li&gt;
+&lt;li&gt;Mac: click RStudio-1.2.5033.dmg, click “Ok”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;installing-rstudio&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Installing RStudio&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: double-check icon for RStudio-1.2.5033.exe&lt;/li&gt;
+&lt;li&gt;Mac: double-click icon for RStudio-1.2.5033.dmg&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For the rest of these steps, it is okay to accept the default selections (but I will outline them here for posterity):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;give computer permission to install&lt;/li&gt;
+&lt;li&gt;“Click Next to continue”&lt;/li&gt;
+&lt;li&gt;Choose Install Location&lt;/li&gt;
+&lt;li&gt;Choose Start Menu Folder&lt;/li&gt;
+&lt;li&gt;(wait a minute or two for installation to take place)&lt;/li&gt;
+&lt;li&gt;“Click Finish to close Setup”&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&#34;code-packages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Code Packages&lt;/h1&gt;
+&lt;p&gt;For R coding, we will often need more code—called code packages. To ease our coding sessions, please run the following lines of code before class (in the lower-left &lt;code&gt;console&lt;/code&gt; area of RStudio, just has to be done once this semester).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;package_list &amp;lt;- c(&amp;quot;tidyverse&amp;quot;, &amp;quot;readxl&amp;quot;, &amp;quot;mosaic&amp;quot;, &amp;quot;titanic&amp;quot;)
+install.packages(package_list)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;file-types&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;File Types&lt;/h1&gt;
+&lt;p&gt;Also, while we are learning how I want homework assignments to be submitted, it will be useful if you can see file types in your computer.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;http://kb.winzip.com/kb/entry/26/&#34;&gt;Windows&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;instructions for &lt;a href=&#34;https://www.idownloadblog.com/2014/10/29/how-to-show-or-hide-filename-extensions-in-os-x-yosemite/&#34;&gt;Mac OS X&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Semester Schedule Planner</title>
+      <link>https://dsollberger.netlify.com/post/semester-schedule-planner/</link>
+      <pubDate>Wed, 01 Aug 2018 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/semester-schedule-planner/</guid>
+      <description>
+
+
+&lt;p&gt;As a lecturer at UC Merced, each semester I find myself needing to figure out how many days I get to teach. Furthermore, I like to plan out my lecture schedule down to the days themselves. Here I hope to use some &lt;code&gt;R&lt;/code&gt; code to quickly figure out (say) which days are on Tuesday or Thursday.&lt;/p&gt;
+&lt;div id=&#34;construction&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Construction&lt;/h2&gt;
+&lt;p&gt;In &lt;code&gt;R&lt;/code&gt;, the &lt;code&gt;seq&lt;/code&gt; command can be used with dates easily.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;semester_dates &amp;lt;- seq(as.Date(&amp;quot;2018-08-22&amp;quot;), as.Date(&amp;quot;2018-12-07&amp;quot;), by = &amp;quot;days&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;When working with time data, the &lt;code&gt;xts&lt;/code&gt; package (“extensible time series”) offers convenient tools for manipulating time series.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;library(&amp;quot;xts&amp;quot;)
+xts_dates &amp;lt;- as.xts( rep(NA, length(semester_dates)), order.by = semester_dates)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The convention is that “0” is a Sunday, “1” is a Monday, …, and “5” is a Friday.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div id=&#34;monday-and-wednesday&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Monday and Wednesday&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Mondays &amp;lt;- xts_dates[.indexwday(xts_dates) == 1]
+head(Mondays)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##            [,1]
+## 2018-08-27   NA
+## 2018-09-03   NA
+## 2018-09-10   NA
+## 2018-09-17   NA
+## 2018-09-24   NA
+## 2018-10-01   NA&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;MW_dates &amp;lt;- xts_dates[.indexwday(xts_dates) %in% c(1, 3)]
+head(MW_dates)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##            [,1]
+## 2018-08-22   NA
+## 2018-08-27   NA
+## 2018-08-29   NA
+## 2018-09-03   NA
+## 2018-09-05   NA
+## 2018-09-10   NA&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;tuesday-and-thursday&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Tuesday and Thursday&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;TuTh_dates &amp;lt;- xts_dates[.indexwday(xts_dates) %in% c(2, 4)]
+head(TuTh_dates)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##            [,1]
+## 2018-08-23   NA
+## 2018-08-28   NA
+## 2018-08-30   NA
+## 2018-09-04   NA
+## 2018-09-06   NA
+## 2018-09-11   NA&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;friday&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Friday&lt;/h2&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;Fri_dates &amp;lt;- xts_dates[.indexwday(xts_dates) == 5]
+head(Fri_dates)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##            [,1]
+## 2018-08-24   NA
+## 2018-08-31   NA
+## 2018-09-07   NA
+## 2018-09-14   NA
+## 2018-09-21   NA
+## 2018-09-28   NA&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div id=&#34;exporting-the-time-series&#34; class=&#34;section level2&#34;&gt;
+&lt;h2&gt;Exporting the Time Series&lt;/h2&gt;
+&lt;p&gt;From here, I might still want to use Excel for data entry in my planning. &lt;code&gt;xts&lt;/code&gt; objects are still &lt;code&gt;zoo&lt;/code&gt; objects.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;#write.zoo(Mondays, sep = &amp;quot;,&amp;quot;, file = &amp;quot;schedule.csv&amp;quot;)
+#write.zoo(MW_dates, sep = &amp;quot;,&amp;quot;, file = &amp;quot;schedule.csv&amp;quot;)
+#write.zoo(TuTh_dates, sep = &amp;quot;,&amp;quot;, file = &amp;quot;schedule.csv&amp;quot;)
+write.zoo(Fri_dates, sep = &amp;quot;,&amp;quot;, file = &amp;quot;schedule.csv&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now I have a spreadsheet with the dates already arranged!&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

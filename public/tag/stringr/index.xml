@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>stringr | Derek Sollberger&#39;s Blog</title>
+    <link>https://dsollberger.netlify.com/tag/stringr/</link>
+      <atom:link href="https://dsollberger.netlify.com/tag/stringr/index.xml" rel="self" type="application/rss+xml" />
+    <description>stringr</description>
+    <generator>Wowchemy (https://wowchemy.com)</generator><language>en-us</language><lastBuildDate>Sun, 24 May 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://dsollberger.netlify.com/media/icon_hua2ec155b4296a9c9791d015323e16eb5_11927_512x512_fill_lanczos_center_3.png</url>
+      <title>stringr</title>
+      <link>https://dsollberger.netlify.com/tag/stringr/</link>
+    </image>
+    
+    <item>
+      <title>Analysis of NYT Sample of Covid-19 Obituaries</title>
+      <link>https://dsollberger.netlify.com/post/analysis-of-nyt-sample-of-covid-19-obituaries/</link>
+      <pubDate>Sun, 24 May 2020 00:00:00 +0000</pubDate>
+      <guid>https://dsollberger.netlify.com/post/analysis-of-nyt-sample-of-covid-19-obituaries/</guid>
+      <description>
+
+
+&lt;div id=&#34;obtaining-the-data&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Obtaining the Data&lt;/h1&gt;
+&lt;p&gt;On May 24, 2020, the &lt;em&gt;New York Times&lt;/em&gt; published an article called “&lt;a href=&#34;https://www.nytimes.com/interactive/2020/05/24/us/us-coronavirus-deaths-100000.html&#34;&gt;An Incalcuable Loss&lt;/a&gt;”&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;quot;America is fast approaching a grim milestone in the coronavirus outbreak — each figure here represents one of the nearly 100,000 lives lost so far. But a count reveals only so much. Memories, gathered from obituaries across the country, help us to reckon with what was lost.&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What I am trying to do today is summarize the 1001 obituaries.&lt;/p&gt;
+&lt;p&gt;I started out by manually&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;going to &lt;a href=&#34;https://www.nytimes.com/interactive/2020/05/24/us/us-coronavirus-deaths-100000.html&#34;&gt;https://www.nytimes.com/interactive/2020/05/24/us/us-coronavirus-deaths-100000.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;right-clicking and selecting “View Source”&lt;/li&gt;
+&lt;li&gt;copy-and-pasting the HTML code to a text document&lt;/li&gt;
+&lt;li&gt;paring down the HTML code to focus on the obituaries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;div id=&amp;quot;g-obits&amp;quot;&amp;gt;
+    &amp;lt;div id=&amp;quot;g-obit-frame&amp;quot;&amp;gt;
+        
+            &amp;lt;div id=&amp;quot;g-0&amp;quot; class=&amp;quot;g-obit&amp;quot; data-date=&amp;quot;February 6&amp;quot;&amp;gt;
+                &amp;lt;div class=&amp;quot;g-obit-inner&amp;quot;&amp;gt;
+                    &amp;lt;b&amp;gt;Auditor in Silicon Valley.&amp;lt;/b&amp;gt;
+                    ...
+    ...             &lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;texts &amp;lt;- readLines(&amp;quot;obituaries.txt&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;word-cloud&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Word Cloud&lt;/h1&gt;
+&lt;p&gt;For one view, I wanted to make a word cloud to reveal the most commonly used words in the one-sentence obituaries. I used the &lt;code&gt;stringr&lt;/code&gt; package to extract the text in between the &lt;strong&gt;bold&lt;/strong&gt; HTML tags (as well as removing the period).&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;obits &amp;lt;- str_extract_all(texts, regex(&amp;quot;(?&amp;lt;=&amp;lt;b&amp;gt;)(.*?)(?=.&amp;lt;/b&amp;gt;)&amp;quot;, multiline = TRUE))&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There is &lt;code&gt;R&lt;/code&gt; code and packages for making word clouds, but I find it best to use the site &lt;a href=&#34;https://www.wordclouds.com/&#34;&gt;wordclouds.com&lt;/a&gt; since that application has many neat features. Thus, all I needed at this point is to save the results to upload to that site.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;write_lines(unlist(obits), &amp;quot;clean.txt&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;density-plot-of-ages&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Density Plot of Ages&lt;/h1&gt;
+&lt;p&gt;Q: Does Covid-19 only affect older people?&lt;/p&gt;
+&lt;p&gt;For this analysis, I seek the two- or three-digit numbers in between the &lt;em&gt;italics&lt;/em&gt; HTML tags.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;ages &amp;lt;- as.integer( unlist( str_extract_all(texts, regex(&amp;quot;(?&amp;lt;=,)(.[0-9]{2,3}?)(?=,)&amp;quot;, multiline = TRUE) )))
+
+summary(ages)&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   22.00   67.00   80.00   76.72   89.00  108.00&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;data.frame(ages) %&amp;gt;%
+  ggplot(aes(x = ages)) +
+  geom_density(fill = &amp;quot;black&amp;quot;) +
+  labs(title = &amp;quot;Ages of Covid-19 Casualties&amp;quot;,
+       subtitle = &amp;quot;Sample of Obituaries from February to May 2020&amp;quot;,
+       caption = &amp;quot;Source: New York Times&amp;quot;,
+       x = &amp;quot;Age&amp;quot;,
+       y = &amp;quot;density&amp;quot;) +
+  theme(axis.text.y = element_blank())&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-24-analysis-of-nyt-sample-of-covid-19-obituaries_files/figure-html/unnamed-chunk-5-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;/div&gt;
+&lt;div id=&#34;spread-by-week&#34; class=&#34;section level1&#34;&gt;
+&lt;h1&gt;Spread by Week&lt;/h1&gt;
+&lt;p&gt;Out of curiosity, here I hope to build a boxplot of the ages, but grouped by week of the year.&lt;/p&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;dates &amp;lt;- unlist( str_extract_all(texts, regex(&amp;quot;(?&amp;lt;=date=\&amp;quot;)(.*?)(?=\&amp;quot;)&amp;quot;, multiline = TRUE) ))
+
+
+# There was one missing age value in this data, so I am going to choose to delete the last date
+# with hopes that the data still mostly lines up
+dates &amp;lt;- dates[1:1000]
+
+df &amp;lt;- data.frame(ages, dates)
+
+# separate month and day
+df &amp;lt;- df %&amp;gt;%
+  separate(dates, into = c(&amp;quot;month&amp;quot;, &amp;quot;day&amp;quot;), remove = FALSE)
+
+# Soon, I want to know the day of the year (i.e. how far into the year 2020), so here I make offsets,
+df &amp;lt;- df %&amp;gt;%
+  mutate(offset = case_when(month == &amp;quot;February&amp;quot; ~ 31,
+                            month == &amp;quot;March&amp;quot; ~ 60,
+                            month == &amp;quot;April&amp;quot; ~ 91,
+                            TRUE ~ 121))
+
+# Adding the offset and the obituary day to get the day of the year
+df$day &amp;lt;- as.integer(df$day)
+df &amp;lt;- df %&amp;gt;%
+  mutate(day_of_year = offset + day)
+
+# Finally, we divide by 7 to get the week of the year
+df &amp;lt;- df %&amp;gt;%
+  mutate(week_of_year = ceiling(day_of_year / 7))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;df %&amp;gt;%
+  ggplot(aes(x = week_of_year, y = ages, fill = week_of_year, group = week_of_year)) +
+  geom_boxplot() +
+  labs(title = &amp;quot;US Covid-19 Deaths&amp;quot;,
+       subtitle = &amp;quot;Age Distributions by week, Sample of n = 1000 obituaries&amp;quot;,
+       caption = &amp;quot;Data Source: New York Times&amp;quot;,
+       x = &amp;quot;Week of Year (since start of 2020)&amp;quot;,
+       y = &amp;quot;Age&amp;quot;) +
+  theme(legend.position = &amp;quot;none&amp;quot;)&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://dsollberger.netlify.com/post/2020-05-24-analysis-of-nyt-sample-of-covid-19-obituaries_files/figure-html/unnamed-chunk-7-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
+&lt;/div&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
